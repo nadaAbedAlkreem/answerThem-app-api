@@ -67,6 +67,6 @@ class FriendRequestController extends Controller
 
     public function send()
     {
-        dd("ssdd");
+        $this->notifyUser(1, "You have a new friend request from User {1}");
     }
 }

@@ -9,7 +9,7 @@ use App\Traits\ResponseTrait;
 use App ;
 use App\Services\UserService;
 
- class loginController extends Controller
+class LoginController extends Controller
 {
 
     use ResponseTrait ;

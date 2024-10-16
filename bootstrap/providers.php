@@ -2,9 +2,9 @@
 
 return [
     App\Providers\AppServiceProvider::class,
+    App\Providers\BroadcastServiceProvider::class,
+    App\Providers\EventServiceProvider::class,
+    App\Providers\FirebaseServiceProvider::class,
     App\Providers\RepositoryServiceProvider::class,
-    App\Providers\RouteServiceProvider::class,//EventServiceProvider
-    App\Providers\EventServiceProvider::class, //BroadcastServiceProvider
-    App\Providers\BroadcastServiceProvider::class
-
-];
+    App\Providers\RouteServiceProvider::class,
+ ];
