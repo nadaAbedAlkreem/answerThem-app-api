@@ -13,14 +13,17 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->index();  
+            $table->string('name')->index();
             $table->string('full_name');
             $table->string('email')->unique();
             $table->string('phone')->unique()->nullable();
+            $table->string('image')->index();
             $table->string('country')->nullable();
-            $table->enum('lang' , ['en' , 'ar'])->default('ar');
+            $table->enum('lang', ['en', 'ar'])->default('ar');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('provider');
+            $table->string('provider_id');
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes(); // Add soft deletes column

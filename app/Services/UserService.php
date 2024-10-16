@@ -2,28 +2,38 @@
 namespace App\Services;
 
 use App\Models\User;
+use App\Repositories\IUserRepository;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 
 class UserService
 {
+
+    protected $userRepository;
+
+    public function __construct(IUserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository; // Inject the repository
+    }
+
     public function register($data)
     {
         try {
-             $user = User::create($data);
-             return $user;
-
+            return $this->userRepository->create($data);
         } catch (\Exception $e) {
              throw new \Exception($e->getMessage());
         }
 
     }
 
+
+
         public function login($credentials)
         {
             $user = Auth::user();
             $token = $user->createToken('auth_token')->plainTextToken;
-             return [
+
+            return [
                 'access_token' => $token,
                 'token_type' => 'Bearer',
                 'user' => $user,
@@ -33,7 +43,6 @@ class UserService
 
     public function getTranslatedPageDataRegister()
     {
-
         $page_en = [
             'register_new_account' => __('auth.register_new_account'),
             'username' => __('auth.username'),
@@ -83,7 +92,114 @@ class UserService
             ];
         }
     }
+    public function getTranslatedPageDataForgetPasseord()
+    {
+        $page_en = [
+            'forget_password'=>  __('auth.forget_password'),
+            'enter_email_or_password'=>  __('auth.enter_email_or_password'),
+            'send'=>  __('auth.send'),
+            'mobile_number' => __('auth.mobile_number'),
+            'email' => __('auth.email'),
+        ];
 
+        $page_ar = [
+            'forget_password'=>  __('auth.forget_password'),
+            'enter_email_or_password'=>  __('auth.enter_email_or_password'),
+            'send'=>  __('auth.send'),
+            'mobile_number' => __('auth.mobile_number'),
+            'email' => __('auth.email'),
+        ];
+
+        // Return the correct translation based on the application's locale
+        if (app()->getLocale() == 'en') {
+            return [
+                'status' => 'PAGE_TRANSLATED_SUCCESS',
+                'data' => $page_en,
+            ];
+        } else {
+            return [
+                'status' => 'PAGE_TRANSLATED_SUCCESS',
+                'data' => $page_ar,
+            ];
+        }
+
+
+
+
+    }
+
+
+    public function getTranslatedPageDataChangePassword()
+    {
+        $page_en = [
+            'forget_password'=>  __('auth.forget_password'),
+            'enter_new_password'=>  __('auth.enter_new_password'),
+            'send'=>  __('auth.send'),
+            'confirm_password' => __('auth.confirm_password'),
+            'password' => __('auth.password'),
+
+        ];
+
+        $page_ar = [
+            'forget_password'=>  __('auth.forget_password'),
+            'enter_new_password'=>  __('auth.enter_new_password'),
+            'send'=>  __('auth.send'),
+            'confirm_password' => __('auth.confirm_password'),
+            'password' => __('auth.password'),
+
+        ];
+
+        // Return the correct translation based on the application's locale
+        if (app()->getLocale() == 'en') {
+            return [
+                'status' => 'PAGE_TRANSLATED_SUCCESS',
+                'data' => $page_en,
+            ];
+        } else {
+            return [
+                'status' => 'PAGE_TRANSLATED_SUCCESS',
+                'data' => $page_ar,
+            ];
+        }
+
+
+
+
+    }
+
+
+    public function getTranslatedPageverifyToken()
+    {
+        $page_en = [
+            'enter_verification'=>  __('auth.enter_verification'),
+            'enter_verification_text'=>  __('auth.enter_verification_text'),
+            'verification'=>  __('auth.verification'),
+        ];
+
+        $page_ar = [
+            'enter_verification'=>  __('auth.enter_verification'),
+            'enter_verification_text'=>  __('auth.enter_verification_text'),
+            'verification'=>  __('auth.verification'),
+
+        ];
+
+        // Return the correct translation based on the application's locale
+        if (app()->getLocale() == 'en') {
+            return [
+                'status' => 'PAGE_TRANSLATED_SUCCESS',
+                'data' => $page_en,
+            ];
+        } else {
+            return [
+                'status' => 'PAGE_TRANSLATED_SUCCESS',
+                'data' => $page_ar,
+            ];
+        }
+
+
+
+
+    }
     public function getTranslatedPageDataLogin()
     {
 

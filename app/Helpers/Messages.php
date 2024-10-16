@@ -22,7 +22,7 @@ class Messages
         'ERROR_CREDENTIALS' => 'Error login credentials, check and try again',
         'LOGGED_OUT_SUCCESSFULLY' => 'Logged out successfully',
         'LOGGED_IN_SUCCESSFULLY' => 'Logged in successfully',
-
+        'NO_DATA' => 'no data ' ,
         'LOGIN_IN_FAILED' => 'Login failed, try again!',
         'NO_ACCOUNT' => 'User mobile is not registered!',
         'AUTH_CODE_SENT' => 'Auth code sent successfully',
@@ -204,6 +204,8 @@ class Messages
         'PURCHASES_ORDER_ITEMS_NOT_FOUND' =>  ' لا يمكن العثور على بيانات المشتريات في هذه الطلبية' ,
         'PAYMENTS_ORDER_NOT_FOUND' => ' لا يمكن العثور على بيانات الدفعات   في هذه الطلبية'  ,
         // PASSWORD
+        'NO_DATA' => ' لا يوجد بيانات ' ,
+
         'FORGET_PASSWORD_SUCCESS' => 'تم إرسال رمز إعادة تعيين كلمة المرور بنجاح',
         'FORGET_PASSWORD_FAILED' => 'فشل في إرسال رمز إعادة تعيين كلمة المرور!',
         'PASSWORD_RESET_CODE_CORRECT' => 'رمز إعادة تعيين كلمة المرور صحيح، قم بتعيين كلمة مرور جديدة',

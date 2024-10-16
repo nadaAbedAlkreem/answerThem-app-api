@@ -2,27 +2,16 @@
 
 namespace App\Providers;
 
-
- 
 use Illuminate\Support\ServiceProvider;
+use App\Repositories\BaseRepositoryInterface ;
+use App\Repositories\Eloquent\UserRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     *
-     * @return void
-     */
     public function register()
     {
-     
     }
 
-    /**
-     * Bootstrap any application services.
-     *
-     * @return void
-     */
     public function boot()
     {
         //

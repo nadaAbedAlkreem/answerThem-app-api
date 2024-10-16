@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\V1\Friends;
 
-use App\Models\Setting;
-use App\Http\Requests\StoreSettingRequest;
-use App\Http\Requests\UpdateSettingRequest;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreFriendRequest;
+use App\Http\Requests\UpdateFriendRequest;
+use App\Models\Friend;
 
-class SettingController extends Controller
+class FriendController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,15 +28,17 @@ class SettingController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreSettingRequest $request)
+    public function store(StoreFriendRequest $request)
     {
         //
     }
 
+
+
     /**
      * Display the specified resource.
      */
-    public function show(Setting $setting)
+    public function show(Friend $friend)
     {
         //
     }
@@ -43,7 +46,7 @@ class SettingController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Setting $setting)
+    public function edit(Friend $friend)
     {
         //
     }
@@ -51,7 +54,7 @@ class SettingController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateSettingRequest $request, Setting $setting)
+    public function update(UpdateFriendRequest $request, Friend $friend)
     {
         //
     }
@@ -59,7 +62,7 @@ class SettingController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Setting $setting)
+    public function destroy(Friend $friend)
     {
         //
     }

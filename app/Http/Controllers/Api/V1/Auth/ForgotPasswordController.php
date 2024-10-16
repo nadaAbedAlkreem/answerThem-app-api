@@ -6,6 +6,7 @@ use App\Http\Requests\Auth\ForgotPasswordRequest;  //VerifyTokenRequest
 use App\Http\Requests\Auth\VerifyTokenRequest;  //VerifyTokenRequest
 use App\Http\Requests\Auth\ResetPasswordRequest;  //VerifyTokenRequest
 use App\Models\User;
+use App\Services\UserService;
 use Illuminate\Support\Facades\Hash;
 use App\Services\SmsService;
 use App\Traits\ResponseTrait;
@@ -14,8 +15,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Cache;
 use Carbon\Carbon;
 use Twilio\Rest\Client;
-
-class ForgotPasswordController extends Controller
+ class ForgotPasswordController extends Controller
 {
     use ResponseTrait ;
     protected $client;
@@ -26,16 +26,57 @@ class ForgotPasswordController extends Controller
     protected $maxAttempts = 5;
 
     protected $lockoutTime = 60;
+    protected $userService;
 
-    public function __construct(SmsService $smsService)
+    public function __construct(SmsService $smsService ,UserService $userService)
     {
         $this->client = new Client(env('TWILIO_SID'), env('TWILIO_AUTH_TOKEN'));
         $this->verifyServiceSid = env('TWILIO_VERIFY_SERVICE_SID'); // Initialize your Verify Service SID
         $this->smsService = $smsService;
+        $this->userService = $userService;
+
     }
 
 
-    public function sendResetLink(ForgotPasswordRequest $request)
+
+    public function createForgetPasseord()
+    {
+        $translatedPage = $this->userService->getTranslatedPageDataForgetPasseord();
+
+        return $this->successResponse(
+            $translatedPage['status'],
+            $translatedPage['data'],
+            200,
+            app()->getLocale()
+        );
+    }
+
+     public function createVerifyToken()
+     {
+         $translatedPage = $this->userService->getTranslatedPageverifyToken();
+
+         return $this->successResponse(
+             $translatedPage['status'],
+             $translatedPage['data'],
+             200,
+             app()->getLocale()
+         );
+     }
+
+     public function createChangePassword()
+     {
+         $translatedPage = $this->userService->getTranslatedPageDataChangePassword();
+
+         return $this->successResponse(
+             $translatedPage['status'],
+             $translatedPage['data'],
+             200,
+             app()->getLocale()
+         );
+     }
+
+
+     public function sendResetLink(ForgotPasswordRequest $request)
     {
 
 

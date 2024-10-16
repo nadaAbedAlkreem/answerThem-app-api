@@ -5,6 +5,7 @@ namespace App\Http\Requests\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\Password;
 
 class RegisterRequest extends FormRequest
 {
@@ -24,6 +25,7 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
 
+
         return [
             'image' =>  $this->hasFile('image')
             ? 'required|file|mimes:jpeg,png,jpg,gif,svg|max:2048'
@@ -34,7 +36,14 @@ class RegisterRequest extends FormRequest
             'country_prefix' => 'required|string',  // Add the country prefix field
             'email' => 'required|string|email|max:255|unique:users',
             'phone' =>'required|string|unique:users'   ,
-            'password' => 'required|string|min:8|confirmed',
+            'password' => ['required|string|confirmed',
+                Password::min(8)
+                    ->letters()
+                    ->mixedCase()
+                    ->numbers()
+                    ->symbols()
+                    ->uncompromised(),
+                ]
         ];
     }
 
@@ -72,24 +81,28 @@ class RegisterRequest extends FormRequest
 
             'password.required' => __('messages.password.required'),
             'password.string' => __('messages.password.string'),
-            'password.min' => __('messages.password.min'),
+            'password.min' => __('messages.password.min', ['min' => 8]),
             'password.confirmed' => __('messages.password.confirmed'),
+            'password.letters' => __('messages.password.letters'),
+            'password.mixedCase' => __('messages.password.mixed_case'),
+            'password.numbers' => __('messages.password.numbers'),
+            'password.symbols' => __('messages.password.symbols'),
+            'password.uncompromised' => __('messages.password.uncompromised'),
         ];
     }
 
     public  function getDataWithImage()
     {
         $data=$this->validated();
-
         if ($this->hasFile('image'))
         {
 
-            $userName = (!empty($data['full_name']))?  $data['full_name'] :  time()+rand(1,10000000)  ;
+            $userName = (!empty($data['full_name']))?  $data['full_name'].time()+rand(1,10000000) :  time()+rand(1,10000000)  ;
             $path = 'uploads/images/users/';
             $nameImage = $userName.'.'. $this->file('image')->getClientOriginalExtension();
             Storage::disk('public')->put($path.$nameImage, file_get_contents( $this->file('image') ));
             $data['image'] = $path.$nameImage ;
-        }
+         }
         if (!empty($data['password'])) {
             $data['password'] = Hash::make($data['password']);
         }
