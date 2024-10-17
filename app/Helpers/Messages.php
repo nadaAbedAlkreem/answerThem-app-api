@@ -10,6 +10,9 @@ class Messages
         // general
         'operation accomplished successfully' => 'Operation accomplished successfully',
          //AUTH
+        'ERROR_FCM_TOKEN'=> 'User does not have a device token' ,
+        'UPDATE_FCM_TOKEN_SUCCESSFULLY'=> 'Device token updated successfully' ,
+
         'FINANCIA_GET_SUCCESSFULLY' => 'Financial data acquisition process completed',
         'REGISTERED_SUCCESSFULLY' => 'Account created successfully',
         'BLOCKED_DEVICE' => 'Account is blocked',
@@ -117,6 +120,7 @@ class Messages
         'ERROR_OCCURRED' => 'ERROR OCCURRED' ,
         'USER_NOT_FOUND' => 'User not found ' ,
         'TOKEN_VALID' => 'Token valid' ,
+        'NOTAUTHORIZED'=> 'You are not authorized. You must log in first.' ,
 
         'PURCHASES_ORDER_ITEMS_NOT_FOUND' =>  ' Purchase data cannot be found for this order.' ,
         'PURCHASES_ORDER_ITEMS_RETRIEVED' => 'Order purchases have been returned' ,
@@ -136,7 +140,9 @@ class Messages
 
         'CREATE_ITEM_FAILD' => 'Created Failed' ,
         'DELETE_ITEM_FAILD' => 'Deleted Failed' ,
-        'UPDATE_ELEMENT_NOT_FOUND' => 'Update failed You must enter the data you want to update'
+        'UPDATE_ELEMENT_NOT_FOUND' => 'Update failed You must enter the data you want to update',
+        'CURL_ERROR' => 'Error curl' ,
+        'NOTIFICATION_SENT_SUCCESSFULLY'=> 'Notification has been sent'  ,
 
     ];
 
@@ -144,6 +150,7 @@ class Messages
 
     private static $Messages_AR = [
         // General
+        'NOTIFICATION_SENT_SUCCESSFULLY'=> 'تم ارسال الاشعار بنجاح ' ,
         'TOO_MANY_ATTEMPTS'=>'محاولات كثيرة جدًا',
         'FINANCIA_GET_SUCCESSFULLY' => 'تمت عملية الحصول على بيانات المالية',
         'DATA_RETRIEVED_SUCCESSFULLY' => ' . تم استرجاع البيانات بنجاح',
@@ -172,8 +179,7 @@ class Messages
         'ITEMS_UPDATED_SUCCESSFULLY' => 'تم تحديث العناصر بنجاح.',
          'INVALID_DELIVERED_QUANTITY' => 'يجب ألا تكون الكمية المسلمة أكبر من الكمية الإجمالية.',
         'EXCEPTION_MESSAGE' => 'حدث خطأ: :message',
-         'ORDER_STATUS_UPDATED' => 'تم تحديث الحالة لطلبية ',
-        'UPDATE_FAILED'  => 'فشل في عملية التحديث ' ,
+        'ORDER_STATUS_UPDATED' => 'تم تحديث الحالة لطلبية ',
         'INVALID_UPDATE_ELEMENT' =>   'عنصر التحديث غير صالح'  ,
         "PASSWORD_RESET_LINK_SEND"=>'تم إرسال رابط إعادة تعيين كلمة المرور.'  ,
         'REGISTERED_SUCCESSFULLY' => 'تم إنشاء الحساب بنجاح',
@@ -203,7 +209,7 @@ class Messages
         'INTERNAL_SERVER_ERROR'  => 'خطأ في الخادم الداخلي'  ,
         'PURCHASES_ORDER_ITEMS_NOT_FOUND' =>  ' لا يمكن العثور على بيانات المشتريات في هذه الطلبية' ,
         'PAYMENTS_ORDER_NOT_FOUND' => ' لا يمكن العثور على بيانات الدفعات   في هذه الطلبية'  ,
-        // PASSWORD
+        'ERROR_FCM_TOKEN'=> 'لا يمتلك المستخدم رمز جهاز' ,
         'NO_DATA' => ' لا يوجد بيانات ' ,
 
         'FORGET_PASSWORD_SUCCESS' => 'تم إرسال رمز إعادة تعيين كلمة المرور بنجاح',
@@ -235,7 +241,6 @@ class Messages
         'SECURITY_CHECK_DUPLICATE' => 'تم إرسال حالتك مسبقًا، كن آمنًا',
         'SECURITY_CHECK_FAILED' => 'حدث خطأ في إرسال حالتك، حاول مرة أخرى',
         'CREATE_USER_SUCCESSFULLY' => 'تم انشاء الحساب بنجاح ' ,
-        'CREATE_USER_SUCCESSFULLY' => 'تم انشاء الحساب بنجاح ' ,
         'PAGE_TRANSLATED_SUCCESS' => 'تم حصول على بيانات صفحة   مترجمة بنجاح ' ,
         'PAGE_TRANSLATED_FAILED' => ' تعذر حصول على بيانات صفحة   مترجمة بنجاح ' ,
         'CREATE_SUCCESS' => 'تم الإنشاء بنجاح',
@@ -243,11 +248,11 @@ class Messages
         'ERROR_OCCURRED' => 'حدث خطأ' ,
         'DELETE_SUCCESS' => 'تم الحذف بنجاح',
         'DELETE_FAILED' => 'فشل في الحذف، حاول مرة أخرى',
-
+        'UPDATE_FCM_TOKEN_SUCCESSFULLY'=> 'تم تحديث رمز الجهاز بنجاح',
         'REQUEST_SUCCESS' => 'تمت العملية بنجاح',
         'UPDATE_SUCCESS' => 'تم التحديث بنجاح',
         'UPDATE_FAILED' => 'فشل في التحديث، حاول مرة أخرى',
-
+        'CURL_ERROR' => 'خطأ في curl' ,
         'favorite' => 'تمت الإضافة إلى قائمتك المفضلة',
         'favorite_delete' => 'تم الحذف من قائمتك المفضلة',
         'PASSWORD_changed' => 'تم تغيير كلمة المرور بنجاح',
@@ -258,7 +263,7 @@ class Messages
         'ORDER_NOT_FOUND' => ' لم يتم العثور على الطلبية ',
         'ORDER_DETAILS_RETRIEVED' => 'تم استرداد تفاصيل الطلب' ,
         'USER_NOT_FOUND' => 'لم يتم العثور على المستخدم ' ,
-
+        'NOTAUTHORIZED' =>  'غير مصرح لك  يجب عليك تسجيل دخول اولا ',
 
         // Order Status
         'PENDING' => 'تم إنشاء طلبك بنجاح',

@@ -35,15 +35,26 @@ class RegisterRequest extends FormRequest
             'country' => 'required' ,
             'country_prefix' => 'required|string',  // Add the country prefix field
             'email' => 'required|string|email|max:255|unique:users',
-            'phone' =>'required|string|unique:users'   ,
-            'password' => 'required' ,'string','confirmed' ,
-                Password::min(8)
-                    ->letters()
+            'phone' => [
+                'required',
+                'string',
+                function ($attribute, $value, $fail) {
+                    $phoneWithPrefix = request()->country_prefix . $value;
+                    if (\App\Models\User::where('phone', $phoneWithPrefix)->exists()) {
+                        $fail(__('validation.unique', ['attribute' => $attribute]));
+                    }
+                },
+            ],            'password' => [
+                'required',
+                'string',
+                'confirmed',
+                Password::min(8) // Adjust the length as needed
+                ->letters()
                     ->mixedCase()
                     ->numbers()
                     ->symbols()
-                    ->uncompromised(),
-
+                    ->uncompromised()
+            ]
         ];
     }
 

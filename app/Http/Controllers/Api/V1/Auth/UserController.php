@@ -8,15 +8,18 @@ use App\Repositories\IUserRepository;
 use App\Http\Requests\Auth\SearchUsersRequest;
 use Illuminate\Support\Facades\App; // Make sure to import the App facade
 use App\Traits\ResponseTrait;
+use App\Services\UserService;
 
 class UserController extends Controller
 {
     use ResponseTrait  ;
-    protected $userRepository;
+    protected $userRepository  , $userService ;
 
-    public function __construct(IUserRepository $userRepository)
+    public function __construct(IUserRepository $userRepository  ,UserService $userService)
     {
         $this->userRepository = $userRepository; // Inject the repository
+        $this->userService = $userService;
+
     }
 
     public function getAllUsers()
@@ -26,6 +29,16 @@ class UserController extends Controller
     }
 
 
+    public function getTranslatedPagesAuthentication()
+    {
+        $translatedPage = $this->userService->getTranslatedPagesAuthentication();
+        return $this->successResponse(
+            $translatedPage['status'],
+            $translatedPage['data'],
+            200,
+            app()->getLocale()
+        );
+    }
     public function getSearchUsers(SearchUsersRequest $request)
     {
         $searchResult = $this->userRepository->getWhereSerach([[$request->query('search_type'), 'like', "%{$request->query('search_value')}%"]]);

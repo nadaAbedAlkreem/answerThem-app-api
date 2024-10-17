@@ -14,9 +14,9 @@ use App\Http\Middleware\SetLocale ;
     Route::group(['middleware' => SetLocale::class], function () {
 
                 Route::prefix('auth')->group(function ()
-            {
-                Route::get('/register', [RegisterController::class, 'create']);
-                Route::get('/login', [LoginController::class, 'create'])->name('login');
+            {  //getTranslatedPagesAuthentication
+                Route::get('/translate', [UserController::class, 'getTranslatedPagesAuthentication']);
+                Route::get('/login', [LoginController::class, 'notAuthorized'])->name('login');
                 Route::post('/register', [RegisterController::class, 'register']);
                 Route::post('/login', [LoginController::class, 'login']);
                 Route::get('/users', [UserController::class, 'getAllUsers']);
@@ -33,9 +33,7 @@ use App\Http\Middleware\SetLocale ;
                     Route::post('instagram/deauthorize', [SocialAuthController::class, 'handleInstagramDeauthorization']);
 
                 });
-                Route::get('forgot-password', [ForgotPasswordController::class, 'createForgetPasseord']);
-                Route::get('reset-password', [ForgotPasswordController::class, 'createChangePassword']);
-                Route::get('verifyToken', [ForgotPasswordController::class, 'createVerifyToken']);
+
                 Route::post('forgot-password', [ForgotPasswordController::class, 'sendResetLink']);
                 Route::post('reset-password', [ForgotPasswordController::class, 'resetPassword']);
                 Route::post('verifyToken', [ForgotPasswordController::class, 'verifyToken']);

@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Traits\ResponseTrait;
 use App ;
 use App\Services\UserService;
-
+use App\Http\Resources\Api\UserResource;
 class LoginController extends Controller
 {
 
@@ -19,16 +19,10 @@ class LoginController extends Controller
     {
         $this->userService = $userService;
     }
-    public function create()
+    public function notAuthorized()
     {
-        $translatedPage = $this->userService->getTranslatedPageDataLogin();
+        return $this->errorResponse('NOTAUTHORIZED', 401 , app()->getLocale());
 
-        return $this->successResponse(
-            $translatedPage['status'],
-            $translatedPage['data'],
-            200,
-            app()->getLocale()
-        );
     }
 
     public function login(LoginRequest $request)
@@ -36,7 +30,7 @@ class LoginController extends Controller
         try {
             $user = $this->userService->login($request->getData());
             $request->session()->regenerate();
-            return $this->successResponse('LOGGED_IN_SUCCESSFULLY', $user, 202, app()->getLocale());
+            return $this->successResponse('LOGGED_IN_SUCCESSFULLY',new UserResource($user) , 202, app()->getLocale());
         } catch (\Exception $e) {
             return $this->errorResponse('ERROR_OCCURRED', ['error' => $e->getMessage()], 500, app()->getLocale());
         }

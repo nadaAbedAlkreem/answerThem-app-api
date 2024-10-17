@@ -39,42 +39,6 @@ use Twilio\Rest\Client;
 
 
 
-    public function createForgetPasseord()
-    {
-        $translatedPage = $this->userService->getTranslatedPageDataForgetPasseord();
-
-        return $this->successResponse(
-            $translatedPage['status'],
-            $translatedPage['data'],
-            200,
-            app()->getLocale()
-        );
-    }
-
-     public function createVerifyToken()
-     {
-         $translatedPage = $this->userService->getTranslatedPageverifyToken();
-
-         return $this->successResponse(
-             $translatedPage['status'],
-             $translatedPage['data'],
-             200,
-             app()->getLocale()
-         );
-     }
-
-     public function createChangePassword()
-     {
-         $translatedPage = $this->userService->getTranslatedPageDataChangePassword();
-
-         return $this->successResponse(
-             $translatedPage['status'],
-             $translatedPage['data'],
-             200,
-             app()->getLocale()
-         );
-     }
-
 
      public function sendResetLink(ForgotPasswordRequest $request)
     {

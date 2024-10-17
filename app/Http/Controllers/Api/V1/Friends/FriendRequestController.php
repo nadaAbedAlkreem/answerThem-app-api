@@ -6,17 +6,25 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreFriendRequestRequest;
 use App\Http\Requests\UpdateFriendRequestRequest;
 use App\Models\FriendRequest;
-use App\Notifications\PushNotification;
-use App\Models\User ;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Google\Client as Google_Client; // Correct class name
+use App\Traits\ResponseTrait;
+
+use App\Repositories\Eloquent\NotificationRepository;
 
 class FriendRequestController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
+    use ResponseTrait ;
+
+
+    protected $notificationRepo;
+
+    public function __construct(NotificationRepository $notificationRepo)
+    {
+        $this->notificationRepo = $notificationRepo;
+    }
     public function index()
     {
         //
@@ -25,68 +33,14 @@ class FriendRequestController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+
+    public function updateDeviceToken(Request $request)
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreFriendRequestRequest $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(FriendRequest $friendRequest)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(FriendRequest $friendRequest)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateFriendRequestRequest $request, FriendRequest $friendRequest)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(FriendRequest $friendRequest)
-    {
-        //
-    }
-
-    public function send()
-    {
-        $user = User::find(1);
-        $user->notify(new PushNotification());
-
-    }
-
-
-    public function updateDeviceToken(Request $request) {
-        $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'fcm_token' => 'required|string',
-        ]);
-
-        $request->user()->update(['fcm_token' => $request->fcm_token]);
-
-        return response()->json(['message' => 'Device token updated successfully']);
+         $response = Notification::updateDeviceToken($request);
+         if (isset($response['message']) && $response['message'] === 'UPDATE_FCM_TOKEN_SUCCESSFULLY') {
+            return $this->successResponse('UPDATE_FCM_TOKEN_SUCCESSFULLY', [], 202 ,  app()->getLocale());
+        }
+        return  $this->errorResponse('USER_NOT_FOUND' , [] , 404 , app()->getLocale());
     }
 
     public function sendFcmNotification(Request $request) {
@@ -96,11 +50,12 @@ class FriendRequestController extends Controller
             'body' => 'required|string',
         ]);
 
-        $user = \App\Models\User::find($request->user_id);
+        $user = User::find($request->user_id);
         $fcm = $user->fcm_token;
 
         if (!$fcm) {
-            return response()->json(['message' => 'User does not have a device token'], 400);
+            return $this->errorResponse('ERROR_FCM_TOKEN', [], 400, app()->getLocale());
+
         }
 
         $title = $request->title;
@@ -153,12 +108,10 @@ class FriendRequestController extends Controller
         curl_close($ch);
 
         if ($err) {
-            return response()->json(['message' => 'Curl Error: ' . $err], 500);
+             return $this->errorResponse('CURL_ERROR', [$err], 500, app()->getLocale());
         } else {
-            return response()->json([
-                'message' => 'Notification has been sent',
-                'response' => json_decode($response, true)
-            ]);
+            return $this->successResponse('NOTIFICATION_SENT_SUCCESSFULLY', [$response], 202,  app()->getLocale());
+
         }
     }
 }
