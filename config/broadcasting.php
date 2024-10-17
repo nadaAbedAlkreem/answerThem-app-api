@@ -45,6 +45,11 @@ return [
                 // Guzzle client options: https://docs.guzzlephp.org/en/stable/request-options.html
             ],
         ],
+        'firebase' => [
+            'driver' => 'firebase',
+            'project_id' => env('FIREBASE_PROJECT_ID'),
+            // Add other necessary config options
+        ],
 
         'pusher' => [
             'driver' => 'pusher',

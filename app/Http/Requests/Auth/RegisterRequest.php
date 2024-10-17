@@ -36,14 +36,14 @@ class RegisterRequest extends FormRequest
             'country_prefix' => 'required|string',  // Add the country prefix field
             'email' => 'required|string|email|max:255|unique:users',
             'phone' =>'required|string|unique:users'   ,
-            'password' => ['required|string|confirmed',
+            'password' => 'required' ,'string','confirmed' ,
                 Password::min(8)
                     ->letters()
                     ->mixedCase()
                     ->numbers()
                     ->symbols()
                     ->uncompromised(),
-                ]
+
         ];
     }
 

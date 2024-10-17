@@ -41,9 +41,11 @@ use App\Http\Middleware\SetLocale ;
                 Route::post('verifyToken', [ForgotPasswordController::class, 'verifyToken']);
 
             });
-        Route::group(['middleware' =>  'auth','session'], function () {
-            Route::post('/friend-request/send', [FriendRequestController::class, 'send']);
-            Route::post('/friend-request/accept/{id}', [FriendRequestController::class, 'accept']);
-        });
+            Route::group(['middleware' =>  'auth','session'], function () {
+                Route::put('update-device-token', [FriendRequestController::class, 'updateDeviceToken']);
+                Route::post('send-fcm-notification', [FriendRequestController::class, 'sendFcmNotification']);
+
+
+            });
 
     });

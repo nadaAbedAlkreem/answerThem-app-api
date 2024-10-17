@@ -6,7 +6,11 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "ext-curl": "*",
         "aloha/twilio": "^5.0",
+        "firebase/php-jwt": "^6.10",
+        "google/apiclient": "^2.17",
+        "google/apiclient-services": "*",
         "guzzlehttp/guzzle": "^7.9",
         "infobip/infobip-api-php-client": "5.0.0",
         "kreait/firebase-php": "^7.15",

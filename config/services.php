@@ -50,6 +50,9 @@ return [
     'resend' => [
         'key' => env('RESEND_KEY'),
     ],
+    'fcm' => [
+        'project_id' => env('FIREBASE_PROJECT_ID'),
+    ],
 
     'slack' => [
         'notifications' => [

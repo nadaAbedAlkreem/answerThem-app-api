@@ -28,7 +28,8 @@ class User extends Authenticatable
         'country'  ,
         'provider',
         'provider_id',
-        'remember_token'
+        'remember_token',
+        'fcm_token'
 
     ];
 

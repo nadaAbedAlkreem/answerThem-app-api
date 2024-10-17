@@ -12,9 +12,10 @@ class FirebaseServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('firebase', function ($app) {
-            return (new Factory)->withServiceAccount(env('FIREBASE_CREDENTIALS'));
-        });
+        $this->app->singleton('firebase',
+            function ($app) {
+                return (new Factory)->withServiceAccount(config('firebase.credentials.path'))->create();
+            });
     }
 
     /**
