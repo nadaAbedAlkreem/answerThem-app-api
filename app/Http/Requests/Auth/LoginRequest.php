@@ -6,6 +6,8 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Exception;
+use Illuminate\Validation\Rules\Password;
+
 class LoginRequest extends FormRequest
 {
     /**
@@ -25,8 +27,13 @@ class LoginRequest extends FormRequest
     {
         return [
             'email' => 'required|string|email',
-            'password' => 'required|string|min:8|confirmed',
-        ];
+            'password' => 'required', 'string', 'min:8', 'confirmed', Password::min(8)
+                ->letters()
+                ->mixedCase()
+            ->numbers()
+            ->symbols()
+            ->uncompromised(),
+            ];
     }
 
 
