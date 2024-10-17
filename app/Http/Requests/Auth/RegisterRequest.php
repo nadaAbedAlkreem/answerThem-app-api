@@ -44,7 +44,8 @@ class RegisterRequest extends FormRequest
                         $fail(__('validation.unique', ['attribute' => $attribute]));
                     }
                 },
-            ],            'password' => [
+            ],
+            'password' => [
                 'required',
                 'string',
                 'confirmed',

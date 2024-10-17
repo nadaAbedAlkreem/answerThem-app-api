@@ -47,6 +47,13 @@ class UserController extends Controller
             : $this->errorResponse('NO_DATA', [], 200, App::getLocale());
     }
 
+    public function getUserById($id)
+    {
+
+    }
+
+
+
 
 
     // Other methods using the user repository...

@@ -16,7 +16,7 @@ use App\Http\Middleware\SetLocale ;
                 Route::prefix('auth')->group(function ()
             {  //getTranslatedPagesAuthentication
                 Route::get('/translate', [UserController::class, 'getTranslatedPagesAuthentication']);
-                Route::get('/login', [LoginController::class, 'notAuthorized'])->name('login');
+//                Route::get('/notAuthorized', [LoginController::class, 'notAuthorized'])->name('login');
                 Route::post('/register', [RegisterController::class, 'register']);
                 Route::post('/login', [LoginController::class, 'login']);
                 Route::get('/users', [UserController::class, 'getAllUsers']);
