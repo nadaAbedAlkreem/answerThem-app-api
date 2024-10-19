@@ -30,6 +30,10 @@ class UserService
 
         public function login($credentials)
         {
+            if (!Auth::attempt($credentials)) {
+
+                throw new \Exception('Invalid login details', 401);
+            }
             $user = Auth::user();
             $token = $user->createToken('auth_token')->plainTextToken;
 

@@ -9,6 +9,7 @@ use App\Traits\ResponseTrait;
 use App ;
 use App\Services\UserService;
 use App\Http\Resources\Api\UserResource;
+use App\Models\User ;
 class LoginController extends Controller
 {
 
@@ -19,18 +20,15 @@ class LoginController extends Controller
     {
         $this->userService = $userService;
     }
-    public function notAuthorized()
-    {
-        return $this->errorResponse('NOTAUTHORIZED', 401 , app()->getLocale());
 
-    }
 
     public function login(LoginRequest $request)
     {
         try {
-            $user = $this->userService->login($request->getData());
+            $user= $this->userService->login($request->getData());
+
             $request->session()->regenerate();
-            return $this->successResponse('LOGGED_IN_SUCCESSFULLY',new UserResource($user) , 202, app()->getLocale());
+            return $this->successResponse('LOGGED_IN_SUCCESSFULLY',new UserResource($user['user']) , 202, app()->getLocale());
         } catch (\Exception $e) {
             return $this->errorResponse('ERROR_OCCURRED', ['error' => $e->getMessage()], 500, app()->getLocale());
         }

@@ -67,10 +67,10 @@ class LoginRequest extends FormRequest
     {
         $credentials = $this->validated();
         // Attempt authentication
+
         if (!Auth::attempt($credentials)) {
             throw new Exception('Invalid login details', 401); //
         }
-
         $user = Auth::user();
 
         // Check if password matches

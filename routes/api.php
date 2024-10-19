@@ -14,9 +14,9 @@ use App\Http\Middleware\SetLocale ;
     Route::group(['middleware' => SetLocale::class], function () {
 
                 Route::prefix('auth')->group(function ()
-            {  //getTranslatedPagesAuthentication
+            {
                 Route::get('/translate', [UserController::class, 'getTranslatedPagesAuthentication']);
-//                Route::get('/notAuthorized', [LoginController::class, 'notAuthorized'])->name('login');
+                Route::get('/login', [LoginController::class, 'notAuthorized'])->name('login');
                 Route::post('/register', [RegisterController::class, 'register']);
                 Route::post('/login', [LoginController::class, 'login']);
                 Route::get('/users', [UserController::class, 'getAllUsers']);
@@ -39,7 +39,9 @@ use App\Http\Middleware\SetLocale ;
                 Route::post('verifyToken', [ForgotPasswordController::class, 'verifyToken']);
 
             });
-            Route::group(['middleware' =>  'auth','session'], function () {
+
+            Route::prefix('friends-request')->group(function ()
+            {
                 Route::put('update-device-token', [FriendRequestController::class, 'updateDeviceToken']);
                 Route::post('send-fcm-notification', [FriendRequestController::class, 'sendFcmNotification']);
 
