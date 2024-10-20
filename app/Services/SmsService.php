@@ -7,18 +7,16 @@ use Twilio\Rest\Client;
 class SmsService
 {
     protected $client;
-    protected $twilioNumber;
     protected $verifyServiceSid; // Add this line for your Verify Service SID
 
     public function __construct()
     {
-        $this->client = new Client(env('TWILIO_SID'), env('TWILIO_AUTH_TOKEN'));
-        $this->twilioNumber = env('TWILIO_PHONE_NUMBER');
-        $this->verifyServiceSid = env('TWILIO_VERIFY_SERVICE_SID'); // Initialize your Verify Service SID
+        $this->client = new Client(config('services.twilio.sid'), config('services.twilio.token'));
     }
 
     public function sendSms($to, $message)
     {
+
         try {
             $this->client->messages->create(
                 $to, // Recipient's phone number
@@ -43,6 +41,7 @@ class SmsService
 
     public function sendVerificationCode($to)
     {
+
         try {
             // Create a message with the verification code
 //            $message = "Your verification code is: $code";

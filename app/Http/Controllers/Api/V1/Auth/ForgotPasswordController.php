@@ -18,10 +18,10 @@ use Twilio\Rest\Client;
  class ForgotPasswordController extends Controller
 {
     use ResponseTrait ;
-    protected $client;
-    protected $verifyServiceSid; // Add this line for your Verify Service SID
+    protected $client ;
+    protected $verifyServiceSid ; // Add this line for your Verify Service SID
 
-    protected $smsService;
+    protected $smsService ;
 
     protected $maxAttempts = 5;
 
@@ -30,29 +30,15 @@ use Twilio\Rest\Client;
 
     public function __construct(SmsService $smsService ,UserService $userService)
     {
-        $this->client = new Client(env('TWILIO_SID'), env('TWILIO_AUTH_TOKEN'));
-        $this->verifyServiceSid = env('TWILIO_VERIFY_SERVICE_SID'); // Initialize your Verify Service SID
+        $this->client = new Client(config('services.twilio.sid'), config('services.twilio.token'));
         $this->smsService = $smsService;
         $this->userService = $userService;
 
     }
 
 
-
-
      public function sendResetLink(ForgotPasswordRequest $request)
     {
-
-
-        $sid = config('services.twilio.sid');
-        $token = config('services.twilio.token');
-
-        // Check if the credentials are loaded properly
-        if (!$sid || !$token) {
-            throw new \Twilio\Exceptions\ConfigurationException('Twilio credentials not configured properly.');
-        }
-
-
         $identifier = $this->getIdentifier($request);
         if (!Cache::has($identifier . '_attempts')) {
             Cache::put($identifier . '_attempts', 0);
