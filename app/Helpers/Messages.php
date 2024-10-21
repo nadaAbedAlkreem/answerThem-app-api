@@ -121,7 +121,7 @@ class Messages
         'USER_NOT_FOUND' => 'User not found ' ,
         'TOKEN_VALID' => 'Token valid' ,
         'NOTAUTHORIZED'=> 'You are not authorized. You must log in first.' ,
-
+        'TOKEN_EXPIRED'=> 'The code has expired. Try again later.'  ,
         'PURCHASES_ORDER_ITEMS_NOT_FOUND' =>  ' Purchase data cannot be found for this order.' ,
         'PURCHASES_ORDER_ITEMS_RETRIEVED' => 'Order purchases have been returned' ,
         'PAYMENTS_ORDER_RETRIEVED' => 'Order Payments have been returned' ,
@@ -137,6 +137,7 @@ class Messages
         'DELETE_ITEM_SUCCESSFULLY' => 'Deleted successfully' ,
         'DATA_RETRIEVED_SUCCESSFULLY' => 'Delivered data successfully',
         'DATA_RETRIEVED_FAILD' => 'Delivered data failed',
+        'UNAUTHENTICATED'=> 'Unauthenticated' ,
 
         'CREATE_ITEM_FAILD' => 'Created Failed' ,
         'DELETE_ITEM_FAILD' => 'Deleted Failed' ,
@@ -211,7 +212,7 @@ class Messages
         'PAYMENTS_ORDER_NOT_FOUND' => ' لا يمكن العثور على بيانات الدفعات   في هذه الطلبية'  ,
         'ERROR_FCM_TOKEN'=> 'لا يمتلك المستخدم رمز جهاز' ,
         'NO_DATA' => ' لا يوجد بيانات ' ,
-
+        'TOKEN_EXPIRED'=> 'انتهت صلاحية الكود. حاول مرة أخرى لاحقًا.' ,
         'FORGET_PASSWORD_SUCCESS' => 'تم إرسال رمز إعادة تعيين كلمة المرور بنجاح',
         'FORGET_PASSWORD_FAILED' => 'فشل في إرسال رمز إعادة تعيين كلمة المرور!',
         'PASSWORD_RESET_CODE_CORRECT' => 'رمز إعادة تعيين كلمة المرور صحيح، قم بتعيين كلمة مرور جديدة',
@@ -224,7 +225,7 @@ class Messages
         'RESET_PASSWORD_SUCCESS' => 'تم إعادة تعيين كلمة المرور بنجاح',
         'RESET_PASSWORD_FAILED' => 'فشل في إعادة تعيين كلمة المرور!',
         'CART_SUCCESS' => 'تمت الإضافة إلى السلة بنجاح',
-
+        'UNAUTHENTICATED'=> 'غير مصادق عليه ' ,
         'CONTACT_US_REQUEST_SUCCESS' => 'تم إرسال طلب الاتصال بنجاح، شكرًا لك',
         'CONTACT_US_REQUEST_FAILED' => 'فشل في إرسال طلب الاتصال، حاول مرة أخرى',
 

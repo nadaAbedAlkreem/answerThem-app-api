@@ -5,11 +5,16 @@ namespace App\Http\Controllers\Api\V1\Friends;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreFriendRequestRequest;
 use App\Http\Requests\UpdateFriendRequestRequest;
+use App\Http\Resources\Api\UserResource;
+use App\Http\Resources\Api\UserWithFriendRequestsResource;
 use App\Models\FriendRequest;
+use App\Repositories\Eloquent\FriendsRequestRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Storage;
 use Google\Client as Google_Client; // Correct class name
 use App\Traits\ResponseTrait;
+use App\Services\FriendRequestService ;
 
 use App\Repositories\Eloquent\NotificationRepository;
 
@@ -19,12 +24,18 @@ class FriendRequestController extends Controller
     use ResponseTrait ;
 
 
-    protected $notificationRepo;
+    protected $notificationRepo  , $friendRequestService   , $friendRequestsRepository;
 
-    public function __construct(NotificationRepository $notificationRepo)
+    public function __construct(NotificationRepository $notificationRepo ,  FriendsRequestRepository $friendRequestsRepository , FriendRequestService $friendRequestService)
     {
         $this->notificationRepo = $notificationRepo;
+        $this->friendRequestService = $friendRequestService;
+        $this->friendRequestsRepository= $friendRequestsRepository ;
+
+
     }
+
+
     public function index()
     {
         //
@@ -114,4 +125,27 @@ class FriendRequestController extends Controller
 
         }
     }
+
+
+
+
+    public function acceptRequest(Request $request, $id)
+    {
+        $this->friendRequestService->acceptFriendRequest($id);
+
+        return response()->json(['status' => 'success', 'message' => 'Friend request accepted and friend added.']);
+    }
+
+
+    public function getFriendRequestsForCurrentUser()
+    {
+        try{
+        $friendRequest = $this->friendRequestsRepository->getFriendRequestsForCurrentUser();
+
+        return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY', UserResource::collection($friendRequest), 200, App::getLocale());
+       } catch (\Exception $e) {
+            return $this->errorResponse($e->getMessage(), [] ,  $e->getCode()  , app()->getLocale());
+       }
+
+}
 }

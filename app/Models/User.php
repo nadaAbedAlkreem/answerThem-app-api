@@ -8,6 +8,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable
 {
@@ -57,4 +59,35 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+
+    public function friends()
+    {
+        return $this->belongsToMany(User::class, 'friends', 'user_id', 'friend_id')
+            ->withTimestamps()->whereNull('users.deleted_at');
+    }
+
+
+    public function sentFriendRequests()
+    {
+        return $this->hasMany(FriendRequest::class, 'sender_id');
+    }
+    public function receivedFriendRequests()
+    {
+        return $this->hasMany(FriendRequest::class, 'receiver_id');
+    }
+
+    public function sentNotifications()
+    {
+        return $this->hasMany(Notification::class, 'sender_id');
+    }
+
+    // Relationship to notifications received by the user
+    public function receivedNotifications()
+    {
+        return $this->hasMany(Notification::class, 'receiver_id');
+    }
+
+
+
 }

@@ -2,22 +2,27 @@
 
 namespace App\Http\Resources\Api;
 
- use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
 
- class UserResource extends JsonResource
+class UserWithTokenAccessResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
+     * @return array<string, mixed>
      */
+    public function __construct($userData)
+    {
+        parent::__construct($userData['user']);
+        return $this->access_token = $userData['access_token'] ?? null;
 
-
+    }
     public function toArray($request): array
     {
         return [
             'id' => $this->id ,
+            'access_token'=>$this->access_token ,
             'image' => $this->image,
             'name' => $this->name,
             'full_name' => $this->full_name,

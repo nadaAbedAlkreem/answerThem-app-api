@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\V1\NotificationController;
+use App\Http\Controllers\Api\V1\SettingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\Auth\RegisterController;
@@ -8,6 +10,7 @@ use App\Http\Controllers\Api\V1\Auth\LoginController;
 use App\Http\Controllers\Api\V1\Auth\SocialAuthController;
 use App\Http\Controllers\Api\V1\Auth\ForgotPasswordController;
 use App\Http\Controllers\Api\V1\Friends\FriendRequestController;
+use App\Http\Controllers\Api\V1\Friends\FriendController;
 use App\Http\Middleware\SetLocale ;
 
 
@@ -42,9 +45,29 @@ use App\Http\Middleware\SetLocale ;
 
             Route::prefix('friends-request')->group(function ()
             {
+                Route::get('users', [FriendController::class, 'getUsersForFriendsRequest']);
+                Route::get('current-user', [FriendRequestController::class, 'getFriendRequestsForCurrentUser']);
                 Route::put('update-device-token', [FriendRequestController::class, 'updateDeviceToken']);
                 Route::post('send-fcm-notification', [FriendRequestController::class, 'sendFcmNotification']);
 
+
+            });
+
+            Route::prefix('friends')->group(function ()
+            {
+                Route::get('current-user', [FriendController::class, 'getFriendsForCurrentUser']);
+
+            });
+            Route::prefix('notifications')->group(function ()
+            {
+              Route::get('current-user', [NotificationController::class, 'getNotificationForCurrentUser']);
+            });
+
+            Route::prefix('setting')->group(function ()
+            {
+                Route::get('', [SettingController::class, 'index']);
+                Route::get('{id}', [SettingController::class, 'show']);
+                Route::get('update/{id}', [SettingController::class, 'update']);
 
             });
 

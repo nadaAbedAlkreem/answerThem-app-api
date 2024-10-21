@@ -5,10 +5,19 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreNotificationRequest;
 use App\Http\Requests\UpdateNotificationRequest;
+use App\Http\Resources\Api\NotificationResource;
 use App\Models\Notification;
+use App\Repositories\INotificationRepositories  ;
+use App\Traits\ResponseTrait;
 
 class NotificationController extends Controller
 {
+    use ResponseTrait;
+    protected $notificationRepo;
+    public function __construct(INotificationRepositories  $NotificationRepo )
+    {
+       $this->notificationRepo = $NotificationRepo;
+    }
     /**
      * Display a listing of the resource.
      */
@@ -64,4 +73,16 @@ class NotificationController extends Controller
     {
         //
     }
+    public  function  getNotificationForCurrentUser()
+    {
+        try {
+            $notificationsForCurrentUser = $this->notificationRepo->getNotificationForCurrentUser();
+             return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY', NotificationResource::collection($notificationsForCurrentUser), 200, \Illuminate\Support\Facades\App::getLocale());
+        } catch (\Exception $e) {
+            return $this->errorResponse($e->getMessage(), [] ,  $e->getCode()  , app()->getLocale());
+        }
+
+    }
+
+
 }

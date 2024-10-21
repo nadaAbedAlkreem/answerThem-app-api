@@ -2,10 +2,13 @@
 
 namespace App\Repositories\Eloquent;
 
+use App\Http\Resources\Api\NotificationResource;
+use App\Models\FriendRequest;
 use App\Models\Notification;
 use App\Repositories\INotificationRepositories;
 use Google_Client;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 class NotificationRepository extends BaseRepository implements INotificationRepositories
 {
@@ -13,6 +16,7 @@ class NotificationRepository extends BaseRepository implements INotificationRepo
     public function __construct()
     {
         $this->model = new Notification();
+
     }
     public function sendFcmNotification($userId, $title, $body)
     {
@@ -88,6 +92,18 @@ class NotificationRepository extends BaseRepository implements INotificationRepo
         }
     }
 
+    public function getNotificationForCurrentUser()
+    {
+        $currentUserId = Auth::id();
+        if (!$currentUserId) {
+            throw new \Exception('UNAUTHORISED', 401);
+        }
+        $notificationsForCurrentUser = Notification::with('sender')->where('receiver_id', auth()->id())->get();
+
+
+        return NotificationResource::collection($notificationsForCurrentUser);
+
+    }
 
 
 

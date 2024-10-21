@@ -2,10 +2,14 @@
 
 namespace App\Providers;
 
+use App\Repositories\Eloquent\FriendsRepository;
+use App\Repositories\Eloquent\NotificationRepository;
+use App\Repositories\INotificationRepositories;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\ServiceProvider;
 use App\Repositories\Eloquent\UserRepository;
 use App\Repositories\IUserRepository;
+use App\Repositories\IFriendsRepositories;
 class RepositoryServiceProvider extends ServiceProvider
 {
     /**
@@ -21,6 +25,8 @@ class RepositoryServiceProvider extends ServiceProvider
         //         "App\Repositories\Eloquent\\{$model}Repository");
         // }
         $this->app->bind(IUserRepository::class, UserRepository::class);
+        $this->app->bind(IFriendsRepositories::class, FriendsRepository::class);
+        $this->app->bind(INotificationRepositories::class, NotificationRepository::class);
 
     }
 

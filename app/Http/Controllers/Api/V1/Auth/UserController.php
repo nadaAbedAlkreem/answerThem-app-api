@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Api\UserResource;
+use App\Http\Resources\Api\UserWithFriendsResource;
 use App\Repositories\IUserRepository;
 use App\Http\Requests\Auth\SearchUsersRequest;
 use Illuminate\Support\Facades\App; // Make sure to import the App facade
@@ -26,9 +27,12 @@ class UserController extends Controller
     {
         $users = $this->userRepository->getAll();
         return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY',UserResource::collection($users), 200, App::getLocale());
-
     }
-
+    public function getAllUsersWithFriends()
+    {
+        $users = $this->userRepository->getWith(['friends']);
+        return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY',UserWithFriendsResource::collection($users), 200, App::getLocale());
+    }
 
     public function getTranslatedPagesAuthentication()
     {

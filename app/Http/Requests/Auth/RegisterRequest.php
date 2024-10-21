@@ -49,13 +49,7 @@ class RegisterRequest extends FormRequest
                 'required',
                 'string',
                 'confirmed',
-                Password::min(8) // Adjust the length as needed
-                ->letters()
-                    ->mixedCase()
-                    ->numbers()
-                    ->symbols()
-                    ->uncompromised()
-            ]
+                Password::min(8)]
         ];
     }
 
@@ -95,11 +89,7 @@ class RegisterRequest extends FormRequest
             'password.string' => __('messages.password.string'),
             'password.min' => __('messages.password.min', ['min' => 8]),
             'password.confirmed' => __('messages.password.confirmed'),
-            'password.letters' => __('messages.password.letters'),
-            'password.mixedCase' => __('messages.password.mixed_case'),
-            'password.numbers' => __('messages.password.numbers'),
-            'password.symbols' => __('messages.password.symbols'),
-            'password.uncompromised' => __('messages.password.uncompromised'),
+
         ];
     }
 

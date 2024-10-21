@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('full_name');
             $table->string('email')->unique();
             $table->string('phone')->unique()->nullable();
-            $table->string('image')->nullable()->index();
+            $table->string('image')->index();
             $table->string('country')->nullable();
             $table->enum('lang', ['en', 'ar'])->default('ar');
             $table->timestamp('email_verified_at')->nullable();
