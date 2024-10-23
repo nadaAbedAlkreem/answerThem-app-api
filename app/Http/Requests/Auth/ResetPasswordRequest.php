@@ -34,11 +34,25 @@ class ResetPasswordRequest extends FormRequest
 
     protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
     {
+        $errors = $validator->errors()->all();
+
+        // Format the errors as required
+        $formattedErrors = array_map(function ($error) {
+            return ['error' => $error];
+        }, $errors);
+
+        // Create a response with the desired format
+        throw new \Illuminate\Validation\ValidationException($validator, response()->json([
+            'success' => false,
+            'message' => 'ERROR OCCURRED',
+            'data' => $formattedErrors,
+            'status' => 'Internal Server Error'
+        ], 500));
     }
     public function messages()
     {
         return [
-        
+
             'email.required' => __('messages.email.required'),
             'email.string' => __('messages.email.string'),
             'email.email' => __('messages.email.email'),
@@ -51,17 +65,17 @@ class ResetPasswordRequest extends FormRequest
             'token.required' => __('messages.token.required'),
             'token.digits' => __('messages.token.digits'),
 
-            
+
             'password.required' => __('messages.password.required'),
             'password.string' => __('messages.password.string'),
             'password.min' => __('messages.password.min'),
             'password.confirmed' => __('messages.password.confirmed'),
 
-  
- 
+
+
         ];
     }
-    
+
 
     public  function getDataWithImage()
     {

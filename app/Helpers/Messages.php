@@ -83,7 +83,6 @@ class Messages
         'DELETE_FAILED' => 'Delete failed, please try again',
         'REQUEST_SUCCESS' => 'Successfully',
         'UPDATE_SUCCESS' => 'Updated successfully',
-        'UPDATE_FAILED' => 'Delete failed, please try again',
         'favorite' => 'Added to your favorite list',
         'favorite_delete' => 'Removed from your favorite list',
         'PASSWORD_changed' => 'PASSWORD_changed',

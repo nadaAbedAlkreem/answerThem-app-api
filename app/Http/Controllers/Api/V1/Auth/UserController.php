@@ -10,6 +10,8 @@ use App\Http\Requests\Auth\SearchUsersRequest;
 use Illuminate\Support\Facades\App; // Make sure to import the App facade
 use App\Traits\ResponseTrait;
 use App\Services\UserService;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -28,18 +30,18 @@ class UserController extends Controller
         $users = $this->userRepository->getAll();
         return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY',UserResource::collection($users), 200, App::getLocale());
     }
-    public function getAllUsersWithFriends()
-    {
-        $users = $this->userRepository->getWith(['friends']);
-        return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY',UserWithFriendsResource::collection($users), 200, App::getLocale());
-    }
+//    public function getAllUsersWithFriends()
+//    {
+//        $users = $this->userRepository->getWith(['friends']);
+//        return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY',UserWithFriendsResource::collection($users), 200, App::getLocale());
+//    }
 
     public function getTranslatedPagesAuthentication()
     {
         $translatedPage = $this->userService->getTranslatedPagesAuthentication();
-        return $this->successResponse(
+         return $this->successResponse(
             $translatedPage['status'],
-            $translatedPage['data'],
+             $translatedPage['data'],
             200,
             app()->getLocale()
         );
@@ -52,8 +54,12 @@ class UserController extends Controller
             : $this->errorResponse('NO_DATA', [], 200, App::getLocale());
     }
 
-    public function getUserById($id)
+    public function getCurrentUser()
     {
+        $currentUser = Auth::user();
+         return (!empty($currentUser))
+            ? $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY',[new UserResource($currentUser)], 200, App::getLocale())
+            : $this->errorResponse('NOTAUTHORIZED', [], 403, App::getLocale());
 
     }
 

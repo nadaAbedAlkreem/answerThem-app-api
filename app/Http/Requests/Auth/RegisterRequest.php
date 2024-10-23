@@ -55,6 +55,17 @@ class RegisterRequest extends FormRequest
 
     protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
     {
+        $errors = $validator->errors()->all();
+        $formattedErrors = array_map(function ($error) {
+            return ['error' => $error];
+        }, $errors);
+
+        throw new \Illuminate\Validation\ValidationException($validator, response()->json([
+            'success' => false,
+            'message' => 'ERROR OCCURRED',
+            'data' => $formattedErrors,
+            'status' => 'Internal Server Error'
+        ], 500));
     }
     public function messages()
     {
@@ -96,15 +107,24 @@ class RegisterRequest extends FormRequest
     public  function getDataWithImage()
     {
         $data=$this->validated();
-        if ($this->hasFile('image'))
-        {
+        if ($this->hasFile('image')) {
+            $userName = (!empty($data['full_name']))
+                ? $data['full_name'] . time() + rand(1, 10000000)
+                : time() + rand(1, 10000000);
 
-            $userName = (!empty($data['full_name']))?  $data['full_name'].time()+rand(1,10000000) :  time()+rand(1,10000000)  ;
             $path = 'uploads/images/users/';
-            $nameImage = $userName.'.'. $this->file('image')->getClientOriginalExtension();
-            Storage::disk('public')->put($path.$nameImage, file_get_contents( $this->file('image') ));
-            $data['image'] = $path.$nameImage ;
-         }
+            $nameImage = $userName . '.' . $this->file('image')->getClientOriginalExtension();
+             Storage::disk('public')->put($path . $nameImage, file_get_contents($this->file('image')));
+
+             $absolutePath = storage_path('app/public/' . $path . $nameImage);
+
+             if (file_exists($absolutePath)) {
+                chmod($absolutePath, 0775);
+            } else {
+                 throw new \Exception('File not found: ' . $absolutePath);
+            }
+            $data['image'] = Storage::url($path . $nameImage);
+        }
         if (!empty($data['password'])) {
             $data['password'] = Hash::make($data['password']);
         }

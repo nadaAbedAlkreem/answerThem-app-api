@@ -28,22 +28,25 @@ class SettingController extends Controller
 
     public function index(Request $request)
     {
-        $settings = Setting::all(); // Get all settings
+
+        $settings = Setting::where('lang', App::getLocale())->get();
         return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY', SettingResource::collection($settings) , 200,  App::getLocale());
 
     }
     public function show($id)
     {
         $setting = Setting::findOrFail($id);
-        return new SettingResource($setting);
+        return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY',[new SettingResource($setting) ], 200,  App::getLocale());
+
     }
 
-    public function update($id , UpdateSettingRequest $request)
+    public function update(Request $request , $id)
     {
-        dd($id.$request);
+
         try {
-             $setting = $this->settingService->updateSetting($id, $request);
-             return $this->successResponse('DAtA_UPDATED_SUCCESSFULLY', SettingResource::collection($setting) , 200,  App::getLocale());
+
+            $setting = $this->settingService->updateSetting($id, $request);
+             return $this->successResponse('UPDATE_SUCCESS', [new SettingResource($setting)] , 200,  App::getLocale());
 
         } catch (\Exception $e) {
             return $this->errorResponse($e->getMessage(), [] ,  404 , app()->getLocale());

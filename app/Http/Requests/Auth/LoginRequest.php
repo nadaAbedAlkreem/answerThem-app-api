@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -40,32 +41,41 @@ class LoginRequest extends FormRequest
 
     protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
     {
+        $errors = $validator->errors()->all();
+
+        // Format the errors as required
+        $formattedErrors = array_map(function ($error) {
+            return ['error' => $error];
+        }, $errors);
+
+        // Create a response with the desired format
+        throw new \Illuminate\Validation\ValidationException($validator, response()->json([
+            'success' => false,
+            'message' => 'ERROR OCCURRED',
+            'data' => $formattedErrors,
+            'status' => 'Internal Server Error'
+        ], 500));
+
     }
 
     public function messages()
     {
         return [
-
-
-            'email.required' => __('messages.email.required'),
-            'email.string' => __('messages.email.string'),
-            'email.email' => __('messages.email.email'),
-            'email.max' => __('messages.email.max'),
-
-            'password.required' => __('messages.password.required'),
-            'password.string' => __('messages.password.string'),
-            'password.min' => __('messages.password.min'),
-            'password.confirmed' => __('messages.password.confirmed'),
+            'email' => 'required|string|email|max:255',
+            'password' => [
+                'required',
+                'string',
+                'min:8', // Ensure minimum password length
+            ]
         ];
     }
 
     public  function getData()
     {
-        $credentials = $this->validated();
-        // Attempt authentication
+        $credentials = $this->only('email', 'password');
 
         if (!Auth::attempt($credentials)) {
-            throw new Exception('Invalid login details', 401); //
+             throw new Exception('Invalid login details', 401); //
         }
         $user = Auth::user();
 

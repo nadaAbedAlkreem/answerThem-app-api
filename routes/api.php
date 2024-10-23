@@ -15,7 +15,6 @@ use App\Http\Middleware\SetLocale ;
 
 
     Route::group(['middleware' => SetLocale::class], function () {
-
                 Route::prefix('auth')->group(function ()
             {
                 Route::get('/translate', [UserController::class, 'getTranslatedPagesAuthentication']);
@@ -24,6 +23,8 @@ use App\Http\Middleware\SetLocale ;
                 Route::post('/login', [LoginController::class, 'login']);
                 Route::get('/users', [UserController::class, 'getAllUsers']);
                 Route::get('/users/search', [UserController::class, 'getSearchUsers']);
+                Route::get('/user', [UserController::class, 'getCurrentUser']);
+
                 Route::middleware(['web'])->group(function () {
                     Route::get('google', [SocialAuthController::class, 'redirectToGoogle']);
                     Route::get('google/callback', [SocialAuthController::class, 'handleGoogleCallback']);
@@ -66,8 +67,8 @@ use App\Http\Middleware\SetLocale ;
             Route::prefix('setting')->group(function ()
             {
                 Route::get('', [SettingController::class, 'index']);
-                Route::get('{id}', [SettingController::class, 'show']);
-                Route::get('update/{id}', [SettingController::class, 'update']);
+                Route::get('{id}', [SettingController::class, 'show'])->name('setting.show');
+                Route::post('update/{id}', [SettingController::class, 'update'])->name('setting.update');
 
             });
 
