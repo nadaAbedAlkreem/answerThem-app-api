@@ -18,25 +18,26 @@ use App\Http\Middleware\SetLocale ;
                 Route::prefix('auth')->group(function ()
             {
                 Route::get('/translate', [UserController::class, 'getTranslatedPagesAuthentication']);
-                Route::get('/login', [LoginController::class, 'notAuthorized'])->name('login');
-                Route::post('/register', [RegisterController::class, 'register']);
-                Route::post('/login', [LoginController::class, 'login']);
+//                Route::get('/login', [LoginController::class, 'notAuthorized'])->name('login');
+
                 Route::get('/users', [UserController::class, 'getAllUsers']);
                 Route::get('/users/search', [UserController::class, 'getSearchUsers']);
                 Route::get('/user', [UserController::class, 'getCurrentUser']);
-
-                Route::middleware(['web'])->group(function () {
-                    Route::get('google', [SocialAuthController::class, 'redirectToGoogle']);
-                    Route::get('google/callback', [SocialAuthController::class, 'handleGoogleCallback']);
-
-                    Route::get('twitter', [SocialAuthController::class, 'redirectToTwitter']);
-                    Route::get('twitter/callback', [SocialAuthController::class, 'handleTwitterCallback']);
-
-                    Route::get('instagram', [SocialAuthController::class, 'redirectToInstagram']);
-                    Route::get('instagram/callback', [SocialAuthController::class, 'handleInstagramCallback']);
-                    Route::post('instagram/deauthorize', [SocialAuthController::class, 'handleInstagramDeauthorization']);
-
-                });
+                Route::post('/register', [RegisterController::class, 'register']);
+                Route::post('/login', [LoginController::class, 'login']);
+//                Route::middleware(['web'])->group(function () {
+//                    Route::get('google', [SocialAuthController::class, 'redirectToGoogle']);
+//                    Route::get('google/callback', [SocialAuthController::class, 'handleGoogleCallback']);
+//
+//                    Route::get('twitter', [SocialAuthController::class, 'redirectToTwitter']);
+//                    Route::get('twitter/callback', [SocialAuthController::class, 'handleTwitterCallback']);
+//
+//                    Route::get('instagram', [SocialAuthController::class, 'redirectToInstagram']);
+//                    Route::get('instagram/callback', [SocialAuthController::class, 'handleInstagramCallback']);
+//                    Route::post('instagram/deauthorize', [SocialAuthController::class, 'handleInstagramDeauthorization']);
+//
+//                });
+                Route::post('social/mobile', [SocialAuthController::class, 'handleSocialLogin']);
 
                 Route::post('forgot-password', [ForgotPasswordController::class, 'sendResetLink']);
                 Route::post('reset-password', [ForgotPasswordController::class, 'resetPassword']);
