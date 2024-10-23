@@ -41,7 +41,7 @@ class LoginRequest extends FormRequest
 
     protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
     {
-        $errors = $validator->errors()->all();
+         $errors = $validator->errors()->all();
 
         // Format the errors as required
         $formattedErrors = array_map(function ($error) {
@@ -76,7 +76,7 @@ class LoginRequest extends FormRequest
 
         if (!Auth::attempt($credentials)) {
              throw new Exception('Invalid login details', 401); //
-        }
+         }
         $user = Auth::user();
 
         // Check if password matches

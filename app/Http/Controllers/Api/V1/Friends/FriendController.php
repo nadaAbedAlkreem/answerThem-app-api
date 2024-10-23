@@ -37,7 +37,7 @@ class FriendController extends Controller
         }
         $user = Auth::user();
         $userWithFriends = $this->userRepository->findWith($user->id ,  ['friends']);
-        return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY',new UserWithFriendsResource($userWithFriends) , 202, app()->getLocale());
+        return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY',[new UserWithFriendsResource($userWithFriends)] , 202, app()->getLocale());
 
     }
 

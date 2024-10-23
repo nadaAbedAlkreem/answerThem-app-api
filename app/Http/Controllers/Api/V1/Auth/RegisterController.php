@@ -26,7 +26,7 @@ class RegisterController extends Controller
     {
         try {
              $user = $this->userService->register($request->getDataWithImage());
-             return $this->successResponse('CREATE_USER_SUCCESSFULLY',  new UserResource($user), 201, app()->getLocale());
+             return $this->successResponse('CREATE_USER_SUCCESSFULLY',  [new UserResource($user)], 201, app()->getLocale());
         } catch (\Exception $e) {
             if ($e->getCode() === '23000') {
                 return $this->errorResponse('ERROR_OCCURRED'  ,['error' =>  __('messages.phone.unique')],    400 ,app()->getLocale() );

@@ -28,7 +28,7 @@ class UserController extends Controller
     public function getAllUsers()
     {
         $users = $this->userRepository->getAll();
-        return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY',UserResource::collection($users), 200, App::getLocale());
+        return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY',[UserResource::collection($users)], 200, App::getLocale());
     }
 //    public function getAllUsersWithFriends()
 //    {
@@ -50,7 +50,7 @@ class UserController extends Controller
     {
         $searchResult = $this->userRepository->getWhereSerach([[$request->query('search_type'), 'like', "%{$request->query('search_value')}%"]]);
          return ($searchResult)
-            ? $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY',new UserResource($searchResult), 200, App::getLocale())
+            ? $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY',[new UserResource($searchResult)], 200, App::getLocale())
             : $this->errorResponse('NO_DATA', [], 200, App::getLocale());
     }
 

@@ -13,12 +13,13 @@ return new class extends Migration
     {
         Schema::create('notifications', function (Blueprint $table) {
             $table->id(); // Primary key auto-increment
-            $table->foreignId('user_id') // Foreign key to users table
-            ->constrained()
-                ->onDelete('cascade'); // Cascade delete
-
-            $table->string('type'); // Notification type (e.g., 'friend_request', 'message')
+            $table->unsignedBigInteger('sender_id')->nullable();
+            $table->unsignedBigInteger('receiver_id')->nullable();
+            $table->enum('type', ['friend_request', 'invitations_request', 'other'])->default('friend_request');
             $table->json('data'); // Additional data for the notification (JSON format)
+            // You may also want to add foreign key constraints
+            $table->foreign('sender_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('receiver_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamp('read_at')->nullable(); // Nullable read timestamp
             $table->timestamps(); // Created at and updated at timestamps
             $table->softDeletes(); // Soft delete for notifications
