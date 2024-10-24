@@ -7,7 +7,7 @@ use App\Models\User;
 use App\Repositories\IFriendRequestRepositories;
 use Illuminate\Support\Facades\Auth;
 
-class FriendsRequestRepository extends BaseRepository implements   IFriendRequestRepositories
+class FriendRequestRepository extends BaseRepository implements   IFriendRequestRepositories
 {
     protected $table = "FriendRequest"  ;
 

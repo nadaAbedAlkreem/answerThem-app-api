@@ -10,6 +10,8 @@ class SettingsTableSeeder extends Seeder
 
     public function run()
     {
+        DB::table('settings')->delete();
+
         DB::table('settings')->insert([
             // Arabic app name
             [
@@ -107,7 +109,7 @@ class SettingsTableSeeder extends Seeder
                     ]
                     ,
                     [
-                        'UAE' => 'Saudi Arabia',
+                        'name' => 'Saudi Arabia',
                         'flag' => 'SA',
                         'code' => '+966',
                     ]
@@ -134,88 +136,145 @@ class SettingsTableSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+//            [
+//                'key' => 'app_country_en',
+//                'value' => json_encode([
+//                    'title' => 'United States', // English country title
+//                    'image' => 'path/to/flag.png', // Replace with actual image path
+//                ]),
+//                'description' => 'Country information',
+//                'base_term' => 'app_country',
+//                'lang' => 'en', // You can choose a default language here
+//                'type' => 'json',
+//                'created_at' => now(),
+//                'updated_at' => now(),
+//            ],
+//
+//
+//
+//            [
+//                'key' => 'app_privacy_policy_ar',
+//                'value' => json_encode([
+//                        [
+//                        'title' => 'سياسة الخصوصية',
+//                        'body' => 'هذه هي سياسة الخصوصية للتطبيق.',
+//                        ]
+//                         ,
+//                        [
+//                            'title' => 'سياسة الخصوصية',
+//                            'body' => 'هذه هي سياسة الخصوصية للتطبيق.',
+//                        ]
+//                        ,
+//                        [
+//                          'title' => 'سياسة الخصوصية',
+//                          'body' => 'هذه هي سياسة الخصوصية للتطبيق.',
+//                        ]
+//                         ,
+//                        [
+//                          'title' => 'سياسة الخصوصية',
+//                          'body' => 'هذه هي سياسة الخصوصية للتطبيق.',
+//                        ]
+//
+//
+//
+//
+//
+//                  ]),
+//                'description' => 'Privacy policy',
+//                'base_term' => 'app_privacy_policy',
+//                'lang' => 'ar', // You can choose a default language here
+//                'type' => 'json',
+//                'created_at' => now(),
+//                'updated_at' => now(),
+//            ],
+//
+//
+//            [
+//                'key' => 'app_privacy_policy_en',
+//                'value' => json_encode([
+//                       [
+//                           'title' =>  'Privacy Policy',
+//                           'body' => 'This is the privacy policy of the application.',
+//                       ],
+//                       [
+//                           'title' =>  'Privacy Policy',
+//                           'body' => 'This is the privacy policy of the application.',
+//                       ],
+//                       [
+//                           'title' =>  'Privacy Policy',
+//                           'body' => 'This is the privacy policy of the application.',
+//                       ],
+//                       [
+//                           'title' =>  'Privacy Policy',
+//                           'body' => 'This is the privacy policy of the application.',
+//                       ],
+//
+//                   ]),
+//                'description' => 'Privacy policy',
+//                'base_term' => 'app_privacy_policy',
+//                'lang' => 'en', // You can choose a default language here
+//                'type' => 'json',
+//                'created_at' => now(),
+//                'updated_at' => now(),
+//            ],
+            // Add similar entries for other settings...
+
             [
-                'key' => 'app_country_en',
-                'value' => json_encode([
-                    'title' => 'United States', // English country title
-                    'image' => 'path/to/flag.png', // Replace with actual image path
-                ]),
-                'description' => 'Country information',
-                'base_term' => 'app_country',
-                'lang' => 'en', // You can choose a default language here
-                'type' => 'json',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
+                'key' => 'contact_us',
+                'value' => json_encode(
+                   [  'gmail' => 'test@test.com',
+                       'facebook' => 'facebook',
+                       'Instagram' => 'Instagram',
+                       'WhatsApp' => '9999999',
+                       'Snapchat' => 'Snapchat',
+
+                   ]
 
 
 
-            [
-                'key' => 'app_privacy_policy_ar',
-                'value' => json_encode([
-                        [
-                        'title' => 'سياسة الخصوصية',
-                        'body' => 'هذه هي سياسة الخصوصية للتطبيق.',
-                        ]
-                         ,
-                        [
-                            'title' => 'سياسة الخصوصية',
-                            'body' => 'هذه هي سياسة الخصوصية للتطبيق.',
-                        ]
-                        ,
-                        [
-                          'title' => 'سياسة الخصوصية',
-                          'body' => 'هذه هي سياسة الخصوصية للتطبيق.',
-                        ]
-                         ,
-                        [
-                          'title' => 'سياسة الخصوصية',
-                          'body' => 'هذه هي سياسة الخصوصية للتطبيق.',
-                        ]
-
-
-
-
-
-                  ]),
-                'description' => 'Privacy policy',
-                'base_term' => 'app_privacy_policy',
+                ),
+                'description' => 'contact us information',
+                'base_term' => 'app_contact_us',
                 'lang' => 'ar', // You can choose a default language here
                 'type' => 'json',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
 
-
             [
-                'key' => 'app_privacy_policy_en',
-                'value' => json_encode([
-                       [
-                           'title' =>  'Privacy Policy',
-                           'body' => 'This is the privacy policy of the application.',
-                       ],
-                       [
-                           'title' =>  'Privacy Policy',
-                           'body' => 'This is the privacy policy of the application.',
-                       ],
-                       [
-                           'title' =>  'Privacy Policy',
-                           'body' => 'This is the privacy policy of the application.',
-                       ],
-                       [
-                           'title' =>  'Privacy Policy',
-                           'body' => 'This is the privacy policy of the application.',
-                       ],
+                'key' => 'frequently_asked_questions',
+                'value' => json_encode(
+                    [
+                        [
+                            'title' => 'كيف يمكنني استعادة كلمة المرور الخاصة بي؟',
+                            'body' => 'يمكنك استعادة كلمة المرور من خلال النقر على "نسيت كلمة المرور" في شاشة تسجيل الدخول.',
+                        ],
+                        [
+                            'title' => 'هل يمكنني استخدام التطبيق بدون اتصال بالإنترنت؟',
+                            'body' => 'بعض الميزات قد تتطلب اتصالاً بالإنترنت، ولكن يمكن استخدام ميزات أخرى في وضع عدم الاتصال.',
+                        ],
+                        [
+                            'title' => 'كيف أقوم بترقية حسابي إلى حساب مميز؟',
+                            'body' => 'يمكنك الترقية إلى حساب مميز من خلال إعدادات الحساب والدفع عن طريق الوسائل المتاحة.',
+                        ],
+                        [
+                            'title' => 'هل يدعم التطبيق عدة لغات؟',
+                            'body' => 'نعم، التطبيق يدعم العديد من اللغات ويمكن تغيير اللغة من إعدادات التطبيق.',
+                        ],
+                        [
+                            'title' => 'ما هي الأجهزة التي يمكنني استخدامها لتشغيل التطبيق؟',
+                            'body' => 'يمكن تشغيل التطبيق على الهواتف الذكية والأجهزة اللوحية التي تعمل بنظامي iOS وAndroid.',
+                        ]
+                    ]
 
-                   ]),
-                'description' => 'Privacy policy',
-                'base_term' => 'app_privacy_policy',
-                'lang' => 'en', // You can choose a default language here
+                ),
+                'description' => 'frequently asked questions ',
+                'base_term' => 'frequently_asked_questions',
+                'lang' => 'ar', // You can choose a default language here
                 'type' => 'json',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-            // Add similar entries for other settings...
         ]);
     }
 }

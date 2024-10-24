@@ -6,9 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreFriendRequestRequest;
 use App\Http\Requests\UpdateFriendRequestRequest;
 use App\Http\Resources\Api\UserResource;
-use App\Http\Resources\Api\UserWithFriendRequestsResource;
 use App\Models\FriendRequest;
-use App\Repositories\Eloquent\FriendsRequestRepository;
+use App\Models\Notification;
+use App\Models\User;
+use App\Repositories\Eloquent\FriendRequestRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Storage;
@@ -26,7 +27,7 @@ class FriendRequestController extends Controller
 
     protected $notificationRepo  , $friendRequestService   , $friendRequestsRepository;
 
-    public function __construct(NotificationRepository $notificationRepo ,  FriendsRequestRepository $friendRequestsRepository , FriendRequestService $friendRequestService)
+    public function __construct(NotificationRepository $notificationRepo ,  FriendRequestRepository $friendRequestsRepository , FriendRequestService $friendRequestService)
     {
         $this->notificationRepo = $notificationRepo;
         $this->friendRequestService = $friendRequestService;

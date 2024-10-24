@@ -2,7 +2,7 @@
 namespace App\Services;
 
 use App\Models\User;
-use App\Repositories\IUserRepository;
+use App\Repositories\IUserRepositories;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 
@@ -11,7 +11,7 @@ class UserService
 
     protected $userRepository;
 
-    public function __construct(IUserRepository $userRepository)
+    public function __construct(IUserRepositories $userRepository)
     {
         $this->userRepository = $userRepository; // Inject the repository
     }
@@ -19,7 +19,20 @@ class UserService
     public function register($data)
     {
         try {
-            return $this->userRepository->create($data);
+
+            $user = $this->userRepository->create($data);
+            Auth::login($user);
+
+
+            $token = $user->createToken('auth_token')->plainTextToken;
+
+            return [
+                'access_token' => $token,
+                'token_type' => 'Bearer',
+                'user' => $user,
+                'message' => 'Registration successful',
+                'status' => 201
+            ];
         } catch (\Exception $e) {
              throw new \Exception($e->getMessage());
         }

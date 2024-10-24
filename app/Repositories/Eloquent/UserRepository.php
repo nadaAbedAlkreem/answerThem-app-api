@@ -3,10 +3,12 @@
 namespace App\Repositories\Eloquent;
 
 use App\Models\User; // Import the User model
-use App\Repositories\BaseRepositoryInterface; // Import the interface for the User repository
-use App\Repositories\IUserRepository;
+use App\Repositories\BaseRepositoryInterface;
+use App\Repositories\IUserRepositories;
 
-class UserRepository extends BaseRepository implements IUserRepository
+// Import the interface for the User repository
+
+class UserRepository extends BaseRepository implements IUserRepositories
 {
     public function __construct(User $user)
     {

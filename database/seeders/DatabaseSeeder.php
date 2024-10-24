@@ -17,10 +17,10 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             SettingsTableSeeder::class,
-            UsersTableSeeder::class,
-            FriendRequestSeeder::class,
-            FriendSeeder::class,
-            NotificationSeeder::class,
+//            UsersTableSeeder::class,
+//            FriendRequestSeeder::class,
+//            FriendSeeder::class,
+//            NotificationSeeder::class,
         ]);
 
     }

@@ -10,8 +10,8 @@ use App\Http\Resources\Api\UserResource;
 use App\Http\Resources\Api\UserWithFriendsResource;
 use App\Models\Friend;
 use App\Models\User;
-use App\Repositories\IFriendsRepositories;
-use App\Repositories\IUserRepository;
+use App\Repositories\IFriendRepositories;
+use App\Repositories\IUserRepositories;
 use App\Services\UserService;
 use App\Traits\ResponseTrait;
 use Illuminate\Support\Facades\Auth;
@@ -21,10 +21,10 @@ class FriendController extends Controller
 {
 
     use ResponseTrait ;
-    protected $friendsRepository   , $userRepository ;
-    public function __construct(IFriendsRepositories $friendsRepository  , IUserRepository  $userRepository)
+    protected $friendRepository   , $userRepository ;
+    public function __construct(IFriendRepositories $friendRepository  , IUserRepositories  $userRepository)
     {
-        $this->friendsRepository = $friendsRepository; // Inject the repository
+        $this->friendRepository = $friendRepository; // Inject the repository
         $this->userRepository = $userRepository; // Inject the repository
     }
     /**
@@ -37,7 +37,7 @@ class FriendController extends Controller
         }
         $user = Auth::user();
         $userWithFriends = $this->userRepository->findWith($user->id ,  ['friends']);
-        return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY',[new UserWithFriendsResource($userWithFriends)] , 202, app()->getLocale());
+        return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY',new UserWithFriendsResource($userWithFriends) , 202, app()->getLocale());
 
     }
 
@@ -98,7 +98,7 @@ class FriendController extends Controller
     public  function  getUsersForFriendsRequest()
     {
         try {
-            $nonFriends = $this->friendsRepository->getNonFriends();
+            $nonFriends = $this->friendRepository->getNonFriends();
             return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY',UserResource::collection($nonFriends), 200, \Illuminate\Support\Facades\App::getLocale());
         } catch (\Exception $e) {
             return $this->errorResponse($e->getMessage(), [] ,  $e->getCode()  , app()->getLocale());

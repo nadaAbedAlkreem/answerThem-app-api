@@ -4,10 +4,10 @@ namespace App\Repositories\Eloquent;
 
 use App\Models\Friend;
 use App\Models\User;
-use App\Repositories\IFriendsRepositories;
+use App\Repositories\IFriendRepositories;
 use Illuminate\Support\Facades\Auth;
 
-class FriendsRepository extends BaseRepository implements   IFriendsRepositories
+class FriendRepository extends BaseRepository implements   IFriendRepositories
 {
     protected $table = "friends"  ;
 

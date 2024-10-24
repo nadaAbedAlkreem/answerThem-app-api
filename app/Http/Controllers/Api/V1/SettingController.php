@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\UpdateSettingRequest;
-use App\Http\Resources\Api\NotificationResource;
 use App\Http\Resources\Api\SettingResource;
 use App\Models\Setting;
 use App\Services\SettingService;
@@ -36,7 +34,7 @@ class SettingController extends Controller
     public function show($id)
     {
         $setting = Setting::findOrFail($id);
-        return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY',[new SettingResource($setting) ], 200,  App::getLocale());
+        return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY',new SettingResource($setting), 200,  App::getLocale());
 
     }
 

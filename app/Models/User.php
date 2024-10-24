@@ -82,6 +82,11 @@ class User extends Authenticatable
         return $this->hasMany(Notification::class, 'sender_id');
     }
 
+    public function senderContactUs()
+    {
+        return $this->hasMany(ContactUs::class, 'sender_id');
+    }
+
     // Relationship to notifications received by the user
     public function receivedNotifications()
     {

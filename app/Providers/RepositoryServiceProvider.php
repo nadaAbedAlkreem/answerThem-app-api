@@ -19,14 +19,14 @@ class RepositoryServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        // foreach($this->getModels() as $model){
-        //     $this->app->bind(
-        //         "App\Repositories\I{$model}Repository",
-        //         "App\Repositories\Eloquent\\{$model}Repository");
-        // }
-        $this->app->bind(IUserRepository::class, UserRepository::class);
-        $this->app->bind(IFriendsRepositories::class, FriendsRepository::class);
-        $this->app->bind(INotificationRepositories::class, NotificationRepository::class);
+         foreach($this->getModels() as $model){
+              $this->app->bind(
+                 "App\Repositories\I{$model}Repositories",
+                 "App\Repositories\Eloquent\\{$model}Repository");
+         }
+//        $this->app->bind(IUserRepository::class, UserRepository::class);
+//        $this->app->bind(IFriendsRepositories::class, FriendsRepository::class);
+//        $this->app->bind(INotificationRepositories::class, NotificationRepository::class);
 
     }
 
@@ -40,10 +40,11 @@ class RepositoryServiceProvider extends ServiceProvider
         //
     }
 
-    // public function getModels(){
-    //     $files = Storage::disk('app')->files('Models');
-    //     return collect($files)->map(function($file){
-    //         return basename($file, '.php');
-    //     });
-    // }
+     public function getModels(){
+         $files = Storage::disk('app')->files('Models');
+
+         return collect($files)->map(function($file){
+             return basename($file, '.php');
+         });
+     }
 }

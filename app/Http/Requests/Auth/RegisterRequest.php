@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Auth;
 
+use Exception;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
@@ -125,6 +127,8 @@ class RegisterRequest extends FormRequest
             }
             $data['image'] = Storage::url($path . $nameImage);
         }
+
+
         if (!empty($data['password'])) {
             $data['password'] = Hash::make($data['password']);
         }
@@ -132,7 +136,9 @@ class RegisterRequest extends FormRequest
             $data['phone'] = $data['country_prefix'].$data['phone'] ;
         }
 
-         return $data;
+
+
+        return $data;
     }
 
 }

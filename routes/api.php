@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\V1\ContactUsController;
 use App\Http\Controllers\Api\V1\NotificationController;
 use App\Http\Controllers\Api\V1\SettingController;
 use Illuminate\Http\Request;
@@ -38,7 +39,6 @@ use App\Http\Middleware\SetLocale ;
 //
 //                });
                 Route::post('social/mobile', [SocialAuthController::class, 'handleSocialLogin']);
-
                 Route::post('forgot-password', [ForgotPasswordController::class, 'sendResetLink']);
                 Route::post('reset-password', [ForgotPasswordController::class, 'resetPassword']);
                 Route::post('verifyToken', [ForgotPasswordController::class, 'verifyToken']);
@@ -71,6 +71,11 @@ use App\Http\Middleware\SetLocale ;
                 Route::get('{id}', [SettingController::class, 'show'])->name('setting.show');
                 Route::post('update/{id}', [SettingController::class, 'update'])->name('setting.update');
 
+            });
+
+            Route::prefix('contact-us')->group(function ()
+            {
+                  Route::post('', [ContactUsController::class, 'store']);
             });
 
     });

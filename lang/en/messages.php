@@ -15,6 +15,16 @@ return [
     'full_name.string' => 'The full name must be a string.',
     'full_name.max' => 'The full name may not be greater than 255 characters.',
 
+    'sender_id.required' => 'The name field is required.',
+    'sender_id.exists' => 'Sender_id.exists',
+
+
+    'title.required' => 'The name field is required.',
+    'title.string' => 'Name must be text.',
+    'title.max' => 'The length of the name cannot exceed 255 characters.',
+
+    'description.required' => 'The name field is required.',
+    'description.string' => 'Name must be text.',
     'email.required' => 'The email field is required.',
     'email.string' => 'The email must be a string.',
     'email.email' => 'The email must be a valid email address.',
