@@ -62,7 +62,7 @@ class RegisterRequest extends FormRequest
         throw new \Illuminate\Validation\ValidationException($validator, response()->json([
             'success' => false,
             'message' => 'ERROR OCCURRED',
-            'data' => $formattedErrors,
+            'data' => [$formattedErrors],
             'status' => 'Internal Server Error'
         ], 500));
     }

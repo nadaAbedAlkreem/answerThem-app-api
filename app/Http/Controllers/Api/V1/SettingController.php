@@ -47,7 +47,7 @@ class SettingController extends Controller
              return $this->successResponse('UPDATE_SUCCESS', [new SettingResource($setting)] , 200,  App::getLocale());
 
         } catch (\Exception $e) {
-            return $this->errorResponse($e->getMessage(), [] ,  404 , app()->getLocale());
+            return $this->errorResponse('ERROR_OCCURRED',  ['error' => $e->errors()] ,  404 , app()->getLocale());
 
          }
     }

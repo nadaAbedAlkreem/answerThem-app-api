@@ -49,7 +49,7 @@ class FriendRequestController extends Controller
          if (isset($response['message']) && $response['message'] === 'UPDATE_FCM_TOKEN_SUCCESSFULLY') {
             return $this->successResponse('UPDATE_FCM_TOKEN_SUCCESSFULLY', [], 202 ,  app()->getLocale());
         }
-        return  $this->errorResponse('USER_NOT_FOUND' , [] , 404 , app()->getLocale());
+        return  $this->errorResponse('USER_NOT_FOUND' , ['error' => "user not found "], 404 , app()->getLocale());
     }
 
     public function sendFcmNotification(Request $request) {

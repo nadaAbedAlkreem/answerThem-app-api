@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Api\UserWithTokenAccessResource;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Hash;
@@ -63,28 +64,26 @@ class SocialAuthController extends Controller
             }
 
             // Log the user in
-            Auth::login($user);
-
-            // Generate an authentication token (if you're using Laravel Sanctum)
-            $token = $user->createToken('auth_token')->plainTextToken;
+              Auth::login($user);
+             $token = $user->createToken('auth_token')->plainTextToken;
+             $data = ['access_token' => $token,'user' => $user,];
+             return $this->successResponse('LOGGED_IN_SUCCESSFULLY',   new UserWithTokenAccessResource($data) , 202, app()->getLocale());
 
             // Return the response
-            return response()->json([
-                'success' => true,
-                'data' => [
-                    'social_type' => 'required|string|in:google,twitter,instagram',
-                    'social_token' => $request->social_token,
-                    'fcm_token' => $request->fcm_token,
-                    'device_type' => $request->device_type,
-                ],
-                'user' => $user,
-                'token' => $token,
-            ]);
+//            return response()->json([
+//                'success' => true,
+//                'data' => [
+//                    'social_type' => 'required|string|in:google,twitter,instagram',
+//                    'social_token' => $request->social_token,
+//                    'fcm_token' => $request->fcm_token,
+//                    'device_type' => $request->device_type,
+//                ],
+//                'user' => $user,
+//                'token' => $token,
+//            ]);
         } catch (Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Authentication failed: ' . $e->getMessage(),
-            ], 500);
+              return $this->errorResponse('ERROR_OCCURRED', ['error' =>'Authentication failed:'. $e->getMessage()], 500, app()->getLocale());
+
         }
     }
 //    public function redirectToTwitter()

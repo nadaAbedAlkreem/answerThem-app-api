@@ -101,7 +101,7 @@ class FriendController extends Controller
             $nonFriends = $this->friendRepository->getNonFriends();
             return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY',UserResource::collection($nonFriends), 200, \Illuminate\Support\Facades\App::getLocale());
         } catch (\Exception $e) {
-            return $this->errorResponse($e->getMessage(), [] ,  $e->getCode()  , app()->getLocale());
+            return $this->errorResponse("ERROR_OCCURRED" ,  ['error' => $e->getMessage()] ,  $e->getCode()  , app()->getLocale());
         }
 
     }

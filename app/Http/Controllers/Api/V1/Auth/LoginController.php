@@ -29,7 +29,7 @@ class LoginController extends Controller
             return $this->successResponse('LOGGED_IN_SUCCESSFULLY', new UserWithTokenAccessResource($user) , 202, app()->getLocale());
         } catch (\Exception $e) {
 
-            return $this->errorResponse('ERROR_OCCURRED', ['error' =>[ $e->getMessage()]], 500, app()->getLocale());
+            return $this->errorResponse('ERROR_OCCURRED', ['error' => $e->getMessage()], 500, app()->getLocale());
         }
     }
 }
