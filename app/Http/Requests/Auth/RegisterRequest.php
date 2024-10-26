@@ -35,7 +35,7 @@ class RegisterRequest extends FormRequest
             'name' => 'required|string|max:255',
             'full_name' => 'required|string|max:255',
             'country' => 'required' ,
-            'country_prefix' => 'required|string',  // Add the country prefix field
+            'country_prefix' => 'required|string|in:+20,+965,+966,+971,+970',
             'email' => 'required|string|email|max:255|unique:users',
             'phone' => [
                 'required',
@@ -58,10 +58,7 @@ class RegisterRequest extends FormRequest
     protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
     {
         $errors = $validator->errors()->all();
-        $formattedErrors = array_map(function ($error) {
-            return ['error' => $error];
-        }, $errors);
-
+        $formattedErrors = ['error' => $errors[0]] ;
         throw new \Illuminate\Validation\ValidationException($validator, response()->json([
             'success' => false,
             'message' => 'ERROR OCCURRED',

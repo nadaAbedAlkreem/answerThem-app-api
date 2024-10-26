@@ -3,10 +3,7 @@
 namespace App\Http\Controllers\Api\V1\Friends;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreFriendRequestRequest;
-use App\Http\Requests\UpdateFriendRequestRequest;
 use App\Http\Resources\Api\UserResource;
-use App\Models\FriendRequest;
 use App\Models\Notification;
 use App\Models\User;
 use App\Repositories\Eloquent\FriendRequestRepository;

@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
  class Notification extends Model
 {
     use HasFactory  , SoftDeletes;
@@ -35,19 +37,24 @@ use Illuminate\Http\Request;
 
      public static function updateDeviceToken(Request $request)
      {
+         $user = Auth::user();
          $request->validate([
-             'user_id' => 'required|exists:users,id',
-             'fcm_token' => 'required|string',
+              'fcm_token' => 'required|string',
          ]);
 
-         // Find the user associated with the token
-         $user = User::find($request->user_id);
-         if ($user) {
-             $user->update(['fcm_token' => $request->fcm_token]);
-             return ['message' => 'Device token updated successfully'];
+         if (!empty($user)) {
+               $user->update(['fcm_token' => $request->fcm_token]);
+              $user->save();
+             return ['message' => 'UPDATE_FCM_TOKEN_SUCCESSFULLY'];
          }
 
-         return ['message' => 'User not found'];
+         if(empty($user));
+         {
+             return ['message' => 'User not found'];
+
+         }
+
+
      }
 
 

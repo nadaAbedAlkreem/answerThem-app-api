@@ -80,9 +80,26 @@ class SettingsTableSeeder extends Seeder
             [
                 'key' => 'app_welcome_interface_en',
                 'value' => json_encode([
-                    'image' => 'path/to/image.jpg', // Replace with actual image path
-                    'title' => 'Welcome to the App' ,
-                    'body' => 'This is the welcome message for the app.' // English body
+                        [
+                        'title' => 'How can I recover my password?',
+                        'body' => 'You can recover your password by clicking on Forgot Passwordon the login screen.',
+                        ],
+                        [
+                            'title' => 'Can I use the app offline?',
+                            'body' => 'Some features may require an internet connection, but other features can be used offline.',
+                        ],
+                        [
+                            'title' => 'How do I upgrade my account to a premium account?',
+                            'body' => 'You can upgrade to a premium account through the account settings and pay through the available methods.',
+                        ],
+                        [
+                            'title' => 'Does the app support multiple languages?',
+                            'body' => 'Yes, the app supports multiple languages ​​and the language can be changed from the app settings.',
+                        ],
+                        [
+                            'title' => 'What devices can I use to run the app?',
+                            'body' => 'The app can be run on iOS and Android smartphones and tablets.',
+                        ]
                 ]),
                 'description' => 'Welcome interface settings',
                 'base_term' => 'app_welcome_interface',
@@ -136,88 +153,89 @@ class SettingsTableSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-//            [
-//                'key' => 'app_country_en',
-//                'value' => json_encode([
-//                    'title' => 'United States', // English country title
-//                    'image' => 'path/to/flag.png', // Replace with actual image path
-//                ]),
-//                'description' => 'Country information',
-//                'base_term' => 'app_country',
-//                'lang' => 'en', // You can choose a default language here
-//                'type' => 'json',
-//                'created_at' => now(),
-//                'updated_at' => now(),
-//            ],
-//
-//
-//
-//            [
-//                'key' => 'app_privacy_policy_ar',
-//                'value' => json_encode([
-//                        [
-//                        'title' => 'سياسة الخصوصية',
-//                        'body' => 'هذه هي سياسة الخصوصية للتطبيق.',
-//                        ]
-//                         ,
-//                        [
-//                            'title' => 'سياسة الخصوصية',
-//                            'body' => 'هذه هي سياسة الخصوصية للتطبيق.',
-//                        ]
-//                        ,
-//                        [
-//                          'title' => 'سياسة الخصوصية',
-//                          'body' => 'هذه هي سياسة الخصوصية للتطبيق.',
-//                        ]
-//                         ,
-//                        [
-//                          'title' => 'سياسة الخصوصية',
-//                          'body' => 'هذه هي سياسة الخصوصية للتطبيق.',
-//                        ]
-//
-//
-//
-//
-//
-//                  ]),
-//                'description' => 'Privacy policy',
-//                'base_term' => 'app_privacy_policy',
-//                'lang' => 'ar', // You can choose a default language here
-//                'type' => 'json',
-//                'created_at' => now(),
-//                'updated_at' => now(),
-//            ],
-//
-//
-//            [
-//                'key' => 'app_privacy_policy_en',
-//                'value' => json_encode([
-//                       [
-//                           'title' =>  'Privacy Policy',
-//                           'body' => 'This is the privacy policy of the application.',
-//                       ],
-//                       [
-//                           'title' =>  'Privacy Policy',
-//                           'body' => 'This is the privacy policy of the application.',
-//                       ],
-//                       [
-//                           'title' =>  'Privacy Policy',
-//                           'body' => 'This is the privacy policy of the application.',
-//                       ],
-//                       [
-//                           'title' =>  'Privacy Policy',
-//                           'body' => 'This is the privacy policy of the application.',
-//                       ],
-//
-//                   ]),
-//                'description' => 'Privacy policy',
-//                'base_term' => 'app_privacy_policy',
-//                'lang' => 'en', // You can choose a default language here
-//                'type' => 'json',
-//                'created_at' => now(),
-//                'updated_at' => now(),
-//            ],
-            // Add similar entries for other settings...
+
+
+            [
+                'key' => 'app_country_en',
+                'value' => json_encode([
+                    'title' => 'United States', // English country title
+                    'image' => 'path/to/flag.png', // Replace with actual image path
+                ]),
+                'description' => 'Country information',
+                'base_term' => 'app_country',
+                'lang' => 'en', // You can choose a default language here
+                'type' => 'json',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+
+
+            [
+                'key' => 'app_privacy_policy_ar',
+                'value' => json_encode([
+                        [
+                        'title' => 'سياسة الخصوصية',
+                        'body' => 'هذه هي سياسة الخصوصية للتطبيق.',
+                        ]
+                         ,
+                        [
+                            'title' => 'سياسة الخصوصية',
+                            'body' => 'هذه هي سياسة الخصوصية للتطبيق.',
+                        ]
+                        ,
+                        [
+                          'title' => 'سياسة الخصوصية',
+                          'body' => 'هذه هي سياسة الخصوصية للتطبيق.',
+                        ]
+                         ,
+                        [
+                          'title' => 'سياسة الخصوصية',
+                          'body' => 'هذه هي سياسة الخصوصية للتطبيق.',
+                        ]
+
+
+
+
+
+                  ]),
+                'description' => 'Privacy policy',
+                'base_term' => 'app_privacy_policy',
+                'lang' => 'ar', // You can choose a default language here
+                'type' => 'json',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+
+            [
+                'key' => 'app_privacy_policy_en',
+                'value' => json_encode([
+                       [
+                           'title' =>  'Privacy Policy',
+                           'body' => 'This is the privacy policy of the application.',
+                       ],
+                       [
+                           'title' =>  'Privacy Policy',
+                           'body' => 'This is the privacy policy of the application.',
+                       ],
+                       [
+                           'title' =>  'Privacy Policy',
+                           'body' => 'This is the privacy policy of the application.',
+                       ],
+                       [
+                           'title' =>  'Privacy Policy',
+                           'body' => 'This is the privacy policy of the application.',
+                       ],
+
+                   ]),
+                'description' => 'Privacy policy',
+                'base_term' => 'app_privacy_policy',
+                'lang' => 'en', // You can choose a default language here
+                'type' => 'json',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
 
             [
                 'key' => 'contact_us',
@@ -242,9 +260,46 @@ class SettingsTableSeeder extends Seeder
             ],
 
             [
-                'key' => 'frequently_asked_questions',
-                'value' => json_encode(
-                    [
+                'key' => 'contact_us',
+                'value' => json_encode([  'gmail' => 'test@test.com',
+                        'facebook' => 'facebook',
+                        'Instagram' => 'Instagram',
+                        'WhatsApp' => '9999999',
+                        'Snapchat' => 'Snapchat',
+
+                    ]),
+                'description' => 'contact us information',
+                'base_term' => 'app_contact_us',
+                'lang' => 'en', // You can choose a default language here
+                'type' => 'json',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'key' => 'problem_suggestions_ar',
+                'value' => json_encode(["Technical Issues" , "Account Problems" , "Feedback and Suggestions" , "Other"]),
+                'description' => 'problem suggestions  information',
+                'base_term' => 'problem_suggestions',
+                'lang' => 'ar', // You can choose a default language here
+                'type' => 'json',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            [
+                'key' => 'problem_suggestions_en',
+                'value' => json_encode(["المشاكل الفنية" , "مشاكل الحساب" ,"الملاحظات والاقتراحات" , "أخرى"]),
+                'description' => 'problem suggestions  information',
+                'base_term' => 'problem_suggestions',
+                'lang' => 'en', // You can choose a default language here
+                'type' => 'json',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            [
+                'key' => 'frequently_asked_questions_ar',
+                'value' => json_encode([
                         [
                             'title' => 'كيف يمكنني استعادة كلمة المرور الخاصة بي؟',
                             'body' => 'يمكنك استعادة كلمة المرور من خلال النقر على "نسيت كلمة المرور" في شاشة تسجيل الدخول.',
@@ -265,9 +320,7 @@ class SettingsTableSeeder extends Seeder
                             'title' => 'ما هي الأجهزة التي يمكنني استخدامها لتشغيل التطبيق؟',
                             'body' => 'يمكن تشغيل التطبيق على الهواتف الذكية والأجهزة اللوحية التي تعمل بنظامي iOS وAndroid.',
                         ]
-                    ]
-
-                ),
+                    ]),
                 'description' => 'frequently asked questions ',
                 'base_term' => 'frequently_asked_questions',
                 'lang' => 'ar', // You can choose a default language here
@@ -275,6 +328,40 @@ class SettingsTableSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+
+            'key' => 'frequently_asked_questions_en',
+            'value' => json_encode(
+                [
+                    [
+                        'title' => 'How can I recover my password?',
+                        'body' => 'You can recover your password by clicking on Forgot Password on the login screen.',
+                    ],
+                    [
+                        'title' => 'Can I use the app offline?',
+                        'body' => 'Some features may require an internet connection, but other features can be used offline.',
+                    ],
+                    [
+                        'title' => 'How do I upgrade my account to a premium account?',
+                        'body' => 'You can upgrade to a premium account through the account settings and pay through the available methods.',
+                    ],
+                    [
+                        'title' => 'Does the app support multiple languages?',
+                        'body' => 'Yes, the app supports multiple languages ​​and the language can be changed from the app settings.',
+                    ],
+                    [
+                        'title' => 'What devices can I use to run the app?',
+                        'body' => 'The app can be run on iOS and Android smartphones and tablets.',
+                    ]
+                ]
+
+            ),
+            'description' => 'frequently asked questions ',
+            'base_term' => 'frequently_asked_questions',
+            'lang' => 'en', // You can choose a default language here
+            'type' => 'json',
+            'created_at' => now(),
+            'updated_at' => now(),
+
         ]);
     }
 }

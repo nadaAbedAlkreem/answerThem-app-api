@@ -12,7 +12,7 @@ class Messages
          //AUTH
         'ERROR_FCM_TOKEN'=> 'User does not have a device token' ,
         'UPDATE_FCM_TOKEN_SUCCESSFULLY'=> 'Device token updated successfully' ,
-
+        'PROFILE_UPDATED_SUCCESSFULLY' => 'Profile updated successfully' ,
         'FINANCIA_GET_SUCCESSFULLY' => 'Financial data acquisition process completed',
         'REGISTERED_SUCCESSFULLY' => 'Account created successfully',
         'BLOCKED_DEVICE' => 'Account is blocked',
@@ -220,7 +220,7 @@ class Messages
         'PASS_RESET_CODE_SENT_BEFORE' => 'تم إرسال رمز إعادة تعيين كلمة المرور مسبقًا، تحقق من رسائلك!',
         'exp_date' => 'انتهت صلاحية هذا الاختبار',
         'ID_NOT_FOUND' => 'لم يتم العثور على المعرف المحدد.',
-
+        'PROFILE_UPDATED_SUCCESSFULLY' => 'تحديث بيانات البروفايل بنجاح  '  ,
         'RESET_PASSWORD_SUCCESS' => 'تم إعادة تعيين كلمة المرور بنجاح',
         'RESET_PASSWORD_FAILED' => 'فشل في إعادة تعيين كلمة المرور!',
         'CART_SUCCESS' => 'تمت الإضافة إلى السلة بنجاح',

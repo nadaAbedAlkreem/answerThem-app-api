@@ -33,7 +33,7 @@ class FriendController extends Controller
     public function getFriendsForCurrentUser()
     {
         if (!Auth::check()) {
-             return $this->errorResponse('Unauthenticated', [], 401, app()->getLocale());
+             return $this->errorResponse('UNAUTHENTICATED', [], 401, app()->getLocale());
         }
         $user = Auth::user();
         $userWithFriends = $this->userRepository->findWith($user->id ,  ['friends']);

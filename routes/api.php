@@ -49,7 +49,7 @@ use App\Http\Middleware\SetLocale ;
             {
                 Route::get('users', [FriendController::class, 'getUsersForFriendsRequest']);
                 Route::get('current-user', [FriendRequestController::class, 'getFriendRequestsForCurrentUser']);
-                Route::put('update-device-token', [FriendRequestController::class, 'updateDeviceToken']);
+                Route::post('update-device-token', [FriendRequestController::class, 'updateDeviceToken']);
                 Route::post('send-fcm-notification', [FriendRequestController::class, 'sendFcmNotification']);
 
 
@@ -65,7 +65,11 @@ use App\Http\Middleware\SetLocale ;
               Route::get('current-user', [NotificationController::class, 'getNotificationForCurrentUser']);
             });
 
-            Route::prefix('setting')->group(function ()
+
+            Route::post('profile/update', [UserController::class, 'updateProfile']);
+
+
+        Route::prefix('setting')->group(function ()
             {
                 Route::get('', [SettingController::class, 'index']);
                 Route::get('{id}', [SettingController::class, 'show'])->name('setting.show');

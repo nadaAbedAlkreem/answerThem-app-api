@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\UpdateProfileRequest;
 use App\Http\Resources\Api\UserResource;
 use App\Http\Resources\Api\UserWithFriendsResource;
 use App\Repositories\IUserRepositories;
@@ -62,7 +63,26 @@ class UserController extends Controller
             : $this->errorResponse('NOTAUTHORIZED', [], 403, App::getLocale());
 
     }
+    public function updateProfile(UpdateProfileRequest $request)
+    {
+        try {
+            $updatedUser = $request->updateUserData();
+            return $this->successResponse(
+                'PROFILE_UPDATED_SUCCESSFULLY',
+                new UserResource($updatedUser),
+                200,
+                App::getLocale()
+            );
+        } catch (\Exception $exception) {
+            return $this->errorResponse(
+                'ERROR_OCCURRED',
+                ['error' => $exception->getMessage()],
+                500,
+                App::getLocale()
+            );
+        }
 
+    }
 
 
 

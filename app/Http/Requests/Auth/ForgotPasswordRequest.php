@@ -42,13 +42,7 @@ class ForgotPasswordRequest extends FormRequest
     protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
     {
         $errors = $validator->errors()->all();
-
-        // Format the errors as required
-        $formattedErrors = array_map(function ($error) {
-            return ['error' => $error];
-        }, $errors);
-
-        // Create a response with the desired format
+        $formattedErrors = ['error' => $errors[0]] ;
         throw new \Illuminate\Validation\ValidationException($validator, response()->json([
             'success' => false,
             'message' => 'ERROR OCCURRED',
@@ -56,6 +50,5 @@ class ForgotPasswordRequest extends FormRequest
             'status' => 'Internal Server Error'
         ], 500));
     }
-
 
 }
