@@ -10,7 +10,7 @@ class SettingsTableSeeder extends Seeder
 
     public function run()
     {
-        DB::table('settings')->delete();
+      //  DB::table('settings')->delete();
 
         DB::table('settings')->insert([
             // Arabic app name
@@ -329,9 +329,8 @@ class SettingsTableSeeder extends Seeder
                 'updated_at' => now(),
             ],
 
-            'key' => 'frequently_asked_questions_en',
-            'value' => json_encode(
-                [
+         [   'key' => 'frequently_asked_questions_en',
+            'value' => json_encode([
                     [
                         'title' => 'How can I recover my password?',
                         'body' => 'You can recover your password by clicking on Forgot Password on the login screen.',
@@ -352,16 +351,14 @@ class SettingsTableSeeder extends Seeder
                         'title' => 'What devices can I use to run the app?',
                         'body' => 'The app can be run on iOS and Android smartphones and tablets.',
                     ]
-                ]
-
-            ),
+                ]),
             'description' => 'frequently asked questions ',
             'base_term' => 'frequently_asked_questions',
             'lang' => 'en', // You can choose a default language here
             'type' => 'json',
             'created_at' => now(),
             'updated_at' => now(),
-
+]
         ]);
     }
 }
