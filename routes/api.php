@@ -23,7 +23,6 @@ use App\Http\Middleware\SetLocale ;
 
                 Route::get('/users', [UserController::class, 'getAllUsers']);
                 Route::get('/users/search', [UserController::class, 'getSearchUsers']);
-                Route::get('/user', [UserController::class, 'getCurrentUser']);
                 Route::post('/register', [RegisterController::class, 'register']);
                 Route::post('/login', [LoginController::class, 'login']);
                 Route::post('social/mobile', [SocialAuthController::class, 'handleSocialLogin']);
@@ -34,6 +33,7 @@ use App\Http\Middleware\SetLocale ;
             });
         Route::group(['middleware' =>  'auth:api'], function ()
         {
+            Route::get('/user', [UserController::class, 'getCurrentUser']);
             Route::post('profile/update', [UserController::class, 'updateProfile']);
 
             Route::prefix('friends')->group(function ()
