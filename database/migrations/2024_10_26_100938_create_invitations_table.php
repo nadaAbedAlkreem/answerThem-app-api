@@ -13,9 +13,13 @@ return new class extends Migration
     {
         Schema::create('invitations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('sender_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('receiver_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('challenge_id')->constrained('challenges')->onDelete('cascade');
+            $table->foreignId('sender_id')->nullable()->index();
+            $table->foreign('sender_id', 'fk_sender_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('receiver_id')->nullable()->index();
+            $table->foreign('receiver_id', 'fk_receiver_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('challenge_id')->nullable()->index();
+            $table->foreign('challenge_id', 'fk_challenge_id')->references('id')->on('users')->onDelete('cascade');
+            $table->enum('status', ['pending', 'accepted', 'declined'])->default('pending'); // Status column
             $table->timestamps();
             $table->softDeletes(); // Soft delete for notifications
 

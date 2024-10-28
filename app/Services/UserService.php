@@ -3,6 +3,8 @@ namespace App\Services;
 
 use App\Models\User;
 use App\Repositories\IUserRepositories;
+use Exception;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 
@@ -21,18 +23,20 @@ class UserService
         try {
 
             $user = $this->userRepository->create($data);
-            Auth::login($user);
+            $credentials = $user->only('email', 'password');
+            $user = User::where('email', $credentials['email'])->first();
 
-
-            $token = $user->createToken('auth_token')->plainTextToken;
-
-            return [
-                'access_token' => $token,
+            if ($user) {
+                $userToken =  $user->createToken('API Token')->plainTextToken;
+            }else
+            {
+                throw new Exception('Invalid credentials');
+            }
+            return   [
+                'access_token' =>  $userToken ,
                 'token_type' => 'Bearer',
-                'user' => $user,
-                'message' => 'Registration successful',
-                'status' => 201
-            ];
+                'user' => $user
+            ] ;
         } catch (\Exception $e) {
              throw new \Exception($e->getMessage());
         }
@@ -40,24 +44,6 @@ class UserService
     }
 
 
-
-        public function login($credentials)
-        {
-            if (!Auth::attempt($credentials)) {
-
-                throw new \Exception('Invalid login details', 401);
-            }
-            $user = Auth::user();
-            $token = $user->createToken('auth_token')->plainTextToken;
-
-
-            return [
-                'access_token' => $token,
-                'token_type' => 'Bearer',
-                'user' => $user,
-                'status' => 200
-            ];
-        }
 
     public function getTranslatedPagesAuthentication()
     {

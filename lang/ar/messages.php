@@ -9,6 +9,11 @@ return [
     ],
     'sender_id.required' => 'حقل الاسم مطلوب.',
     'sender_id.exists' => ' رقم معرف غير موجود',
+    'id.exists' => 'الفئة المحددة ليست فئة أساسية صالحة.',
+    'id.required' => 'حقل المعرف  مطلوب.',
+    'id.integer' => 'يجب ان يكون المعرف رقما ',
+    'ERROR_OCCURRED' => 'حدث خطأ ' ,
+    'invalid_credentials' => 'كلمة المرور او الايميل غير صالحين ' ,
 
 
     'title.required' => 'حقل الاسم مطلوب.',

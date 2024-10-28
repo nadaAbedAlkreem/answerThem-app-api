@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\V1;
 
-use App\Models\Challenge;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreChallengeRequest;
 use App\Http\Requests\UpdateChallengeRequest;
+use App\Models\Challenge;
 
 class ChallengeController extends Controller
 {

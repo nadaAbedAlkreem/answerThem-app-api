@@ -63,10 +63,8 @@ class SocialAuthController extends Controller
                 ]);
             }
 
-            // Log the user in
-              Auth::login($user);
-             $token = $user->createToken('auth_token')->plainTextToken;
-             $data = ['access_token' => $token,'user' => $user,];
+             $userToken =  $user->createToken('API Token')->plainTextToken;
+             $data = ['access_token' => $userToken,'user' => $user,];
              return $this->successResponse('LOGGED_IN_SUCCESSFULLY',   new UserWithTokenAccessResource($data) , 202, app()->getLocale());
 
             // Return the response
@@ -82,7 +80,7 @@ class SocialAuthController extends Controller
 //                'token' => $token,
 //            ]);
         } catch (Exception $e) {
-              return $this->errorResponse('ERROR_OCCURRED', ['error' =>'Authentication failed:'. $e->getMessage()], 500, app()->getLocale());
+              return $this->errorResponse('ERROR_OCCURRED', ['error' => $e->getMessage()], 500, app()->getLocale());
 
         }
     }

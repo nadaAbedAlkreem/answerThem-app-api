@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('teams', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Creator of the
+            $table->string('name_ar')->index();
+            $table->string('name_en')->nullable()->index();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade')->index(); // Creator of the
             $table->timestamps();
             $table->softDeletes(); // Soft delete for notifications
 

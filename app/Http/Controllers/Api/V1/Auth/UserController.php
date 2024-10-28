@@ -5,14 +5,13 @@ namespace App\Http\Controllers\Api\V1\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\UpdateProfileRequest;
 use App\Http\Resources\Api\UserResource;
-use App\Http\Resources\Api\UserWithFriendsResource;
-use App\Repositories\IUserRepositories;
+ use App\Repositories\IUserRepositories;
 use App\Http\Requests\Auth\SearchUsersRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App; // Make sure to import the App facade
 use App\Traits\ResponseTrait;
 use App\Services\UserService;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
+
 
 class UserController extends Controller
 {
@@ -55,10 +54,11 @@ class UserController extends Controller
             : $this->errorResponse('NO_DATA', [], 200, App::getLocale());
     }
 
-    public function getCurrentUser()
+    public function getCurrentUser(Request $request)
     {
-        $currentUser = Auth::user();
-         return (!empty($currentUser))
+
+        $currentUser = $request->user();
+             return (!empty($currentUser))
             ? $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY',new UserResource($currentUser), 200, App::getLocale())
             : $this->errorResponse('NOTAUTHORIZED', [], 403, App::getLocale());
 
@@ -66,7 +66,8 @@ class UserController extends Controller
     public function updateProfile(UpdateProfileRequest $request)
     {
         try {
-            $updatedUser = $request->updateUserData();
+            $user = $request->user();
+            $updatedUser = $request->updateUserData($user);
             return $this->successResponse(
                 'PROFILE_UPDATED_SUCCESSFULLY',
                 new UserResource($updatedUser),

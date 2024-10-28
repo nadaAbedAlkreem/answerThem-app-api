@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\V1\CategoryController;
 use App\Http\Controllers\Api\V1\ContactUsController;
 use App\Http\Controllers\Api\V1\NotificationController;
 use App\Http\Controllers\Api\V1\SettingController;
@@ -15,58 +16,54 @@ use App\Http\Controllers\Api\V1\Friends\FriendController;
 use App\Http\Middleware\SetLocale ;
 
 
-    Route::group(['middleware' => SetLocale::class], function () {
+    Route::group(['middleware' =>  SetLocale::class], function () {
                 Route::prefix('auth')->group(function ()
             {
                 Route::get('/translate', [UserController::class, 'getTranslatedPagesAuthentication']);
-//                Route::get('/login', [LoginController::class, 'notAuthorized'])->name('login');
 
                 Route::get('/users', [UserController::class, 'getAllUsers']);
                 Route::get('/users/search', [UserController::class, 'getSearchUsers']);
                 Route::get('/user', [UserController::class, 'getCurrentUser']);
                 Route::post('/register', [RegisterController::class, 'register']);
                 Route::post('/login', [LoginController::class, 'login']);
-//                Route::middleware(['web'])->group(function () {
-//                    Route::get('google', [SocialAuthController::class, 'redirectToGoogle']);
-//                    Route::get('google/callback', [SocialAuthController::class, 'handleGoogleCallback']);
-//
-//                    Route::get('twitter', [SocialAuthController::class, 'redirectToTwitter']);
-//                    Route::get('twitter/callback', [SocialAuthController::class, 'handleTwitterCallback']);
-//
-//                    Route::get('instagram', [SocialAuthController::class, 'redirectToInstagram']);
-//                    Route::get('instagram/callback', [SocialAuthController::class, 'handleInstagramCallback']);
-//                    Route::post('instagram/deauthorize', [SocialAuthController::class, 'handleInstagramDeauthorization']);
-//
-//                });
                 Route::post('social/mobile', [SocialAuthController::class, 'handleSocialLogin']);
                 Route::post('forgot-password', [ForgotPasswordController::class, 'sendResetLink']);
                 Route::post('reset-password', [ForgotPasswordController::class, 'resetPassword']);
                 Route::post('verifyToken', [ForgotPasswordController::class, 'verifyToken']);
 
             });
+        Route::group(['middleware' =>  'auth:api'], function ()
+        {
+            Route::post('profile/update', [UserController::class, 'updateProfile']);
 
+            Route::prefix('friends')->group(function ()
+            {
+                Route::get('current-user', [FriendController::class, 'getFriendsForCurrentUser']);
+            });
+            Route::prefix('notifications')->group(function ()
+            {
+                Route::get('current-user', [NotificationController::class, 'getNotificationForCurrentUser']);
+            });
             Route::prefix('friends-request')->group(function ()
             {
                 Route::get('users', [FriendController::class, 'getUsersForFriendsRequest']);
                 Route::get('current-user', [FriendRequestController::class, 'getFriendRequestsForCurrentUser']);
                 Route::post('update-device-token', [FriendRequestController::class, 'updateDeviceToken']);
                 Route::post('send-fcm-notification', [FriendRequestController::class, 'sendFcmNotification']);
-
-
             });
+        });
 
-            Route::prefix('friends')->group(function ()
+            Route::prefix('categories')->group(function ()
             {
-                Route::get('current-user', [FriendController::class, 'getFriendsForCurrentUser']);
+                Route::get('primary', [CategoryController::class, 'getPrimaryCategories']);
+                Route::get('{id}/subcategories', [CategoryController::class, 'getSubcategories']);
 
+                Route::get('primary/search', [CategoryController::class, 'searchPrimaryCategories']);
+                Route::get('{id}/subcategories/search', [CategoryController::class, 'searchSubcategories']);
             });
-            Route::prefix('notifications')->group(function ()
-            {
-              Route::get('current-user', [NotificationController::class, 'getNotificationForCurrentUser']);
-            });
 
 
-            Route::post('profile/update', [UserController::class, 'updateProfile']);
+
 
 
         Route::prefix('setting')->group(function ()

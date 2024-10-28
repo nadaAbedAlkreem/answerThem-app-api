@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Auth;
+namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ForgotPasswordRequest extends FormRequest
+class SubcategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -19,23 +19,12 @@ class ForgotPasswordRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
-    {
-        return [
-            'email' => 'required_if:verification_method,email|email',
-            'phone' => 'required_if:verification_method,phone|string|max:15',
-            'verification_method' => 'required|in:email,phone',
-        ];
-    }
 
-    public function messages()
+    public function rules()
     {
-        return [
-            'email.required' => __('messages.email.required'),
-            'email.email' => __('messages.email.email'),
-            'phone.required' => __('messages.phone.required'),
-            'verification_method.required' => __('messages.verification_method.required'),
-            'verification_method.in' => __('messages.verification_method.in'),
+        $id = $this->route('id'); // Access the route parameter 'id'
+         return [
+            'id' => 'required|integer|exists:categories,id,parent_id,NULL',
         ];
     }
 
@@ -50,5 +39,16 @@ class ForgotPasswordRequest extends FormRequest
             'status' => 'Internal Server Error'
         ], 500));
     }
+    public function messages()
+    {
+        return [
+            'id.required' => __('messages.id.required'),
+            'id.integer' => __('messages.id.integer'),
+            'id.exists' => __('messages.id.exists'),
+        ];
+    }
+
+
+
 
 }

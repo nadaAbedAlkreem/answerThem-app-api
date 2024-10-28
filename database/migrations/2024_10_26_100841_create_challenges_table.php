@@ -12,13 +12,23 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('challenges', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('team1_id')->nullable()->constrained('teams')->onDelete('cascade'); // Nullable for one-on-one
-            $table->foreignId('team2_id')->nullable()->constrained('teams')->onDelete('cascade'); // Nullable for one-on-one
-            $table->foreignId('user1_id')->nullable()->constrained('users')->onDelete('cascade'); // For individual competitors
-            $table->foreignId('user2_id')->nullable()->constrained('users')->onDelete('cascade'); // For individual competitors
+            $table->foreignId('team1_id')->nullable()->index();
+            $table->foreign('team1_id', 'fk_team1_id')->references('id')->on('teams')->onDelete('cascade');
+
+            $table->foreignId('team2_id')->nullable()->index();
+            $table->foreign('team2_id', 'fk_team2_id')->references('id')->on('teams')->onDelete('cascade');
+
+            // User foreign keys with unique constraint names
+            $table->foreignId('user1_id')->nullable()->index();
+            $table->foreign('user1_id', 'fk_user1_id')->references('id')->on('users')->onDelete('cascade');
+
+            $table->foreignId('user2_id')->nullable()->index();
+            $table->foreign('user2_id', 'fk_user2_id')->references('id')->on('users')->onDelete('cascade');
+
             $table->integer('number_of_questions')->default(25);
             $table->integer('time_per_question')->default(30); // seconds
+            $table->enum('status', ['ongoing', 'pending', 'end'])->default('pending'); // Status column
+
             $table->timestamps();
             $table->softDeletes(); // Soft delete for notifications
         });

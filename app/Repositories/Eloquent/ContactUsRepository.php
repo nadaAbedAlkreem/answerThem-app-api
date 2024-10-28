@@ -13,4 +13,5 @@ class ContactUsRepository extends BaseRepository implements IContactUsRepositori
         $this->model = new ContactUs();
     }
 
+
 }

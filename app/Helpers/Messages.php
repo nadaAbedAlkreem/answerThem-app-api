@@ -177,7 +177,7 @@ class Messages
 
          // AUTH
         'ITEMS_UPDATED_SUCCESSFULLY' => 'تم تحديث العناصر بنجاح.',
-         'INVALID_DELIVERED_QUANTITY' => 'يجب ألا تكون الكمية المسلمة أكبر من الكمية الإجمالية.',
+        'INVALID_DELIVERED_QUANTITY' => 'يجب ألا تكون الكمية المسلمة أكبر من الكمية الإجمالية.',
         'EXCEPTION_MESSAGE' => 'حدث خطأ: :message',
         'ORDER_STATUS_UPDATED' => 'تم تحديث الحالة لطلبية ',
         'INVALID_UPDATE_ELEMENT' =>   'عنصر التحديث غير صالح'  ,

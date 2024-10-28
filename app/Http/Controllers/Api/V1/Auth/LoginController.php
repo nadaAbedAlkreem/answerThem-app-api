@@ -24,12 +24,20 @@ class LoginController extends Controller
     public function login(LoginRequest $request)
     {
         try {
-            $user = $this->userService->login($request->getData());
-            $request->session()->regenerate();
-            return $this->successResponse('LOGGED_IN_SUCCESSFULLY', new UserWithTokenAccessResource($user) , 202, app()->getLocale());
+            $user = $request->authenticate();
+             return $this->successResponse(
+                'LOGGED_IN_SUCCESSFULLY',
+                new UserWithTokenAccessResource($user),
+                202,
+                app()->getLocale()
+            );
         } catch (\Exception $e) {
-
-            return $this->errorResponse('ERROR_OCCURRED', ['error' => $e->getMessage()], 500, app()->getLocale());
+            return $this->errorResponse(
+                'ERROR_OCCURRED',
+                ['error' => $e->getMessage()],
+                500,
+                app()->getLocale()
+            );
         }
     }
 }

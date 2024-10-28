@@ -45,7 +45,7 @@ class LoginRequest extends FormRequest
         $formattedErrors = ['error' => $errors[0]] ;
         throw new \Illuminate\Validation\ValidationException($validator, response()->json([
             'success' => false,
-            'message' => 'ERROR OCCURRED',
+            'message' => __('messages.ERROR_OCCURRED'),
             'data' => $formattedErrors,
             'status' => 'Internal Server Error'
         ], 500));
@@ -63,21 +63,20 @@ class LoginRequest extends FormRequest
         ];
     }
 
-    public  function getData()
+    public function authenticate()
     {
         $credentials = $this->only('email', 'password');
+        $user = User::where('email', $credentials['email'])->first();
 
-        if (!Auth::attempt($credentials)) {
-             throw new Exception('Invalid login details', 401); //
-         }
-        $user = Auth::user();
+        if ($user && Hash::check($credentials['password'], $user->password)) {
 
-        // Check if password matches
-        if (!Hash::check($credentials['password'], $user->password)) {
-            throw new Exception('Password mismatch', 401);  //
+             return   [
+                 'access_token' =>  $user->createToken('API Token')->plainTextToken,
+                 'token_type' => 'Bearer',
+                 'user' => $user
+              ] ;
         }
 
-        return $credentials;
+        throw new Exception(__('messages.invalid_credentials'));
     }
-
 }

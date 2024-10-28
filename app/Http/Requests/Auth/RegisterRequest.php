@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Models\User;
 use Exception;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
@@ -61,8 +62,8 @@ class RegisterRequest extends FormRequest
         $formattedErrors = ['error' => $errors[0]] ;
         throw new \Illuminate\Validation\ValidationException($validator, response()->json([
             'success' => false,
-            'message' => 'ERROR OCCURRED',
-            'data' => [$formattedErrors],
+            'message' => __('messages.ERROR_OCCURRED'),
+            'data' => $formattedErrors,
             'status' => 'Internal Server Error'
         ], 500));
     }
@@ -107,22 +108,20 @@ class RegisterRequest extends FormRequest
     {
         $data=$this->validated();
         if ($this->hasFile('image')) {
-            $userName = (!empty($data['full_name']))
-                ? $data['full_name'] . time() + rand(1, 10000000)
-                : time() + rand(1, 10000000);
+            $userName =  (!empty($data['full_name']))
+                ? str_replace(' ', '_', $data['full_name']) . time() . rand(1, 10000000)
+                : time() . rand(1, 10000000);
 
             $path = 'uploads/images/users/';
             $nameImage = $userName . '.' . $this->file('image')->getClientOriginalExtension();
              Storage::disk('public')->put($path . $nameImage, file_get_contents($this->file('image')));
-
              $absolutePath = storage_path('app/public/' . $path . $nameImage);
-
              if (file_exists($absolutePath)) {
                 chmod($absolutePath, 0775);
             } else {
-                 throw new \Exception('File not found: ' . $absolutePath);
+                 throw new \Exception(__('messages.ERROR_OCCURRED') . $absolutePath);
             }
-            $data['image'] = Storage::url($path . $nameImage);
+             $data['image'] = Storage::url($path . $nameImage);
         }
 
 
@@ -137,5 +136,7 @@ class RegisterRequest extends FormRequest
 
         return $data;
     }
+
+
 
 }

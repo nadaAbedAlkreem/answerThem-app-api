@@ -5,15 +5,13 @@ namespace App\Http\Controllers\Api\V1\Friends;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreFriendRequest;
 use App\Http\Requests\UpdateFriendRequest;
-use App\Http\Resources\Api\FriendResource;
-use App\Http\Resources\Api\UserResource;
+ use App\Http\Resources\Api\UserResource;
 use App\Http\Resources\Api\UserWithFriendsResource;
 use App\Models\Friend;
-use App\Models\User;
-use App\Repositories\IFriendRepositories;
+ use App\Repositories\IFriendRepositories;
 use App\Repositories\IUserRepositories;
-use App\Services\UserService;
-use App\Traits\ResponseTrait;
+ use App\Traits\ResponseTrait;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App  ;
 
@@ -30,12 +28,12 @@ class FriendController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function getFriendsForCurrentUser()
+    public function getFriendsForCurrentUser(Request $request)
     {
         if (!Auth::check()) {
              return $this->errorResponse('UNAUTHENTICATED', [], 401, app()->getLocale());
         }
-        $user = Auth::user();
+        $user =  $request->user();
         $userWithFriends = $this->userRepository->findWith($user->id ,  ['friends']);
         return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY',new UserWithFriendsResource($userWithFriends) , 202, app()->getLocale());
 

@@ -13,8 +13,12 @@ return new class extends Migration
     {
         Schema::create('questions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('category_id')->constrained()->onDelete('cascade'); // Sports or Science
-            $table->string('question_text');
+             $table->foreignId('category_id')->index();
+            $table->foreign('category_id', 'fk_category_id')->references('id')->on('categories')->onDelete('cascade');
+
+
+            $table->string('question_ar_text');
+            $table->string('question_en_text')->nullable();
             $table->timestamps();
             $table->softDeletes(); // Soft delete for notifications
 

@@ -36,7 +36,7 @@ class StoreContactUsRequest extends FormRequest
         $formattedErrors = ['error' => $errors[0]] ;
         throw new \Illuminate\Validation\ValidationException($validator, response()->json([
             'success' => false,
-            'message' => 'ERROR OCCURRED',
+            'message' => __('messages.ERROR_OCCURRED'),
             'data' => [$formattedErrors],
             'status' => 'Internal Server Error'
         ], 500));

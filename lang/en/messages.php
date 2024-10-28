@@ -14,10 +14,13 @@ return [
     'full_name.required' => 'The full name field is required.',
     'full_name.string' => 'The full name must be a string.',
     'full_name.max' => 'The full name may not be greater than 255 characters.',
-
+    'id.exists' => 'The specified class is not a valid base class.',
+    'id.required' => 'The id field is required.',
+    'id.integer' => 'The id must be a number.',
     'sender_id.required' => 'The name field is required.',
     'sender_id.exists' => 'Sender_id.exists',
-
+    'invalid_credentials' => 'Invalid password or email' ,
+    'ERROR_OCCURRED' => 'ERROR OCCURRED' ,
 
     'title.required' => 'The name field is required.',
     'title.string' => 'Name must be text.',

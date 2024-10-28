@@ -4,9 +4,8 @@ namespace App\Http\Requests\Auth;
 
 use Exception;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\Rules\Password;
+use Illuminate\Http\Request;
 
 class UpdateProfileRequest extends FormRequest
 {
@@ -53,27 +52,26 @@ class UpdateProfileRequest extends FormRequest
         $formattedErrors = ['error' => $errors[0]];
         throw new \Illuminate\Validation\ValidationException($validator, response()->json([
             'success' => false,
-            'message' => 'ERROR OCCURRED',
-            'data' => [$formattedErrors],
+            'message' => __('messages.ERROR_OCCURRED'),
+            'data' => $formattedErrors,
             'status' => 'Internal Server Error'
         ], 500));
     }
 
-    public function updateUserData()
+    public function updateUserData($user)
     {
         $data = $this->validated();
 
         // Get the user instance
-        $user = Auth::user(); // or retrieve a user by ID
         if (!$user) {
             throw new Exception('not found user ', 401);
         }
 
         if (isset($data['image']) && $this->hasFile('image')) {
 
-            $userName = (!empty($user->full_name))
-                ? $user->full_name . time() + rand(1, 10000000)
-                : time() + rand(1, 10000000);
+            $userName =  (!empty($data['full_name']))
+                ? str_replace(' ', '_', $data['full_name']) . time() . rand(1, 10000000)
+                : time() . rand(1, 10000000);
 
             $path = 'uploads/images/users/';
             $nameImage = $userName . '.' . $this->file('image')->getClientOriginalExtension();
@@ -82,7 +80,7 @@ class UpdateProfileRequest extends FormRequest
             if (file_exists($absolutePath)) {
                 chmod($absolutePath, 0775);
             } else {
-                throw new \Exception('File not found: ' . $absolutePath);
+                throw new \Exception(__('messages.ERROR_OCCURRED') . $absolutePath);
             }
             $user->image = Storage::url($path . $nameImage);
         }

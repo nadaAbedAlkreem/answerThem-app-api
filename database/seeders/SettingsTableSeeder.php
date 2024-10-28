@@ -173,7 +173,8 @@ class SettingsTableSeeder extends Seeder
 
             [
                 'key' => 'app_privacy_policy_ar',
-                'value' => json_encode([
+                'value' => json_encode(
+                    [
                         [
                         'title' => 'سياسة الخصوصية',
                         'body' => 'هذه هي سياسة الخصوصية للتطبيق.',
