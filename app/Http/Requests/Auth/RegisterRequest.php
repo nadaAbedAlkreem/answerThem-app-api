@@ -116,12 +116,13 @@ class RegisterRequest extends FormRequest
             $nameImage = $userName . '.' . $this->file('image')->getClientOriginalExtension();
              Storage::disk('public')->put($path . $nameImage, file_get_contents($this->file('image')));
              $absolutePath = storage_path('app/public/' . $path . $nameImage);
-             if (file_exists($absolutePath)) {
+              if (file_exists($absolutePath)) {
                 chmod($absolutePath, 0775);
             } else {
                  throw new \Exception(__('messages.ERROR_OCCURRED') . $absolutePath);
             }
-             $data['image'] = Storage::url($path . $nameImage);
+
+            $data['image'] = Storage::url($path . $nameImage);
         }
 
 

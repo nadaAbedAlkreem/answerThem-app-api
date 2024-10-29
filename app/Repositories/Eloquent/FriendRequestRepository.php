@@ -5,6 +5,7 @@ namespace App\Repositories\Eloquent;
 use App\Models\FriendRequest;
 use App\Models\User;
 use App\Repositories\IFriendRequestRepositories;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class FriendRequestRepository extends BaseRepository implements   IFriendRequestRepositories
@@ -15,9 +16,9 @@ class FriendRequestRepository extends BaseRepository implements   IFriendRequest
     {
         $this->model = new FriendRequest();
     }
-    public function getFriendRequestsForCurrentUser()
+    public function getFriendRequestsForCurrentUser($request)
     {
-        $currentUserId = Auth::id();
+        $currentUserId  = $request->user();
         if (!$currentUserId) {
              throw new \Exception('UNAUTHORISED', 401);
         }

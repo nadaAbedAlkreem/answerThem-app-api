@@ -33,6 +33,9 @@ use App\Http\Middleware\SetLocale ;
             });
         Route::group(['middleware' =>  'auth:api'], function ()
         {
+            //
+            Route::get('/user', [UserController::class, 'sendFriendRequest']);
+
             Route::get('/user', [UserController::class, 'getCurrentUser']);
             Route::post('profile/update', [UserController::class, 'updateProfile']);
 
@@ -46,6 +49,10 @@ use App\Http\Middleware\SetLocale ;
             });
             Route::prefix('friends-request')->group(function ()
             {
+                Route::post('send', [FriendRequestController::class, 'sendFriendRequest']);
+
+                Route::get('accept/{id}', [FriendRequestController::class, 'acceptFriendRequest']);
+                Route::get('declined/{id}', [FriendRequestController::class, 'declinedFriendRequest']);
                 Route::get('users', [FriendController::class, 'getUsersForFriendsRequest']);
                 Route::get('current-user', [FriendRequestController::class, 'getFriendRequestsForCurrentUser']);
                 Route::post('update-device-token', [FriendRequestController::class, 'updateDeviceToken']);
@@ -60,6 +67,9 @@ use App\Http\Middleware\SetLocale ;
 
                 Route::get('primary/search', [CategoryController::class, 'searchPrimaryCategories']);
                 Route::get('{id}/subcategories/search', [CategoryController::class, 'searchSubcategories']);
+
+                Route::get('{id}/category', [CategoryController::class, 'getSubAndPrimeCategoryById']);
+
             });
 
 

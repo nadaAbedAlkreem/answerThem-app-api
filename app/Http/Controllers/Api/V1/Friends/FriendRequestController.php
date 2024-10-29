@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\Api\V1\Friends;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreFriendRequestRequest;
 use App\Http\Resources\Api\UserResource;
+use App\Http\Resources\Api\UserWithTokenAccessResource;
 use App\Models\Notification;
 use App\Models\User;
 use App\Repositories\Eloquent\FriendRequestRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Google\Client as Google_Client; // Correct class name
 use App\Traits\ResponseTrait;
@@ -34,9 +37,26 @@ class FriendRequestController extends Controller
     }
 
 
-    public function index()
+    public function sendFriendRequest(StoreFriendRequestRequest $request)
     {
-        //
+        try {
+            $this->friendRequestsRepository->create($request->getData());
+            return $this->successResponse(
+                'CREATE_FRIEND_REQUEST_SUCCESSFULLY',
+               [],
+                202,
+                app()->getLocale()
+            );
+
+        } catch (\Exception $e) {
+             return $this->errorResponse(
+                'ERROR_OCCURRED',
+                ['error' => $e->getMessage()],
+                500,
+                App::getLocale()
+            );
+        }
+
     }
 
     /**
@@ -127,19 +147,26 @@ class FriendRequestController extends Controller
 
 
 
-    public function acceptRequest(Request $request, $id)
+    public function acceptFriendRequest($id)
     {
-        $this->friendRequestService->acceptFriendRequest($id);
-
-        return response()->json(['status' => 'success', 'message' => 'Friend request accepted and friend added.']);
-    }
+        $user = Auth::user();
+        dd($user);
 
 
-    public function getFriendRequestsForCurrentUser()
+        return   $this->friendRequestService->acceptFriendRequest($id);
+     }
+    public function declinedFriendRequest($id ,Request $request)
+    {
+
+       return $this->friendRequestService->declinedFriendRequest($id , $request);
+     }
+
+
+
+    public function getFriendRequestsForCurrentUser(Request $request)
     {
         try{
-        $friendRequest = $this->friendRequestsRepository->getFriendRequestsForCurrentUser();
-
+         $friendRequest = $this->friendRequestsRepository->getFriendRequestsForCurrentUser($request);
         return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY', UserResource::collection($friendRequest), 200, App::getLocale());
        } catch (\Exception $e) {
             return $this->errorResponse($e->getMessage(), [] ,  $e->getCode()  , app()->getLocale());

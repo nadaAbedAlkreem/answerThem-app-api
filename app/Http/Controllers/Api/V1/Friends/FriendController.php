@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Api\V1\Friends;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreFriendRequest;
 use App\Http\Requests\UpdateFriendRequest;
- use App\Http\Resources\Api\UserResource;
+use App\Http\Resources\Api\FriendResource;
+use App\Http\Resources\Api\UserResource;
 use App\Http\Resources\Api\UserWithFriendsResource;
 use App\Models\Friend;
  use App\Repositories\IFriendRepositories;
@@ -30,12 +31,12 @@ class FriendController extends Controller
      */
     public function getFriendsForCurrentUser(Request $request)
     {
-        if (!Auth::check()) {
-             return $this->errorResponse('UNAUTHENTICATED', [], 401, app()->getLocale());
-        }
         $user =  $request->user();
-        $userWithFriends = $this->userRepository->findWith($user->id ,  ['friends']);
-        return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY',new UserWithFriendsResource($userWithFriends) , 202, app()->getLocale());
+        if (!$user) {
+            return $this->errorResponse('UNAUTHENTICATED', [], 401, app()->getLocale());
+        }
+        $friendsOfUser = Friend::getFriends($user->id);
+        return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY',FriendResource::collection($friendsOfUser) , 202, app()->getLocale());
 
     }
 
@@ -93,10 +94,10 @@ class FriendController extends Controller
         //
     }
 
-    public  function  getUsersForFriendsRequest()
+    public  function  getUsersForFriendsRequest(Request $request)
     {
         try {
-            $nonFriends = $this->friendRepository->getNonFriends();
+            $nonFriends = $this->friendRepository->getNonFriends($request);
             return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY',UserResource::collection($nonFriends), 200, \Illuminate\Support\Facades\App::getLocale());
         } catch (\Exception $e) {
             return $this->errorResponse("ERROR_OCCURRED" ,  ['error' => $e->getMessage()] ,  $e->getCode()  , app()->getLocale());

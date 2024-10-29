@@ -26,6 +26,18 @@ class Friend extends Model
     {
         return $this->belongsTo(User::class, 'friend_id');
     }
+    public static function getFriends($userId)
+    {
+        return Friend::where('user_id', $userId)
+            ->orWhere('friend_id', $userId)
+            ->with(['user', 'friend'])
+            ->get()
+            ->map(function ($friendship) use ($userId) {
+                 return $friendship->user_id == $userId ? $friendship->friend : $friendship->user;
+            })
+            ->unique()
+            ->values();
+    }
 
 
 

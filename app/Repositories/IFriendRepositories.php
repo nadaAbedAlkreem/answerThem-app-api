@@ -5,5 +5,5 @@ namespace App\Repositories;
 interface IFriendRepositories
 {
 
-    public function getNonFriends();
+    public function getNonFriends($request);
 }

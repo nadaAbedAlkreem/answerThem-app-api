@@ -24,14 +24,14 @@ return Application::configure(basePath: dirname(__DIR__))
 
     })
     ->withExceptions(function (Exceptions $exceptions) {
-//        $exceptions->render(function (AuthenticationException $e ) {
-//            return (new class {
-//                use ResponseTrait;
-//
-//                public function handleUnauthorized($e) {
-//                    return $this->errorResponse('NOTAUTHORIZED', [],401, app()->getLocale());
-//                }
-//            })->handleUnauthorized($e);
-//
-//        });
+        $exceptions->render(function (AuthenticationException $e ) {
+            return (new class {
+                use ResponseTrait;
+
+                public function handleUnauthorized($e) {
+                     return $this->errorResponse('NOTAUTHORIZED', [],401, app()->getLocale());
+                }
+            })->handleUnauthorized($e);
+
+        });
     })->create();

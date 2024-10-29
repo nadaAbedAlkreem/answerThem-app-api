@@ -44,6 +44,7 @@ class Messages
 
 
 
+
         //PASSWORD
         'FORGET_PASSWORD_SUCCESS' => 'Password reset code sent successfully',
         'FORGET_PASSWORD_FAILED' => 'Failed to sent password reset code!',
@@ -143,6 +144,9 @@ class Messages
         'UPDATE_ELEMENT_NOT_FOUND' => 'Update failed You must enter the data you want to update',
         'CURL_ERROR' => 'Error curl' ,
         'NOTIFICATION_SENT_SUCCESSFULLY'=> 'Notification has been sent'  ,
+        'delete_friend_request' => 'Friend request deleted',
+        'accept_friend_request' => 'Friend request accepted',
+        'CREATE_FRIEND_REQUEST_SUCCESSFULLY' => 'Friend request sent',
 
     ];
 
@@ -150,6 +154,9 @@ class Messages
 
     private static $Messages_AR = [
         // General
+        'delete_friend_request' => 'تم حذف  طلب الصداقة' ,
+        'accept_friend_request' => 'تم قبول طلب الصداقة' ,
+
         'NOTIFICATION_SENT_SUCCESSFULLY'=> 'تم ارسال الاشعار بنجاح ' ,
         'TOO_MANY_ATTEMPTS'=>'محاولات كثيرة جدًا',
         'FINANCIA_GET_SUCCESSFULLY' => 'تمت عملية الحصول على بيانات المالية',
@@ -161,6 +168,8 @@ class Messages
         'UPDATES_ORDER_DETAILS_RETRIEVED'  => 'تم استرجاع   تحديثات   الطلبية '  ,
         'UPDATES_ORDER_NOT_FOUND' => 'لا يمكننا العثور على هذا   تحديثات  الطلبية ' ,
         'CREATE_ITEM_SUCCESSFULLY' => ' تم انشاء العنصر بنجاح ' ,
+        'CREATE_FRIEND_REQUEST_SUCCESSFULLY' => ' تم ارسال طلب الصداقة ' ,
+
         'DELETE_ITEM_SUCCESSFULLY' => ' تم حذف  العنصر بنجاح ' ,
         'CREATE_ITEM_FAILD' => 'فشل في عملية الانشاء العنصر ' ,
         'DELETE_ITEM_FAILD' => 'فشل في عملية حذف العنصر ' ,

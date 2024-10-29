@@ -55,12 +55,19 @@ class CategoryController extends Controller
 
     public function searchSubcategories($id , Request $request)
     {
-
         $subcategories = $this->categoryRepository->searchSubcategories($id , $request);
         if ($subcategories instanceof \Illuminate\Http\JsonResponse) {
             return $subcategories; // Return error response directly
         }
         return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY', CategoryResource::collection($subcategories) , 202, app()->getLocale());
+    }
+    public function getSubAndPrimeCategoryById($id)
+    {
+        $category = $this->categoryRepository->getCategoryById($id);
+        if ($category instanceof \Illuminate\Http\JsonResponse) {
+            return $category; // Return error response directly
+        }
+        return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY', new CategoryResource($category) , 202, app()->getLocale());
     }
 
     /**

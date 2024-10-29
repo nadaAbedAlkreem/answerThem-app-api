@@ -92,9 +92,9 @@ class NotificationRepository extends BaseRepository implements INotificationRepo
         }
     }
 
-    public function getNotificationForCurrentUser()
+    public function getNotificationForCurrentUser($request)
     {
-        $currentUserId = Auth::id();
+        $currentUserId = $request->user();
         if (!$currentUserId) {
             throw new \Exception('UNAUTHORISED', 401);
         }

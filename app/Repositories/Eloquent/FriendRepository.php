@@ -5,6 +5,7 @@ namespace App\Repositories\Eloquent;
 use App\Models\Friend;
 use App\Models\User;
 use App\Repositories\IFriendRepositories;
+use http\Env\Request;
 use Illuminate\Support\Facades\Auth;
 
 class FriendRepository extends BaseRepository implements   IFriendRepositories
@@ -21,16 +22,16 @@ class FriendRepository extends BaseRepository implements   IFriendRepositories
     }
 
     // FriendRepository.php
-    public function getNonFriends()
+    public function getNonFriends($request)
     {
-        $currentUserId = Auth::id();
-        if (!$currentUserId) {
+        $user =  $request->user();
+        if (!$user) {
             throw new \Exception('UNAUTHORISED', 401);
         }
-        $friendIds = Friend::where('user_id', $currentUserId)
+        $friendIds = Friend::where('user_id', $user)
             ->pluck('friend_id')
             ->toArray();
-        return User::where('users.id', '!=', $currentUserId)
+        return User::where('users.id', '!=', $user)
             ->whereNotIn('users.id', $friendIds)
             ->get();
     }

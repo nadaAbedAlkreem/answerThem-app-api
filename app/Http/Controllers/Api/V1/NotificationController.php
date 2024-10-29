@@ -8,6 +8,7 @@ use App\Http\Resources\Api\NotificationResource;
 use App\Models\Notification;
 use App\Repositories\INotificationRepositories  ;
 use App\Traits\ResponseTrait;
+use Illuminate\Http\Request;
 
 class NotificationController extends Controller
 {
@@ -72,10 +73,10 @@ class NotificationController extends Controller
     {
         //
     }
-    public  function  getNotificationForCurrentUser()
+    public  function  getNotificationForCurrentUser(Request $request)
     {
         try {
-            $notificationsForCurrentUser = $this->notificationRepo->getNotificationForCurrentUser();
+            $notificationsForCurrentUser = $this->notificationRepo->getNotificationForCurrentUser($request);
              return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY', NotificationResource::collection($notificationsForCurrentUser), 200, \Illuminate\Support\Facades\App::getLocale());
         } catch (\Exception $e) {
             return $this->errorResponse($e->getMessage(), [] ,  $e->getCode()  , app()->getLocale());

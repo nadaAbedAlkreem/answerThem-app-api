@@ -5,51 +5,67 @@ namespace App\Services;
 
 use App\Models\FriendRequest;
 use App\Models\User;
+use App\Traits\ResponseTrait;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 
 class FriendRequestService
 {
+
+    use ResponseTrait ;
     public function acceptFriendRequest($requestId)
     {
-        // Start a database transaction
-        DB::beginTransaction();
+         DB::beginTransaction();
         try {
             // Find the friend request
-            $friendRequest = FriendRequest::findOrFail($requestId);
-
-            // Check if the friend request is still pending
-            if ($friendRequest->status !== 'pending') {
-                return response()->json(['message' => 'Friend request already processed.'], 400);
+            $friendRequest = FriendRequest::find($requestId);
+            if(!$friendRequest)
+            {
+                throw new \Exception(__('messages.id_not_found'));
             }
-
-            // Update the friend request status
-            $friendRequest->status = 'accepted';
-            $friendRequest->save();
-
-            // Add to friends list
-            $friend = User::find($friendRequest->receiver_id); // Get the receiver (friend)
+            $friend = User::find($friendRequest->receiver_id);
             if (!$friend->friends()->where('friend_id', $friendRequest->sender_id)->exists()) {
-                $friend->friends()->attach($friendRequest->sender_id); // Add sender to receiver's friends
+                $friend->friends()->attach($friendRequest->sender_id);
             }
-
-            // Add the receiver as a friend to the sender as well
             $sender = User::find($friendRequest->sender_id);
             if (!$sender->friends()->where('friend_id', $friendRequest->receiver_id)->exists()) {
                 $sender->friends()->attach($friendRequest->receiver_id);
             }
-
-            // Delete the friend request
+            $friendRequest->status = 'accepted';
+            $friendRequest->save();
             $friendRequest->delete();
-
-            // Commit the transaction
             DB::commit();
 
-            return response()->json(['message' => 'Friend request accepted successfully.'], 200);
+            return $this->successResponse('accept_friend_request', [], 200, App::getLocale());
         } catch (\Exception $e) {
             // Rollback the transaction in case of error
             DB::rollBack();
-            return response()->json(['message' => 'An error occurred.'], 500);
+            return $this->errorResponse('ERROR_OCCURRED', ['error' => $e->getMessage()], 500, app()->getLocale());
+        }
+    }
+
+    public function declinedFriendRequest($requestId , $request)
+    {
+        DB::beginTransaction();
+        try {
+
+            $friendRequest = FriendRequest::find($requestId);
+             if(!$friendRequest)
+            {
+                 throw new \Exception(__('messages.id_not_found'));
+            }
+             $friendRequest->status = 'declined';
+             $friendRequest->save();
+             $friendRequest->delete();
+            DB::commit();
+
+            return $this->successResponse('delete_friend_request', [], 200, App::getLocale());
+        } catch (\Exception $e) {
+            // Rollback the transaction in case of error
+            DB::rollBack();
+            return $this->errorResponse('ERROR_OCCURRED', ['error' => $e->getMessage()], 500, app()->getLocale());
         }
     }
 
