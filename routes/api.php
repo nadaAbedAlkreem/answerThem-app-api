@@ -20,6 +20,7 @@ use App\Http\Middleware\SetLocale ;
                 Route::prefix('auth')->group(function ()
             {
                 Route::get('/translate', [UserController::class, 'getTranslatedPagesAuthentication']);
+                Route::get('/login', [LoginController::class, 'index'])->name('login');
 
                 Route::get('/users', [UserController::class, 'getAllUsers']);
                 Route::get('/users/search', [UserController::class, 'getSearchUsers']);

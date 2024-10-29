@@ -19,6 +19,10 @@ class LoginController extends Controller
     {
         $this->userService = $userService;
     }
+    public function index()
+    {
+         throw new \Illuminate\Auth\AuthenticationException('Unauthenticated.');
+    }
 
 
     public function login(LoginRequest $request)
