@@ -20,7 +20,7 @@ class CategorySeeder extends Seeder
             'description_en' => 'Category for sports games.',
             'rating' => 4.5,
             'image' => 'https://linktest.gastwerk-bern.ch/storage/uploads/images/categories/Basketball.png', // Specify an actual path or URL
-            'parent_id' => 0, // No parent for primary category
+            'parent_id' => 0,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -35,6 +35,7 @@ class CategorySeeder extends Seeder
                 'rating' => 4.8,
                 'image' => 'https://linktest.gastwerk-bern.ch/storage/uploads/images/categories/Football.png',
                 'parent_id' => $sportsCategoryId, // Link to Sports Games
+                'famous_gaming' =>1 ,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -57,6 +58,7 @@ class CategorySeeder extends Seeder
                 'rating' => 4.6,
                 'image' => 'https://linktest.gastwerk-bern.ch/storage/uploads/images/categories/game.png',
                 'parent_id' => $sportsCategoryId,
+                'famous_gaming' =>1 ,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

@@ -1,22 +1,23 @@
 <?php
 
-use App\Http\Controllers\Api\V1\CategoryController;
+use App\Http\Controllers\Api\V1\Auth\ForgotPasswordController;
+use App\Http\Controllers\Api\V1\Auth\LoginController;
+use App\Http\Controllers\Api\V1\Auth\RegisterController;
+use App\Http\Controllers\Api\V1\Auth\SocialAuthController;
+use App\Http\Controllers\Api\V1\Auth\UserController;
 use App\Http\Controllers\Api\V1\ContactUsController;
+use App\Http\Controllers\Api\V1\Friends\FriendController;
+use App\Http\Controllers\Api\V1\Friends\FriendRequestController;
+use App\Http\Controllers\Api\V1\Game\CategoryController;
+use App\Http\Controllers\Api\V1\Game\UserTrackingController;
 use App\Http\Controllers\Api\V1\NotificationController;
 use App\Http\Controllers\Api\V1\SettingController;
-use Illuminate\Http\Request;
+use App\Http\Middleware\SetLocale;
+use App\Models\UserTracking;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\V1\Auth\RegisterController;
-use App\Http\Controllers\Api\V1\Auth\UserController;
-use App\Http\Controllers\Api\V1\Auth\LoginController;
-use App\Http\Controllers\Api\V1\Auth\SocialAuthController;
-use App\Http\Controllers\Api\V1\Auth\ForgotPasswordController;
-use App\Http\Controllers\Api\V1\Friends\FriendRequestController;
-use App\Http\Controllers\Api\V1\Friends\FriendController;
-use App\Http\Middleware\SetLocale ;
 
 
-    Route::group(['middleware' =>  SetLocale::class], function () {
+Route::group(['middleware' =>  SetLocale::class], function () {
                 Route::prefix('auth')->group(function ()
             {
                 Route::get('/translate', [UserController::class, 'getTranslatedPagesAuthentication']);
@@ -39,7 +40,14 @@ use App\Http\Middleware\SetLocale ;
 
             Route::get('/user', [UserController::class, 'getCurrentUser']);
             Route::post('profile/update', [UserController::class, 'updateProfile']);
+            Route::prefix('user-tracking')->group(function ()
+            {
+                Route::get('LastGame', [UserTrackingController::class, 'getLastGame']);
+                Route::get('track-game/{userId}/{result}', [UserTrackingController::class, 'trackAppLogGameResult']);
+                Route::get('track-entry/{userId}', [UserTrackingController::class, 'trackAppEntry']);
+                Route::get('current-user', [UserTrackingController::class, 'getTrafficForCurrentUser']);
 
+            });
             Route::prefix('friends')->group(function ()
             {
                 Route::get('current-user', [FriendController::class, 'getFriendsForCurrentUser']);
@@ -70,6 +78,9 @@ use App\Http\Middleware\SetLocale ;
                 Route::get('{id}/subcategories/search', [CategoryController::class, 'searchSubcategories']);
 
                 Route::get('{id}/category', [CategoryController::class, 'getSubAndPrimeCategoryById']);
+                Route::get('all', [CategoryController::class, 'getSubCategoriesAll']);
+                Route::get('famous', [CategoryController::class, 'getSubCategoriesFamous']);
+                Route::get('latest', [CategoryController::class, 'getSubCategoriesLatest']);
 
             });
 

@@ -12,11 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('challenges', function (Blueprint $table) {
-            $table->foreignId('team1_id')->nullable()->index();
-            $table->foreign('team1_id', 'fk_team1_id')->references('id')->on('teams')->onDelete('cascade');
+            $table->id();
 
-            $table->foreignId('team2_id')->nullable()->index();
-            $table->foreign('team2_id', 'fk_team2_id')->references('id')->on('teams')->onDelete('cascade');
+            $table->foreignId('team_member1_id')->nullable()->index();
+            $table->foreign('team_member1_id', 'fk_team_member1_id')->references('id')->on('team_members')->onDelete('cascade');
+
+            $table->foreignId('team_member2_id')->nullable()->index();
+            $table->foreign('team_member2_id', 'fk_team_member2_id')->references('id')->on('team_members')->onDelete('cascade');
 
             // User foreign keys with unique constraint names
             $table->foreignId('user1_id')->nullable()->index();
@@ -24,6 +26,8 @@ return new class extends Migration
 
             $table->foreignId('user2_id')->nullable()->index();
             $table->foreign('user2_id', 'fk_user2_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('category_id')->index()->constrained('categories')->onDelete('cascade');
+
 
             $table->integer('number_of_questions')->default(25);
             $table->integer('time_per_question')->default(30); // seconds

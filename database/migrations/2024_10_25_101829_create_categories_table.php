@@ -20,6 +20,9 @@ return new class extends Migration
             $table->decimal('rating' ,4, 2)->default(0.00);
             $table->string('image');
             $table->bigInteger('parent_id')->default(0);
+            $table->enum('famous_gaming',[ 0, 1])->default(0);
+
+
             $table->timestamps();
             $table->softDeletes();
 

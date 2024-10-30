@@ -13,6 +13,8 @@ class Team extends Model
 
     protected $fillable = ['name_ar', 'name_en', 'user_id'];
 
+
+
     // A team belongs to a user (creator)
     public function user()
     {
@@ -20,14 +22,19 @@ class Team extends Model
     }
 
     // A team can participate in multiple challenges
-    public function challenges()
-    {
-        return $this->hasMany(Challenge::class, 'team1_id');
-    }
+//    public function challenges()
+//    {
+//        return $this->hasMany(Challenge::class, 'team1_id');
+//    }
 
     // A team can be challenged by other teams
-    public function challengesReceived()
+//    public function challengesReceived()
+//    {
+//        return $this->hasMany(Challenge::class, 'team2_id');
+//    }
+    public function teamMembers()
     {
-        return $this->hasMany(Challenge::class, 'team2_id');
+        return $this->hasMany(TeamMember::class, 'team_id');
     }
+
 }

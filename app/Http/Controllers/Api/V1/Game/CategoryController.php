@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers\Api\V1\Game;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCategoryRequest;
-use App\Http\Requests\SubcategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Http\Resources\Api\CategoryResource;
 use App\Models\Category;
@@ -69,6 +68,24 @@ class CategoryController extends Controller
         }
         return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY', new CategoryResource($category) , 202, app()->getLocale());
     }
+
+    public function getSubCategoriesAll()
+    {
+        $categories = $this->categoryRepository->getSubCategoriesAll();
+        return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY', CategoryResource::collection($categories), 202, app()->getLocale());
+    }
+    public function getSubCategoriesLatest()
+    {
+        $categories = $this->categoryRepository->getSubCategoriesLatest();
+        return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY', CategoryResource::collection($categories), 202, app()->getLocale());
+    }
+
+    public function getSubCategoriesFamous()
+    {
+        $categories = $this->categoryRepository->getSubCategoriesFamous();
+        return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY', CategoryResource::collection($categories), 202, app()->getLocale());
+    }
+
 
     /**
      * Store a newly created resource in storage.

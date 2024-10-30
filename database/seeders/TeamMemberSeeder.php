@@ -6,22 +6,21 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class TeamSeeder extends Seeder
+class TeamMemberSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        DB::table('teams')->insert([
+        DB::table('team_members')->insert([
             [
-                'name_ar' => 'فريق 1',
-                'name_en' => 'Team 1',
-                'user_id' => 1, // Creator of the team
+                'team_id' => 1, // Adjust IDs as needed
+                'user_id' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-            // Add more teams as needed
+            // Add more team members as needed
         ]);
     }
 }

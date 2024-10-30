@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers\Api\V1\Game;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreInvitationRequest;
-use App\Http\Requests\UpdateInvitationRequest;
-use App\Models\Invitation;
+use App\Http\Requests\StoreQuestionRequest;
+use App\Http\Requests\UpdateQuestionRequest;
+use App\Models\Question;
 
-class InvitationController extends Controller
+class QuestionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -28,7 +28,7 @@ class InvitationController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreInvitationRequest $request)
+    public function store(StoreQuestionRequest $request)
     {
         //
     }
@@ -36,7 +36,7 @@ class InvitationController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Invitation $invitation)
+    public function show(Question $question)
     {
         //
     }
@@ -44,7 +44,7 @@ class InvitationController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Invitation $invitation)
+    public function edit(Question $question)
     {
         //
     }
@@ -52,7 +52,7 @@ class InvitationController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateInvitationRequest $request, Invitation $invitation)
+    public function update(UpdateQuestionRequest $request, Question $question)
     {
         //
     }
@@ -60,7 +60,7 @@ class InvitationController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Invitation $invitation)
+    public function destroy(Question $question)
     {
         //
     }

@@ -16,12 +16,17 @@ class DatabaseSeeder extends Seeder
     {
 
         $this->call([
-            CategorySeeder::class,
-            UsersTableSeeder::class,
-            FriendRequestSeeder::class,
-            FriendSeeder::class,
-            NotificationSeeder::class,
-            SettingsTableSeeder::class,
+//            CategorySeeder::class,
+            TeamSeeder::class,
+            TeamMemberSeeder::class,
+            UserTrackingSeeder::class,
+//            UsersTableSeeder::class,
+//            FriendRequestSeeder::class,
+//            FriendSeeder::class,
+//            NotificationSeeder::class,
+//            SettingsTableSeeder::class,
+         ChallengeSeeder::class,
+
 
         ]);
 

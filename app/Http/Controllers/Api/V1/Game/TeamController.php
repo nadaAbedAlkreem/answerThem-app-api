@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers\Api\V1\Game;
 
 use App\Http\Controllers\Controller;
-use App\Models\Answer;
-use App\Http\Requests\StoreAnswerRequest;
-use App\Http\Requests\UpdateAnswerRequest;
+use App\Http\Requests\StoreTeamRequest;
+use App\Http\Requests\UpdateTeamRequest;
+use App\Models\Team;
 
-class AnswerController extends Controller
+class TeamController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -28,7 +28,7 @@ class AnswerController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreAnswerRequest $request)
+    public function store(StoreTeamRequest $request)
     {
         //
     }
@@ -36,7 +36,7 @@ class AnswerController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Answer $answer)
+    public function show(Team $team)
     {
         //
     }
@@ -44,7 +44,7 @@ class AnswerController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Answer $answer)
+    public function edit(Team $team)
     {
         //
     }
@@ -52,7 +52,7 @@ class AnswerController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateAnswerRequest $request, Answer $answer)
+    public function update(UpdateTeamRequest $request, Team $team)
     {
         //
     }
@@ -60,7 +60,7 @@ class AnswerController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Answer $answer)
+    public function destroy(Team $team)
     {
         //
     }

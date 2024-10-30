@@ -136,9 +136,10 @@ class Messages
         'CREATE_ITEM_SUCCESSFULLY' => 'Created successfully' ,
         'DELETE_ITEM_SUCCESSFULLY' => 'Deleted successfully' ,
         'DATA_RETRIEVED_SUCCESSFULLY' => 'Delivered data successfully',
-        'DATA_RETRIEVED_FAILD' => 'Delivered data failed',
+        'DATA_RETRIEVED_FAILED' => 'Delivered data failed',
         'UNAUTHENTICATED'=> 'Unauthenticated' ,
-
+        'TRAFFICKER_SUCCESSFULLY' => 'The tracking process has been completed. ',
+        'NO_GAMES' => 'No games found for this user' ,
         'CREATE_ITEM_FAILD' => 'Created Failed' ,
         'DELETE_ITEM_FAILD' => 'Deleted Failed' ,
         'UPDATE_ELEMENT_NOT_FOUND' => 'Update failed You must enter the data you want to update',
@@ -154,9 +155,10 @@ class Messages
 
     private static $Messages_AR = [
         // General
+        'NO_GAMES' => 'لم يتم العثور على ألعاب لهذا المستخدم',
         'delete_friend_request' => 'تم حذف  طلب الصداقة' ,
         'accept_friend_request' => 'تم قبول طلب الصداقة' ,
-
+        'TRAFFICKER_SUCCESSFULLY' => 'تم إكمال عملية التتبع. ',
         'NOTIFICATION_SENT_SUCCESSFULLY'=> 'تم ارسال الاشعار بنجاح ' ,
         'TOO_MANY_ATTEMPTS'=>'محاولات كثيرة جدًا',
         'FINANCIA_GET_SUCCESSFULLY' => 'تمت عملية الحصول على بيانات المالية',

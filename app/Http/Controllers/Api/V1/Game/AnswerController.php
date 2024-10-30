@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers\Api\V1\Game;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreChallengeRequest;
-use App\Http\Requests\UpdateChallengeRequest;
-use App\Models\Challenge;
+use App\Http\Requests\StoreAnswerRequest;
+use App\Http\Requests\UpdateAnswerRequest;
+use App\Models\Answer;
 
-class ChallengeController extends Controller
+class AnswerController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -28,7 +28,7 @@ class ChallengeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreChallengeRequest $request)
+    public function store(StoreAnswerRequest $request)
     {
         //
     }
@@ -36,7 +36,7 @@ class ChallengeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Challenge $challenge)
+    public function show(Answer $answer)
     {
         //
     }
@@ -44,7 +44,7 @@ class ChallengeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Challenge $challenge)
+    public function edit(Answer $answer)
     {
         //
     }
@@ -52,7 +52,7 @@ class ChallengeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateChallengeRequest $request, Challenge $challenge)
+    public function update(UpdateAnswerRequest $request, Answer $answer)
     {
         //
     }
@@ -60,7 +60,7 @@ class ChallengeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Challenge $challenge)
+    public function destroy(Answer $answer)
     {
         //
     }

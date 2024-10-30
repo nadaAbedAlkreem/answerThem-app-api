@@ -17,7 +17,8 @@ class Category extends Model
         'description_en',
         'rating',
         'image',
-        'parent_id'
+        'parent_id',
+        'famous_gaming'
     ];
 
     // A category can have many questions

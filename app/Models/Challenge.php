@@ -21,15 +21,14 @@ class Challenge extends Model
     ];
 
     // A challenge belongs to team 1
-    public function team1()
+    public function teamMember1()
     {
-        return $this->belongsTo(Team::class, 'team1_id');
+        return $this->belongsTo(TeamMember::class, 'team_member1_id'); // foreign key in the challenges table
     }
 
-    // A challenge belongs to team 2
-    public function team2()
+    public function teamMember2()
     {
-        return $this->belongsTo(Team::class, 'team2_id');
+        return $this->belongsTo(TeamMember::class, 'team_member2_id'); // foreign key in the challenges table
     }
 
     // A challenge belongs to user 1

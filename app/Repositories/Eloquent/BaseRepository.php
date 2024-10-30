@@ -20,7 +20,13 @@ abstract class BaseRepository implements BaseRepositoryInterface
     {
         return $this->model->create($data);
     }
-    
+
+    public function firstOrCreate(array $data)
+    {
+        return $this->model->firstOrCreate($data);
+    }
+
+
     public function getMax($column)
     {
         return $this->model->max($column);
@@ -52,6 +58,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
     }
 
 
+
     /**
      * retrieve all the row for the given model
      * @params OPTIONAL $orderBy with the column name && dir
@@ -66,7 +73,27 @@ abstract class BaseRepository implements BaseRepositoryInterface
         return $this->model->active()->orderBy($orderBy['column'], $orderBy['dir'])->get();
     }
 
-    public function getAllWhere(array $data , $orderBy = ['column' => 'id', 'dir' => 'DESC'])
+//    public function getAllWhere(array $data , $orderBy = ['column' => 'id', 'dir' => 'DESC'])
+//    {
+//        return $this->model->where($data)->orderBy($orderBy['column'], $orderBy['dir'])->get();
+//    }
+
+    public function getAllWhere(array $conditions = [], $orderBy = ['column' => 'id', 'dir' => 'DESC'])
+    {
+        $query = $this->model;
+
+        foreach ($conditions as $column => $value) {
+            if (is_array($value)) {
+                // Assuming format ['operator', 'value']
+                $query = $query->where($column, $value[0], $value[1]);
+            } else {
+                $query = $query->where($column, $value);
+            }
+        }
+
+        return $query->orderBy($orderBy['column'], $orderBy['dir'])->get();
+    }
+    public function getAllWhereWithoutArray($data , $orderBy = ['column' => 'id', 'dir' => 'DESC'])
     {
         return $this->model->where($data)->orderBy($orderBy['column'], $orderBy['dir'])->get();
     }
@@ -140,20 +167,20 @@ abstract class BaseRepository implements BaseRepositoryInterface
     {
         return $this->model->where($conditions)->orderBy($orderBy['column'], $orderBy['dir'])->get();
 
-        
+
     }
     public function getWhereFirst(array $conditions, $orderBy = ['column' => 'id', 'dir' => 'DESC'])
     {
         return $this->model->where($conditions)->orderBy($orderBy['column'], $orderBy['dir'])->first();
 
-        
+
     }
 
     public function getWhereSerach( $conditions, $orderBy = ['column' => 'id', 'dir' => 'DESC'])
     {
         return $this->model->where($conditions)->orderBy($orderBy['column'], $orderBy['dir'])->get();
 
-        
+
     }
     public function getWhereNestedSearch($conditions, $orderBy = ['column' => 'id', 'dir' => 'DESC'])
     {
@@ -169,13 +196,13 @@ abstract class BaseRepository implements BaseRepositoryInterface
             }
         })->orderBy($orderBy['column'], $orderBy['dir'])->get();
     }
- 
-    
+
+
     public function getWhereYear($column , $operator ,$val, array $data, $orderBy = ['column' => 'id', 'dir' => 'DESC'])
     {
         return $this->model->whereYear($column , $operator ,$val)->where($data)->orderBy($orderBy['column'], $orderBy['dir'])->get();
     }
-    
+
     public function collectByYear(array $data, $orderBy = ['column' => 'id', 'dir' => 'DESC'])
     {
         return $this->model->where($data)->orderBy($orderBy['column'], $orderBy['dir'])->get()
@@ -183,7 +210,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
             return Carbon::parse($date->event_date)->format('Y'); // grouping by years
         });
     }
-    
+
     /**
      * retrieve all the row for the given model with the given relations
      * @params OPTIONAL $orderBy with the column name && dir
@@ -205,7 +232,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
         return $this->model->with($data)->orderBy($orderBy['column'], $orderBy['dir'])->paginate($limit);
     }
 
-    
+
     /**
      * retrieve the model paginated with th given relations and conditions
      * @params OPTIONAL $orderBy with the column name && dir
@@ -327,12 +354,12 @@ abstract class BaseRepository implements BaseRepositoryInterface
     }
 
     public function softDeleteAll(){
-        
+
         $this->model::where('id', '>', 0)->update(['deleted_at' => Carbon::now(), 'deleted_by' => Auth::user()->id]);
     }
 
     public function softDeleteAllWhere(array $data){
-        
+
         $this->model::where('id', '>', 0)->where($data)->update(['deleted_at' => Carbon::now(), 'deleted_by' => Auth::user()->id]);
     }
 
@@ -366,7 +393,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
     {
         return $this->model->with($data)->where('id', $id)->first();
     }
-    
+
 
 
 
@@ -540,7 +567,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
         return $result;
 
     }
-    
+
     public function searchWithWhereHas(array $with, array $where = ['id', '>', 0],array $columns, $searchQuery ,$relation_arr,$var,$arr_data,$orderBy = ['column' => 'id', 'dir' => 'DESC'])
     {
 

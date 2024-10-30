@@ -92,6 +92,19 @@ class User extends Authenticatable
     {
         return $this->hasMany(Notification::class, 'receiver_id');
     }
+    public function userTracking()
+    {
+        return $this->hasMany(UserTracking::class, 'user_id');
+    }
+    public function teamMembers()
+    {
+        return $this->hasMany(TeamMember::class, 'user_id');
+    }
+
+    public function team()
+    {
+        return $this->hasMany(Team::class, 'user_id');
+    }
 
 
 
