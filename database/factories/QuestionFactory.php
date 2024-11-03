@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Category;
+use Faker\Factory as FakerFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,8 +18,12 @@ class QuestionFactory extends Factory
      */
     public function definition(): array
     {
+        $arabicFaker = FakerFactory::create('ar_SA');
+        $englishFaker = $this->faker; // defaults to en_US
         return [
-            //
+            'category_id' => Category::factory(5),
+            'question_ar_text' => $arabicFaker->sentence,
+            'question_en_text' => $this->faker->optional()->sentence,
         ];
     }
 }

@@ -27,7 +27,7 @@ Route::group(['middleware' =>  SetLocale::class], function () {
                 Route::get('/users/search', [UserController::class, 'getSearchUsers']);
                 Route::post('/register', [RegisterController::class, 'register']);
                 Route::post('/login', [LoginController::class, 'login']);
-                Route::post('social/mobile', [SocialAuthController::class, 'handleSocialLogin']);
+                Route::post('login/callback', [SocialAuthController::class, 'handleSocialLogin']);
                 Route::post('forgot-password', [ForgotPasswordController::class, 'sendResetLink']);
                 Route::post('reset-password', [ForgotPasswordController::class, 'resetPassword']);
                 Route::post('verifyToken', [ForgotPasswordController::class, 'verifyToken']);
@@ -35,14 +35,13 @@ Route::group(['middleware' =>  SetLocale::class], function () {
             });
         Route::group(['middleware' =>  'auth:api'], function ()
         {
-            //
-            Route::get('/user', [UserController::class, 'sendFriendRequest']);
-
+            Route::post('/logout', [LoginController::class, 'logout']);
             Route::get('/user', [UserController::class, 'getCurrentUser']);
+
             Route::post('profile/update', [UserController::class, 'updateProfile']);
             Route::prefix('user-tracking')->group(function ()
             {
-                Route::get('LastGame', [UserTrackingController::class, 'getLastGame']);
+                Route::get('game-track', [UserTrackingController::class, 'getLastGame']);
                 Route::get('track-game/{userId}/{result}', [UserTrackingController::class, 'trackAppLogGameResult']);
                 Route::get('track-entry/{userId}', [UserTrackingController::class, 'trackAppEntry']);
                 Route::get('current-user', [UserTrackingController::class, 'getTrafficForCurrentUser']);
@@ -59,14 +58,12 @@ Route::group(['middleware' =>  SetLocale::class], function () {
             Route::prefix('friends-request')->group(function ()
             {
                 Route::post('send', [FriendRequestController::class, 'sendFriendRequest']);
-
                 Route::get('accept/{id}', [FriendRequestController::class, 'acceptFriendRequest']);
                 Route::get('declined/{id}', [FriendRequestController::class, 'declinedFriendRequest']);
                 Route::get('users', [FriendController::class, 'getUsersForFriendsRequest']);
                 Route::get('current-user', [FriendRequestController::class, 'getFriendRequestsForCurrentUser']);
                 Route::post('update-device-token', [FriendRequestController::class, 'updateDeviceToken']);
-                Route::post('send-fcm-notification', [FriendRequestController::class, 'sendFcmNotification']);
-            });
+             });
         });
 
             Route::prefix('categories')->group(function ()
@@ -78,16 +75,8 @@ Route::group(['middleware' =>  SetLocale::class], function () {
                 Route::get('{id}/subcategories/search', [CategoryController::class, 'searchSubcategories']);
 
                 Route::get('{id}/category', [CategoryController::class, 'getSubAndPrimeCategoryById']);
-                Route::get('all', [CategoryController::class, 'getSubCategoriesAll']);
-                Route::get('famous', [CategoryController::class, 'getSubCategoriesFamous']);
-                Route::get('latest', [CategoryController::class, 'getSubCategoriesLatest']);
-
+                Route::get('home', [CategoryController::class, 'getCategoriesDetails']);
             });
-
-
-
-
-
         Route::prefix('setting')->group(function ()
             {
                 Route::get('', [SettingController::class, 'index']);

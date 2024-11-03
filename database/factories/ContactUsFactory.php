@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,10 @@ class ContactUsFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'sender_id' => User::factory(5),
+            'title' => $this->faker->sentence(),
+            'description' => $this->faker->paragraph(),
+            'status' => $this->faker->randomElement(['important', 'middle', 'not_important']),
         ];
     }
 }

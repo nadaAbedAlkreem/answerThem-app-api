@@ -16,7 +16,7 @@ class ChallengeSeeder extends Seeder
         DB::table('challenges')->insert([
             [
                 'team_member1_id' => 1, // Adjust IDs as needed
-                'team_member2_id' => 2,
+                'team_member2_id' => 1,
                 'user1_id' => null,
                 'user2_id' => null,
                 'category_id' => 2, // Make sure this ID corresponds to an existing category

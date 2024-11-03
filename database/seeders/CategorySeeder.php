@@ -23,10 +23,27 @@ class CategorySeeder extends Seeder
             'parent_id' => 0,
             'created_at' => now(),
             'updated_at' => now(),
-        ]);
+        ]
+          ,
+        [
+            'name_ar' => 'ألعاب رياضية',
+            'name_en' => 'Sports Games',
+            'description_ar' => 'فئة الألعاب الرياضية.',
+            'description_en' => 'Category for sports games.',
+            'rating' => 4.5,
+            'image' => 'https://linktest.gastwerk-bern.ch/storage/uploads/images/categories/Basketball.png', // Specify an actual path or URL
+            'parent_id' => 0,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]
+
+
+
+
+        );
 
         // Insert subcategories for Sports Games
-        DB::table('categories')->insert([
+        $ss =   DB::table('categories')->insertGetId([
             [
                 'name_ar' => 'كرة القدم',
                 'name_en' => 'Football',

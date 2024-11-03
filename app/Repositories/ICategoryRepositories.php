@@ -12,9 +12,8 @@ interface ICategoryRepositories
 
     public function searchSubcategories($primaryCategoryId , $request);
     public function getCategoryById($CategoryId);
-    public function getSubCategoriesAll();
-    public function getSubCategoriesLatest();
-    public function getSubCategoriesFamous();
+    public function getCategoriesDetails();
+
 
 
 }

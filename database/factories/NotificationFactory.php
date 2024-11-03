@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,11 @@ class NotificationFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'sender_id' => User::factory(5),
+            'receiver_id' => User::factory(5),
+            'type' => $this->faker->randomElement(['friend_request', 'invitations_request', 'other']),
+            'data' => json_encode(['message' => $this->faker->sentence]),
+            'read_at' => $this->faker->optional()->dateTime(),
         ];
     }
 }

@@ -67,7 +67,7 @@ use Twilio\Rest\Client;
          $user->update(['remember_token' => $token]);
          $utcNow = Carbon::now();
          $localNow = $utcNow->setTimezone('Asia/Baghdad');
-         $expiryTime = $localNow->copy()->addMinutes(5);
+         $expiryTime = $localNow->copy()->addMinutes(1);
           Cache::put($identifier . '_token', ['token' => $token, 'expires_at' => $expiryTime], 60); // Store token and expiry time
          $cachedData = Cache::get($identifier . '_token');
 

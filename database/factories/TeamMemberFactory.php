@@ -2,6 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\Team;
+use App\Models\TeamMember;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -9,6 +12,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class TeamMemberFactory extends Factory
 {
+    protected $model = TeamMember::class;
+
     /**
      * Define the model's default state.
      *
@@ -17,7 +22,8 @@ class TeamMemberFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'team_id' => Team::factory(5),
+            'user_id' => User::factory(5),
         ];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,8 +17,14 @@ class FriendRequestFactory extends Factory
      */
     public function definition(): array
     {
+        $status = $this->faker->randomElement(['pending', 'accepted', 'declined']);
+
         return [
-            //
+            'sender_id' => User::factory(5),
+            'receiver_id' => User::factory(5),
+            'status' => $status,
+            'deleted_at' => $status === 'accepted' || $status === 'declined' ? now() : null, // Set deleted_at if accepted or declined
+
         ];
     }
 }

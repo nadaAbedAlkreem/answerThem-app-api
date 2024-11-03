@@ -19,8 +19,8 @@ class HttpStatus
         "500" => "Internal Server Error"  ,
         "503" => "Service Unavailable . "  ,
         "401" => "Invalid credentials . "  ,
-        "403" => "Forbidden error"
-    ];
+        "403" => "Forbidden error"  ,
+     ];
 
     public static function getHttpStatus($status)
     {

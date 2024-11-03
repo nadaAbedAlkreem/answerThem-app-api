@@ -20,44 +20,34 @@ use Illuminate\Support\Str;
 class SocialAuthController extends Controller
 {
     use ResponseTrait ;
-//    public function redirectToGoogle()
-//    {
-//         return Socialite::driver('google')->redirect();
-//    }
-//
-//    public function handleGoogleCallback()
-//    {
-//        try {
-//            $googleUser = Socialite::driver('google')->user();
-//            return $this->handleSocialUser($googleUser, 'google');
-//        } catch (Exception $e) {
-//            return $this->errorResponse('ERROR_OCCURRED', ['error' => $e->getMessage()], 500, app()->getLocale());
-//        }
-//    }
+    public function redirectToGoogle()
+    {
+
+         return Socialite::driver('google')->stateless()->redirect();
+    }
+
+
     public function handleSocialLogin(Request $request)
     {
         try {
             $request->validate([
-                'social_type' => 'required|string',
+                'social_type' => 'required|string|in:google,twitter,instagram',
                 'social_token' => 'required|string',
                 'fcm_token' => 'required|string',
                 'device_type' => 'required|string',
             ]);
 
-             // Verify Google token and get user information
-            $socialUser = Socialite::driver($request->input['social_type'])->stateless()->userFromToken($request->social_token);
-
-            // Check if the user exists in your database
-            $user = User::where('email', $socialUser->email)->first();
-
+             $socialUser = retry(3, function() use ($request) {
+                return Socialite::driver($request->social_type)->stateless()->userFromToken($request->social_token);
+            }, 100);
+             $user = User::where('email', $socialUser->email)->first();
             if (!$user) {
-                // If user does not exist, create a new user
                 $user = User::create([
                     'full_name' => $socialUser->name,
                     'email' => $socialUser->email,
 //                    'phone' => $socialUser->email, // You might want to modify this to handle phone numbers properly
                     'image' => $socialUser->avatar,
-                    'provider' =>$request->input['social_type'] ,
+                    'provider' =>$request->social_type ,
                     'provider_id' => $socialUser->id,
                     'password' => Hash::make(Str::random(8)), // Generate a random password for security
                 ]);
@@ -80,7 +70,10 @@ class SocialAuthController extends Controller
 //                'token' => $token,
 //            ]);
         } catch (Exception $e) {
-              return $this->errorResponse('ERROR_OCCURRED', ['error' => $e->getMessage()], 500, app()->getLocale());
+            if ($e instanceof \Laravel\Socialite\Two\InvalidStateException) {
+                return $this->errorResponse('INVALID_TOKEN', ['error' => 'Token has expired or is invalid'], 401, app()->getLocale());
+            }
+            return $this->errorResponse('ERROR_OCCURRED', ['error' => $e->getMessage()], 500, app()->getLocale());
 
         }
     }

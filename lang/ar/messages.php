@@ -7,6 +7,8 @@ return [
         'mimes' => 'يجب أن يكون الملف من الأنواع: jpeg, png, jpg, gif, svg.',
         'max' => 'لا يمكن أن يتجاوز حجم الصورة 2048 كيلوبايت.',
     ],
+    'friend_request_notification_title' => 'طلب الصداقة' ,
+    'friend_request_notification_body' => 'أرسل لك طلب صداقة ' ,
     'sender_id.required' => 'حقل الاسم مطلوب.',
     'sender_id.exists' => ' رقم معرف غير موجود',
     'receiver_id.required' => 'حقل الاسم مطلوب.',
@@ -16,11 +18,8 @@ return [
     'id.integer' => 'يجب ان يكون المعرف رقما ',
     'ERROR_OCCURRED' => 'حدث خطأ ' ,
     'id_not_found' => 'حدث خطأ:عنصر  غير موجود  ' ,
-    'friend_request_exists' =>'تم ارسال طلب الصداقة ' ,
-
+    'friend_request_exists' =>'لقد قمت بارسال طلب الصداقة مسبقا!' ,
     'invalid_credentials' => 'كلمة المرور او الايميل غير صالحين ' ,
-
-
     'title.required' => 'حقل الاسم مطلوب.',
     'title.string' => 'يجب أن يكون الاسم نصًا.',
     'title.max' => 'لا يمكن أن يتجاوز طول الاسم 255 حرفًا.',

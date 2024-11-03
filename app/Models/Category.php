@@ -33,6 +33,11 @@ class Category extends Model
         return $this->hasMany(Category::class, 'parent_id');
     }
 
+    public function challenge()
+    {
+        return $this->hasMany(Category::class, 'category_id');
+    }
+
     // A category can belong to a parent category
     public function parent()
     {

@@ -8,7 +8,9 @@ use App\Http\Resources\Api\UserWithTokenAccessResource;
  use App\Traits\ResponseTrait;
 use App ;
 use App\Services\UserService;
- ;
+use Illuminate\Http\Request;
+
+;
 class LoginController extends Controller
 {
 
@@ -44,4 +46,11 @@ class LoginController extends Controller
             );
         }
     }
+
+    public function logout(Request $request)
+    {
+        $request->user()->currentAccessToken()->delete();
+        return $this->successResponse('LOGGED_OUT_SUCCESSFULLY' ,[] ,202, app()->getLocale());
+
+     }
 }

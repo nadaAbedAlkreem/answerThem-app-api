@@ -24,8 +24,9 @@ return [
     'invalid_credentials' => 'Invalid password or email' ,
     'ERROR_OCCURRED' => 'ERROR OCCURRED' ,
     'id_not_found' => 'An error occurred: Item not found',
-    'friend_request_exists' => 'Friend request sent',
-
+    'friend_request_exists' => 'Your honest request has been sent.',
+    'friend_request_notification_title' => 'Request friendship' ,
+    'friend_request_notification_body' => 'send you a friend request' ,
     'title.required' => 'The name field is required.',
     'title.string' => 'Name must be text.',
     'title.max' => 'The length of the name cannot exceed 255 characters.',

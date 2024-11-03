@@ -15,6 +15,7 @@ class Challenge extends Model
         'team2_id',
         'user1_id',
         'user2_id',
+        'category_id' ,
         'number_of_questions',
         'time_per_question',
         'status'
@@ -29,6 +30,11 @@ class Challenge extends Model
     public function teamMember2()
     {
         return $this->belongsTo(TeamMember::class, 'team_member2_id'); // foreign key in the challenges table
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'category_id'); // foreign key in the challenges table
     }
 
     // A challenge belongs to user 1

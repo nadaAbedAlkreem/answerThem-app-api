@@ -92,18 +92,13 @@ class CategoryRepository  extends BaseRepository implements ICategoryRepositorie
     }
 
 
-    public function getSubCategoriesAll()
+    public function getCategoriesDetails()
     {
-        return $this->getAllWhere(['parent_id' => ['<>', 0]]);
+        $games =  $this->getAllWhere(['parent_id' => ['<>', 0]]);
+        $latestGames = $this->getAll(['column' => 'created_at', 'dir' => 'DESC'])->take(5);
+        $famousGames = $this->getAllWhere(['famous_gaming' => ['<>', 0]]);
+        return ['games' => $games , 'latestGames' => $latestGames , 'famousGames' => $famousGames]  ;
     }
 
-    public function getSubCategoriesLatest()
-    {
-         return $this->getAll(['column' => 'created_at', 'dir' => 'DESC'])->take(5);
-    }
 
-    public function getSubCategoriesFamous()
-    {
-         return $this->getAllWhere(['famous_gaming' => ['<>', 0]]);
-    }
 }
