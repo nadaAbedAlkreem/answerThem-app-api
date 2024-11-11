@@ -9,6 +9,7 @@ class Messages
     private static $Messages_EN = [
         // general
         'operation accomplished successfully' => 'Operation accomplished successfully',
+        'UPDATE_STATUS_USER_ACTIVE' => 'Update status user active',
         'EXPIRED_TIME'=>'Waiting time is up, try again.' ,
         'ERROR_FCM_TOKEN'=> 'User does not have a device token' ,
         'UPDATE_FCM_TOKEN_SUCCESSFULLY'=> 'Device token updated successfully' ,
@@ -172,6 +173,7 @@ class Messages
         'UPDATES_ORDER_NOT_FOUND' => 'لا يمكننا العثور على هذا   تحديثات  الطلبية ' ,
         'CREATE_ITEM_SUCCESSFULLY' => ' تم انشاء العنصر بنجاح ' ,
         'CREATE_FRIEND_REQUEST_SUCCESSFULLY' => ' تم ارسال طلب الصداقة ' ,
+        'UPDATE_STATUS_USER_ACTIVE' => 'تم تحديث على حالة نشاط المستخدم ',
 
         'DELETE_ITEM_SUCCESSFULLY' => ' تم حذف  العنصر بنجاح ' ,
         'CREATE_ITEM_FAILD' => 'فشل في عملية الانشاء العنصر ' ,

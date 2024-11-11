@@ -49,8 +49,22 @@ class LoginController extends Controller
 
     public function logout(Request $request)
     {
+        $this->offlineUserActive($request);
         $request->user()->currentAccessToken()->delete();
         return $this->successResponse('LOGGED_OUT_SUCCESSFULLY' ,[] ,202, app()->getLocale());
 
-     }
+    }
+    public function offline(Request $request)
+    {
+        $this->offlineUserActive($request);
+        return $this->successResponse('UPDATE_STATUS_USER_ACTIVE' ,[] ,202, app()->getLocale());
+
+    }
+    private function  offlineUserActive($request)
+    {
+        $currentUser = $request->user();
+         $currentUser->is_online = false;
+        $currentUser->last_active_at = now();
+        $currentUser->save();
+    }
 }

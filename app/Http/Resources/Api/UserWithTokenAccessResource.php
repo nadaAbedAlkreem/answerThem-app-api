@@ -29,6 +29,7 @@ class UserWithTokenAccessResource extends JsonResource
             'email' => $this->email,
             'phone' => $this->phone,
             'country' => $this->country,
+            'is_online'=> $this->is_online  ?? 1 ,
             'created_at' => $this->created_at->toDateTimeString(),
             'updated_at' => $this->updated_at->toDateTimeString(),
 

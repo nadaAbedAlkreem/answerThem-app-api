@@ -137,6 +137,10 @@ Route::group(['middleware' =>  SetLocale::class  , UpdateLastActive::class], fun
             {
                   Route::post('', [ContactUsController::class, 'store']);
             });
+            Route::prefix('active-user')->group(function ()
+            {
+                Route::get('offline', [LoginController::class, 'offline']);
+            });
             Route::prefix('challenges')->group(function ()
             {
                 Route::get('competitors', [ChallengeController::class, 'getFriendsWithSearch']);
@@ -146,5 +150,6 @@ Route::group(['middleware' =>  SetLocale::class  , UpdateLastActive::class], fun
 
 
             });
+
 
     });
