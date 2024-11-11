@@ -4,12 +4,13 @@ namespace App\Http\Controllers\Api\V1\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Api\UserWithTokenAccessResource;
+use Google\Client;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Hash;
 use App\Traits\ResponseTrait;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Exception;
 use App ;
 use Illuminate\Support\Str;
@@ -29,33 +30,67 @@ class SocialAuthController extends Controller
 
     public function handleSocialLogin(Request $request)
     {
-        try {
-            $request->validate([
-                'social_type' => 'required|string|in:google,twitter,instagram',
-                'social_token' => 'required|string',
-                'fcm_token' => 'required|string',
-                'device_type' => 'required|string',
-            ]);
+        $client = new Client(['client_id' => env('GOOGLE_CLIENT_ID')]);
+                       $payload = $client->verifyIdToken($request->input('id_token'));
+                    if ($payload) {
+                        $googleId = $payload['sub'];
+                        $email = $payload['email'];
+                        $name = $payload['name'] ?? 'No Name';
 
-             $socialUser = retry(3, function() use ($request) {
-                return Socialite::driver($request->social_type)->stateless()->userFromToken($request->social_token);
-            }, 100);
-             $user = User::where('email', $socialUser->email)->first();
-            if (!$user) {
-                $user = User::create([
-                    'full_name' => $socialUser->name,
-                    'email' => $socialUser->email,
-//                    'phone' => $socialUser->email, // You might want to modify this to handle phone numbers properly
-                    'image' => $socialUser->avatar,
-                    'provider' =>$request->social_type ,
-                    'provider_id' => $socialUser->id,
-                    'password' => Hash::make(Str::random(8)), // Generate a random password for security
-                ]);
-            }
+                         $user = User::where('google_id', $googleId)->orWhere('email', $email)->first();
 
-             $userToken =  $user->createToken('API Token')->plainTextToken;
-             $data = ['access_token' => $userToken,'user' => $user,];
-             return $this->successResponse('LOGGED_IN_SUCCESSFULLY',   new UserWithTokenAccessResource($data) , 202, app()->getLocale());
+                        if (!$user) {
+                             $user = User::create([
+                                'name' => $name,
+                                'email' => $email,
+                                'google_id' => $googleId,
+                                'password' => Hash::make(Str::random(24)), // Random password, not used for Google login
+                            ]);
+                        }
+
+                        // Log the user in
+                        Auth::login($user);
+
+                        // Generate a token for the user (using Laravel Sanctum in this example)
+                        $token = $user->createToken('GoogleAuthToken')->plainTextToken;
+
+                        // Return the token and user data
+                        return response()->json([
+                            'user' => $user,
+                            'token' => $token,
+                        ]);
+                    } else {
+                        return response()->json(['error' => 'Invalid ID token'], 401);
+                    }
+
+
+
+//        try {
+//            $request->validate([
+//                'social_type' => 'required|string|in:google,twitter,instagram',
+//                'social_token' => 'required|string',
+//                'fcm_token' => 'required|string',
+//                'device_type' => 'required|string',
+//            ]);
+//
+//            $socialUser = Socialite::driver('google')->userFromToken($request->social_token);
+//
+//             $user = User::where('email', $socialUser->email)->first();
+//            if (!$user) {
+//                $user = User::create([
+//                    'full_name' => $socialUser->name,
+//                    'email' => $socialUser->email,
+////                    'phone' => $socialUser->email, // You might want to modify this to handle phone numbers properly
+//                    'image' => $socialUser->avatar,
+//                    'provider' =>$request->social_type ,
+//                    'provider_id' => $socialUser->id,
+//                    'password' => Hash::make(Str::random(8)), // Generate a random password for security
+//                ]);
+//            }
+//
+//             $userToken =  $user->createToken('API Token')->plainTextToken;
+//             $data = ['access_token' => $userToken,'user' => $user,];
+//             return $this->successResponse('LOGGED_IN_SUCCESSFULLY',   new UserWithTokenAccessResource($data) , 202, app()->getLocale());
 
             // Return the response
 //            return response()->json([
@@ -69,13 +104,13 @@ class SocialAuthController extends Controller
 //                'user' => $user,
 //                'token' => $token,
 //            ]);
-        } catch (Exception $e) {
-            if ($e instanceof \Laravel\Socialite\Two\InvalidStateException) {
-                return $this->errorResponse('INVALID_TOKEN', ['error' => 'Token has expired or is invalid'], 401, app()->getLocale());
-            }
-            return $this->errorResponse('ERROR_OCCURRED', ['error' => $e->getMessage()], 500, app()->getLocale());
-
-        }
+//        } catch (Exception $e) {
+//            if ($e instanceof \Laravel\Socialite\Two\InvalidStateException) {
+//                return $this->errorResponse('INVALID_TOKEN', ['error' => 'Token has expired or is invalid'], 401, app()->getLocale());
+//            }
+//            return $this->errorResponse('ERROR_OCCURRED', ['error' => $e->getMessage(), 'trace' => $e->getTraceAsString()], 500, app()->getLocale());
+//
+//        }
     }
 //    public function redirectToTwitter()
 //    {

@@ -24,7 +24,7 @@ class Category extends Model
     // A category can have many questions
     public function questions()
     {
-        return $this->hasMany(Question::class);
+        return $this->hasMany(Question::class , 'category_id');
     }
 
     // A category can have sub-categories (parent-child relationship)

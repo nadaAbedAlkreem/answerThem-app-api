@@ -23,7 +23,7 @@ class UserWithTokenAccessResource extends JsonResource
         return [
             'id' => $this->id ,
             'access_token'=>$this->access_token ,
-            'image' => $this->image,
+            'image' => 'https://linktest.gastwerk-bern.ch/'.$this->image,
             'name' => $this->name,
             'full_name' => $this->full_name,
             'email' => $this->email,

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('challenges', function (Blueprint $table) {
             $table->id();
+            $table->string('name_game');
 
             $table->foreignId('team_member1_id')->nullable()->index();
             $table->foreign('team_member1_id', 'fk_team_member1_id')->references('id')->on('team_members')->onDelete('cascade');
@@ -30,7 +31,7 @@ return new class extends Migration
 
 
             $table->integer('number_of_questions')->default(25);
-            $table->integer('time_per_question')->default(30); // seconds
+            $table->integer('time_per_question')->default(1); // seconds
             $table->enum('status', ['ongoing', 'pending', 'end'])->default('pending'); // Status column
 
             $table->timestamps();

@@ -31,7 +31,9 @@ class User extends Authenticatable
         'provider',
         'provider_id',
         'remember_token',
-        'fcm_token'
+        'fcm_token' ,
+        'is_online' ,
+        'last_active_at'
 
     ];
 
@@ -76,6 +78,24 @@ class User extends Authenticatable
     {
         return $this->hasMany(FriendRequest::class, 'receiver_id');
     }
+
+
+    public function userResultfirstCompetitor()
+    {
+        return $this->hasMany(Result::class, 'first_competitor_id');
+    }
+
+    public function userResultSecondCompetitor()
+    {
+        return $this->hasMany(Result::class, 'second_competitor_id');
+    }
+
+    public function userWinner()
+    {
+        return $this->hasMany(Result::class, 'winner_id');
+    }
+
+
 
     public function sentNotifications()
     {

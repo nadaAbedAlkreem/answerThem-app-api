@@ -17,8 +17,8 @@ return new class extends Migration
             $table->foreign('sender_id', 'fk_sender_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreignId('receiver_id')->nullable()->index();
             $table->foreign('receiver_id', 'fk_receiver_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreignId('challenge_id')->nullable()->index();
-            $table->foreign('challenge_id', 'fk_challenge_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('challenge_id')->constrained('challenges');
+
             $table->enum('status', ['pending', 'accepted', 'declined'])->default('pending'); // Status column
             $table->timestamps();
             $table->softDeletes(); // Soft delete for notifications

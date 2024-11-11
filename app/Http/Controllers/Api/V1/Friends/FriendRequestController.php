@@ -6,16 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreFriendRequestRequest;
 use App\Http\Resources\Api\UserResource;
 use App\Models\Notification;
-use App\Models\User;
 use App\Repositories\Eloquent\FriendRequestRepository;
 use App\Services\FcmNotificationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Auth;
-use Google\Client as Google_Client; // Correct class name
 use App\Traits\ResponseTrait;
 use App\Services\FriendRequestService ;
-
 use App\Repositories\Eloquent\NotificationRepository;
 
 class FriendRequestController extends Controller
@@ -82,8 +78,7 @@ class FriendRequestController extends Controller
 
     public function acceptFriendRequest($id)
     {
-        $user = Auth::user();
-        return   $this->friendRequestService->acceptFriendRequest($id);
+        return $this->friendRequestService->acceptFriendRequest($id);
      }
     public function declinedFriendRequest($id ,Request $request)
     {

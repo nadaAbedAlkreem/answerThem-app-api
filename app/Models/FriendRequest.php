@@ -12,8 +12,7 @@ class FriendRequest extends Model
     use HasFactory , SoftDeletes;
     protected $fillable = ['sender_id', 'receiver_id', 'status'];
 
-    // Define sender relationship
-    public function sender()
+     public function sender()
     {
         return $this->belongsTo(User::class, 'sender_id');
     }

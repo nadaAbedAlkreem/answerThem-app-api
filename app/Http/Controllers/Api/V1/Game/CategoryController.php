@@ -10,6 +10,7 @@ use App\Models\Category;
 use App\Repositories\ICategoryRepositories;
 use App\Traits\ResponseTrait;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
@@ -28,14 +29,14 @@ class CategoryController extends Controller
     public function getPrimaryCategories()
     {
         $categories = $this->categoryRepository->getPrimaryCategories();
-        return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY', CategoryResource::collection($categories) , 202, app()->getLocale());
+        return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY', CategoryResource::collection($categories), 202, app()->getLocale());
 
     }
 
     public function searchPrimaryCategories(Request $request)
     {
         $categories = $this->categoryRepository->searchPrimaryCategories($request);
-        return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY', CategoryResource::collection($categories) , 202, app()->getLocale());
+        return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY', CategoryResource::collection($categories), 202, app()->getLocale());
     }
 
 
@@ -49,29 +50,32 @@ class CategoryController extends Controller
         if ($subcategories instanceof \Illuminate\Http\JsonResponse) {
             return $subcategories; // Return error response directly
         }
-        return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY', CategoryResource::collection($subcategories) , 202, app()->getLocale());
+        return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY', CategoryResource::collection($subcategories), 202, app()->getLocale());
     }
 
-    public function searchSubcategories($id , Request $request)
+    public function searchSubcategories($id, Request $request)
     {
-        $subcategories = $this->categoryRepository->searchSubcategories($id , $request);
+        $subcategories = $this->categoryRepository->searchSubcategories($id, $request);
         if ($subcategories instanceof \Illuminate\Http\JsonResponse) {
             return $subcategories; // Return error response directly
         }
-        return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY', CategoryResource::collection($subcategories) , 202, app()->getLocale());
+        return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY', CategoryResource::collection($subcategories), 202, app()->getLocale());
     }
+
     public function getSubAndPrimeCategoryById($id)
     {
         $category = $this->categoryRepository->getCategoryById($id);
         if ($category instanceof \Illuminate\Http\JsonResponse) {
             return $category; // Return error response directly
         }
-        return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY', new CategoryResource($category) , 202, app()->getLocale());
+        return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY', new CategoryResource($category), 202, app()->getLocale());
     }
 
-    public function getCategoriesDetails()
+
+    public function getCategoriesDetails(Request $request)
     {
         $categories = $this->categoryRepository->getCategoriesDetails();
+        $this->onlineUserActive($request);
         return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY',
            [
            'games' => CategoryResource::collection($categories['games']),
@@ -79,44 +83,11 @@ class CategoryController extends Controller
            'famousGames' => CategoryResource::collection($categories['famousGames'])
            ], 202, app()->getLocale());
     }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreCategoryRequest $request)
+    private function  onlineUserActive($request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Category $category)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Category $category)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateCategoryRequest $request, Category $category)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Category $category)
-    {
-        //
+        $currentUser = $request->user();
+        $currentUser->is_online = true;
+        $currentUser->last_active_at = now();
+        $currentUser->save();
     }
 }

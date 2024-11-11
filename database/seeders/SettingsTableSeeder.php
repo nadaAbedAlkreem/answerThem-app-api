@@ -239,6 +239,80 @@ class SettingsTableSeeder extends Seeder
             ],
 
             [
+                'key' => 'app_privacy_policy_en',
+                'value' => json_encode([
+                    [
+                        'title' =>  'Privacy Policy',
+                        'body' => 'This is the privacy policy of the application.',
+                    ],
+                    [
+                        'title' =>  'Privacy Policy',
+                        'body' => 'This is the privacy policy of the application.',
+                    ],
+                    [
+                        'title' =>  'Privacy Policy',
+                        'body' => 'This is the privacy policy of the application.',
+                    ],
+                    [
+                        'title' =>  'Privacy Policy',
+                        'body' => 'This is the privacy policy of the application.',
+                    ],
+
+                ]),
+                'description' => 'Privacy policy',
+                'base_term' => 'app_privacy_policy',
+                'lang' => 'en', // You can choose a default language here
+                'type' => 'json',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            [
+                'key' => 'app_banner_en',
+                'value' => json_encode([
+                    [
+                        'title' =>  'test',
+                        'body' => 'tset',
+                        'image' => 'https://linktest.gastwerk-bern.ch/storage/uploads/images/settings/banner_1.png'
+                    ],
+                    [
+                        'title' =>  'test',
+                        'body' => 'tset',
+                        'image' => 'https://linktest.gastwerk-bern.ch/storage/uploads/images/settings/banner_1.png'
+                    ],
+                ]),
+                'description' => 'banner',
+                'base_term' => 'app_banner',
+                'lang' => 'en', // You can choose a default language here
+                'type' => 'json',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'key' => 'app_banner_ar',
+                'value' => json_encode([
+                    [
+                        'title' =>  'احدث اللعاب ',
+                        'body' => 'مثيرة وشيقة ',
+                        'image' => 'https://linktest.gastwerk-bern.ch/storage/uploads/images/settings/banner_1.png'
+                    ],
+                    [
+                        'title' =>  'احدث اللعاب ',
+                        'body' => 'مثيرة وشيقة ',
+                        'image' => 'https://linktest.gastwerk-bern.ch/storage/uploads/images/settings/banner_1.png'
+                    ],
+
+                ]),
+                'description' => 'banner',
+                'base_term' => 'app_banner',
+                'lang' => 'en', // You can choose a default language here
+                'type' => 'json',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+
+            [
                 'key' => 'contact_us',
                 'value' => json_encode(
                    [  'gmail' => 'test@test.com',

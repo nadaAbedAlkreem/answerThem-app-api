@@ -18,7 +18,7 @@ namespace App\Http\Resources\Api;
     {
         return [
             'id' => $this->id ,
-            'image' => $this->image,
+            'image' => 'https://linktest.gastwerk-bern.ch/'.$this->image,
             'name' => $this->name,
             'full_name' => $this->full_name,
             'email' => $this->email,

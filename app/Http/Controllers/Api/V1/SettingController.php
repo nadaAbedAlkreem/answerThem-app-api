@@ -40,9 +40,7 @@ class SettingController extends Controller
 
     public function update(Request $request , $id)
     {
-
-        try {
-
+       try {
             $setting = $this->settingService->updateSetting($id, $request);
              return $this->successResponse('UPDATE_SUCCESS', [new SettingResource($setting)] , 200,  App::getLocale());
 

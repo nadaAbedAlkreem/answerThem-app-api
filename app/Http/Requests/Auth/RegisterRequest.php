@@ -112,8 +112,8 @@ class RegisterRequest extends FormRequest
                 ? str_replace(' ', '_', $data['full_name']) . time() . rand(1, 10000000)
                 : time() . rand(1, 10000000);
 
-            $path = 'uploads/images/users/';
-            $nameImage = $userName . '.' . $this->file('image')->getClientOriginalExtension();
+             $path = 'uploads/images/users/';
+             $nameImage = $userName . '.' . $this->file('image')->getClientOriginalExtension();
              Storage::disk('public')->put($path . $nameImage, file_get_contents($this->file('image')));
              $absolutePath = storage_path('app/public/' . $path . $nameImage);
               if (file_exists($absolutePath)) {

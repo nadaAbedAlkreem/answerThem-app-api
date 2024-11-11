@@ -53,7 +53,13 @@ class UserController extends Controller
             ? $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY', UserResource::collection($searchResult), 200, App::getLocale())
             : $this->errorResponse('NO_DATA', [], 200, App::getLocale());
     }
-
+    public function  oflineUserActive($request)
+    {
+        $currentUser = $request->user();
+        $currentUser->is_online = false;
+        $currentUser->last_active_at = now();
+        $currentUser->save();
+    }
     public function getCurrentUser(Request $request)
     {
 

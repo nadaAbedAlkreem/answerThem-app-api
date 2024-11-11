@@ -40,7 +40,43 @@ class Friend extends Model
     }
 
 
+    public static function getFriendsByLimited($userId, $search = '', $limit = 5)
+    {
+        // Base query for the friend relationship
+        $query = Friend::where(function ($q) use ($userId) {
+            $q->where('user_id', $userId)
+                ->orWhere('friend_id', $userId);
+        })
+            ->with(['user', 'friend']);
 
+        if ($search) {
+            // Apply search without considering `is_online`
+            $query->where(function ($q) use ($search) {
+                $q->whereHas('user', function ($q) use ($search) {
+                    $q->where('name', 'like', '%' . $search . '%');
+                })
+                    ->orWhereHas('friend', function ($q) use ($search) {
+                        $q->where('name', 'like', '%' . $search . '%');
+                    });
+            });
+        } else {
+            // Apply `is_online = 1` filter to both `user` and `friend` if no search term
+            $query->where(function ($q) {
+                $q->whereHas('user', function ($q) {
+                    $q->where('is_online', 1);
+                })->whereHas('friend', function ($q) {
+                    $q->where('is_online', 1);
+                });
+            });
+        }
+
+        // Limit results and map relationships for unique friends
+        return $query->limit($limit)->get()->map(function ($friendship) use ($userId) {
+            return $friendship->user_id == $userId ? $friendship->friend : $friendship->user;
+        })
+            ->unique()
+            ->values();
+    }
 
 
 

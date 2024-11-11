@@ -20,6 +20,10 @@ abstract class BaseRepository implements BaseRepositoryInterface
     {
         return $this->model->create($data);
     }
+    public function createWith(array $data , array $relationships)
+    {
+        return $this->model->with([$relationships])->create($data);
+    }
 
     public function firstOrCreate(array $data)
     {

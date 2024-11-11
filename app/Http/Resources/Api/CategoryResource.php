@@ -20,8 +20,10 @@ class CategoryResource extends JsonResource
             'name_en' => $this->name_en,
             'description_ar' => $this->description_ar,
             'description_en' => $this->description_en,
-            'image' => $this->image,
+            'image' => 'https://linktest.gastwerk-bern.ch/'.$this->image,
             'rating' => $this->rating,
+            'questions' => QuestionResource::collection($this->whenLoaded('questions')),
+
         ];
     }
 }

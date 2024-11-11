@@ -20,6 +20,7 @@ class ChallengeFactory extends Factory
     {
 
         return [
+            'name_game' => $this->faker->word(),
             'team_member1_id' => TeamMember::factory(5), // Assuming TeamMember has a factory
             'team_member2_id' => TeamMember::factory(5),
             'user1_id' => User::factory(5), // Assuming User has a factory

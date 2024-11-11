@@ -15,17 +15,31 @@ class FriendRequestService
 {
 
     use ResponseTrait ;
+    protected $fcmNotificationService ;
+
+    public function __construct(
+        FcmNotificationService $fcmNotificationService
+    )
+    {
+        $this->fcmNotificationService = $fcmNotificationService;
+    }
+
+
+
+
+
     public function acceptFriendRequest($requestId)
     {
          DB::beginTransaction();
         try {
             // Find the friend request
-            $friendRequest = FriendRequest::find($requestId);
+            $friendRequest = FriendRequest::with('receiver')->find($requestId);
             if(!$friendRequest)
             {
                 throw new \Exception(__('messages.id_not_found'));
             }
             $friend = User::find($friendRequest->receiver_id);
+
             if (!$friend->friends()->where('friend_id', $friendRequest->sender_id)->exists()) {
                 $friend->friends()->attach($friendRequest->sender_id);
             }
@@ -35,9 +49,12 @@ class FriendRequestService
             }
             $friendRequest->status = 'accepted';
             $friendRequest->save();
+            $title = __('messages.accept_friend_request_notification_title'); ;
+            $body  = $friendRequest->receiver->name .' '. __('messages.accept_friend_request_notification_body'); ;
+            $type  = "friend_request" ;
+            $this->fcmNotificationService->sendNotification($friendRequest->receiver_id ,$friendRequest->sender_id , $title , $body  , $type );
             $friendRequest->delete();
             DB::commit();
-
             return $this->successResponse('accept_friend_request', [], 200, App::getLocale());
         } catch (\Exception $e) {
             // Rollback the transaction in case of error

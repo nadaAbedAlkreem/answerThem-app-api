@@ -11,6 +11,7 @@ class Challenge extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
+        'name_game' ,
         'team1_id',
         'team2_id',
         'user1_id',
@@ -43,8 +44,7 @@ class Challenge extends Model
         return $this->belongsTo(User::class, 'user1_id');
     }
 
-    // A challenge belongs to user 2
-    public function user2()
+     public function user2()
     {
         return $this->belongsTo(User::class, 'user2_id');
     }
@@ -53,5 +53,9 @@ class Challenge extends Model
     public function questions()
     {
         return $this->hasMany(Question::class);
+    }
+    public function result()
+    {
+        return $this->hasOne(Result::class , 'challenge_id');
     }
 }

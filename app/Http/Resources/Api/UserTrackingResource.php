@@ -19,13 +19,13 @@ class UserTrackingResource extends JsonResource
 
         return
             [
-             'challenge_id' => $this->id,
-            'competitor' => new UserResource($this->whenLoaded($competitorId)), // Load item as a single instance
-            'game' => new CategoryResource($this->whenLoaded('category')),
-            'number_of_questions' => $this->number_of_questions,
-            'time_per_question' => $this->time_per_question,
-            'status' => $this->status,
-            'created_at' => $this->created_at->toDateTimeString(),
+                'challenge_id' => $this->id,
+                'competitor' => new UserResource($this->whenLoaded($competitorId)), // Load item as a single instance
+                'game' => new CategoryResource($this->whenLoaded('category')),
+                'number_of_questions' => $this->number_of_questions,
+                'time_per_question' => $this->time_per_question,
+                'status' => $this->status,
+                'created_at' => $this->created_at->toDateTimeString(),
         ];
     }
 }

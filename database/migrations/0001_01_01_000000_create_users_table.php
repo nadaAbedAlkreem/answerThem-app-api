@@ -25,6 +25,8 @@ return new class extends Migration
             $table->string('provider')->nullable();
             $table->string('provider_id')->nullable();
             $table->string('fcm_token')->nullable();
+            $table->boolean('is_online')->default(false);
+            $table->timestamp('last_active_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes(); // Add soft deletes column

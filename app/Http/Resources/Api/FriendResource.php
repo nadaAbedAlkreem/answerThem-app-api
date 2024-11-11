@@ -17,7 +17,7 @@ class FriendResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,  // Assuming name is in the User model
-            'image' => $this->image ?? 'https://linktest.gastwerk-bern.ch/storage/uploads/images/settings/app_logo1730468704.jpeg',  // Assuming name is in the User model
+            'image' => 'https://linktest.gastwerk-bern.ch/'.$this->image ?? 'https://linktest.gastwerk-bern.ch/storage/uploads/images/settings/app_logo1730468704.jpeg',  // Assuming name is in the User model
             'email' => $this->email,
          ];
     }
