@@ -3,12 +3,15 @@
 namespace App\Http\Requests;
 
 use App\Models\User;
+use App\Traits\CountryTimezone;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 class StoreChallengeRequest extends FormRequest
 {
+    use CountryTimezone ;
+
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -86,7 +89,10 @@ class StoreChallengeRequest extends FormRequest
     }
     public  function getData()
     {
-        $data=$this->validated();
+        $data= parent::validated();
+        $currentUserCountry = auth()->user()->country ?? 'default';
+        $countryCode = $this->mapCountryNameToCode($currentUserCountry);
+        $data['created_at'] = $this->getCountryTimezone($countryCode);
         return $data;
     }
 }

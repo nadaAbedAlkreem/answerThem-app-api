@@ -17,12 +17,12 @@ return [
         'not_in' => 'The attached game type is invalid',
         'exists' => 'The game type does not exist'
     ],
-    'user_1' => [
+    'user1_id' => [
         'required' => 'The value of the game origin does not exist',
         'integer' => 'The reference of the origin field must be a number',
         'exists' => 'The value returned from the origin field does not exist'
     ],
-    'user_2' => [
+    'user2_id' => [
         'required' => 'The competitor field is required',
         'integer' => 'The competitor field reference must be a number',
         'exists' => 'The value returned from the competitor field does not exist'

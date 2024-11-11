@@ -24,7 +24,8 @@ class FcmNotificationService
     {
         $this->notificationRepository = $notificationRepository;
         $this->invitationRepository = $invitationRepository;
-        $this->credentialsFilePath = storage_path('app/public/json/gaweb7om-ac277818a8f6.json');
+        $this->credentialsFilePath = storage_path('app/public/json/gaweb7om-ac277818a8f6.json') ;
+
 
     }
 
@@ -37,6 +38,7 @@ class FcmNotificationService
         if (!$fcmToken) {
             throw new Exception('ERROR_FCM_TOKEN');
         }
+        dd($this->credentialsFilePath);
 
         $client = new Google_Client();
 
