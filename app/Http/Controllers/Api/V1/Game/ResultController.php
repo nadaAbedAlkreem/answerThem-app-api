@@ -34,7 +34,8 @@ class ResultController extends Controller
            $challenge->status = 'end';
            $challenge->save();
            $resultOfGaming->load(['challenge','firstCompetitor' ,'secondCompetitor', 'winner']);
-            return $this->successResponse('CREATE_ITEM_SUCCESSFULLY', new ResultResource($resultOfGaming), 202, app()->getLocale());
+
+           return $this->successResponse('CREATE_ITEM_SUCCESSFULLY', new ResultResource($resultOfGaming), 202, app()->getLocale());
         } catch (\Exception $e) {
             return $this->errorResponse('ERROR_OCCURRED', ['error' => $e->getMessage()], 500, app()->getLocale());
         }

@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\V1\Friends\FriendController;
 use App\Http\Controllers\Api\V1\Friends\FriendRequestController;
 use App\Http\Controllers\Api\V1\Game\CategoryController;
 use App\Http\Controllers\Api\V1\Game\ChallengeController;
+use App\Http\Controllers\Api\V1\Game\ResultController;
 use App\Http\Controllers\Api\V1\Game\UserTrackingController;
 use App\Http\Controllers\Api\V1\NotificationController;
 use App\Http\Controllers\Api\V1\SettingController;
@@ -141,6 +142,7 @@ Route::group(['middleware' =>  SetLocale::class  , UpdateLastActive::class], fun
                 Route::get('competitors', [ChallengeController::class, 'getFriendsWithSearch']);
                 Route::post('create', [ChallengeController::class, 'create']);
                 Route::get('show/{challengeId}', [ChallengeController::class, 'show'])->name('challenge.show');
+                Route::post('result', [ResultController::class, 'store']);
 
 
             });
