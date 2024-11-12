@@ -23,8 +23,8 @@ class FriendRequestRepository extends BaseRepository implements   IFriendRequest
              throw new \Exception('UNAUTHORISED', 401);
         }
          $friendRequests= FriendRequest::with(['sender'])->where('receiver_id', $currentUserId->id)->get();
-          return $friendRequests->pluck('sender') ;
-    }
+        return $friendRequests ;
+        }
 
 
 }

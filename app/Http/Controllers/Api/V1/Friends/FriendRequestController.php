@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1\Friends;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreFriendRequestRequest;
+use App\Http\Resources\Api\FriendRequestsResource;
 use App\Http\Resources\Api\UserResource;
 use App\Models\Notification;
 use App\Repositories\Eloquent\FriendRequestRepository;
@@ -87,8 +88,9 @@ class FriendRequestController extends Controller
     public function getFriendRequestsForCurrentUser(Request $request)
     {
         try{
+
          $friendRequest = $this->friendRequestsRepository->getFriendRequestsForCurrentUser($request);
-        return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY', UserResource::collection($friendRequest), 200, App::getLocale());
+          return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY', FriendRequestsResource::collection($friendRequest), 200, App::getLocale());
        } catch (\Exception $e) {
             return $this->errorResponse($e->getMessage(), [] ,  $e->getCode()  , app()->getLocale());
        }
