@@ -305,7 +305,7 @@ class SettingsTableSeeder extends Seeder
                 ]),
                 'description' => 'banner',
                 'base_term' => 'app_banner',
-                'lang' => 'en', // You can choose a default language here
+                'lang' => 'ar', // You can choose a default language here
                 'type' => 'json',
                 'created_at' => now(),
                 'updated_at' => now(),

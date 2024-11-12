@@ -13,12 +13,13 @@ use App\Models\User;
 use App\Repositories\IChallengeRepositories;
 use App\Repositories\IFriendRepositories;
 use App\Services\FcmNotificationService;
+use App\Traits\CountryTimezone;
 use App\Traits\ResponseTrait;
 use Illuminate\Http\Request;
 
 class ChallengeController extends Controller
 {
-    use ResponseTrait ;
+    use ResponseTrait  , CountryTimezone;
     protected $friendRepository  , $challengeRepository ,  $fcmNotificationService  ;
     public function __construct(IFriendRepositories $friendRepository   , IChallengeRepositories $challengeRepository  , FcmNotificationService $fcmNotificationService
     )
@@ -37,7 +38,9 @@ class ChallengeController extends Controller
             return $this->errorResponse('UNAUTHENTICATED', [], 401, app()->getLocale());
         }
         $searchValue = $request->query('name');
-        $friendsOfUser = Friend::getFriendsByLimited($user->id ,$searchValue);
+        $limit = $request->query('$limit');
+
+        $friendsOfUser = Friend::getFriendsByLimited($user->id ,$searchValue , $limit);
         return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY',FriendResource::collection($friendsOfUser) , 202, app()->getLocale());
     }
 
@@ -88,9 +91,13 @@ class ChallengeController extends Controller
     {
         try {
             $challenge = $this->challengeRepository->findWith($challengeId , ['user1' , 'user2' , 'category.questions.answers']);
-            if ($challenge->created_at->diffInMinutes(now()) > 5) {
+            $currentUserCountry = auth()->user()->country ?? 'default';
+            $countryCode = $this->mapCountryNameToCode($currentUserCountry);
+
+            if ($challenge->created_at->diffInMinutes($this->getCountryTimezone($countryCode)) > 5) {
                 return $this->errorResponse(
                     'EXPIRED_TIME',
+                    [] ,
                     403,
                     app()->getLocale()
                 );

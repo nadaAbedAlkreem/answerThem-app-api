@@ -69,7 +69,7 @@ class FriendRequestService
         try {
 
             $friendRequest = FriendRequest::find($requestId);
-             if(!$friendRequest)
+              if(!$friendRequest)
             {
                  throw new \Exception(__('messages.id_not_found'));
             }
