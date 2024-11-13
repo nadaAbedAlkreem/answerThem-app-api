@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\App;
 use App\Traits\ResponseTrait;
 use App\Services\FriendRequestService ;
 use App\Repositories\Eloquent\NotificationRepository;
+use App\Http\Resources\Api\FriendRequestsResource;
+
 
 class FriendRequestController extends Controller
 {
@@ -88,7 +90,7 @@ class FriendRequestController extends Controller
     {
         try{
          $friendRequest = $this->friendRequestsRepository->getFriendRequestsForCurrentUser($request);
-        return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY', UserResource::collection($friendRequest), 200, App::getLocale());
+        return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY', FriendRequestsResource::collection($friendRequest), 200, App::getLocale());
        } catch (\Exception $e) {
             return $this->errorResponse($e->getMessage(), [] ,  $e->getCode()  , app()->getLocale());
        }
