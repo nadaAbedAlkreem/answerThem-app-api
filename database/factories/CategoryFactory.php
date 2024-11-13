@@ -30,7 +30,7 @@ class CategoryFactory extends Factory
             'description_en' => $this->faker->sentence,
             'rating' => $this->faker->randomFloat(2, 0, 5),
             'image' => 'https://linktest.gastwerk-bern.ch/storage/uploads/images/categories/Basketball.png',
-            'parent_id' => 0,
+            'parent_id' => $famousGamingValue,
             'famous_gaming' => $famousGamingValue,
         ];
     }
