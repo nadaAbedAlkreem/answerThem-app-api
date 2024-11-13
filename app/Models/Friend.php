@@ -26,27 +26,19 @@ class Friend extends Model
     {
         return $this->belongsTo(User::class, 'friend_id');
     }
-    public static function getFriends($userId, $limit = 10)
+    public static function getFriends($userId)
     {
-        // Paginate without mapping initially to preserve metadata
-        $friendsPaginated = Friend::where('user_id', $userId)
+        return Friend::where('user_id', $userId)
             ->orWhere('friend_id', $userId)
             ->with(['user', 'friend'])
-            ->paginate($limit);
-
-        // Map to get the correct friend while preserving metadata
-        $friendsData = $friendsPaginated->getCollection()
+            ->get()
             ->map(function ($friendship) use ($userId) {
-                return $friendship->user_id == $userId ? $friendship->friend : $friendship->user;
+                 return $friendship->user_id == $userId ? $friendship->friend : $friendship->user;
             })
             ->unique('id')
-            ->values(); // Remove any empty values but keep duplicates if needed
-
-        // Set the mapped collection back to the paginator
-        $friendsPaginated->setCollection($friendsData);
-
-        return $friendsPaginated;
+            ->values();
     }
+
 
     public static function getFriendsByLimited($userId, $search = '', $limit = 5)
     {
@@ -76,7 +68,7 @@ class Friend extends Model
                 });
         }
 
-         return $query->paginate($limit)->map(function ($friendship) use ($userId) {
+         return $query->limit($limit)->get()->map(function ($friendship) use ($userId) {
              return $friendship->user_id == $userId ? $friendship->friend : $friendship->user;
         })
             ->unique('id')
