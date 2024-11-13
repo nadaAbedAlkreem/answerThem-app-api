@@ -36,6 +36,7 @@ class Friend extends Model
                  return $friendship->user_id == $userId ? $friendship->friend : $friendship->user;
             })
             ->unique('id')
+            ->orderBy('created_at', 'desc')
             ->values();
     }
 
@@ -71,7 +72,8 @@ class Friend extends Model
          return $query->limit($limit)->get()->map(function ($friendship) use ($userId) {
              return $friendship->user_id == $userId ? $friendship->friend : $friendship->user;
         })
-            ->unique('id')
+             ->orderBy('created_at', 'desc')
+             ->unique('id')
             ->values();
     }
 

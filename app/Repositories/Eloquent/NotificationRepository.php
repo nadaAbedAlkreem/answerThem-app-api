@@ -98,7 +98,7 @@ class NotificationRepository extends BaseRepository implements INotificationRepo
         if (!$currentUserId) {
             throw new \Exception('UNAUTHORISED', 401);
         }
-        $notificationsForCurrentUser = Notification::with('sender')->where('receiver_id', auth()->id())->paginate(10);
+        $notificationsForCurrentUser = Notification::with('sender')->where('receiver_id', auth()->id())             ->orderBy('created_at', 'desc')->paginate(10);
 
 
         return NotificationResource::collection($notificationsForCurrentUser);

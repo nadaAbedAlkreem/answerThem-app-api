@@ -37,10 +37,11 @@ class FriendRepository extends BaseRepository implements   IFriendRepositories
         $friendRequestIds= FriendRequest::where('sender_id', $user->id)
             ->pluck('receiver_id')
             ->toArray();
-         return User::where('users.id', '!=', $user)
+         return User::where('users.id', '!=', $user->id)
             ->whereNotIn('users.id', $friendIds)
             ->whereNotIn('users.id', $friendRequestIds)
-            ->get();
+             ->orderBy('created_at', 'desc')
+             ->get();
     }
 
 }
