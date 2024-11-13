@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api\V1\Friends;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreFriendRequestRequest;
-use App\Http\Resources\Api\UserResource;
 use App\Models\Notification;
 use App\Repositories\Eloquent\FriendRequestRepository;
 use App\Services\FcmNotificationService;
