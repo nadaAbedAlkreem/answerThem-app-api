@@ -35,7 +35,7 @@ class Friend extends Model
             ->map(function ($friendship) use ($userId) {
                  return $friendship->user_id == $userId ? $friendship->friend : $friendship->user;
             })
-            ->unique()
+            ->unique('id')
             ->values();
     }
 
