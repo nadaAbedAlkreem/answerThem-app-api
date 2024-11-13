@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\V1\Friends;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreFriendRequestRequest;
- use App\Models\Notification;
+use App\Models\Notification;
 use App\Repositories\Eloquent\FriendRequestRepository;
 use App\Services\FcmNotificationService;
 use Illuminate\Http\Request;
@@ -13,6 +13,7 @@ use App\Traits\ResponseTrait;
 use App\Services\FriendRequestService ;
 use App\Repositories\Eloquent\NotificationRepository;
 use App\Http\Resources\Api\FriendRequestsResource;
+
 
 class FriendRequestController extends Controller
 {
