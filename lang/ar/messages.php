@@ -62,6 +62,8 @@ return [
         'integer' =>   'مرجع حقل منافس يجب ان يكون رقم ' ,
         'exists' =>  'القيمة المرجعة من حقل المنافس غير موجود '
          ],
+    'invitation_accept_competitor_notification_title'=> 'التحدي قد بدا!' ,
+    'invitation_accept_competitor_notification_body' => 'وافق على انضمام  لتحدي هيا بنا !' ,
     'invitation_notification_title' => 'منافسة جديدة !' ,
     'invitation_notification_body' => 'احمد قام بدعوتك لمنافسة في تطبيق جاوبنا هي بنا ! ' ,
     'accept_friend_request_notification_title' => 'تم قبول طلب الصداقة!' ,
