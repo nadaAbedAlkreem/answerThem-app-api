@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1\Game;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AcceptInvitationsRequest;
 use App\Http\Requests\StoreChallengeRequest;
 use App\Http\Requests\UpdateChallengeRequest;
 use App\Http\Resources\Api\ChallengeResource;
@@ -54,8 +55,7 @@ class ChallengeController extends Controller
         $challenge= $this->challengeRepository->create($request->getData());
 
         $challenge->load(['user1' , 'user2' , 'category.questions.answers']);
-        $challengeLink = route('challenge.show', ['challengeId' => $challenge->id]);
-        $this->fcmNotificationService->sendNotification($challenge['user1_id']  ,$challenge['user2_id'] , $title , $body  , $type  , $challengeLink  ,$challenge['id']);
+        $this->fcmNotificationService->sendNotification($challenge['user1_id']  ,$challenge['user2_id'] , $title , $body  , $type);
 
          return $this->successResponse(
                 'DATA_RETRIEVED_SUCCESSFULLY',
@@ -76,11 +76,30 @@ class ChallengeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreChallengeRequest $request)
+      public function statusStartGaming(AcceptInvitationsRequest $request)
     {
-        //
+      try {
+          $currentUser = User::findOrFail($request->sender_id);
+          $title = __('messages.invitation_accept_competitor_notification_title');;
+          $body = $currentUser->name . ' ' . __('messages.invitation_accept_competitor_notification_body');;
+          $type = "accept_invitation";
+          $challengeLink = route('challenge.show', ['challengeId' => $request->challenge_id]);
+          $this->fcmNotificationService->sendNotification($request->sender_id, $request->receiver_id, $title, $body, $type, $challengeLink, $request->challenge_id);
+          return $this->successResponse(
+              'NOTIFICATION_SENT_SUCCESSFULLY',
+             [],
+              202,
+              app()->getLocale()
+          );
+      }catch (\Exception $e) {
+          return $this->errorResponse(
+              'ERROR_OCCURRED',
+              ['error' => $e->getMessage()],
+              500,
+              app()->getLocale()
+          );
+      }
     }
-
     /**
      * Display the specified resource.
      */
