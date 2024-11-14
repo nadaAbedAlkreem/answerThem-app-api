@@ -23,7 +23,7 @@ class AnswerFactory extends Factory
         return [
             'question_id' => Question::factory(5),
             'answer_text_ar' => $arabicFaker->sentence,
-            'answer_text_en' => $this->faker->optional()->sentence,
+            'answer_text_en' => $this->faker->sentence,
             'is_correct' => false, // 20% chance of being correct
         ];
     }
