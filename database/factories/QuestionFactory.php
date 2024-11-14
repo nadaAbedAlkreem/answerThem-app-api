@@ -24,14 +24,7 @@ class QuestionFactory extends Factory
         return [
             'category_id' => Category::factory(5),
             'question_ar_text' => $arabicFaker->sentence,
-            'question_en_text' => $this->faker->sentence,
+            'question_en_text' => $this->faker->optional()->sentence,
         ];
-    }
-    public function configure()
-    {
-        return $this->afterCreating(function ($question) {
-             $answers = Answer::factory()->for($question)->count(4)->create();
-              $answers->random()->update(['is_correct' => true]);
-        });
     }
 }

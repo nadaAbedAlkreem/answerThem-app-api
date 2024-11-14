@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api\V1\Game;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\AcceptInvitationsRequest;
 use App\Http\Requests\StoreChallengeRequest;
 use App\Http\Requests\UpdateChallengeRequest;
 use App\Http\Resources\Api\ChallengeResource;
@@ -14,13 +13,12 @@ use App\Models\User;
 use App\Repositories\IChallengeRepositories;
 use App\Repositories\IFriendRepositories;
 use App\Services\FcmNotificationService;
-use App\Traits\CountryTimezone;
 use App\Traits\ResponseTrait;
 use Illuminate\Http\Request;
 
 class ChallengeController extends Controller
 {
-    use ResponseTrait  , CountryTimezone;
+    use ResponseTrait ;
     protected $friendRepository  , $challengeRepository ,  $fcmNotificationService  ;
     public function __construct(IFriendRepositories $friendRepository   , IChallengeRepositories $challengeRepository  , FcmNotificationService $fcmNotificationService
     )
@@ -39,9 +37,7 @@ class ChallengeController extends Controller
             return $this->errorResponse('UNAUTHENTICATED', [], 401, app()->getLocale());
         }
         $searchValue = $request->query('name');
-        $limit = $request->query('$limit');
-
-        $friendsOfUser = Friend::getFriendsByLimited($user->id ,$searchValue , $limit);
+        $friendsOfUser = Friend::getFriendsByLimited($user->id ,$searchValue);
         return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY',FriendResource::collection($friendsOfUser) , 202, app()->getLocale());
     }
 
@@ -81,27 +77,27 @@ class ChallengeController extends Controller
      */
     public function statusStartGaming(AcceptInvitationsRequest $request)
     {
-      try {
-          $currentUser = User::findOrFail($request->sender_id);
-          $title = __('messages.invitation_accept_competitor_notification_title');;
-          $body = $currentUser->name . ' ' . __('messages.invitation_accept_competitor_notification_body');;
-          $type = "accept_invitation";
-          $challengeLink = route('challenge.show', ['challengeId' => $request->challenge_id]);
-          $this->fcmNotificationService->sendNotification($request->sender_id, $request->receiver_id, $title, $body, $type, $challengeLink, $request->challenge_id);
-          return $this->successResponse(
-              'NOTIFICATION_SENT_SUCCESSFULLY',
-             [],
-              202,
-              app()->getLocale()
-          );
-      }catch (\Exception $e) {
-          return $this->errorResponse(
-              'ERROR_OCCURRED',
-              ['error' => $e->getMessage()],
-              500,
-              app()->getLocale()
-          );
-      }
+        try {
+            $currentUser = User::findOrFail($request->sender_id);
+            $title = __('messages.invitation_accept_competitor_notification_title');;
+            $body = $currentUser->name . ' ' . __('messages.invitation_accept_competitor_notification_body');;
+            $type = "accept_invitation";
+            $challengeLink = route('challenge.show', ['challengeId' => $request->challenge_id]);
+            $this->fcmNotificationService->sendNotification($request->sender_id, $request->receiver_id, $title, $body, $type, $challengeLink, $request->challenge_id);
+            return $this->successResponse(
+                'NOTIFICATION_SENT_SUCCESSFULLY',
+                [],
+                202,
+                app()->getLocale()
+            );
+        }catch (\Exception $e) {
+            return $this->errorResponse(
+                'ERROR_OCCURRED',
+                ['error' => $e->getMessage()],
+                500,
+                app()->getLocale()
+            );
+        }
     }
 
     /**
@@ -111,13 +107,9 @@ class ChallengeController extends Controller
     {
         try {
             $challenge = $this->challengeRepository->findWith($challengeId , ['user1' , 'user2' , 'category.questions.answers']);
-            $currentUserCountry = auth()->user()->country ?? 'default';
-            $countryCode = $this->mapCountryNameToCode($currentUserCountry);
-
-            if ($challenge->created_at->diffInMinutes($this->getCountryTimezone($countryCode)) > 10) {
+            if ($challenge->created_at->diffInMinutes(now()) > 5) {
                 return $this->errorResponse(
                     'EXPIRED_TIME',
-                    [] ,
                     403,
                     app()->getLocale()
                 );

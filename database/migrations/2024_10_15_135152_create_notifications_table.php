@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id(); // Primary key auto-increment
             $table->unsignedBigInteger('sender_id')->nullable();
             $table->unsignedBigInteger('receiver_id')->nullable();
-            $table->enum('type', ['friend_request','accept_invitation' ,  'invitations_request', 'other'])->default('friend_request');
+            $table->enum('type', ['friend_request', 'accept_invitation', 'invitations_request', 'other'])->default('friend_request');
             $table->json('data'); // Additional data for the notification (JSON format)
             // You may also want to add foreign key constraints
             $table->foreign('sender_id')->references('id')->on('users')->onDelete('cascade');
