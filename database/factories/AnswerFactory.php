@@ -24,7 +24,7 @@ class AnswerFactory extends Factory
             'question_id' => Question::factory(5),
             'answer_text_ar' => $arabicFaker->sentence,
             'answer_text_en' => $this->faker->optional()->sentence,
-            'is_correct' => $this->faker->boolean(20), // 20% chance of being correct
+            'is_correct' => false, // 20% chance of being correct
         ];
     }
 }
