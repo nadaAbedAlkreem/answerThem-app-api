@@ -27,7 +27,6 @@ class QuestionFactory extends Factory
             'question_en_text' => $this->faker->sentence,
         ];
     }
-
     public function configure()
     {
         return $this->afterCreating(function ($question) {
