@@ -19,7 +19,8 @@ class QuestionResource extends JsonResource
          return [
             'question_text' => $locale === 'ar' ? $this->question_ar_text : $this->question_en_text,
             'answers' => AnswerResource::collection($this->answers),
-        ];
+            'timer' => 60  ,
+         ];
 
     }
 }

@@ -21,7 +21,6 @@ class AnswerResource extends JsonResource
         [
             'answer_text' => $locale === 'ar' ? $this->answer_text_ar : $this->answer_text_en,
             'is_correct' => $this->is_correct ,
-            'timer' => 60  ,
         ] ;
 
      }
