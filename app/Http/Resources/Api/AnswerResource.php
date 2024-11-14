@@ -20,7 +20,8 @@ class AnswerResource extends JsonResource
         return
         [
             'answer_text' => $locale === 'ar' ? $this->answer_text_ar : $this->answer_text_en,
-            'is_correct' => $this->is_correct
+            'is_correct' => $this->is_correct ,
+            'timer' => 60  ,
         ] ;
 
      }
