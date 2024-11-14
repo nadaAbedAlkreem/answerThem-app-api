@@ -147,6 +147,7 @@ Route::group(['middleware' =>  SetLocale::class  , UpdateLastActive::class], fun
                 Route::post('create', [ChallengeController::class, 'create']);
                 Route::get('show/{challengeId}', [ChallengeController::class, 'show'])->name('challenge.show');
                 Route::post('result', [ResultController::class, 'store']);
+                Route::post('send/accept', [ChallengeController::class, 'statusStartGaming']);
 
 
             });

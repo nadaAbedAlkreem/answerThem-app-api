@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1\Game;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AcceptInvitationsRequest;
 use App\Http\Requests\StoreChallengeRequest;
 use App\Http\Requests\UpdateChallengeRequest;
 use App\Http\Resources\Api\ChallengeResource;
@@ -79,9 +80,29 @@ class ChallengeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function statusStartGaming(StoreChallengeRequest $request)
+    public function statusStartGaming(AcceptInvitationsRequest $request)
     {
-        //
+      try {
+          $currentUser = User::findOrFail($request->sender_id);
+          $title = __('messages.invitation_accept_competitor_notification_title');;
+          $body = $currentUser->name . ' ' . __('messages.invitation_accept_competitor_notification_body');;
+          $type = "accept_invitation";
+          $challengeLink = route('challenge.show', ['challengeId' => $request->challenge_id]);
+          $this->fcmNotificationService->sendNotification($request->sender_id, $request->receiver_id, $title, $body, $type, $challengeLink, $request->challenge_id);
+          return $this->successResponse(
+              'NOTIFICATION_SENT_SUCCESSFULLY',
+             [],
+              202,
+              app()->getLocale()
+          );
+      }catch (\Exception $e) {
+          return $this->errorResponse(
+              'ERROR_OCCURRED',
+              ['error' => $e->getMessage()],
+              500,
+              app()->getLocale()
+          );
+      }
     }
 
     /**
@@ -94,7 +115,7 @@ class ChallengeController extends Controller
             $currentUserCountry = auth()->user()->country ?? 'default';
             $countryCode = $this->mapCountryNameToCode($currentUserCountry);
 
-            if ($challenge->created_at->diffInMinutes($this->getCountryTimezone($countryCode)) > 5) {
+            if ($challenge->created_at->diffInMinutes($this->getCountryTimezone($countryCode)) > 10) {
                 return $this->errorResponse(
                     'EXPIRED_TIME',
                     [] ,

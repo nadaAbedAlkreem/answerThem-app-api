@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Answer;
 use App\Models\Question;
 use Faker\Factory as FakerFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -11,6 +12,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class AnswerFactory extends Factory
 {
+    protected $model = Answer::class;
+
     /**
      * Define the model's default state.
      *
@@ -23,8 +26,9 @@ class AnswerFactory extends Factory
         return [
             'question_id' => Question::factory(5),
             'answer_text_ar' => $arabicFaker->sentence,
-            'answer_text_en' => $this->faker->optional()->sentence,
-            'is_correct' => $this->faker->boolean(20), // 20% chance of being correct
+            'answer_text_en' => $this->faker->sentence,
+            'is_correct' => false, // 20% chance of being correct
         ];
     }
+
 }
