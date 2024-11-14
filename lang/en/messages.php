@@ -67,6 +67,8 @@ return [
     'name.required' => 'The name field is required.',
     'name.string' => 'The name must be a string.',
     'name.max' => 'The name may not be greater than 255 characters.',
+    'invitation_accept_competitor_notification_title'=> 'The challenge has begun !' ,
+    'invitation_accept_competitor_notification_body' => 'Accept to join the Lets Go Challenge!',
     'invitation_notification_title' => 'New competition!' ,
     'invitation_notification_body' => 'Ahmed invited you to a competition in the Jawabna Lets go!' ,
     'accept_friend_request_notification_title' => 'Friend request accepted!' ,
