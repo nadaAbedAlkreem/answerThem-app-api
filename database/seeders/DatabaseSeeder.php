@@ -43,7 +43,7 @@ class DatabaseSeeder extends Seeder
         ]);
         $categories = Category::factory()->count(5)->create();
         $teams = Team::factory()->count(5)->create();
-         $answers= Question::factory()->count(5)->create([
+         $answers= Question::factory()->count(25)->create([
             'category_id' => $categories->random()->id,
         ]);
         Answer::factory()->count(5)->create([
