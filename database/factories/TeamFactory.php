@@ -18,7 +18,7 @@ class TeamFactory extends Factory
      */
     public function definition()
     {
-        $arabicFaker = FakerFactory::create('ar_SA');
+        $arabicFaker = \Faker\Factory::create('ar_SA');
         $englishFaker = $this->faker;
         return [
             'name_ar' => $arabicFaker->word,

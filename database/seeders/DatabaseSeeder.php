@@ -41,14 +41,23 @@ class DatabaseSeeder extends Seeder
             'friend_id' => $users->random()->id,
 
         ]);
-        $categories = Category::factory()->count(5)->create();
+        $categories = Category::factory(10)->create();
+
+        $categoriesWithParent = $categories->filter(function ($category) {
+            return $category->parent_id != 0; // Exclude categories with parent_id == 0
+        });
+
+        $categoriesWithParent->each(function ($category) {
+            Question::factory(25)->for($category)->create();
+        });
+
         $teams = Team::factory()->count(5)->create();
-         $answers= Question::factory()->count(25)->create([
-            'category_id' => $categories->random()->id,
-        ]);
-        Answer::factory()->count(5)->create([
-            'question_id' => $answers->random()->id,
-        ]);
+//         $answers= Question::factory()->count(25)->create([
+//            'category_id' => $categories->random()->id,
+//        ]);
+//        Answer::factory()->count(5)->create([
+//            'question_id' => $answers->random()->id,
+//        ]);
        $teamMembers = TeamMember::factory()->count(5)->create([
              'team_id' => $teams->random()->id,
              'user_id' => $users->random()->id,

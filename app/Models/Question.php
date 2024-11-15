@@ -10,7 +10,7 @@ class Question extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['category_id', 'question_ar_text', 'question_en_text'];
+    protected $fillable = ['category_id', 'image' , 'question_ar_text', 'question_en_text'];
 
     // A question belongs to a category
     public function category()

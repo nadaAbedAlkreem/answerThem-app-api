@@ -19,12 +19,20 @@ class QuestionFactory extends Factory
      */
     public function definition(): array
     {
-        $arabicFaker = FakerFactory::create('ar_SA');
+        $arabicFaker = \Faker\Factory::create('ar_SA');
         $englishFaker = $this->faker; // defaults to en_US
         return [
             'category_id' => Category::factory(5),
+            'image' => 'https://linktest.gastwerk-bern.ch/storage/uploads/images/settings/app_logo1730468704.jpeg',
             'question_ar_text' => $arabicFaker->sentence,
-            'question_en_text' => $this->faker->optional()->sentence,
+            'question_en_text' => $this->faker->sentence,
         ];
+    }
+    public function configure()
+    {
+        return $this->afterCreating(function ($question) {
+            $answers = Answer::factory()->for($question)->count(4)->create();
+            $answers->random()->update(['is_correct' => true]);
+        });
     }
 }

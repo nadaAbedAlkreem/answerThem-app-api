@@ -19,7 +19,7 @@ class AnswerFactory extends Factory
      */
     public function definition(): array
     {
-        $arabicFaker = FakerFactory::create('ar_SA');
+        $arabicFaker = \Faker\Factory::create('ar_SA');
         $englishFaker = $this->faker; // defaults to en_US
         return [
             'question_id' => Question::factory(5),
