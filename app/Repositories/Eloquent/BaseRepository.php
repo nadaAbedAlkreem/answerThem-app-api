@@ -56,6 +56,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
         return $this->model->findOrFail($id)->update($data);
     }
 
+
     public function updateWhere(array $data, array $data2)
     {
         return $this->model->where($data2)->update($data);
@@ -324,6 +325,11 @@ abstract class BaseRepository implements BaseRepositoryInterface
     {
         return $this->model->find($id);
     }
+    public function findOrFail($id)
+    {
+        return $this->model->findOrFail($id);
+    }
+
 
     /**
      * retrieve count of rows of the given model

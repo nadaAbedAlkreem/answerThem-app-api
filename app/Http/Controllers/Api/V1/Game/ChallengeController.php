@@ -109,6 +109,8 @@ class ChallengeController extends Controller
         try {
             $challenge = $this->challengeRepository->findWith($challengeId , ['user1' , 'user2' , 'category.questions.answers']);
             if ($challenge->created_at->diffInMinutes(now()) > 5) {
+                $challenge->status = 'end' ;
+                $challenge->save();
                 return $this->errorResponse(
                     'EXPIRED_TIME',
                     403,
@@ -137,9 +139,24 @@ class ChallengeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Challenge $challenge)
+    public function endOFChallenge($challengeId)
     {
-        //
+        try {
+            $endChallenge = $this->challengeRepository->update($challengeId , ['status' => 'ended']); ;
+            return $this->successResponse(
+                'GAME_END',
+               [],
+                202,
+                app()->getLocale()
+            );
+        }catch (\Exception $e) {
+            return $this->errorResponse(
+                'ERROR_OCCURRED',
+                ['error' => $e->getMessage()],
+                500,
+                app()->getLocale()
+            );
+        }
     }
 
     /**

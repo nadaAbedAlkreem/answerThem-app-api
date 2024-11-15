@@ -149,6 +149,8 @@ class Messages
         'delete_friend_request' => 'Friend request deleted',
         'accept_friend_request' => 'Friend request accepted',
         'CREATE_FRIEND_REQUEST_SUCCESSFULLY' => 'Friend request sent',
+        'GAME_END' =>'The game has been completed.'
+
 
     ];
 
@@ -162,6 +164,7 @@ class Messages
         'accept_friend_request' => 'تم قبول طلب الصداقة' ,
         'TRAFFICKER_SUCCESSFULLY' => 'تم إكمال عملية التتبع. ',
         'NOTIFICATION_SENT_SUCCESSFULLY'=> 'تم ارسال الاشعار بنجاح ' ,
+        'GAME_END' =>'لقد تم الانتهاء من اللعبة.' ,
         'TOO_MANY_ATTEMPTS'=>'محاولات كثيرة جدًا',
         'FINANCIA_GET_SUCCESSFULLY' => 'تمت عملية الحصول على بيانات المالية',
         'DATA_RETRIEVED_SUCCESSFULLY' => ' . تم استرجاع البيانات بنجاح',

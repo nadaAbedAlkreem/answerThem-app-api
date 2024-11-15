@@ -148,6 +148,7 @@ Route::group(['middleware' =>  SetLocale::class  , UpdateLastActive::class], fun
                 Route::get('show/{challengeId}', [ChallengeController::class, 'show'])->name('challenge.show');
                 Route::post('result', [ResultController::class, 'store']);
                 Route::post('send/accept', [ChallengeController::class, 'statusStartGaming']);
+                Route::get('end/{challengeId}', [ChallengeController::class, 'endOFChallenge']);
 
 
             });
