@@ -29,7 +29,7 @@ class FcmNotificationService
 
     }
 
-    public function sendNotification($senderId ,$receiverId, $title, $body, $type , $challengeLink = null , $challenge_id = null)
+    public function sendNotification($senderId ,$receiverId, $title, $body, $type , $challengeLink = null , $challengeId = null)
     {
 
         $user = User::find($receiverId);
@@ -63,11 +63,17 @@ class FcmNotificationService
 
                 "data" => [
                     "type" => $type,
-                 ],
+                    "sender" => $senderId,
+                    "receiver" => $receiverId,
+
+                ],
             ]
         ];
         if ($challengeLink) {
             $data["message"]["data"]["challengeLink"] = $challengeLink;
+        }
+        if ($challengeId) {
+            $data["message"]["data"]["challengeId"] = $challengeId;
         }
 
         $ch = curl_init();

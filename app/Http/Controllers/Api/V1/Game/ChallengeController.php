@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1\Game;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AcceptInvitationsRequest;
 use App\Http\Requests\StoreChallengeRequest;
 use App\Http\Requests\UpdateChallengeRequest;
 use App\Http\Resources\Api\ChallengeResource;
@@ -54,7 +55,7 @@ class ChallengeController extends Controller
         $challenge= $this->challengeRepository->create($request->getData());
 
         $challenge->load(['user1' , 'user2' , 'category.questions.answers']);
-        $this->fcmNotificationService->sendNotification($challenge['user1_id']  ,$challenge['user2_id'] , $title , $body  , $type);
+        $this->fcmNotificationService->sendNotification($challenge['user1_id']  ,$challenge['user2_id'] , $title , $body  , $type  , null ,  $challenge->id );
 
          return $this->successResponse(
                 'DATA_RETRIEVED_SUCCESSFULLY',
