@@ -55,7 +55,9 @@ class ChallengeController extends Controller
         $challenge= $this->challengeRepository->create($request->getData());
 
         $challenge->load(['user1' , 'user2' , 'category.questions.answers']);
-        $this->fcmNotificationService->sendNotification($challenge['user1_id']  ,$challenge['user2_id'] , $title , $body  , $type  , null ,  $challenge->id );
+            $challengeLink = route('challenge.show', ['challengeId' => $request->challenge_id]);
+
+            $this->fcmNotificationService->sendNotification($challenge['user1_id']  ,$challenge['user2_id'] , $title , $body  , $type  , $challengeLink ,  $challenge->id );
 
          return $this->successResponse(
                 'DATA_RETRIEVED_SUCCESSFULLY',

@@ -47,7 +47,6 @@ class FcmNotificationService
         $client->setAccessType("offline");
         $token = $client->fetchAccessTokenWithAssertion();
         $accessToken = $token['access_token'];
-
         $headers = [
             "Authorization: Bearer $accessToken",
             'Content-Type: application/json'
