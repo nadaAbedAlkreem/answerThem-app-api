@@ -69,11 +69,11 @@ class FriendRequestController extends Controller
 
     public function updateDeviceToken(Request $request)
     {
-         $response = Notification::updateDeviceToken($request);
+          $response = Notification::updateDeviceToken($request);
          if (isset($response['message']) && $response['message'] === 'UPDATE_FCM_TOKEN_SUCCESSFULLY') {
             return $this->successResponse('UPDATE_FCM_TOKEN_SUCCESSFULLY', [], 202 ,  app()->getLocale());
         }
-        return  $this->errorResponse('USER_NOT_FOUND' , [], 404 , app()->getLocale());
+         return  $this->errorResponse('USER_NOT_FOUND' , [], 404 , app()->getLocale());
     }
 
 

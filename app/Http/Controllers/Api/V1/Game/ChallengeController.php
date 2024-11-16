@@ -144,7 +144,7 @@ class ChallengeController extends Controller
     public function endOFChallenge($challengeId)
     {
         try {
-            $endChallenge = $this->challengeRepository->update($challengeId , ['status' => 'ended']); ;
+            $this->challengeRepository->update($challengeId , ['status' => 'ended']); ;
             return $this->successResponse(
                 'GAME_END',
                [],

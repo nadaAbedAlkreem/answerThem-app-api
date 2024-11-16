@@ -29,7 +29,7 @@ Route::group(['middleware' =>  SetLocale::class  , UpdateLastActive::class], fun
                 Route::prefix('auth')->group(function ()
             {
                 Route::get('/translate', [UserController::class, 'getTranslatedPagesAuthentication']);
-                Route::get('/login', [LoginController::class, 'index']);
+                Route::get('/login', [LoginController::class, 'index'])->name('login');
                 Route::get('/users', [UserController::class, 'getAllUsers']);
                 Route::get('/users/search', [UserController::class, 'getSearchUsers']);
                 Route::post('/register', [RegisterController::class, 'register']);
@@ -113,7 +113,6 @@ Route::group(['middleware' =>  SetLocale::class  , UpdateLastActive::class], fun
                 Route::post('update-device-token', [FriendRequestController::class, 'updateDeviceToken']);
              });
         });
-
             Route::prefix('categories')->group(function ()
             {
                 Route::get('primary', [CategoryController::class, 'getPrimaryCategories']);

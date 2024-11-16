@@ -31,13 +31,13 @@ class Friend extends Model
         return Friend::where('user_id', $userId)
             ->orWhere('friend_id', $userId)
             ->with(['user', 'friend'])
-            ->get()
-            ->map(function ($friendship) use ($userId) {
-                 return $friendship->user_id == $userId ? $friendship->friend : $friendship->user;
+            ->orderBy('created_at', 'desc') // Sort before pagination
+            ->paginate(10) // Paginate with 10 results per page
+            ->through(function ($friendship) use ($userId) {
+                return $friendship->user_id == $userId ? $friendship->friend : $friendship->user;
             })
-            ->unique('id')
-            ->orderBy('created_at', 'desc')
-            ->values();
+           ->unique('id') ;
+
     }
 
 
@@ -69,12 +69,11 @@ class Friend extends Model
                 });
         }
 
-         return $query->limit($limit)->get()->map(function ($friendship) use ($userId) {
+         return $query->orderBy('created_at', 'desc')->paginate($limit)->through(function ($friendship) use ($userId) {
              return $friendship->user_id == $userId ? $friendship->friend : $friendship->user;
         })
-             ->orderBy('created_at', 'desc')
              ->unique('id')
-            ->values();
+             ->values();
     }
 
 
