@@ -99,12 +99,12 @@ class FcmNotificationService
                   'receiver_id' => $receiverId,
                   'data' =>  json_encode($data),
               ]);
-        if ($challenge_id) {
+        if ($challengeId) {
             $this->invitationRepository->create(
                 [
                     'sender_id' => $senderId  ,
                     'receiver_id' => $receiverId,
-                    'challenge_id' => $challenge_id,
+                    'challenge_id' => $challengeId,
                     'status'=> 'pending',
                 ]);
          }
