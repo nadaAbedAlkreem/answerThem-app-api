@@ -15,6 +15,7 @@ class ResultResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'id'=> $this->id  ,
             'challenge_id' => new ChallengeResource($this->challenge),
             'first_competitor_id' => new UserResource($this->firstCompetitor),
             'second_competitor_id' => new UserResource($this->secondCompetitor),

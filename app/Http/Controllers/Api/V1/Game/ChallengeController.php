@@ -55,7 +55,8 @@ class ChallengeController extends Controller
         $challenge= $this->challengeRepository->create($request->getData());
         $challenge->load(['user1' , 'user2' , 'category.questions.answers']);
         $challengeLink = route('challenge.show', ['challengeId' => $challenge->id]);
-        $this->fcmNotificationService->sendNotification($challenge['user1_id']  ,$challenge['user2_id'] , $title , $body  , $type  , $challengeLink ,  $challenge->id );
+        $this->fcmNotificationService->sendNotification($challenge['user1_id']  ,$challenge['user2_id'] , $title , $body  , $type  , $challengeLink  , $challenge->id  );
+
          return $this->successResponse(
                 'DATA_RETRIEVED_SUCCESSFULLY',
                 new ChallengeResource($challenge),
@@ -84,6 +85,7 @@ class ChallengeController extends Controller
             $type = "accept_invitation";
             $challengeLink = route('challenge.show', ['challengeId' => $request->challenge_id]);
             $this->fcmNotificationService->sendNotification($request->sender_id, $request->receiver_id, $title, $body, $type, $challengeLink, $request->challenge_id);
+
             return $this->successResponse(
                 'NOTIFICATION_SENT_SUCCESSFULLY',
                 [],
@@ -110,6 +112,7 @@ class ChallengeController extends Controller
             if ($challenge->created_at->diffInMinutes(now()) > 5) {
                 $challenge->status = 'end' ;
                 $challenge->save();
+                $this->challengeRepository->delete($challengeId );
                 return $this->errorResponse(
                     'EXPIRED_TIME',
                     403,
@@ -141,7 +144,8 @@ class ChallengeController extends Controller
     public function endOFChallenge($challengeId)
     {
         try {
-            $this->challengeRepository->update($challengeId , ['status' => 'ended']); ;
+            $this->challengeRepository->update(['status' => 'end'] , $challengeId);
+            $this->challengeRepository->delete($challengeId );
             return $this->successResponse(
                 'GAME_END',
                [],

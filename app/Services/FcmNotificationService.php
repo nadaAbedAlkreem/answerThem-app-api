@@ -31,7 +31,6 @@ class FcmNotificationService
 
     public function sendNotification($senderId ,$receiverId, $title, $body, $type , $challengeLink = null , $challengeId = null)
     {
-
         $user = User::find($receiverId);
         $fcmToken = $user->fcm_token;
 
@@ -64,7 +63,6 @@ class FcmNotificationService
                     "type" => $type,
                     "sender" => $senderId,
                     "receiver" => $receiverId,
-
                 ],
             ]
         ];
@@ -72,8 +70,9 @@ class FcmNotificationService
             $data["message"]["data"]["challengeLink"] = $challengeLink;
         }
         if ($challengeId) {
-            $data["message"]["data"]["challengeId"] = $challengeId;
+            $data["message"]["data"]["challengeId"] = (string)$challengeId;
         }
+
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, "https://fcm.googleapis.com/v1/projects/" . config('services.fcm.project_id') . "/messages:send");
@@ -83,7 +82,7 @@ class FcmNotificationService
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-        curl_setopt($ch, CURLOPT_TIMEOUT, 10); // Set timeout to 10 seconds
+        curl_setopt($ch, CURLOPT_TIMEOUT, 10);
 
 
         $response = curl_exec($ch);

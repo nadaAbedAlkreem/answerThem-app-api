@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Api\SettingResource;
 use App\Models\Setting;
+use App\Repositories\ISettingRepositories;
 use App\Services\SettingService;
 use App\Traits\ResponseTrait;
 use Illuminate\Http\Request;
@@ -17,25 +18,24 @@ class SettingController extends Controller
     /**
      * Display a listing of the resource.
      */
-    protected $settingService;
+    protected $settingService  , $settingRepositories;
 
-    public function __construct(SettingService $settingService)
+    public function __construct(SettingService $settingService   , ISettingRepositories $settingRepositories)
     {
         $this->settingService = $settingService;
+        $this->settingRepositories = $settingRepositories;
     }
 
     public function index(Request $request)
     {
-
         $settings = Setting::where('lang', App::getLocale())->get();
         return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY', SettingResource::collection($settings) , 200,  App::getLocale());
-
     }
-    public function show($id)
+    public function show($lang)
     {
-        $setting = Setting::findOrFail($id);
-        return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY',new SettingResource($setting), 200,  App::getLocale());
+        $setting = $this->settingRepositories->getAndWhere(['lang' => $lang ?? 'ar']  , ['lang' => '']);
 
+        return  view('dashboard.pages.setting', compact('setting'));
     }
 
     public function update(Request $request , $id)

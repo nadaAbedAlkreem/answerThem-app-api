@@ -22,10 +22,7 @@ Route::prefix('dashboard')->group(function ()
 {
     Route::get('home', function (){
         return  view('dashboard.pages.home');
-    });
-    Route::get('setting/test', [SettingController::class, 'show'])->name('dashboard.setting.show');
-    Route::get('setting', function (){
-        return  view('dashboard.pages.setting');
-    });
+    })->name('dashboard.home');
+    Route::get('setting/{lang}', [SettingController::class, 'show'])->name('dashboard.setting.create');
 
 });
