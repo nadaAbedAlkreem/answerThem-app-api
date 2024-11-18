@@ -15,7 +15,8 @@ class Result extends Model
         'second_competitor_id',
         'score_FC',
         'score_SC',
-        'winner_id'
+        'winner_id',
+        'is_tie'
     ];
 
     public function firstCompetitor()

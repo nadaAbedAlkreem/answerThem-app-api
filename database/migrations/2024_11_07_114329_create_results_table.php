@@ -22,9 +22,12 @@ return new class extends Migration
             $table->foreign('second_competitor_id', 'fk_second_competitor_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreignId('winner_id')->nullable()->index();
             $table->foreign('winner_id', 'fk_winner_id')->references('id')->on('users')->onDelete('cascade');
-            $table->integer('score_FC');
-            $table->integer('score_SC');
+            $table->boolean('is_tie')->default(false);
+            $table->integer('score_FC')->nullable();
+            $table->integer('score_SC')->nullable();
             $table->timestamps();
+            $table->softDeletes();
+
         });
     }
 

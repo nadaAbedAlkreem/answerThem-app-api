@@ -149,7 +149,8 @@ class Messages
         'delete_friend_request' => 'Friend request deleted',
         'accept_friend_request' => 'Friend request accepted',
         'CREATE_FRIEND_REQUEST_SUCCESSFULLY' => 'Friend request sent',
-        'GAME_END' =>'The game has been completed.'
+        'GAME_END' =>'The game has been completed.' ,
+        'STORE_SCORE_SUCCESSFULLY' => 'store score success'
 
 
     ];
@@ -177,6 +178,7 @@ class Messages
         'CREATE_ITEM_SUCCESSFULLY' => ' تم انشاء العنصر بنجاح ' ,
         'CREATE_FRIEND_REQUEST_SUCCESSFULLY' => ' تم ارسال طلب الصداقة ' ,
         'UPDATE_STATUS_USER_ACTIVE' => 'تم تحديث على حالة نشاط المستخدم ',
+        'STORE_SCORE_SUCCESSFULLY' => 'تم تخزين النتيجة '  ,
 
         'DELETE_ITEM_SUCCESSFULLY' => ' تم حذف  العنصر بنجاح ' ,
         'CREATE_ITEM_FAILD' => 'فشل في عملية الانشاء العنصر ' ,

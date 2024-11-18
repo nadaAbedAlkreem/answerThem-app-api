@@ -30,6 +30,21 @@ abstract class BaseRepository implements BaseRepositoryInterface
         return $this->model->firstOrCreate($data);
     }
 
+    public function whereIn(array $conditions)
+    {
+        $query =  $this->model->query();
+
+        foreach ($conditions as $field => $value) {
+            if (is_array($value)) {
+                $query->whereIn($field, $value);
+            } else {
+                $query->where($field, $value);
+            }
+        }
+
+        return $query->get();
+    }
+
 
     public function getMax($column)
     {
@@ -334,6 +349,11 @@ abstract class BaseRepository implements BaseRepositoryInterface
     public function findOrFail($id)
     {
         return $this->model->findOrFail($id);
+    }
+
+    public function findOrFailWith($id, array $relations = [])
+    {
+        return $this->model->with($relations)->findOrFail($id);
     }
 
 

@@ -108,13 +108,14 @@ class ChallengeController extends Controller
   function show($challengeId)
     {
         try {
-            $challenge = $this->challengeRepository->findWith($challengeId , ['user1' , 'user2' , 'category.questions.answers']);
+            $challenge = $this->challengeRepository->findOrFailWith($challengeId , ['user1' , 'user2' , 'category.questions.answers']);
             if ($challenge->created_at->diffInMinutes(now()) > 5) {
                 $challenge->status = 'end' ;
                 $challenge->save();
                 $this->challengeRepository->delete($challengeId );
                 return $this->errorResponse(
                     'EXPIRED_TIME',
+                    [],
                     403,
                     app()->getLocale()
                 );

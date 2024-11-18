@@ -22,6 +22,8 @@ class ResultResource extends JsonResource
             'score_FC' => $this->score_FC,
             'score_SC' => $this->score_SC,
             'winner_id' => new UserResource($this->winner),
+            'is_tie' => $this->is_tie,
+
         ];
     }
 }

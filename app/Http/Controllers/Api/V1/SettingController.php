@@ -31,11 +31,10 @@ class SettingController extends Controller
         $settings = Setting::where('lang', App::getLocale())->get();
         return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY', SettingResource::collection($settings) , 200,  App::getLocale());
     }
-    public function show($lang)
+    public function show()
     {
-        $setting = $this->settingRepositories->getAndWhere(['lang' => $lang ?? 'ar']  , ['lang' => '']);
-
-        return  view('dashboard.pages.setting', compact('setting'));
+         $settings = $this->settingRepositories->whereIn(['lang' => [ 'ar', '']]);
+         return  view('dashboard.pages.setting', compact('settings'));
     }
 
     public function update(Request $request , $id)
