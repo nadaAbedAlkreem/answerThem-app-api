@@ -32,6 +32,7 @@ class FcmNotificationService
     public function sendNotification($senderId ,$receiverId, $title, $body, $type , $challengeLink = null , $challengeId = null)
     {
         $user = User::find($receiverId);
+
         $fcmToken = $user->fcm_token;
 
         if (!$fcmToken) {
@@ -61,8 +62,9 @@ class FcmNotificationService
 
                 "data" => [
                     "type" => $type,
-                    "sender" => $senderId,
-                    "receiver" => $receiverId,
+                    "sender" => (string)$senderId,
+                    "receiver" => (string)$receiverId,
+
                 ],
             ]
         ];
