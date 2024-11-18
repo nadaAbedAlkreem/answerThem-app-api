@@ -62,6 +62,8 @@ return [
         'integer' =>   'مرجع حقل منافس يجب ان يكون رقم ' ,
         'exists' =>  'القيمة المرجعة من حقل المنافس غير موجود '
          ],
+    'competition_over_competitor_notification_title' => 'المسابقة على وشك الانتهاء !' ,
+    'competition_over_competitor_notification_body' => 'صديقك انتهى من اللعبة بقية القليل من وقت ' ,
     'invitation_accept_competitor_notification_title'=> 'التحدي قد بدا!' ,
     'invitation_accept_competitor_notification_body' => 'وافق على انضمام  لتحدي هيا بنا !' ,
     'invitation_notification_title' => 'منافسة جديدة !' ,

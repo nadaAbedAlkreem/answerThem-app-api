@@ -10,17 +10,19 @@ use App\Http\Resources\Api\ResultResource;
 use App\Models\Result;
 use App\Repositories\IChallengeRepositories;
 use App\Repositories\IResultRepositories;
+use App\Services\FcmNotificationService;
 use App\Traits\ResponseTrait;
 
 class ResultController extends Controller
 {
     use ResponseTrait ;
 
-    protected $resultRepository  , $challengeRepositories  ;
-    public function __construct(IResultRepositories $resultRepository , IChallengeRepositories $challengeRepositories)
+    protected $resultRepository  , $challengeRepositories , $fcmNotificationService ;
+    public function __construct(IResultRepositories $resultRepository , IChallengeRepositories $challengeRepositories ,  FcmNotificationService $fcmNotificationService)
     {
         $this->resultRepository = $resultRepository;
         $this->challengeRepositories = $challengeRepositories;
+        $this->fcmNotificationService = $fcmNotificationService;
     }
     /**
      * Display a listing of the resource.
@@ -36,11 +38,9 @@ class ResultController extends Controller
             $scoreFC = $resultChallenge['score_FC'];
             $scoreSC = $resultChallenge['score_SC'];
             if ($scoreFC === $scoreSC) {
-                // Handle tie case
-                $resultChallenge['winner_id'] = null; // No winner in case of a tie
-                $resultChallenge['is_tie'] = true; // Optionally, add an 'is_tie' field
+                $resultChallenge['winner_id'] = null;
+                $resultChallenge['is_tie'] = true;
             } else {
-                // Determine winner
                 $winnerId = $scoreFC > $scoreSC
                     ? $resultChallenge['first_competitor_id']
                     : $resultChallenge['second_competitor_id'];
@@ -65,18 +65,33 @@ class ResultController extends Controller
                 'challenge_id' => $request['challenge_id'],
             ]);
            $score = ($request['for'] == 'first')? 'score_FC' : 'score_SC';
-           if (!$existingResult) {
+           $title = __('messages.competition_over_competitor_notification_title');;
+           $body = __('messages.competition_over_competitor_notification_body');;
+           $type = "competition_over";
+            if (!$existingResult) {
                     $this->resultRepository->create([
                     'challenge_id' => $request['challenge_id'],
                     'first_competitor_id' => $challenge['user1_id'],
                     'second_competitor_id' => $challenge['user2_id'],
                     $score  => $request['score']
                 ]);
-            } else {
+            if($score == 'score_FC')
+            {
+                $this->fcmNotificationService->sendNotification($challenge['user1_id'],$challenge['user2_id'], $title, $body, $type, $request->challenge_id);
+
+            }else
+            {
+                $this->fcmNotificationService->sendNotification($challenge['user2_id'], $challenge['user1_id'], $title, $body, $type, $request->challenge_id);
+
+            }
+
+
+
+
+           } else {
                  $existingResult[$score] = $request['score']  ;
                  $existingResult->save();
             }
-
             return $this->successResponse('STORE_SCORE_SUCCESSFULLY',[], 202, app()->getLocale());
         } catch (\Exception $e) {
             return $this->errorResponse('ERROR_OCCURRED', ['error' => $e->getMessage()], 500, app()->getLocale());

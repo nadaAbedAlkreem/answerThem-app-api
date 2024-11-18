@@ -100,7 +100,7 @@ class FcmNotificationService
                   'receiver_id' => $receiverId,
                   'data' =>  json_encode($data),
               ]);
-        if ($challengeId) {
+        if ($challengeId && $type != "competition_over" ) {
             $this->invitationRepository->create(
                 [
                     'sender_id' => $senderId  ,
