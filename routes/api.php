@@ -35,53 +35,12 @@ Route::group(['middleware' =>  SetLocale::class  , UpdateLastActive::class], fun
                 Route::post('/register', [RegisterController::class, 'register']);
                 Route::post('/login', [LoginController::class, 'login'])->name('login-post');
                 Route::post('login/callback', [SocialAuthController::class, 'handleSocialLogin']);
-//                Route::post('login/callback', function (Request $request) {
-//                     $client = new Client(['client_id' => env('GOOGLE_CLIENT_ID')]);
-//                    // Verify the Google ID token
-//                     dd($request->id_token);
-//                     $payload = $client->verifyIdToken($request->input('id_token'));
-//                    dd($payload);
-//
-//                    if ($payload) {
-//                        $googleId = $payload['sub']; // Google unique user ID
-//                        $email = $payload['email'];
-//                        $name = $payload['name'] ?? 'No Name';
-//                        dd($email, $name);
-//
-//                        // Check if user exists
-//                        $user = User::where('google_id', $googleId)->orWhere('email', $email)->first();
-//
-//                        if (!$user) {
-//                            // If user does not exist, create a new user
-//                            $user = User::create([
-//                                'name' => $name,
-//                                'email' => $email,
-//                                'google_id' => $googleId,
-//                                'password' => Hash::make(Str::random(24)), // Random password, not used for Google login
-//                            ]);
-//                        }
-//
-//                        // Log the user in
-//                        Auth::login($user);
-//
-//                        // Generate a token for the user (using Laravel Sanctum in this example)
-//                        $token = $user->createToken('GoogleAuthToken')->plainTextToken;
-//
-//                        // Return the token and user data
-//                        return response()->json([
-//                            'user' => $user,
-//                            'token' => $token,
-//                        ]);
-//                    } else {
-//                        return response()->json(['error' => 'Invalid ID token'], 401);
-//                    }
-//                });
                 Route::post('forgot-password', [ForgotPasswordController::class, 'sendResetLink']);
                 Route::post('reset-password', [ForgotPasswordController::class, 'resetPassword']);
                 Route::post('verifyToken', [ForgotPasswordController::class, 'verifyToken']);
 
             });
-        Route::group(['middleware' =>  'auth:api'], function ()
+        Route::group(['middleware' =>'auth:api'], function ()
         {
             Route::post('/logout', [LoginController::class, 'logout']);
             Route::get('/user', [UserController::class, 'getCurrentUser']);

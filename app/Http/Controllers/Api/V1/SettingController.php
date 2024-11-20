@@ -24,7 +24,9 @@ class SettingController extends Controller
     {
         $this->settingService = $settingService;
         $this->settingRepositories = $settingRepositories;
+
     }
+
 
     public function index(Request $request)
     {
@@ -33,18 +35,19 @@ class SettingController extends Controller
     }
     public function show()
     {
-         $settings = $this->settingRepositories->whereIn(['lang' => [ 'ar', '']]);
+         $settings = $this->settingRepositories->whereIn(['lang' => [app::getLocale(), '']]);
          return  view('dashboard.pages.setting', compact('settings'));
     }
 
-    public function update(Request $request , $id)
+    public function update(Request $request)
     {
-       try {
-            $setting = $this->settingService->updateSetting($id, $request);
+        try {
+            $setting = $this->settingService->updateSetting($request);
              return $this->successResponse('UPDATE_SUCCESS', [new SettingResource($setting)] , 200,  App::getLocale());
 
         } catch (\Exception $e) {
-            return $this->errorResponse('ERROR_OCCURRED',  ['error' => $e->errors()] ,  404 , app()->getLocale());
+
+            return $this->errorResponse('ERROR_OCCURRED',  ['error' =>  $e->getMessage()] ,  404 , app()->getLocale());
 
          }
     }

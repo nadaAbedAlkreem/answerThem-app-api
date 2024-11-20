@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\NoCache;
 use App\Http\Middleware\UpdateLastActive;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -22,10 +23,16 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->append(SetLocale::class);
         $middleware->append(StartSession::class);
         $middleware->append(UpdateLastActive::class);
-
+        $middleware->append(NoCache::class);
+//
+//        $middleware->validateCsrfTokens(except: [
+//            env('APP_URL', 'http://127.0.0.1:8000').'/dashboard/setting' ,
+//            env('APP_URL', 'http://127.0.0.1:8000').'/dashboard/setting/update'
+//        ]);
 
     })
     ->withExceptions(function (Exceptions $exceptions) {
+
         $exceptions->render(function (AuthenticationException $e ) {
             return (new class {
                 use ResponseTrait;

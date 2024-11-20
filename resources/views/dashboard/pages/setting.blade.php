@@ -1847,7 +1847,8 @@
                             </div>
                             <!--end::Card header-->
                             <!--begin::Form-->
-                            <form id="kt_project_settings_form" class="form">
+                            <form id="kt_project_settings_form" class="form"  enctype="multipart/form-data" >
+                                {{ csrf_field() }}
                                 <!--begin::Card body-->
                                 <div class="card-body p-9">
                                     @if(!empty($settings))
@@ -1860,7 +1861,7 @@
                                                             <label class="fs-6 fw-bold mt-2 mb-3">{{$setting->base_term}}</label>
                                                         </div>
                                                         <div class="col-xl-9 fv-row">
-                                                            <input type="text" class="form-control form-control-solid" name="{{$setting->key}}" value="{{$setting->value}}" />
+                                                            <input type="text" class="form-control form-control-solid" name="{{$setting->id}}" value="{{$setting->value}}" />
                                                         </div>
                                                     </div>
                                                     @break
@@ -1884,7 +1885,7 @@
                                                                 <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
                                                                     <i class="bi bi-pencil-fill fs-7"></i>
                                                                     <!--begin::Inputs-->
-                                                                    <input type="file" name="avatar" accept=".png, .jpg, .jpeg" />
+                                                                    <input type="file" name="{{$setting->id}}" accept=".png, .jpg, .jpeg" />
                                                                     <input type="hidden" name="avatar_remove" />
                                                                     <!--end::Inputs-->
                                                                 </label>
@@ -1918,66 +1919,6 @@
                                                         </div>
 
                                                         @foreach(json_decode($setting->value, true) as $index => $json)
-
-{{--                                                            @if($setting->base_term == 'app country')--}}
-{{--                                                                @php--}}
-{{--                                                                    $countries = json_decode($setting->value, true);--}}
-{{--                                                                   @endphp--}}
-{{--                                                                   @if(!empty($countries[$index]['name']))--}}
-{{--                                                                            <div class="col-md-6 col-lg-4 mb-4">--}}
-{{--                                                                                <div class="card shadow-lg border-0 rounded-3 hover-shadow-lg transition-all">--}}
-{{--                                                                                    <div class="card-body">--}}
-{{--                                                                                        <div class="mb-4">--}}
-{{--                                                                                            <label class="form-label fw-bold text-dark">--}}
-{{--                                                                                                <i class="bi bi-globe me-2"></i> Country--}}
-{{--                                                                                            </label>--}}
-{{--                                                                                            <input type="text" class="form-control rounded-3 shadow-sm" name="json_country_{{$index}}"--}}
-{{--                                                                                                   value="{{$countries[$index]['name']}}"--}}
-{{--                                                                                                   placeholder="Enter country code or name" />--}}
-{{--                                                                                        </div>--}}
-{{--                                                                                    </div>--}}
-{{--                                                                                </div>--}}
-{{--                                                                            </div>--}}
-{{--                                                                 @endif--}}
-{{--                                                                @endif--}}
-
-{{--                                                            @if($setting->base_term == 'contact us')--}}
-{{--                                                                <div class="col-md-6 col-lg-4 mb-4">--}}
-{{--                                                                    <div class="card shadow-lg border-0 rounded-3 hover-shadow-lg transition-all">--}}
-{{--                                                                        <div class="card-body">--}}
-{{--                                                                            @php--}}
-{{--                                                                                $contactUs = json_decode($setting->value, true);--}}
-{{--                                                                            @endphp--}}
-{{--                                                                            <label class="form-label fw-bold text-dark">Contact Us</label>--}}
-{{--                                                                            <ul>--}}
-{{--                                                                                <li><strong>Gmail:</strong> <a href="mailto:{{ $contactUs['gmail'] }}">{{ $contactUs['gmail'] }}</a></li>--}}
-{{--                                                                                <li><strong>Facebook:</strong> <a href="https://facebook.com/{{ $contactUs['facebook'] }}" target="_blank">{{ $contactUs['facebook'] }}</a></li>--}}
-{{--                                                                                <li><strong>Instagram:</strong> <a href="https://instagram.com/{{ $contactUs['Instagram'] }}" target="_blank">{{ $contactUs['Instagram'] }}</a></li>--}}
-{{--                                                                                <li><strong>WhatsApp:</strong> <a href="https://wa.me/{{ $contactUs['WhatsApp'] }}" target="_blank">{{ $contactUs['WhatsApp'] }}</a></li>--}}
-{{--                                                                                <li><strong>Snapchat:</strong> <a href="https://snapchat.com/add/{{ $contactUs['Snapchat'] }}" target="_blank">{{ $contactUs['Snapchat'] }}</a></li>--}}
-{{--                                                                            </ul>--}}
-{{--                                                                        </div>--}}
-{{--                                                                    </div>--}}
-{{--                                                                </div>--}}
-{{--                                                            @endif--}}
-
-{{--                                                            @if($setting->base_term == 'problem suggestions')--}}
-{{--                                                                <div class="col-md-6 col-lg-4 mb-4">--}}
-{{--                                                                    <div class="card shadow-lg border-0 rounded-3 hover-shadow-lg transition-all">--}}
-{{--                                                                        <div class="card-body">--}}
-{{--                                                                            <label class="form-label fw-bold text-dark">Problem Suggestions</label>--}}
-{{--                                                                            <ul>--}}
-{{--                                                                                @php--}}
-{{--                                                                                    $suggestions = json_decode($setting->value, true);--}}
-{{--                                                                                @endphp--}}
-{{--                                                                                @foreach($suggestions as $suggestion)--}}
-{{--                                                                                    <li>{{ $suggestion }}</li>--}}
-{{--                                                                                @endforeach--}}
-{{--                                                                            </ul>--}}
-{{--                                                                        </div>--}}
-{{--                                                                    </div>--}}
-{{--                                                                </div>--}}
-{{--                                                             @endif--}}
                                                             <div class="col-md-6 col-lg-4 mb-4">
                                                                 <!-- Modern Item Card -->
                                                                 <div class="card shadow-lg border-0 rounded-3 hover-shadow-lg transition-all">
@@ -2003,7 +1944,7 @@
                                                                                         <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
                                                                                             <i class="bi bi-pencil-fill fs-7"></i>
                                                                                             <!--begin::Inputs-->
-                                                                                            <input type="file" name="avatar" accept=".png, .jpg, .jpeg" />
+                                                                                            <input type="file" name="{{$setting->id}}-{{$index}}-image" accept=".png, .jpg, .jpeg" />
                                                                                             <input type="hidden" name="avatar_remove" />
                                                                                             <!--end::Inputs-->
                                                                                         </label>
@@ -2035,7 +1976,7 @@
                                                                                 <label class="form-label fw-bold text-dark">
                                                                                     <i class="bi bi-fonts me-2"></i>Title
                                                                                 </label>
-                                                                                <input type="text" class="form-control rounded-3 shadow-sm" name="json_title_{{$index}}" value="{{$json['title']}}" placeholder="Enter title" />
+                                                                                <input type="text" class="form-control rounded-3 shadow-sm" name="{{$setting->id}}-{{$index}}-title" value="{{$json['title']}}" placeholder="Enter title" required />
                                                                             </div>
                                                                         @endif
 
@@ -2045,7 +1986,7 @@
                                                                                 <label class="form-label fw-bold text-dark">
                                                                                     <i class="bi bi-textarea-t me-2"></i>Body
                                                                                 </label>
-                                                                                <textarea class="form-control rounded-3 shadow-sm" name="json_body_{{$index}}" rows="4" placeholder="Enter body text">{{$json['body']}}</textarea>
+                                                                                <textarea class="form-control rounded-3 shadow-sm" name="{{$setting->id}}-{{$index}}-body" rows="4" placeholder="Enter body text" required>{{$json['body']}}</textarea>
                                                                             </div>
                                                                         @endif
 
@@ -2054,7 +1995,7 @@
                                                                                 <label class="form-label fw-bold text-dark">
                                                                                 <i class="bi bi-globe me-2"></i> Country
                                                                                 </label>
-                                                                                <input type="text" class="form-control rounded-3 shadow-sm" name="json_country_{{$index}}" value="{{$json['name']}} ({{$json['code']}})" placeholder="Enter country" />
+                                                                                <input type="text" class="form-control rounded-3 shadow-sm" name="{{$setting->id}}-{{$index}}-name" value="{{$json['name']}} ({{$json['code']}})" placeholder="Enter country" required />
                                                                             </div>
                                                                         @endif
 
@@ -2063,7 +2004,7 @@
                                                                                 <label class="form-label fw-bold text-dark">
                                                                                     <i class="bi bi-globe me-2"></i> {{$index}}
                                                                                 </label>
-                                                                                <input type="text" class="form-control rounded-3 shadow-sm" name="json_contact_us_{{$index}}" value="{{$json}}" placeholder="Enter contact us " />
+                                                                                <input type="text" class="form-control rounded-3 shadow-sm" name="{{$setting->id}}-{{$index}}" value="{{$json}}" required placeholder="Enter contact us " />
 
                                                                             </div>
                                                                         @endif
@@ -2075,7 +2016,7 @@
                                                                                 <label class="form-label fw-bold text-dark">
                                                                                     <i class="bi bi-globe me-2"></i> problem suggestions
                                                                                 </label>
-                                                                                <input type="text" class="form-control rounded-3 shadow-sm" name="json_problem_{{$index}}" value="{{$json}}" placeholder="Enter contact us " />
+                                                                                <input type="text" class="form-control rounded-3 shadow-sm" name="{{$setting->id}}-{{$index}}" value="{{$json}}" placeholder="Enter contact us " required />
 
                                                                             </div>
                                                                         @endif
@@ -2098,7 +2039,7 @@
                                 <!--begin::Card footer-->
                                 <div class="card-footer d-flex justify-content-end py-6 px-9">
                                     <button type="reset" class="btn btn-light btn-active-light-primary me-2">Discard</button>
-                                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                                    <button type="submit" id="setting_form" class="btn btn-primary">Save Changes</button>
                                 </div>
                                 <!--end::Card footer-->
                             </form>
@@ -7058,6 +6999,6 @@
 
     <!--end::Page Custom Javascript-->
     <!--end::Javascript-->
-
+    <script src="{{asset('assets/js/custom/setting/update.js')}}"></script>
 
 @endsection

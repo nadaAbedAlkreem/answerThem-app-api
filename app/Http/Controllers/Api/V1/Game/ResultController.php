@@ -34,7 +34,7 @@ class ResultController extends Controller
     public function showResult($challengeId)
     {
         try {
-            $resultChallenge = $this->resultRepository->findOne($challengeId);
+            $resultChallenge = $this->resultRepository->findWhere(['challenge_id'=>$challengeId]);
             $scoreFC = $resultChallenge['score_FC'];
             $scoreSC = $resultChallenge['score_SC'];
             if ($scoreFC === $scoreSC) {
