@@ -42,6 +42,7 @@ document.addEventListener("DOMContentLoaded", function () {
             formData.append('changedData', JSON.stringify(changedData)); // Append changed data
 
             console.log(formData); // Debug the form data content
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -51,7 +52,10 @@ document.addEventListener("DOMContentLoaded", function () {
             $.ajax({
                 type: "POST",
                 url: "/dashboard/setting/update",
-                data: formData,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "id": 'dd'
+                },
                 processData: false, // Disable jQuery's default data processing
                 contentType: false, // Let FormData handle content type
                 success: function () {

@@ -92,12 +92,11 @@ class UserTrackingRepository extends BaseRepository implements IUserTrackingRepo
         return $tracking;
 
     }
-    public function getLastGame($request)
+    public function getLastGame($userId)
     {
-         $user = $request->user();
-         $lastGame = Challenge::with(['user1' , 'user2'  ,'category'])->where(function ($query) use ($user) {
-            $query->where('user1_id', $user->id)
-                ->orWhere('user2_id', $user->id);
+          $lastGame = Challenge::with(['user1' , 'user2'  ,'category'])->where(function ($query) use ($userId) {
+            $query->where('user1_id', $userId)
+                ->orWhere('user2_id', $userId);
         })
             ->orderBy('created_at', 'desc')
             ->take(5)

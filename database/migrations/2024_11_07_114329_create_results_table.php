@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('results', function (Blueprint $table) {
             $table->id();
-
             $table->foreignId('challenge_id')->nullable()->index();
             $table->foreign('challenge_id', 'fk1_challenge_id')->references('id')->on('challenges')->onDelete('cascade');
             $table->foreignId('first_competitor_id')->nullable()->index();
@@ -27,7 +26,6 @@ return new class extends Migration
             $table->integer('score_SC')->nullable();
             $table->timestamps();
             $table->softDeletes();
-
         });
     }
 

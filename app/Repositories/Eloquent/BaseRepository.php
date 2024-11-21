@@ -118,6 +118,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
         return $this->model->where($data)->orderBy($orderBy['column'], $orderBy['dir'])->get();
     }
 
+
     /**
      * retrieve all the row for the given model with a conditional relation
      * @params OPTIONAL $orderBy with the column name && dir
@@ -186,6 +187,12 @@ abstract class BaseRepository implements BaseRepositoryInterface
     public function getWhere(array $data, $orderBy = ['column' => 'id', 'dir' => 'DESC'])
     {
         return $this->model->where($data)->orderBy($orderBy['column'], $orderBy['dir'])->get();
+
+
+    }
+    public function getWhereWithCount(array $data, $orderBy = ['column' => 'id', 'dir' => 'DESC'])
+    {
+        return $this->model->where($data)->orderBy($orderBy['column'], $orderBy['dir'])->count();
 
 
     }

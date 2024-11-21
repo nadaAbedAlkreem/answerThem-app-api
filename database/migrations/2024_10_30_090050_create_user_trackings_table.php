@@ -15,9 +15,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->integer('app_entries_count')->default(0);
-            $table->integer('play_count')->default(0);
-            $table->integer('win_count')->default(0);
-            $table->integer('loss_count')->default(0);
             $table->timestamps();
             $table->softDeletes();
 
