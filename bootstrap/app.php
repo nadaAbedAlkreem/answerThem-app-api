@@ -1,14 +1,21 @@
 <?php
 
+use App\Http\Middleware\CustomVerifyCsrfToken;
 use App\Http\Middleware\NoCache;
 use App\Http\Middleware\UpdateLastActive;
+use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
+use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use App\Http\Middleware\SetLocale;
+use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
+use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
+use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Auth\AuthenticationException;
 use App\Traits\ResponseTrait;
+use Illuminate\View\Middleware\ShareErrorsFromSession;
 
 
 return Application::configure(basePath: dirname(__DIR__))
@@ -20,11 +27,22 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        $middleware->append(SetLocale::class);
+//        $middleware->append(SetLocale::class);
         $middleware->append(StartSession::class);
-        $middleware->append(UpdateLastActive::class);
-        $middleware->append(NoCache::class);
-//
+//        $middleware->append(UpdateLastActive::class);
+        $middleware->append(VerifyCsrfToken::class);
+//        $middleware->append(EncryptCookies::class);
+//        $middleware->append(AddQueuedCookiesToResponse::class);
+//        $middleware->append(ShareErrorsFromSession::class);
+  //        Illuminate\Cookie\Middleware\EncryptCookies
+//Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse
+//Illuminate\Session\Middleware\StartSession
+//Illuminate\View\Middleware\ShareErrorsFromSession
+//Illuminate\Foundation\Http\Middleware\ValidateCsrfToken
+//Illuminate\Routing\Middleware\SubstituteBindings
+ //
+//        $middleware->append(CustomVerifyCsrfToken::class);
+
 //        $middleware->validateCsrfTokens(except: [
 //            env('APP_URL', 'http://127.0.0.1:8000').'/dashboard/setting' ,
 //            env('APP_URL', 'http://127.0.0.1:8000').'/dashboard/setting/update'

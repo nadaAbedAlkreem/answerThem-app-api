@@ -40,7 +40,7 @@ class SettingController extends Controller
     }
     public function show()
     {
-         $settings = $this->settingRepositories->whereIn(['lang' => [app::getLocale(), '']]);
+          $settings = $this->settingRepositories->whereIn(['lang' => [app::getLocale(), '']]);
          return  view('dashboard.pages.setting', compact('settings'));
     }
 

@@ -1,4 +1,6 @@
 
+document.querySelector('#allow-copy_script').remove();
+
 document.addEventListener("DOMContentLoaded", function () {
     const form = document.getElementById("kt_project_settings_form");
     const changedData = []; // Array to store changed inputs
@@ -19,6 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
     });
+
 
     $(document).ready(function () {
         $('#setting_form').click(function (event) {
@@ -48,14 +51,14 @@ document.addEventListener("DOMContentLoaded", function () {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
+            console.log("nada");
+
+            console.log($('meta[name="csrf-token"]').attr('content'));
 
             $.ajax({
                 type: "POST",
                 url: "/dashboard/setting/update",
-                data: {
-                    "_token": "{{ csrf_token() }}",
-                    "id": 'dd'
-                },
+                data: formData,
                 processData: false, // Disable jQuery's default data processing
                 contentType: false, // Let FormData handle content type
                 success: function () {
@@ -70,16 +73,18 @@ document.addEventListener("DOMContentLoaded", function () {
                     });
                 },
                 error: function (response) {
+                    console.log("response");
                     console.log(response);
                     Swal.fire({
-                        text: response.responseJSON.data.error ?? 'Something went wrong!',
+                        text: response,
                         icon: "error",
                         buttonsStyling: false,
-                        confirmButtonText: "Ok, got it!",
+                        confirmButtonText: "Ok!",
                         customClass: {
                             confirmButton: "btn btn-primary"
                         }
                     });
+
                 },
             });
         });

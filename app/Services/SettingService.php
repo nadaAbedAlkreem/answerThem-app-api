@@ -10,7 +10,7 @@ class SettingService
 {
     public function updateSetting($request)
     {
-        $data = json_decode($request['changedData'], true);
+         $data = json_decode($request['changedData'], true);
 
         foreach ($data as $key => $value) {
               if ($value['value'] == "") {
