@@ -31,7 +31,12 @@ class SettingController extends Controller
     public function index(Request $request)
     {
         $settings = Setting::where('lang', App::getLocale())->get();
-        return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY', SettingResource::collection($settings) , 200,  App::getLocale());
+         // Aggregate all settings into a single array
+        $settingsData = $settings->reduce(function ($carry, $setting) use ($request) {
+            return array_merge($carry, (new SettingResource($setting))->toArray($request));
+        }, []);
+
+        return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY', ['settings' => $settingsData], 200,  App::getLocale());
     }
     public function show()
     {

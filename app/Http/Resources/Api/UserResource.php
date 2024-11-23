@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Api;
 
+ use AllowDynamicProperties;
  use Illuminate\Http\Resources\Json\JsonResource;
 
  class UserResource extends JsonResource

@@ -17,7 +17,7 @@ class SetLocale
      */
     public function handle(Request $request, Closure $next )
     {
-        if($request->has('Accept-Language'))
+         if($request->header('Accept-Language'))
         {
              $locale = $request->header('Accept-Language');
             if ($locale) {
