@@ -73,10 +73,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     });
                 },
                 error: function (response) {
-                    console.log("response");
-                    console.log(response);
+                     console.log('error in setting home  : '.response);
                     Swal.fire({
-                        text: response,
+                        text: 'The value cannot be null',
                         icon: "error",
                         buttonsStyling: false,
                         confirmButtonText: "Ok!",

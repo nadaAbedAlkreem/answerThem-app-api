@@ -14,13 +14,14 @@ class CategoryResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return [
+        $image = (strpos($this->image, 'https://linktest.gastwerk-bern.ch/') !== false) ?  $this->image : 'https://linktest.gastwerk-bern.ch/'.$this->image   ;
+         return [
             'id' => $this->id,
             'name_ar' => $this->name_ar,
             'name_en' => $this->name_en,
             'description_ar' => $this->description_ar,
             'description_en' => $this->description_en,
-            'image' => 'https://linktest.gastwerk-bern.ch/'.$this->image,
+            'image' =>  $image,
             'rating' => $this->rating,
             'questions' => QuestionResource::collection($this->whenLoaded('questions')),
 

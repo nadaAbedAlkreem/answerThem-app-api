@@ -20,10 +20,12 @@ class UserWithTokenAccessResource extends JsonResource
     }
     public function toArray($request): array
     {
+        $image = (strpos($this->image, 'https://linktest.gastwerk-bern.ch/') !== false) ?  $this->image : 'https://linktest.gastwerk-bern.ch/'.$this->image   ;
+
         return [
             'id' => $this->id ,
             'access_token'=>$this->access_token ,
-            'image' => 'https://linktest.gastwerk-bern.ch/'.$this->image,
+            'image' => $image,
             'name' => $this->name,
             'full_name' => $this->full_name,
             'email' => $this->email,
