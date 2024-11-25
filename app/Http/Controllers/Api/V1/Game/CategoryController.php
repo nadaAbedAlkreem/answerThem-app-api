@@ -9,6 +9,7 @@ use App\Http\Resources\Api\CategoryResource;
 use App\Models\Category;
 use App\Repositories\ICategoryRepositories;
 use App\Traits\ResponseTrait;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -74,19 +75,33 @@ class CategoryController extends Controller
 
     public function getCategoriesDetails(Request $request)
     {
-        $categories = $this->categoryRepository->getCategoriesDetails();
-        $this->onlineUserActive($request);
-        return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY',
-           [
-           'games' => CategoryResource::collection($categories['games']),
-           'latestGames' => CategoryResource::collection($categories['latestGames']),
-           'famousGames' => CategoryResource::collection($categories['famousGames'])
-           ], 202, app()->getLocale());
+        try{
+
+            $categories = $this->categoryRepository->getCategoriesDetails();
+            $this->onlineUserActive($request);
+            return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY',
+                [
+                    'games' => CategoryResource::collection($categories['games']),
+                    'latestGames' => CategoryResource::collection($categories['latestGames']),
+                    'famousGames' => CategoryResource::collection($categories['famousGames'])
+                ], 202, app()->getLocale());
+        }catch (\Exception $exception){
+             return $this->errorResponse('NOTAUTHORIZED', [],401, app()->getLocale());
+
+        }
+
     }
     private function  onlineUserActive($request)
     {
         $currentUser = $request->user();
-        $currentUser->is_online = true;
+
+        if($currentUser == null)
+        {
+            throw new Exception('NOTAUTHORIZED');
+
+        }
+
+         $currentUser->is_online = true;
         $currentUser->last_active_at = now();
         $currentUser->save();
     }
