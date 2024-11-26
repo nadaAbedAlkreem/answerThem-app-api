@@ -48,7 +48,7 @@ Route::group(['middleware' =>  SetLocale::class  , UpdateLastActive::class], fun
             Route::post('profile/update', [UserController::class, 'updateProfile']);
             Route::prefix('user-tracking')->group(function ()
             {
-                 Route::get('track-entry/{userId}', [UserTrackingController::class, 'trackAppEntry']);
+                Route::get('track-entry/{userId}', [UserTrackingController::class, 'trackAppEntry']);
                 Route::get('{userId}', [UserTrackingController::class, 'getTrafficForCurrentUser']);
 
             });
