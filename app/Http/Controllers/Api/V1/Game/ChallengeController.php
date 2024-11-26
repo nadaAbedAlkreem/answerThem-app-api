@@ -15,6 +15,7 @@ use App\Repositories\IChallengeRepositories;
 use App\Repositories\IFriendRepositories;
 use App\Services\FcmNotificationService;
 use App\Traits\ResponseTrait;
+use Exception;
 use Illuminate\Http\Request;
 
 class ChallengeController extends Controller
@@ -79,12 +80,15 @@ class ChallengeController extends Controller
     public function statusStartGaming(AcceptInvitationsRequest $request)
     {
         try {
+            $challenge = $this->challengeRepository->findOne( $request->challenge_id);
+            $this->expiredTime($challenge);
             $currentUser = User::findOrFail($request->sender_id);
             $title = __('messages.invitation_accept_competitor_notification_title');;
             $body = $currentUser->name . ' ' . __('messages.invitation_accept_competitor_notification_body');;
             $type = "accept_invitation";
             $challengeLink = route('challenge.show', ['challengeId' => $request->challenge_id]);
             $this->fcmNotificationService->sendNotification($request->sender_id, $request->receiver_id, $title, $body, $type, $challengeLink, $request->challenge_id);
+
 
             return $this->successResponse(
                 'NOTIFICATION_SENT_SUCCESSFULLY',
@@ -93,6 +97,9 @@ class ChallengeController extends Controller
                 app()->getLocale()
             );
         }catch (\Exception $e) {
+
+
+
             return $this->errorResponse(
                 'ERROR_OCCURRED',
                 ['error' => $e->getMessage()],
@@ -109,17 +116,7 @@ class ChallengeController extends Controller
     {
         try {
             $challenge = $this->challengeRepository->findOrFailWith($challengeId , ['user1' , 'user2' , 'category.questions.answers']);
-            if ($challenge->created_at->diffInMinutes(now()) > 5) {
-                $challenge->status = 'end' ;
-                $challenge->save();
-                $this->challengeRepository->delete($challengeId );
-                return $this->errorResponse(
-                    'EXPIRED_TIME',
-                    [],
-                    403,
-                    app()->getLocale()
-                );
-            }
+            $this->expiredTime($challenge);
             $challenge->status = 'ongoing' ;
             $challenge->save();
             return $this->successResponse(
@@ -129,12 +126,34 @@ class ChallengeController extends Controller
                 app()->getLocale()
             );
          } catch (\Exception $e) {
+            if($e->getMessage() == "EXPIRED_TIME")
+            {
+                return $this->errorResponse(
+                    'EXPIRED_TIME',
+                    [],
+                    403,
+                    app()->getLocale()
+                );
+            }
             return $this->errorResponse(
                 'ERROR_OCCURRED',
                 ['error' => $e->getMessage()],
                 500,
                 app()->getLocale()
             );
+        }
+
+    }
+
+
+    private  function  expiredTime($challenge)
+    {
+        if ($challenge->created_at->diffInMinutes(now()) > 5) {
+            $challenge->status = 'end' ;
+            $challenge->save();
+            $this->challengeRepository->delete($challenge->id );
+
+            throw new Exception('EXPIRED_TIME');
         }
 
     }

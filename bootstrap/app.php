@@ -27,11 +27,10 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-//        $middleware->append(SetLocale::class);
+        $middleware->append(SetLocale::class);
         $middleware->append(StartSession::class);
-//        $middleware->append(UpdateLastActive::class);
-        $middleware->append(VerifyCsrfToken::class);
-//        $middleware->append(EncryptCookies::class);
+        $middleware->append(UpdateLastActive::class);
+ //        $middleware->append(EncryptCookies::class);
 //        $middleware->append(AddQueuedCookiesToResponse::class);
 //        $middleware->append(ShareErrorsFromSession::class);
   //        Illuminate\Cookie\Middleware\EncryptCookies

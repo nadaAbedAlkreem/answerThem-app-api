@@ -22,7 +22,7 @@ class AcceptInvitationsRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+         return [
             'sender_id' => [
                 'required',
                 'integer',
@@ -39,7 +39,8 @@ class AcceptInvitationsRequest extends FormRequest
                  Rule::exists('challenges', 'id')->where(function ($query) {
                      $query->where('user1_id', $this->receiver_id)
                          ->where('user2_id', $this->sender_id);
-                 }),                ],
+                 }),
+                 ],
         ];
     }
 
