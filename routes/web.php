@@ -18,17 +18,18 @@ Route::prefix('auth')->group(function () {
     });
 
 });
-Route::group(['middleware' =>  SetLocale::class , 'web'  ], function () {
+Route::group(['middleware' =>  SetLocale::class  ], function () {
     Route::prefix('dashboard')->group(function ()
     {
         Route::get('home', function (){
             return  view('dashboard.pages.home');
         })->name('dashboard.home');
-        Route::prefix('setting')->group(function ()
-        {
-            Route::get('', [SettingController::class, 'show'])->name('dashboard.setting.create');
-            Route::post('update', [SettingController::class, 'update'])->name('dashboard.setting.update');
-        });
+
+        Route::get('setting', [SettingController::class, 'show'])->name('dashboard.setting.create');
+        Route::post('setting/update', [SettingController::class, 'update'])->name('dashboard.setting.update');
+
+
     });
 });
+
 

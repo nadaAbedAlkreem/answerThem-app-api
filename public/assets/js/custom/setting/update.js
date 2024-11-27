@@ -1,5 +1,4 @@
 
-document.querySelector('#allow-copy_script').remove();
 
 document.addEventListener("DOMContentLoaded", function () {
     const form = document.getElementById("kt_project_settings_form");
@@ -51,13 +50,12 @@ document.addEventListener("DOMContentLoaded", function () {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            console.log("nada");
 
             console.log($('meta[name="csrf-token"]').attr('content'));
 
             $.ajax({
                 type: "POST",
-                url: "/dashboard/setting/update",
+                url: "dashboard/setting/update",
                 data: formData,
                 processData: false, // Disable jQuery's default data processing
                 contentType: false, // Let FormData handle content type

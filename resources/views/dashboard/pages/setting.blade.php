@@ -1861,7 +1861,7 @@
                                                             <label class="fs-6 fw-bold mt-2 mb-3">{{$setting->base_term}}</label>
                                                         </div>
                                                         <div class="col-xl-9 fv-row">
-                                                            <input type="text" class="form-control form-control-solid" name="{{$setting->id}}" value="{{$setting->value}}" />
+                                                            <input type="text" class="form-control form-control-solid" name="{{$setting->id}}" value="{{$setting->value}}" required/>
                                                         </div>
                                                     </div>
                                                     @break
@@ -1885,7 +1885,7 @@
                                                                 <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
                                                                     <i class="bi bi-pencil-fill fs-7"></i>
                                                                     <!--begin::Inputs-->
-                                                                    <input type="file" name="{{$setting->id}}" accept=".png, .jpg, .jpeg" />
+                                                                    <input type="file" name="{{$setting->id}}" accept=".png, .jpg, .jpeg"  />
                                                                     <input type="hidden" name="avatar_remove" />
                                                                     <!--end::Inputs-->
                                                                 </label>
@@ -2004,7 +2004,7 @@
                                                                                 <label class="form-label fw-bold text-dark">
                                                                                     <i class="bi bi-globe me-2"></i> {{$index}}
                                                                                 </label>
-                                                                                <input type="text" class="form-control rounded-3 shadow-sm" name="{{$setting->id}}-{{$index}}" value="{{$json}}" required placeholder="Enter contact us " />
+                                                                                <input type="text" class="form-control rounded-3 shadow-sm" name="{{$setting->id}}-{{$index}}" value="{{$json}}" required placeholder="Enter contact us "  required/>
 
                                                                             </div>
                                                                         @endif

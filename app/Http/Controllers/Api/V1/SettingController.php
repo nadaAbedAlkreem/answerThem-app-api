@@ -28,6 +28,7 @@ class SettingController extends Controller
     }
 
 
+
     public function index(Request $request)
     {
         $settings = Setting::where('lang', App::getLocale())->get();

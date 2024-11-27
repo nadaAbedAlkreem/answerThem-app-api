@@ -60,15 +60,7 @@ class UserController extends Controller
         $currentUser->last_active_at = now();
         $currentUser->save();
     }
-    public function getCurrentUser(Request $request)
-    {
 
-        $currentUser = $request->user();
-             return (!empty($currentUser))
-            ? $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY',new UserResource($currentUser), 200, App::getLocale())
-            : $this->errorResponse('NOTAUTHORIZED', [], 403, App::getLocale());
-
-    }
     public function updateProfile(UpdateProfileRequest $request)
     {
         try {

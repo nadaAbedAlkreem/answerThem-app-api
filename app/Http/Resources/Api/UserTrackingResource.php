@@ -15,6 +15,7 @@ class UserTrackingResource extends JsonResource
     public function toArray(Request $request): array
     {
         $user =  $request->user();
+
         $competitorId = ($this->user1_id === $user->id)?  'user2' :  'user1';
 
         return

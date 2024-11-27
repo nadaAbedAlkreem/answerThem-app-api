@@ -3,25 +3,30 @@
 namespace App\Http\Controllers\Api\V1\Game;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Api\UserResource;
 use App\Http\Resources\Api\UserTrackingResource;
 use App\Models\Result;
 use App\Models\UserTracking;
 use App\Repositories\IResultRepositories;
+use App\Repositories\IUserRepositories;
 use App\Repositories\IUserTrackingRepositories;
 use App\Traits\ResponseTrait;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 
 class UserTrackingController extends Controller
 {
 
     use ResponseTrait;
 
-    protected $userTrackingRepository  , $resultRepository ;
+    protected $userTrackingRepository  , $userRepository , $resultRepository ;
 
-    public function __construct(IUserTrackingRepositories $userTrackingRepository , IResultRepositories $resultRepository)
+    public function __construct(IUserTrackingRepositories $userTrackingRepository ,IUserRepositories $userRepository ,  IResultRepositories $resultRepository)
     {
         $this->userTrackingRepository = $userTrackingRepository;
         $this->resultRepository = $resultRepository;
+        $this->userRepository = $userRepository; // Inject the repository
+
     }
 
     public function trackAppEntry($userId)
@@ -72,24 +77,41 @@ class UserTrackingController extends Controller
         return $losses ;
     }
 
-
-    public function getTrafficForCurrentUser($userId)
+    public function getCurrentUser($userId)
     {
-
 
         $enterUser = $this->getTrackAppEntry($userId) ;
         $win = $this->trackWinsResult($userId);
         $loss = $this->trackLossesResult($userId);
         $game = $this->getNumberOfGame($userId);
         $games = $this->userTrackingRepository->getLastGame($userId);
+        $currentUser = $this->userRepository->findOne($userId);
+        return (!empty($currentUser))
+            ? $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY',
 
-        return $this->successResponse(
-            'TRAFFICKER_SUCCESSFULLY',
-            ['count_entrance'=>$enterUser  , 'count_wins' => $win  , 'count_loss' => $loss  ,'count_game' => $game  ,  'last_games' =>  UserTrackingResource::collection($games) ],
-            202,
-            app()->getLocale()
-        );
+                ['count_entrance'=>$enterUser,
+                    'count_wins' => $win  ,
+                    'count_loss' => $loss  ,
+                    'count_game' => $game  ,
+                    'last_games' =>  UserTrackingResource::collection($games) ,
+                    'user' => new UserResource($currentUser) ,
+                ]
+                , 200, App::getLocale())
+            : $this->errorResponse('NOTAUTHORIZED', [], 403, App::getLocale());
+
     }
+
+//    public function getTrafficForCurrentUser($userId)
+//    {
+//
+//
+//        return $this->successResponse(
+//            'TRAFFICKER_SUCCESSFULLY',
+//            ['count_entrance'=>$enterUser  , 'count_wins' => $win  , 'count_loss' => $loss  ,'count_game' => $game  ,  'last_games' =>  UserTrackingResource::collection($games) ],
+//            202,
+//            app()->getLocale()
+//        );
+//    }
 
     public function getNumberOfGame($userId)
     {
@@ -102,6 +124,6 @@ class UserTrackingController extends Controller
     private function getTrackAppEntry($userId)
     {
         $getUserEnter = UserTracking::where('user_id', $userId)->first();
-        return $getUserEnter->app_entries_count ;
+        return $getUserEnter->app_entries_count  ?? 1 ;
     }
 }

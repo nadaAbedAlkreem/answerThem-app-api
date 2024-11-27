@@ -43,13 +43,13 @@ Route::group(['middleware' =>  SetLocale::class  , UpdateLastActive::class], fun
         Route::group(['middleware' =>'auth:api'], function ()
         {
             Route::post('/logout', [LoginController::class, 'logout']);
-            Route::get('/user', [UserController::class, 'getCurrentUser']);
+            Route::get('/user/{userId}', [UserTrackingController::class, 'getCurrentUser']);
 
             Route::post('profile/update', [UserController::class, 'updateProfile']);
             Route::prefix('user-tracking')->group(function ()
             {
                 Route::get('track-entry/{userId}', [UserTrackingController::class, 'trackAppEntry']);
-                Route::get('{userId}', [UserTrackingController::class, 'getTrafficForCurrentUser']);
+//                Route::get('{userId}', [UserTrackingController::class, 'getTrafficForCurrentUser']);
 
             });
             Route::prefix('friends')->group(function ()
@@ -111,4 +111,7 @@ Route::group(['middleware' =>  SetLocale::class  , UpdateLastActive::class], fun
             });
 
 
+
     });
+//dashboard
+

@@ -155,10 +155,12 @@ class ChallengeController extends Controller
 
             throw new Exception('EXPIRED_TIME');
         }
-
     }
 
-    /**
+
+
+
+/**
      * Show the form for editing the specified resource.
      */
     public function endOFChallenge($challengeId)

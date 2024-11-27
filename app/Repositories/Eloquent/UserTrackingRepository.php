@@ -94,7 +94,7 @@ class UserTrackingRepository extends BaseRepository implements IUserTrackingRepo
     }
     public function getLastGame($userId)
     {
-          $lastGame = Challenge::with(['user1' , 'user2'  ,'category'])->where(function ($query) use ($userId) {
+          $lastGame = Challenge::withTrashed()->with(['user1' , 'user2'  ,'category'])->where(function ($query) use ($userId) {
             $query->where('user1_id', $userId)
                 ->orWhere('user2_id', $userId);
         })
@@ -103,7 +103,7 @@ class UserTrackingRepository extends BaseRepository implements IUserTrackingRepo
 
             ->get();
            if (!$lastGame) {
-            return response()->json(['message' => 'No games found for this user'], 404);
+            return response()->json(['message' => 'No games found for this user'], 202);
         }
           return  $lastGame;
     }
