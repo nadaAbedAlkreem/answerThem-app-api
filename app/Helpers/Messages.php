@@ -9,6 +9,7 @@ class Messages
     private static $Messages_EN = [
         // general
         'operation accomplished successfully' => 'Operation accomplished successfully',
+        'INVALID_LEVEL'=> 'invalid level',
         'UPDATE_STATUS_USER_ACTIVE' => 'Update status user active',
         'EXPIRED_TIME'=>'Waiting time is up, try again.' ,
         'ERROR_FCM_TOKEN'=> 'User does not have a device token' ,
@@ -159,6 +160,7 @@ class Messages
 
     private static $Messages_AR = [
         // General
+        'INVALID_LEVEL'=> 'مستوى غير صالح',
         'EXPIRED_TIME'=> 'انتهى وقت الانتظار حاول مرة اخرى ' ,
         'NO_GAMES' => 'لم يتم العثور على ألعاب لهذا المستخدم',
         'delete_friend_request' => 'تم حذف  طلب الصداقة' ,

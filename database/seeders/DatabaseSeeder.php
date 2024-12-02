@@ -43,17 +43,28 @@ class DatabaseSeeder extends Seeder
         ]);
         $level1 = Category::factory()->count(5)->create(['level' => 1, 'parent_id' => 0]);
 
-        // Level 2 categories
+// Level 2 categories
         $level1Ids = $level1->pluck('id')->toArray();
         $level2 = Category::factory()->count(10)->create([
             'level' => 2,
             'parent_id' => function () use ($level1Ids) {
-                return $level1Ids[array_rand($level1Ids)];
+                return $level1Ids[array_rand($level1Ids)]; // Assign parent_id from level 1 categories
             },
         ]);
 
-        // Level 3 categories
+// Level 3 categories
         $level2Ids = $level2->pluck('id')->toArray();
+        $level3 = Category::factory()->count(15)->create([
+            'level' => 3,
+            'parent_id' => function () use ($level2Ids) {
+                return $level2Ids[array_rand($level2Ids)]; // Assign parent_id from level 2 categories
+            },
+        ]);
+
+// Create questions for each category (level 1, 2, and 3)
+        $level3->each(function ($category) {
+            Question::factory(25)->for($category)->create(); // Creating 25 questions for each level 3 category
+        });
         $categories=  Category::factory()->count(15)->create([
             'level' => 3,
             'parent_id' => function () use ($level2Ids) {

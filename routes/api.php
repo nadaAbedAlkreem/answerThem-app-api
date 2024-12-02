@@ -78,7 +78,7 @@ Route::group(['middleware' =>  SetLocale::class  , UpdateLastActive::class], fun
                 Route::get('{id}/subcategories', [CategoryController::class, 'getSubcategories']);
 
                 Route::get('primary/search', [CategoryController::class, 'searchPrimaryCategories']);
-                Route::get('{id}/subcategories/search', [CategoryController::class, 'searchSubcategories']);
+                Route::get('{level}/game', [CategoryController::class, 'getCategoriesByLevel']);
 
                 Route::get('{id}/category', [CategoryController::class, 'getSubAndPrimeCategoryById']);
                 Route::get('home', [CategoryController::class, 'getCategoriesDetails']);

@@ -65,22 +65,22 @@ class CategoryRepository  extends BaseRepository implements ICategoryRepositorie
 
         return Category::where('parent_id', $primaryCategoryId)->get();
     }
-    public function searchSubcategories($primaryCategoryId , $request)
-    {
-        $searchValue = $request->query('search_value');
-        $name = (App::getLocale()== 'ar')?  'name_ar' : 'name_en'  ;
-        $description = (App::getLocale()== 'ar')?  'description_ar' : 'description_en'  ;
-        $validationError = $this->validateCategoryId($primaryCategoryId);
-        if ($validationError) {
-            return $validationError;
-        }
-        return Category::where('parent_id', $primaryCategoryId)->where(function($q) use ($searchValue  ,$name, $description) {
-            $q->orWhere($name , 'like', "%{$searchValue}%")
-                ->orWhere($description ,'like', "%{$searchValue}%")
-                ->orWhere('rating' , 'like', "%{$searchValue}%");
-
-        })->get();
-    }
+//    public function searchSubcategories($primaryCategoryId , $request)
+//    {
+//        $searchValue = $request->query('search_value');
+//        $name = (App::getLocale()== 'ar')?  'name_ar' : 'name_en'  ;
+//        $description = (App::getLocale()== 'ar')?  'description_ar' : 'description_en'  ;
+//        $validationError = $this->validateCategoryId($primaryCategoryId);
+//        if ($validationError) {
+//            return $validationError;
+//        }
+//        return Category::where('parent_id', $primaryCategoryId)->where(function($q) use ($searchValue  ,$name, $description) {
+//            $q->orWhere($name , 'like', "%{$searchValue}%")
+//                ->orWhere($description ,'like', "%{$searchValue}%")
+//                ->orWhere('rating' , 'like', "%{$searchValue}%");
+//
+//        })->get();
+//    }
 
     public function getCategoryById($CategoryId)
     {
@@ -94,19 +94,18 @@ class CategoryRepository  extends BaseRepository implements ICategoryRepositorie
 
     public function getCategoriesDetails()
     {
-        $commonCondition = ['parent_id' => ['<>', 0]];
 
         // Get all games with the common condition
-        $games = $this->getAllWhere($commonCondition);
+        $games = $this->getAll();
 
         // Get latest games with the common condition, ordered by created_at, and limit to 5
-        $latestGames = Category::where($commonCondition)
-            ->orderBy('created_at', 'DESC')
+        $latestGames = Category::
+             orderBy('created_at', 'DESC')
             ->take(5)
             ->get(); // Ensure you call get() to execute the query and get the results
 
         // Get famous games with the common condition and famous_gaming condition
-        $famousGames = $this->getAllWhere(array_merge($commonCondition, ['famous_gaming' => ['<>', 0]]));
+        $famousGames = $this->getAllWhere( ['famous_gaming' => ['<>', 0]]);
 
         // Return the results
         return [
