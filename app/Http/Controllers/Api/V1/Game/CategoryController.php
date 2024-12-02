@@ -8,20 +8,24 @@ use App\Http\Requests\UpdateCategoryRequest;
 use App\Http\Resources\Api\CategoryResource;
 use App\Models\Category;
 use App\Repositories\ICategoryRepositories;
+use App\Repositories\ISettingRepositories;
 use App\Traits\ResponseTrait;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
 
     use ResponseTrait ;
-    protected $categoryRepository;
+    protected $categoryRepository  , $settingRepositories ;
 
-    public function __construct(ICategoryRepositories $categoryRepository)
+    public function __construct(ICategoryRepositories $categoryRepository  , ISettingRepositories $settingRepositories)
     {
         $this->categoryRepository = $categoryRepository;
+        $this->settingRepositories = $settingRepositories;
+
     }
 
     /**
@@ -77,16 +81,17 @@ class CategoryController extends Controller
     {
         try {
             $categories = $this->categoryRepository->getCategoriesDetails();
+            $banner = $this->settingRepositories->getWhereFirst(['base_term' => 'app banner' , 'lang' => App::getLocale()]);
             $this->onlineUserActive($request);
-
             return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY',
                 [
+                    'banners' => json_decode($banner['value']),
                     'games' => CategoryResource::collection($categories['games']),
                     'latestGames' => CategoryResource::collection($categories['latestGames']),
                     'famousGames' => CategoryResource::collection($categories['famousGames']),
                 ], 202, app()->getLocale());
         } catch (\Exception $exception) {
-             return $this->errorResponse('NOTAUTHORIZED', [], 401, app()->getLocale());
+              return $this->errorResponse('NOTAUTHORIZED', [], 401, app()->getLocale());
         }
 
     }
