@@ -5,7 +5,7 @@
 /public/storage
 #storage/*.key
 /storage/*
-!/storage/app/public
+storage/app/public
 /storage/private/google-services.json
 /vendor
 .env

@@ -1,6 +1,7 @@
 <?php
 
 namespace Database\Factories;
+use App\Models\Category;
 use Faker\Factory as FakerFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -20,19 +21,30 @@ class CategoryFactory extends Factory
     public function definition(): array
     {
         $arabicFaker = \Faker\Factory::create('ar_SA');
-        $famousGamingValue = self::$counter % 2; // 0 for even, 1 for odd
-        self::$counter++; // Increment the counter
-        $parentValue = self::$toggle ? 0 : rand(1, 10);
-        self::$toggle = !self::$toggle;
+
+        // Decide the level and parent_id
+        $level = self::$counter % 3 + 1; // Cycles through levels 1, 2, 3
+        $parent_id = 0; // Default for top-level categories (level 1)
+
+        // If not top-level, assign a valid parent_id
+        if ($level > 1) {
+            $parentLevel = $level - 1; // Parent should be one level above
+            $parent_id = Category::where('level', $parentLevel)->inRandomOrder()->value('id') ?? 0;
+        }
+
+        self::$counter++; // Increment the counter for next call
+
         return [
-            'name_ar' => $arabicFaker->unique()->word. rand(1, 10000),
-            'name_en' =>$this->faker->unique()->word. rand(1, 10000),
+            'name_ar' => $arabicFaker->unique()->word . rand(1, 10000),
+            'name_en' => $this->faker->unique()->word . rand(1, 10000),
             'description_ar' => $arabicFaker->sentence,
             'description_en' => $this->faker->sentence,
             'rating' => $this->faker->randomFloat(2, 0, 5),
             'image' => 'https://linktest.gastwerk-bern.ch/storage/uploads/images/categories/Basketball.png',
-            'parent_id' =>$parentValue ,
-            'famous_gaming' => $famousGamingValue,
+            'parent_id' => $parent_id,
+            'level' => $level,
+            'famous_gaming' => self::$counter % 2, // Alternating 0 and 1
         ];
     }
+
 }
