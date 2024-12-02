@@ -11,6 +11,7 @@ class Invitation extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = ['sender_id', 'receiver_id', 'challenge_id', 'status'];
+    protected $dates = ['deleted_at'];
 
     // An invitation belongs to the sender
     public function sender()

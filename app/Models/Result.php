@@ -18,6 +18,7 @@ class Result extends Model
         'winner_id',
         'is_tie'
     ];
+    protected $dates = ['deleted_at'];
 
     public function firstCompetitor()
     {

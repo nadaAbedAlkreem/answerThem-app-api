@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Auth;
          'data', // Assuming you want to keep this for additional JSON data
          'read_at',
      ];
+     protected $dates = ['deleted_at'];
 
      /**
       * Define the relationship with the User model for sender.

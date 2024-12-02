@@ -31,6 +31,8 @@ Route::group(['middleware' =>  SetLocale::class  , UpdateLastActive::class], fun
                 Route::get('/translate', [UserController::class, 'getTranslatedPagesAuthentication']);
                 Route::get('/login', [LoginController::class, 'index'])->name('login');
                 Route::get('/users', [UserController::class, 'getAllUsers']);
+                Route::get('/user/delete/{id}', [UserController::class, 'deleteUser']);
+
                 Route::get('/users/search', [UserController::class, 'getSearchUsers']);
                 Route::post('/register', [RegisterController::class, 'register']);
                 Route::post('/login', [LoginController::class, 'login'])->name('login-post');

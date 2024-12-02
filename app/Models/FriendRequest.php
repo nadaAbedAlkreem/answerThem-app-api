@@ -11,6 +11,7 @@ class FriendRequest extends Model
 {
     use HasFactory , SoftDeletes;
     protected $fillable = ['sender_id', 'receiver_id', 'status'];
+    protected $dates = ['deleted_at'];
 
      public function sender()
     {

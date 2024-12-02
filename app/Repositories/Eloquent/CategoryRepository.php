@@ -94,11 +94,28 @@ class CategoryRepository  extends BaseRepository implements ICategoryRepositorie
 
     public function getCategoriesDetails()
     {
-        $games =  $this->getAllWhere(['parent_id' => ['<>', 0]]);
-        $latestGames = $this->getAll(['column' => 'created_at', 'dir' => 'DESC'])->take(5);
-        $famousGames = $this->getAllWhere(['famous_gaming' => ['<>', 0]]);
-        return ['games' => $games , 'latestGames' => $latestGames , 'famousGames' => $famousGames]  ;
+        $commonCondition = ['parent_id' => ['<>', 0]];
+
+        // Get all games with the common condition
+        $games = $this->getAllWhere($commonCondition);
+
+        // Get latest games with the common condition, ordered by created_at, and limit to 5
+        $latestGames = Category::where($commonCondition)
+            ->orderBy('created_at', 'DESC')
+            ->take(5)
+            ->get(); // Ensure you call get() to execute the query and get the results
+
+        // Get famous games with the common condition and famous_gaming condition
+        $famousGames = $this->getAllWhere(array_merge($commonCondition, ['famous_gaming' => ['<>', 0]]));
+
+        // Return the results
+        return [
+            'games' => $games,
+            'latestGames' => $latestGames, // Ensure it's a collection
+            'famousGames' => $famousGames,
+        ];
     }
+
 
 
 }

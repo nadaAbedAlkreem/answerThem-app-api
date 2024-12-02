@@ -4,6 +4,7 @@ namespace App\Http\Resources\Api;
 
  use AllowDynamicProperties;
  use Illuminate\Http\Resources\Json\JsonResource;
+ use Illuminate\Support\Facades\Crypt;
 
  class UserResource extends JsonResource
 {

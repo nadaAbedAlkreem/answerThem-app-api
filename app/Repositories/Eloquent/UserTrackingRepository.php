@@ -98,7 +98,8 @@ class UserTrackingRepository extends BaseRepository implements IUserTrackingRepo
             $query->where('user1_id', $userId)
                 ->orWhere('user2_id', $userId);
         })
-            ->orderBy('created_at', 'desc')
+              ->where('status', 'end')
+              ->orderBy('created_at', 'desc')
             ->take(5)
 
             ->get();

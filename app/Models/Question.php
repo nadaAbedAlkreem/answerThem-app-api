@@ -11,6 +11,7 @@ class Question extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = ['category_id', 'image' , 'question_ar_text', 'question_en_text'];
+    protected $dates = ['deleted_at'];
 
     // A question belongs to a category
     public function category()

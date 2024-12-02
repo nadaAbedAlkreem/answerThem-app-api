@@ -20,6 +20,8 @@ class Category extends Model
         'parent_id',
         'famous_gaming'
     ];
+    protected $dates = ['deleted_at'];
+
 
     // A category can have many questions
     public function questions()

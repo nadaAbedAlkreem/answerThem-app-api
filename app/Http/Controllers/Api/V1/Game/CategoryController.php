@@ -75,19 +75,18 @@ class CategoryController extends Controller
 
     public function getCategoriesDetails(Request $request)
     {
-        try{
-
+        try {
             $categories = $this->categoryRepository->getCategoriesDetails();
             $this->onlineUserActive($request);
+
             return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY',
                 [
                     'games' => CategoryResource::collection($categories['games']),
                     'latestGames' => CategoryResource::collection($categories['latestGames']),
-                    'famousGames' => CategoryResource::collection($categories['famousGames'])
+                    'famousGames' => CategoryResource::collection($categories['famousGames']),
                 ], 202, app()->getLocale());
-        }catch (\Exception $exception){
-             return $this->errorResponse('NOTAUTHORIZED', [],401, app()->getLocale());
-
+        } catch (\Exception $exception) {
+             return $this->errorResponse('NOTAUTHORIZED', [], 401, app()->getLocale());
         }
 
     }

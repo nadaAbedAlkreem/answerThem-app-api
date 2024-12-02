@@ -1,10 +1,9 @@
 <?php
 
+use App\Http\Controllers\Dashboard\CategoryController;
 use App\Http\Controllers\Api\V1\SettingController;
-use App\Http\Middleware\CustomVerifyCsrfToken;
 use App\Http\Middleware\SetLocale;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\V1\Auth\RegisterController;
 
 
 
@@ -18,6 +17,7 @@ Route::prefix('auth')->group(function () {
     });
 
 });
+
 Route::group(['middleware' =>  SetLocale::class  ], function () {
     Route::prefix('dashboard')->group(function ()
     {
@@ -27,6 +27,20 @@ Route::group(['middleware' =>  SetLocale::class  ], function () {
 
         Route::get('setting', [SettingController::class, 'show'])->name('dashboard.setting.create');
         Route::post('setting/update', [SettingController::class, 'update'])->name('dashboard.setting.update');
+        Route::post('lang', [CategoryController::class, 'changeLangVersion'])->name('dashboard.language');
+
+
+        Route::prefix('category')->group(function ()
+        {
+            Route::get('', [CategoryController::class, 'index'])->name('dashboard.category');
+        }
+        );
+
+        Route::get('setting', [SettingController::class, 'show'])->name('dashboard.setting.create');
+        Route::post('setting/update', [SettingController::class, 'update'])->name('dashboard.setting.update');
+        Route::post('lang', [CategoryController::class, 'changeLangVersion'])->name('dashboard.language');
+
+
 
 
     });

@@ -33,7 +33,8 @@ class User extends Authenticatable
         'remember_token',
         'fcm_token' ,
         'is_online' ,
-        'last_active_at'
+        'last_active_at' ,
+        'password'
 
     ];
 
@@ -62,7 +63,97 @@ class User extends Authenticatable
         ];
     }
 
+    protected static function boot()
+    {
+        parent::boot();
 
+        static::deleting(function ($user) {
+            // Soft delete related friend requests
+            $user->friendUsers()->each(function ($friendUsers) {
+                $friendUsers->delete(); // Soft delete sent requests
+            });
+            $user->usersFriends()->each(function ($usersFriends) {
+                $usersFriends->delete(); // Soft delete sent requests
+            });
+            $user->sentFriendRequests()->each(function ($request) {
+                $request->delete(); // Soft delete sent requests
+            });
+
+            $user->receivedFriendRequests()->each(function ($request) {
+                $request->delete(); // Soft delete received requests
+            });
+
+            // Soft delete related results
+            $user->userResultfirstCompetitor()->each(function ($result) {
+                $result->delete(); // Soft delete first competitor results
+            });
+
+            $user->userResultSecondCompetitor()->each(function ($result) {
+                $result->delete(); // Soft delete second competitor results
+            });
+
+            $user->userWinner()->each(function ($result) {
+                $result->delete(); // Soft delete winner results
+            });
+
+            // Soft delete related notifications
+            $user->sentNotifications()->each(function ($notification) {
+                $notification->delete(); // Soft delete sent notifications
+            });
+
+            $user->receivedNotifications()->each(function ($notification) {
+                $notification->delete(); // Soft delete received notifications
+            });
+            $user->challengesAsUser1()->each(function ($challengesAsUser1) {
+                $challengesAsUser1->delete(); // Soft delete received notifications
+            });
+            $user->challengesAsUser2()->each(function ($challengesAsUser2) {
+                $challengesAsUser2->delete(); // Soft delete received notifications
+            });
+
+
+            // Soft delete related contact us messages
+            $user->senderContactUs()->each(function ($contactUs) {
+                $contactUs->delete(); // Soft delete contact us messages
+            });
+
+            // Soft delete user tracking records
+            $user->userTracking()->each(function ($tracking) {
+                $tracking->delete(); // Soft delete user tracking records
+            });
+
+            // Soft delete related team members
+            $user->teamMembers()->each(function ($teamMember) {
+                $teamMember->delete(); // Soft delete team members
+            });
+
+            // Soft delete teams
+            $user->team()->each(function ($team) {
+                $team->delete(); // Soft delete teams
+            });
+            $user->invitationsAsUserReceiver()->each(function ($invitationsAsUserReceiver) {
+                $invitationsAsUserReceiver->delete(); // Soft delete teams
+            });
+            $user->invitationsAsUserSender()->each(function ($invitationsAsUserSender) {
+                $invitationsAsUserSender->delete(); // Soft delete teams
+            });
+
+        });
+    }
+
+
+
+    public function friendUsers()
+    {
+        return $this->hasMany(Friend::class, 'friend_id');
+
+    }
+
+    public function usersFriends()
+    {
+        return $this->hasMany(Friend::class, 'user_id');
+
+    }
     public function friends()
     {
         return $this->belongsToMany(User::class, 'friends', 'user_id', 'friend_id')
@@ -101,6 +192,28 @@ class User extends Authenticatable
     {
         return $this->hasMany(Notification::class, 'sender_id');
     }
+    // Challenges where the user is user1
+    public function challengesAsUser1()
+    {
+        return $this->hasMany(Challenge::class, 'user1_id');
+    }
+
+// Challenges where the user is user2
+    public function challengesAsUser2()
+    {
+        return $this->hasMany(Challenge::class, 'user2_id');
+    }
+
+    public function invitationsAsUserSender()
+    {
+        return $this->hasMany(Invitation::class, 'sender_id');
+    }
+
+    // An invitation belongs to the receiver
+    public function invitationsAsUserReceiver()
+    {
+        return $this->hasMany(Invitation::class, 'receiver_id');
+    }
 
     public function senderContactUs()
     {
@@ -125,6 +238,7 @@ class User extends Authenticatable
     {
         return $this->hasMany(Team::class, 'user_id');
     }
+
 
 
 

@@ -10,6 +10,7 @@ class Setting extends Model
 {
     use HasFactory , SoftDeletes;
 
+    protected $dates = ['deleted_at'];
 
     protected $fillable = [
         'key',
@@ -21,6 +22,5 @@ class Setting extends Model
         'remember_token'
 
     ];
-    protected $dates = ['deleted_at'];
 
 }

@@ -95,16 +95,7 @@ class SettingsTableSeeder extends Seeder
                         'title' => 'How do I upgrade my account to a premium account?',
                         'body' => 'You can upgrade to a premium account through the account settings and pay through the available methods.',
                     ],
-                    [
-                        'image' => 'https://linktest.gastwerk-bern.ch/storage/uploads/images/settings/app_welcome_interface_ar1732589803.jpeg' ,// Replace with actual image path
-                        'title' => 'Does the app support multiple languages?',
-                        'body' => 'Yes, the app supports multiple languages ​​and the language can be changed from the app settings.',
-                    ],
-                    [
-                        'image' => 'https://linktest.gastwerk-bern.ch/storage/uploads/images/settings/app_welcome_interface_ar1732589803.jpeg' ,// Replace with actual image path
-                        'title' => 'What devices can I use to run the app?',
-                        'body' => 'The app can be run on iOS and Android smartphones and tablets.',
-                    ]
+
                 ]),
                 'description' => 'Welcome interface settings',
                 'base_term' => 'app welcome interface',
@@ -120,31 +111,31 @@ class SettingsTableSeeder extends Seeder
                     [
                         [
                             'name' => 'Egypt',
-                            'flag' => 'EG',
+                            'flag' => 'https://linktest.gastwerk-bern.ch/storage/uploads/images/settings/Frame.png',
                             'code' => '+20',
                         ]
                         ,
                         [
                             'name' => 'Kuwait',
-                            'flag' => 'KW',
+                            'flag' => 'https://linktest.gastwerk-bern.ch/storage/uploads/images/settings/Frame_(2).png',
                             'code' => '+965',
                         ]
                         ,
                         [
                             'name' => 'Saudi Arabia',
-                            'flag' => 'SA',
+                            'flag' => 'https://linktest.gastwerk-bern.ch/storage/uploads/images/settings/s.png',
                             'code' => '+966',
                         ]
                         ,
                         [
                             'name' => 'UAE',
-                            'flag' => 'AE',
+                            'flag' => 'https://linktest.gastwerk-bern.ch/storage/uploads/images/settings/Frame_13.png',
                             'code' => '+971',
                         ]
                         ,
                         [
                             'name' => 'Palestine',
-                            'flag' => 'PS',
+                            'flag' => 'https://linktest.gastwerk-bern.ch/storage/uploads/images/settings/Frame_23.png',
                             'code' => '+970',
                         ]
                     ]
@@ -164,31 +155,31 @@ class SettingsTableSeeder extends Seeder
                     [
                         [
                             'name' => 'Egypt',
-                            'flag' => 'EG',
+                            'flag' => 'https://linktest.gastwerk-bern.ch/storage/uploads/images/settings/Frame.png',
                             'code' => '+20',
                         ]
                         ,
                         [
                             'name' => 'Kuwait',
-                            'flag' => 'KW',
+                            'flag' => 'https://linktest.gastwerk-bern.ch/storage/uploads/images/settings/Frame_(2).png',
                             'code' => '+965',
                         ]
                         ,
                         [
                             'name' => 'Saudi Arabia',
-                            'flag' => 'SA',
+                            'flag' => 'https://linktest.gastwerk-bern.ch/storage/uploads/images/settings/s.png',
                             'code' => '+966',
                         ]
                         ,
                         [
                             'name' => 'UAE',
-                            'flag' => 'AE',
+                            'flag' => 'https://linktest.gastwerk-bern.ch/storage/uploads/images/settings/Frame_13.png',
                             'code' => '+971',
                         ]
                         ,
                         [
                             'name' => 'Palestine',
-                            'flag' => 'PS',
+                            'flag' => 'https://linktest.gastwerk-bern.ch/storage/uploads/images/settings/Frame_23.png',
                             'code' => '+970',
                         ]
                     ]
@@ -200,7 +191,6 @@ class SettingsTableSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-
 
 
             [
@@ -228,13 +218,45 @@ class SettingsTableSeeder extends Seeder
                         ]
 
 
-
-
-
                     ]),
                 'description' => 'Privacy policy',
                 'base_term' => 'app privacy policy',
                 'lang' => 'ar', // You can choose a default language here
+                'type' => 'json',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            [
+                'key' => 'app_terms_and_conditions_ar',
+                'value' => json_encode(
+                    [
+                        '  شروط والاحكام التطبيق .',
+                        ' شروط والاحكام التطبيق  .',
+                        ' شروط والاحكام التطبيق  .',
+                        ' شروط والاحكام التطبيق  .',
+
+                    ]),
+                'description' => 'app terms and conditions ar',
+                'base_term' => 'app terms and conditions',
+                'lang' => 'ar', // You can choose a default language here
+                'type' => 'json',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'key' => 'app_terms_and_conditions_en',
+                'value' => json_encode(
+                    [
+                        'app terms and conditions  . ',
+                        'app terms and conditions   .',
+                        'app terms and conditions   .',
+                        'app terms and conditions   .',
+
+                    ]),
+                'description' => 'app terms and conditions en',
+                'base_term' => 'app terms and conditions',
+                'lang' => 'en', // You can choose a default language here
                 'type' => 'json',
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -245,19 +267,19 @@ class SettingsTableSeeder extends Seeder
                 'key' => 'app_privacy_policy_en',
                 'value' => json_encode([
                     [
-                        'title' =>  'Privacy Policy',
+                        'title' => 'Privacy Policy',
                         'body' => 'This is the privacy policy of the application.',
                     ],
                     [
-                        'title' =>  'Privacy Policy',
+                        'title' => 'Privacy Policy',
                         'body' => 'This is the privacy policy of the application.',
                     ],
                     [
-                        'title' =>  'Privacy Policy',
+                        'title' => 'Privacy Policy',
                         'body' => 'This is the privacy policy of the application.',
                     ],
                     [
-                        'title' =>  'Privacy Policy',
+                        'title' => 'Privacy Policy',
                         'body' => 'This is the privacy policy of the application.',
                     ],
 
@@ -275,12 +297,12 @@ class SettingsTableSeeder extends Seeder
                 'key' => 'app_banner_en',
                 'value' => json_encode([
                     [
-                        'title' =>  'test',
+                        'title' => 'test',
                         'body' => 'tset',
                         'image' => 'https://linktest.gastwerk-bern.ch/storage/uploads/images/settings/banner_1.png'
                     ],
                     [
-                        'title' =>  'test',
+                        'title' => 'test',
                         'body' => 'tset',
                         'image' => 'https://linktest.gastwerk-bern.ch/storage/uploads/images/settings/banner_1.png'
                     ],
@@ -296,12 +318,12 @@ class SettingsTableSeeder extends Seeder
                 'key' => 'app_banner_ar',
                 'value' => json_encode([
                     [
-                        'title' =>  'احدث اللعاب ',
+                        'title' => 'احدث اللعاب ',
                         'body' => 'مثيرة وشيقة ',
                         'image' => 'https://linktest.gastwerk-bern.ch/storage/uploads/images/settings/banner_1.png'
                     ],
                     [
-                        'title' =>  'احدث اللعاب ',
+                        'title' => 'احدث اللعاب ',
                         'body' => 'مثيرة وشيقة ',
                         'image' => 'https://linktest.gastwerk-bern.ch/storage/uploads/images/settings/banner_1.png'
                     ],
@@ -320,16 +342,15 @@ class SettingsTableSeeder extends Seeder
                 'key' => 'contact_us',
                 'value' => json_encode(
                     [
-                        'gmail' => 'test@test.com',
-                        'facebook' => 'facebook',
-                        'Instagram' => 'Instagram',
-                        'WhatsApp' => '9999999',
-                        'Snapchat' => 'Snapchat',
-
+                        'gmail' => 'mailto:elkahloutnada@gmail.com',
+                        'facebook' => 'https://www.facebook.com/',
+                        'Instagram' => 'https://www.instagram.com/',
+                        'WhatsApp' => 'https://wa.me/9999999',
+                        'Snapchat' => 'https://www.snapchat.com/',
+                        'Twitter' => 'https://www.snapchat.com/',
+                        'TikTok' => 'https://www.snapchat.com/',
+                        'LinkedIn' => 'https://www.snapchat.com/',
                     ]
-
-
-
                 ),
                 'description' => 'contact us information',
                 'base_term' => 'app contact us',
@@ -338,14 +359,21 @@ class SettingsTableSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-
-            [
+             [
                 'key' => 'contact_us',
-                'value' => json_encode([  'gmail' => 'test@test.com',
-                    'facebook' => 'facebook',
-                    'Instagram' => 'Instagram',
-                    'WhatsApp' => '9999999',
-                    'Snapchat' => 'Snapchat',
+                'value' => json_encode([
+                    [
+                        'gmail' => 'mailto:elkahloutnada@gmail.com',
+                        'facebook' => 'https://www.facebook.com/',
+                        'Instagram' => 'https://www.instagram.com/',
+                        'WhatsApp' => 'https://wa.me/9999999',
+                        'Snapchat' => 'https://www.snapchat.com/',
+                        'Twitter' => 'https://www.snapchat.com/',
+                        'TikTok' => 'https://www.snapchat.com/',
+                        'LinkedIn' => 'https://www.snapchat.com/',
+
+
+                    ]
 
                 ]),
                 'description' => 'contact us information',

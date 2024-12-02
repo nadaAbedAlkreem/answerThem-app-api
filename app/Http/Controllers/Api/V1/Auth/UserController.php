@@ -83,6 +83,30 @@ class UserController extends Controller
 
     }
 
+    public function deleteUser($id)
+    {
+        try {
+            $user =$this->userRepository->findOrFail($id);
+            $user->delete();
+             return $this->successResponse(
+                'USER_DELETE_SUCCESS',
+                 [],
+                200,
+                App::getLocale()
+            );
+        } catch (\Exception $exception) {
+            return $this->errorResponse(
+                'USER_NOT_FOUND',
+                [],
+                500,
+                App::getLocale()
+            );
+        }
+
+    }
+
+
+
 
 
 

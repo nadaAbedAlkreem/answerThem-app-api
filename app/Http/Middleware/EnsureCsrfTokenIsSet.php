@@ -15,9 +15,10 @@ class EnsureCsrfTokenIsSet
      */
     public function handle(Request $request, Closure $next): Response
     {
-         if (!$request->session()->has('_token')) {
-            $request->session()->put('_token', csrf_token());
+           if ($request['_token']) {
+             $request->session()->put('_token', $request['_token']);
         }
+
         return $next($request);
     }
 }

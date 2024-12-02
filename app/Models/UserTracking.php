@@ -15,6 +15,8 @@ class UserTracking extends Model
         'loss_count' ,
         'create_at'
     ];
+    protected $dates = ['deleted_at'];
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');

@@ -1,9 +1,7 @@
 <?php
 
-use App\Http\Middleware\CustomVerifyCsrfToken;
-use App\Http\Middleware\EnsureCsrfTokenIsSet;
-use App\Http\Middleware\NoCache;
-use App\Http\Middleware\UpdateLastActive;
+ use App\Http\Middleware\EnsureCsrfTokenIsSet;
+ use App\Http\Middleware\UpdateLastActive;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Application;

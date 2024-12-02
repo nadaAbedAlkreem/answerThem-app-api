@@ -21,6 +21,7 @@ class Challenge extends Model
         'time_per_question',
         'status'
     ];
+    protected $dates = ['deleted_at'];
 
     // A challenge belongs to team 1
     public function teamMember1()
@@ -37,6 +38,8 @@ class Challenge extends Model
     {
         return $this->belongsTo(Category::class, 'category_id'); // foreign key in the challenges table
     }
+
+
 
     // A challenge belongs to user 1
     public function user1()

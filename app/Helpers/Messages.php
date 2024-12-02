@@ -150,8 +150,8 @@ class Messages
         'accept_friend_request' => 'Friend request accepted',
         'CREATE_FRIEND_REQUEST_SUCCESSFULLY' => 'Friend request sent',
         'GAME_END' =>'The game has been completed.' ,
-        'STORE_SCORE_SUCCESSFULLY' => 'store score success'
-
+        'STORE_SCORE_SUCCESSFULLY' => 'store score success',
+        'USER_DELETE_SUCCESS' => 'User account has been successfully deleted',
 
     ];
 
@@ -282,6 +282,8 @@ class Messages
         'ORDER_NOT_FOUND' => ' لم يتم العثور على الطلبية ',
         'ORDER_DETAILS_RETRIEVED' => 'تم استرداد تفاصيل الطلب' ,
         'USER_NOT_FOUND' => 'لم يتم العثور على المستخدم ' ,
+        'USER_DELETE_SUCCESS' => ' تم حذف حساب المستخدم بنجاح ' ,
+
         'NOTAUTHORIZED' =>  'غير مصرح لك  يجب عليك تسجيل دخول اولا ',
 
         // Order Status

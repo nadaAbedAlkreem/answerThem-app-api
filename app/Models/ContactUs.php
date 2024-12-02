@@ -14,6 +14,7 @@ class ContactUs extends Model
         'title',
         'description'
     ];
+    protected $dates = ['deleted_at'];
 
     public function sender()
     {

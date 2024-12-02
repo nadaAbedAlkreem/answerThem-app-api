@@ -4,6 +4,7 @@ namespace App\Http\Resources\Api;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Crypt;
 
 class UserWithTokenAccessResource extends JsonResource
 {
@@ -21,8 +22,7 @@ class UserWithTokenAccessResource extends JsonResource
     public function toArray($request): array
     {
         $image = (strpos($this->image, 'https://linktest.gastwerk-bern.ch/') !== false) ?  $this->image : 'https://linktest.gastwerk-bern.ch/'.$this->image   ;
-
-        return [
+         return [
             'id' => $this->id ,
             'access_token'=>$this->access_token ,
             'image' => $image,
