@@ -72,7 +72,7 @@ use Twilio\Rest\Client;
          $cachedData = Cache::get($identifier . '_token');
 
          if ($request->verification_method === 'email') {
-             Mail::to($user->email)->send(new RestPasswordMail($token));
+              Mail::to($user->email)->send(new RestPasswordMail($token));
          } elseif ($request->verification_method === 'phone') {
              $this->smsService->sendSms($user->phone, "Your verification code is: $token");
          }
