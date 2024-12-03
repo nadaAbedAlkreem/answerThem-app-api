@@ -297,14 +297,14 @@ class SettingsTableSeeder extends Seeder
                 'key' => 'app_banner_en',
                 'value' => json_encode([
                     [
-                        'title' => 'test',
-                        'body' => 'tset',
-                        'image' => 'https://linktest.gastwerk-bern.ch/storage/uploads/images/settings/banner_1.png'
+                        'title' => 'Latest Games',
+                        'body' => 'Exciting and Interesting',
+                        'image' => 'https://linktest.gastwerk-bern.ch/storage/uploads/images/settings/Trophy.png'
                     ],
                     [
-                        'title' => 'test',
-                        'body' => 'tset',
-                        'image' => 'https://linktest.gastwerk-bern.ch/storage/uploads/images/settings/banner_1.png'
+                        'title' => 'Latest Games',
+                        'body' => 'Exciting and Interesting',
+                        'image' => 'https://linktest.gastwerk-bern.ch/storage/uploads/images/settings/Trophy.png'
                     ],
                 ]),
                 'description' => 'banner',

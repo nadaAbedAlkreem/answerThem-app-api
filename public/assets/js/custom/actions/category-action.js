@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function () {
         $.ajax({
             type: "post",
             url: "dashboard/lang",
-            data: {language: language   },
+            data: {language: language  , '_token' :  $('meta[name="csrf-token"]').attr("content") },
 
             contentType: false,
             processData: false,

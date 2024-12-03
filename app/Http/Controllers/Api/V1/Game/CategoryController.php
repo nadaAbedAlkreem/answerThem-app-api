@@ -49,9 +49,9 @@ class CategoryController extends Controller
         return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY', CategoryResource::collection($categories), 202, app()->getLocale());
     }
 
-    public function searchPrimaryCategories(Request $request)
+    public function searchCategories(Request $request)
     {
-        $categories = $this->categoryRepository->searchPrimaryCategories($request);
+        $categories = $this->categoryRepository->searchCategories($request);
         return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY', CategoryResource::collection($categories), 202, app()->getLocale());
     }
 

@@ -27,7 +27,6 @@ Route::group(['middleware' =>  SetLocale::class  ], function () {
 
         Route::get('setting', [SettingController::class, 'show'])->name('dashboard.setting.create');
         Route::post('setting/update', [SettingController::class, 'update'])->name('dashboard.setting.update');
-        Route::post('lang', [CategoryController::class, 'changeLangVersion'])->name('dashboard.language');
 
 
         Route::prefix('category')->group(function ()

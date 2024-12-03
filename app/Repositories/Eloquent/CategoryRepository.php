@@ -42,13 +42,13 @@ class CategoryRepository  extends BaseRepository implements ICategoryRepositorie
     {
         return Category::where('parent_id', 0)->get();
     }
-    public function searchPrimaryCategories($request)
+    public function searchCategories($request)
     {
         $searchValue = $request->query('search_value');
         $name = (App::getLocale()== 'ar')?  'name_ar' : 'name_en'  ;
         $description = (App::getLocale()== 'ar')?  'description_ar' : 'description_en'  ;
 
-        return Category::where('parent_id', 0)->where(function($q) use ($searchValue  ,$name, $description) {
+        return Category::where(function($q) use ($searchValue  ,$name, $description) {
             $q->orWhere($name , 'like', "%{$searchValue}%")
                 ->orWhere($description ,'like', "%{$searchValue}%")
                 ->orWhere('rating' , 'like', "%{$searchValue}%");
@@ -94,18 +94,17 @@ class CategoryRepository  extends BaseRepository implements ICategoryRepositorie
 
     public function getCategoriesDetails()
     {
-
-        // Get all games with the common condition
-        $games = $this->getAll();
+         // Get all games with the common condition
+        $games = $this->getAllWhere(['parent_id' => '0']);
 
         // Get latest games with the common condition, ordered by created_at, and limit to 5
-        $latestGames = Category::
+        $latestGames = Category::where(['level' => 3 ])->
              orderBy('created_at', 'DESC')
             ->take(5)
             ->get(); // Ensure you call get() to execute the query and get the results
 
         // Get famous games with the common condition and famous_gaming condition
-        $famousGames = $this->getAllWhere( ['famous_gaming' => ['<>', 0]]);
+        $famousGames = $this->getAllWhere( [ 'level' =>3, 'famous_gaming' => ['<>', 0]]);
 
         // Return the results
         return [

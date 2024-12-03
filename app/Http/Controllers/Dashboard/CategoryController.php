@@ -45,14 +45,11 @@ class CategoryController extends Controller
 
     }
 
-    public  function changeLangVersion($lang)
+    public  function changeLangVersion(Request $request)
     {
-        \Illuminate\Support\Facades\Log::info("Language change request received: " . $lang);
 
-        // Example return
-        return response()->json([
-            'message' => "Language changed to {$lang}",
-        ], 200);
+        $language = $request->input('language'); // Retrieve the language parameter
+        dd($language);
 
     }
 

@@ -18,6 +18,8 @@ class Category extends Model
         'rating',
         'image',
         'parent_id',
+        'level',
+        'color',
         'famous_gaming'
     ];
     protected $dates = ['deleted_at'];

@@ -7,10 +7,10 @@
 storage/app/private/json/gaweb7om-054422d37865.json
 
 # Allow specific folders inside storage
-#!storage/app/
-#!storage/app/public/
-#!storage/app/public/uploads/
-#!storage/app/public/uploads/images//storage/*
+!storage/app/
+!storage/app/public/
+!storage/app/public/uploads/
+!storage/app/public/uploads/images/storage/*
 /storage/private/google-services.json
 /vendor
 .env

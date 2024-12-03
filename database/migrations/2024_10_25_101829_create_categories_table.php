@@ -20,7 +20,8 @@ return new class extends Migration
             $table->decimal('rating' ,4, 2)->default(0.00);
             $table->string('image');
             $table->bigInteger('parent_id')->default(0);
-            $table->enum('level', [3,2,1])->default(1) ;
+            $table->enum('level', [1,2,3])->default(1) ;
+            $table->string('color');
 
             $table->tinyInteger('famous_gaming')->default(0);
 
