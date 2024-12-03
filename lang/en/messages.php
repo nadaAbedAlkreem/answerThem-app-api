@@ -17,6 +17,8 @@ return [
         'not_in' => 'The attached game type is invalid',
         'exists' => 'The game type does not exist'
     ],
+    'TOO_MANY_ATTEMPTS'=>'Too many attempts' ,
+
     'user1_id' => [
         'required' => 'The value of the game origin does not exist',
         'integer' => 'The reference of the origin field must be a number',

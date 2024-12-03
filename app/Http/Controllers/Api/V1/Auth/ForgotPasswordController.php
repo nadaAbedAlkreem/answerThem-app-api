@@ -52,7 +52,7 @@ use Twilio\Rest\Client;
          if ($attempts >= $this->maxAttempts) {
              Cache::put($identifier . '_lockout_time', Carbon::now()->addMinutes($this->lockoutTime), $this->lockoutTime * 60);
              Cache::forget($identifier . '_attempts');
-             return $this->errorResponse('TOO_MANY_ATTEMPTS', ['minutes_remaining' => $this->lockoutTime], 429, app()->getLocale());
+             return $this->errorResponse('TOO_MANY_ATTEMPTS', ['error'=> __('messages.TOO_MANY_ATTEMPTS')], 429, app()->getLocale());
          }
 
          $user = $request->verification_method === 'email'
