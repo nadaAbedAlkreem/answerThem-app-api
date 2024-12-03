@@ -36,18 +36,18 @@ class CategoryController extends Controller
 
     }
     //
-    public function getCategoriesByLevel($level)
-    {
-        $validator = Validator::make(
-            ['level' => $level],
-            ['level' => 'required|in:1,2,3']
-        );
-        if ($validator->fails()) {
-            return $this->errorResponse('INVALID_LEVEL', [], 400, app()->getLocale());
-        }
-        $categories = $this->categoryRepository->getWhere(['level'=>$level]);
-        return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY', CategoryResource::collection($categories), 202, app()->getLocale());
-    }
+//    public function getCategoriesByLevel($level)
+//    {
+//        $validator = Validator::make(
+//            ['level' => $level],
+//            ['level' => 'required|in:1,2,3']
+//        );
+//        if ($validator->fails()) {
+//            return $this->errorResponse('INVALID_LEVEL', [], 400, app()->getLocale());
+//        }
+//        $categories = $this->categoryRepository->getWhere(['level'=>$level]);
+//        return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY', CategoryResource::collection($categories), 202, app()->getLocale());
+//    }
 
     public function searchCategories(Request $request)
     {
@@ -69,14 +69,14 @@ class CategoryController extends Controller
         return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY', CategoryResource::collection($subcategories), 202, app()->getLocale());
     }
 
-//    public function searchSubcategories($id, Request $request)
-//    {
-//        $subcategories = $this->categoryRepository->searchSubcategories($id, $request);
-//        if ($subcategories instanceof \Illuminate\Http\JsonResponse) {
-//            return $subcategories; // Return error response directly
-//        }
-//        return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY', CategoryResource::collection($subcategories), 202, app()->getLocale());
-//    }
+    public function searchSubCategories( Request $request)
+    {
+        $subcategories = $this->categoryRepository->searchSubcategories($request);
+        if ($subcategories instanceof \Illuminate\Http\JsonResponse) {
+            return $subcategories; // Return error response directly
+        }
+        return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY', CategoryResource::collection($subcategories), 202, app()->getLocale());
+    }
 
     public function getSubAndPrimeCategoryById($id)
     {

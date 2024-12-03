@@ -65,22 +65,21 @@ class CategoryRepository  extends BaseRepository implements ICategoryRepositorie
 
         return Category::where('parent_id', $primaryCategoryId)->get();
     }
-//    public function searchSubcategories($primaryCategoryId , $request)
-//    {
-//        $searchValue = $request->query('search_value');
-//        $name = (App::getLocale()== 'ar')?  'name_ar' : 'name_en'  ;
-//        $description = (App::getLocale()== 'ar')?  'description_ar' : 'description_en'  ;
-//        $validationError = $this->validateCategoryId($primaryCategoryId);
-//        if ($validationError) {
-//            return $validationError;
-//        }
-//        return Category::where('parent_id', $primaryCategoryId)->where(function($q) use ($searchValue  ,$name, $description) {
-//            $q->orWhere($name , 'like', "%{$searchValue}%")
-//                ->orWhere($description ,'like', "%{$searchValue}%")
-//                ->orWhere('rating' , 'like', "%{$searchValue}%");
-//
-//        })->get();
-//    }
+    public function searchSubcategories($request)
+    {
+        $searchValue = $request->query('search_value');
+        $level = $request->query('level');
+
+        $name = (App::getLocale()== 'ar')?  'name_ar' : 'name_en'  ;
+        $description = (App::getLocale()== 'ar')?  'description_ar' : 'description_en'  ;
+
+        return Category::where('level',$level )->where(function($q) use ($searchValue  ,$name, $description) {
+            $q->orWhere($name , 'like', "%{$searchValue}%")
+                ->orWhere($description ,'like', "%{$searchValue}%")
+                ->orWhere('rating' , 'like', "%{$searchValue}%");
+
+        })->get();
+    }
 
     public function getCategoryById($CategoryId)
     {

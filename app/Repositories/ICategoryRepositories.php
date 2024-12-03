@@ -10,7 +10,7 @@ interface ICategoryRepositories
 
     public function searchCategories($request);
 
-//    public function searchSubcategories($primaryCategoryId , $request);
+    public function searchSubcategories($request);
     public function getCategoryById($CategoryId);
     public function getCategoriesDetails();
 
