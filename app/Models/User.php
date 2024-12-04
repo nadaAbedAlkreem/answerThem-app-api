@@ -148,6 +148,10 @@ class User extends Authenticatable
         return $this->hasMany(Friend::class, 'friend_id');
 
     }
+    public function EvaluationsUser()
+    {
+        return $this->hasMany(Evaluation::class, 'user_id');
+    }
 
     public function usersFriends()
     {
