@@ -7,12 +7,15 @@ use App\Http\Resources\Dashboard\CategoryResource;
 use App\Models\Category;
 use App\Repositories\ICategoryRepositories;
 use App\Services\CategoryDatatableService;
+use App\Traits\ResponseTrait;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Throwable;
 
 class CategoryController extends Controller
 {
 
+    use ResponseTrait ;
     protected $categoryRepository;
 
     public function __construct(ICategoryRepositories $categoryRepository)
@@ -50,6 +53,21 @@ class CategoryController extends Controller
 
         $language = $request->input('language'); // Retrieve the language parameter
         dd($language);
+
+    }
+    public function destroy($id)
+    {
+        try {
+            dd($id);
+            $result = $this->categoryRepository->delete($id);
+            return $this->successResponse('DELETE_SUCCESS',[], 202, App::getLocale())  ;
+
+        }catch (Throwable $e){
+            return response([
+                'message' => $e->getMessage(),
+            ], 500);
+        }
+
 
     }
 

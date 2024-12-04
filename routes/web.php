@@ -32,6 +32,8 @@ Route::group(['middleware' =>  SetLocale::class  ], function () {
         Route::prefix('category')->group(function ()
         {
             Route::get('', [CategoryController::class, 'index'])->name('dashboard.category');
+            Route::delete('{id}', [CategoryController::class, 'delete'])->name('dashboard.category.delete');
+
         }
         );
 

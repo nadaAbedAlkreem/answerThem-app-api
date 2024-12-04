@@ -24,6 +24,17 @@ class Category extends Model
     ];
     protected $dates = ['deleted_at'];
 
+    public function parent()
+    {
+        return $this->belongsTo(Category::class, 'parent_id');
+    }
+
+    // Define the children relationship
+    public function children()
+    {
+        return $this->hasMany(Category::class, 'parent_id');
+    }
+
 
     // A category can have many questions
     public function questions()
@@ -32,10 +43,6 @@ class Category extends Model
     }
 
     // A category can have sub-categories (parent-child relationship)
-    public function children()
-    {
-        return $this->hasMany(Category::class, 'parent_id');
-    }
 
     public function challenge()
     {
@@ -43,9 +50,5 @@ class Category extends Model
     }
 
     // A category can belong to a parent category
-    public function parent()
-    {
-        return $this->belongsTo(Category::class, 'parent_id');
-    }
 
 }

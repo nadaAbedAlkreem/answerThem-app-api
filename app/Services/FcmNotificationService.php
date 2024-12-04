@@ -62,9 +62,10 @@ class FcmNotificationService
 
                 "data" => [
                     "type" => $type,
+                    "title" => $title ,
+                    "body" => $body,
                     "sender" => (string)$senderId,
                     "receiver" => (string)$receiverId,
-
                 ],
             ]
         ];

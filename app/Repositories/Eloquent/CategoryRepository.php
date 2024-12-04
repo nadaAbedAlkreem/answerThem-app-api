@@ -40,7 +40,7 @@ class CategoryRepository  extends BaseRepository implements ICategoryRepositorie
     }
     public function getPrimaryCategories()
     {
-        return Category::where('parent_id', 0)->get();
+        return Category::with(['parent', 'parent.parent'])->where('parent_id', 0)->get();
     }
     public function searchCategories($request)
     {
@@ -48,7 +48,7 @@ class CategoryRepository  extends BaseRepository implements ICategoryRepositorie
         $name = (App::getLocale()== 'ar')?  'name_ar' : 'name_en'  ;
         $description = (App::getLocale()== 'ar')?  'description_ar' : 'description_en'  ;
 
-        return Category::where(function($q) use ($searchValue  ,$name, $description) {
+        return Category::with(['parent', 'parent.parent'])->where(function($q) use ($searchValue  ,$name, $description) {
             $q->orWhere($name , 'like', "%{$searchValue}%")
                 ->orWhere($description ,'like', "%{$searchValue}%")
                 ->orWhere('rating' , 'like', "%{$searchValue}%");
@@ -63,7 +63,7 @@ class CategoryRepository  extends BaseRepository implements ICategoryRepositorie
             return $validationError;
         }
 
-        return Category::where('parent_id', $primaryCategoryId)->get();
+        return Category::with(['parent', 'parent.parent'])->where('parent_id', $primaryCategoryId)->get();
     }
     public function searchSubcategories($request)
     {
@@ -73,7 +73,7 @@ class CategoryRepository  extends BaseRepository implements ICategoryRepositorie
         $name = (App::getLocale()== 'ar')?  'name_ar' : 'name_en'  ;
         $description = (App::getLocale()== 'ar')?  'description_ar' : 'description_en'  ;
 
-        return Category::where('level',$level )->where(function($q) use ($searchValue  ,$name, $description) {
+        return Category::with(['parent', 'parent.parent'])->where('level',$level )->where(function($q) use ($searchValue  ,$name, $description) {
             $q->orWhere($name , 'like', "%{$searchValue}%")
                 ->orWhere($description ,'like', "%{$searchValue}%")
                 ->orWhere('rating' , 'like', "%{$searchValue}%");
@@ -87,7 +87,8 @@ class CategoryRepository  extends BaseRepository implements ICategoryRepositorie
         if ($validationError) {
             return $validationError;
         }
-        return $this->findOne($CategoryId);
+
+        return $this->findWith($CategoryId, ['parent', 'parent.parent']);
     }
 
 
@@ -96,14 +97,17 @@ class CategoryRepository  extends BaseRepository implements ICategoryRepositorie
          // Get all games with the common condition
         $games = $this->getAllWhere(['parent_id' => '0']);
 
-        // Get latest games with the common condition, ordered by created_at, and limit to 5
-        $latestGames = Category::where(['level' => 3 ])->
-             orderBy('created_at', 'DESC')
+        $latestGames = Category::where('level', 3)
+            ->with(['parent', 'parent.parent']) // Load parent and grandparent
+            ->orderBy('created_at', 'DESC')
             ->take(5)
-            ->get(); // Ensure you call get() to execute the query and get the results
+            ->get();
 
-        // Get famous games with the common condition and famous_gaming condition
-        $famousGames = $this->getAllWhere( [ 'level' =>3, 'famous_gaming' => ['<>', 0]]);
+        // Retrieve famous games from the third level
+        $famousGames = Category::where('level', 3)
+            ->where('famous_gaming', '<>', 0)
+            ->with(['parent', 'parent.parent']) // Load parent and grandparent
+            ->get();
 
         // Return the results
         return [

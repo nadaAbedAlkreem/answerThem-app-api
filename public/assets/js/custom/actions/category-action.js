@@ -172,7 +172,7 @@ $(document).ready(function ($) {
             },
         });
     });
-    $(".data-table-news").on("click", ".deleteRecord[data-id]", function (e)
+    $(".data-table-category").on("click", ".deleteRecord[data-id]", function (e)
     {
         e.preventDefault();
         $(".show_confirm").click(function (event) {
@@ -190,7 +190,7 @@ $(document).ready(function ($) {
                     var token = $("meta[name='csrf-token']").attr("content");
 
                     $.ajax({
-                        url: "news/" + id,
+                        url: "dashboard/category/" + id,
                         type: "DELETE",
                         data: {
                             id: id,
@@ -198,7 +198,7 @@ $(document).ready(function ($) {
                         },
                         success: function () {
                             console.log("it Works");
-                            $(".data-table-news").DataTable().ajax.reload();
+                            $(".data-table-category").DataTable().ajax.reload();
                         },
                     });
                 }
