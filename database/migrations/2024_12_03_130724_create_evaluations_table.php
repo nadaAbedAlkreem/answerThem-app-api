@@ -18,6 +18,8 @@ return new class extends Migration
                 ->onDelete('cascade') // Cascade delete
                 ->onUpdate('cascade');// Cascade update
             $table->decimal('rating' ,4, 2)->default(0.00);
+            $table->enum('descriptive_evaluation' ,['high' , 'medium','low']);
+
             $table->timestamps();
         });
     }

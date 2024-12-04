@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\V1\Auth\RegisterController;
 use App\Http\Controllers\Api\V1\Auth\SocialAuthController;
 use App\Http\Controllers\Api\V1\Auth\UserController;
 use App\Http\Controllers\Api\V1\ContactUsController;
+use App\Http\Controllers\Api\V1\EvaluationController;
 use App\Http\Controllers\Api\V1\Friends\FriendController;
 use App\Http\Controllers\Api\V1\Friends\FriendRequestController;
 use App\Http\Controllers\Api\V1\Game\CategoryController;
@@ -112,8 +113,13 @@ Route::group(['middleware' =>  SetLocale::class  , UpdateLastActive::class], fun
 
             });
 
+           Route::post('evaluation', [EvaluationController::class, 'store']);
 
 
-    });
+
+
+
+
+});
 //dashboard
 

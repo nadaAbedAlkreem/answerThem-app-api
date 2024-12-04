@@ -10,7 +10,7 @@ class Evaluation extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['user_id', 'rating'];
+    protected $fillable = ['user_id', 'rating' , 'descriptive_evaluation'];
     protected $dates = ['deleted_at'];
 
     public function usersEvaluation()
