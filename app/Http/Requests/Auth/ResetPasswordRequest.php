@@ -22,11 +22,11 @@ class ResetPasswordRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'verification_method' => 'required','in:email,phone', // Ensure this is present and valid
-            'email' => 'required_if:verification_method,email','string','email','max:255',
-            'phone' =>   'required_if:verification_method','phone','string',
-            'token' => 'required','digits:4', // Ensure it's a 4-digit token
-            'password' => 'required','string','min:8','confirmed',
+            'verification_method' => ['required','in:email,phone'], // Ensure this is present and valid
+            'email' => ['required_if:verification_method,email','string','email','max:255'],
+            'phone' =>   ['required_if:verification_method','phone','string'],
+            'token' => ['required','digits:4'], // Ensure it's a 4-digit token
+            'password' => ['required','string','min:8','confirmed'],
 
         ];
     }
@@ -67,16 +67,6 @@ class ResetPasswordRequest extends FormRequest
 
 
         ];
-    }
-
-
-    public  function getDataWithImage()
-    {
-        $data=$this->validated();
-        if (!empty($data['country_prefix'])) {
-            $data['phone'] = $data['country_prefix'].$data['phone'] ;
-        }
-         return $data;
     }
 
 
