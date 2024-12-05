@@ -27,8 +27,6 @@ class CategoryController extends Controller
     public function index(Request $request ,  CategoryDatatableService $categoryDatatableService)
     {
         $dataNative = Category::select('*')->get() ;
-
-
         if ($request->ajax())
         {
             $data = CategoryResource::collection($dataNative);
@@ -41,7 +39,8 @@ class CategoryController extends Controller
                 ], 500);
             }
         }
-         return view('dashboard.pages.category');
+
+         return view('dashboard.pages.category' , ['category'=>CategoryResource::collection($dataNative)->toArray($request)]);
     }
 
     public function store(StoreCategoryRequest $request)

@@ -75,28 +75,11 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 $(document).ready(function ($) {
- var current_lang = "en" ;
-
-    // if (current_lang === "ar")
-    // {
-    //
-    //     columns = [
-    //         { data: "title_ar", name: "title_ar" },
-    //         { data: "date", name: "date" },
-    //         { data: "description_ar", name: "description" },
-    //         { data: "location_ar", name: "location" },
-    //         { data: "action", name: "action" }] ;
-    // }else
-    // {
-    //     columns = [
-    //         { data: "title", name: "title" },
-    //         { data: "date", name: "date" },
-    //         { data: "description", name: "description" },
-    //         { data: "location", name: "location" },
-    //         { data: "action", name: "action" } ] ;
-    //
-    //
-    // }
+    $('#rating').barrating({
+        theme: 'fontawesome-stars', // Use fontawesome star icons
+        showSelectedRating: false    // Don't show the selected rating text
+    });
+    console.log(jQuery.fn.barrating);
 
 
     var table = $(".data-table-category").DataTable({

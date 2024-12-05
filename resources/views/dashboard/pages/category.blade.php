@@ -2514,7 +2514,7 @@
                                         </label>
                                         <!--end::Label-->
                                         <!--begin::Input-->
-                                        <input type="text" class="form-control form-control-lg form-control-solid" name="name" placeholder="" value="" />
+                                        <input type="text" class="form-control form-control-lg form-control-solid" name="name" placeholder="category name " value="" />
                                         <!--end::Input-->
                                     </div>
                                     <!--end::Input group-->
@@ -2529,10 +2529,7 @@
                                         <!--end::Label-->
                                         <!--begin::Input-->
                                         <div class="mb-4">
-                                            <label class="form-label fw-bold text-dark">
-                                                <i class="bi bi-textarea-t me-2"></i>Body
-                                            </label>
-                                            <textarea class="form-control rounded-3 shadow-sm" name="{{$setting->id}}-{{$index}}-body" rows="4" placeholder="Enter body text" required>{{$json['body']}}</textarea>
+                                            <textarea class="form-control form-control-lg form-control-solid rounded-3 shadow-sm" name="description" rows="4" placeholder="Enter description text" required></textarea>
                                         </div>                                        <!--end::Input-->
                                     </div>
                                     <!--end::Input group-->
@@ -2547,116 +2544,81 @@
                                     <div class="fv-row">
                                         <!--begin::Label-->
                                         <label class="d-flex align-items-center fs-5 fw-bold mb-4">
-                                            <span class="required">Select Framework</span>
+                                            <span class="required">Select image </span>
                                             <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify your apps framework"></i>
                                         </label>
                                         <!--end::Label-->
-                                        <!--begin:Option-->
-                                        <label class="d-flex flex-stack cursor-pointer mb-5">
-                                            <!--begin:Label-->
-                                            <span class="d-flex align-items-center me-2">
-														<!--begin:Icon-->
-														<span class="symbol symbol-50px me-6">
-															<span class="symbol-label bg-light-warning">
-																<i class="fab fa-html5 text-warning fs-2x"></i>
-															</span>
-														</span>
-                                                <!--end:Icon-->
-                                                <!--begin:Info-->
-														<span class="d-flex flex-column">
-															<span class="fw-bolder fs-6">HTML5</span>
-															<span class="fs-7 text-muted">Base Web Projec</span>
-														</span>
-                                                <!--end:Info-->
-													</span>
-                                            <!--end:Label-->
-                                            <!--begin:Input-->
-                                            <span class="form-check form-check-custom form-check-solid">
-														<input class="form-check-input" type="radio" checked="checked" name="framework" value="1" />
-													</span>
-                                            <!--end:Input-->
-                                        </label>
-                                        <!--end::Option-->
-                                        <!--begin:Option-->
-                                        <label class="d-flex flex-stack cursor-pointer mb-5">
-                                            <!--begin:Label-->
-                                            <span class="d-flex align-items-center me-2">
-														<!--begin:Icon-->
-														<span class="symbol symbol-50px me-6">
-															<span class="symbol-label bg-light-success">
-																<i class="fab fa-react text-success fs-2x"></i>
-															</span>
-														</span>
-                                                <!--end:Icon-->
-                                                <!--begin:Info-->
-														<span class="d-flex flex-column">
-															<span class="fw-bolder fs-6">ReactJS</span>
-															<span class="fs-7 text-muted">Robust and flexible app framework</span>
-														</span>
-                                                <!--end:Info-->
-													</span>
-                                            <!--end:Label-->
-                                            <!--begin:Input-->
-                                            <span class="form-check form-check-custom form-check-solid">
-														<input class="form-check-input" type="radio" name="framework" value="2" />
-													</span>
-                                            <!--end:Input-->
-                                        </label>
-                                        <!--end::Option-->
-                                        <!--begin:Option-->
-                                        <label class="d-flex flex-stack cursor-pointer mb-5">
-                                            <!--begin:Label-->
-                                            <span class="d-flex align-items-center me-2">
-														<!--begin:Icon-->
-														<span class="symbol symbol-50px me-6">
-															<span class="symbol-label bg-light-danger">
-																<i class="fab fa-angular text-danger fs-2x"></i>
-															</span>
-														</span>
-                                                <!--end:Icon-->
-                                                <!--begin:Info-->
-														<span class="d-flex flex-column">
-															<span class="fw-bolder fs-6">Angular</span>
-															<span class="fs-7 text-muted">Powerful data mangement</span>
-														</span>
-                                                <!--end:Info-->
-													</span>
-                                            <!--end:Label-->
-                                            <!--begin:Input-->
-                                            <span class="form-check form-check-custom form-check-solid">
-														<input class="form-check-input" type="radio" name="framework" value="3" />
-													</span>
-                                            <!--end:Input-->
-                                        </label>
-                                        <!--end::Option-->
-                                        <!--begin:Option-->
-                                        <label class="d-flex flex-stack cursor-pointer">
-                                            <!--begin:Label-->
-                                            <span class="d-flex align-items-center me-2">
-														<!--begin:Icon-->
-														<span class="symbol symbol-50px me-6">
-															<span class="symbol-label bg-light-primary">
-																<i class="fab fa-vuejs text-primary fs-2x"></i>
-															</span>
-														</span>
-                                                <!--end:Icon-->
-                                                <!--begin:Info-->
-														<span class="d-flex flex-column">
-															<span class="fw-bolder fs-6">Vue</span>
-															<span class="fs-7 text-muted">Lightweight and responsive framework</span>
-														</span>
-                                                <!--end:Info-->
-													</span>
-                                            <!--end:Label-->
-                                            <!--begin:Input-->
-                                            <span class="form-check form-check-custom form-check-solid">
-														<input class="form-check-input" type="radio" name="framework" value="4" />
-													</span>
-                                            <!--end:Input-->
-                                        </label>
-                                        <!--end::Option-->
+                                        <div class="row mb-5">
+                                            <!--begin::Col-->
+                                            <!--end::Col-->
+                                            <!--begin::Col-->
+                                            <div class="col-lg-8">
+                                                <!--begin::Image input-->
+                                                <div class="image-input image-input-outline" data-kt-image-input="true" style="background-image: url('assets/media/svg/avatars/blank.svg')">
+                                                    <!--begin::Preview existing avatar-->
+                                                    <div class="image-input-wrapper w-125px h-125px bgi-position-center" style="background-size: 75%; background-image: url()"></div>
+                                                    <!--end::Preview existing avatar-->
+                                                    <!--begin::Label-->
+                                                    <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
+                                                        <i class="bi bi-pencil-fill fs-7"></i>
+                                                        <!--begin::Inputs-->
+                                                        <input type="file" name="image" accept=".png, .jpg, .jpeg" />
+                                                        <input type="hidden" name="avatar_remove" />
+                                                        <!--end::Inputs-->
+                                                    </label>
+                                                    <!--end::Label-->
+                                                    <!--begin::Cancel-->
+                                                    <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel avatar">
+                                                                                            <i class="bi bi-x fs-2"></i>
+                                                                                        </span>
+                                                    <!--end::Cancel-->
+                                                    <!--begin::Remove-->
+                                                    <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="Remove avatar">
+                                                                                            <i class="bi bi-x fs-2"></i>
+                                                                                        </span>
+                                                    <!--end::Remove-->
+                                                </div>
+                                                <!--end::Image input-->
+                                                <!--begin::Hint-->
+                                                <div class="form-text">Allowed file types: png, jpg, jpeg.</div>
+                                                <!--end::Hint-->
+                                            </div>
+                                            <!--end::Col-->
+                                        </div>
+
                                     </div>
                                     <!--end::Input group-->
+                                    <div class="mb-4">
+                                         <select class="form-control form-control-lg form-control-solid  form-select-sm"   aria-label=".form-select-sm example">
+                                             <option value="0">Not affiliated </option>
+                                             <optgroup label="Primary Category">
+
+                                             @if(!empty($category))
+
+                                                 @foreach($category as  $key => $item)
+                                                                  @if($item['level'] == 1 )
+
+                                                                  <option value="{{$item['id']}}">{{$item['name']}}</option>
+                                                                 @endif
+
+                                                 @endforeach
+                                             </optgroup>
+                                             <optgroup label="Sub Category">
+
+                                             @foreach($category as $item)
+                                                         @if($item['level'] == 2 )
+                                                             <option value="{{$item['id']}}">{{$item['name']}}</option>
+                                                         @endif
+
+                                                     @endforeach
+                                             </optgroup>
+
+
+                                             @endif
+                                        </select>
+
+                                    </div>
+
                                 </div>
                             </div>
                             <!--end::Step 2-->
@@ -2666,10 +2628,17 @@
                                     <!--begin::Input group-->
                                     <div class="fv-row mb-10">
                                         <!--begin::Label-->
-                                        <label class="required fs-5 fw-bold mb-2">Database Name</label>
                                         <!--end::Label-->
                                         <!--begin::Input-->
                                         <input type="text" class="form-control form-control-lg form-control-solid" name="dbname" placeholder="" value="master_db" />
+                                        <label for="rating" class="required fs-5 fw-bold mb-2">Rating:</label>
+                                        <select id="rating" name="rating" data-rating="3">
+                                            <option class="form-control form-control-lg form-control-solid" value="1">1 Star</option>
+                                            <option class="form-control form-control-lg form-control-solid" value="2">2 Stars</option>
+                                            <option class="form-control form-control-lg form-control-solid" value="3">3 Stars</option>
+                                            <option class="form-control form-control-lg form-control-solid" value="4">4 Stars</option>
+                                            <option class="form-control form-control-lg form-control-solid" value="5">5 Stars</option>
+                                        </select>
                                         <!--end::Input-->
                                     </div>
                                     <!--end::Input group-->
@@ -4203,5 +4172,6 @@
     <!--end::Modal dialog-->
 </div>
     <script src="{{url('assets/js/custom/actions/category-action.js')}}"></script>
+
 
 @endsection
