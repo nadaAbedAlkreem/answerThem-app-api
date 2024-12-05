@@ -4,7 +4,8 @@
 /public/hot
 /public/storage
 storage/*.key
-
+storage/app/private/json/answerthem-api-notification-342c43a12555.json
+#
 # Allow specific folders inside storage
 #!storage/app/
 #!storage/app/public/
