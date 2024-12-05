@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "answerthem-api-notification",
+  "private_key_id": "5919388940da09c61a709ddb5a5ba8c36fcbcea8",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDYKG8l4uI0xa/2\ntQkVozqUimMZxMiG6AWLf0ntgQYABP6Ucs9BPync9BzIZpvXegw48t3azlbFVdrT\nTORS26NTRuOCHHpPRfvQpuwstWFQPdQMzmtAD4mGMTGj9pWSQTgf0Q1wJAPPA5dN\nFMEbinI96SutvGaOEq9W1SPoFO0wTXzUHdI7fyfqIA2aECOi8fWKKQeTuZrA/VKv\nAe4rDhwriYLUPnAfQKeEqUIEmYHkBgnubmSZgZePFNzsHuh4EBwxTRBCKfC9KJND\nlpBaUd7YtX8D3Bs3N29cDa7Pp0LldPMzWaZsAHnxIxW0XctQCjzSZsZnqFnsJWiU\nTrENldo1AgMBAAECggEALH+abga4gZumv1eCcMFjGFwqzY28qEUQiyifm/ShOxTM\nIdxGvUxW/mUEnd69u0ylQn4A3P/4TfSAMVqVcFdF1qlzwX/CUBp8nfYXDZcjWuT3\nh9Fgs9Xe/lCXQwVKwkqJ1sbvCMRpQk8fcR9SJ6zHGuaq9r+fryS6ktoa47aXI4eX\nAL7Q/PxchmwY8u6WWobC8PhPUO12GnG6yX2I/ZO6oJIQ/3cmuRi6MehNKTCmoqFg\n7daVyitut2gBHfe80NYwS+P1romDMcrAK9jJawajmYmboHhCYv8NVyQPMpwytZue\nTsPuI5SYLrHL4rfVCpPsQ/Wwvo1Y4oD2Fvwp1sTVwQKBgQD+jaaYLPp5km5tYIfo\n6d4c8N+J2blZHWeWIS+R40GLlLLMx6QeJ3z8pccIOZah6+HQrtq5UHPI8uiBSacy\n53T0VneORQeZsiq/8x3itmwpO6WuzC8QRBTHT0E4tvVLH4JHpPPyDQ2IKondhnjx\n8pPMWQ7lt7kBnbno6tqMzHZ+FQKBgQDZYuwKmEAiSvgGdgOUcZPv1EQMpB4fUK/L\nT/KqZeYLUp7IAiUSFYcEo20GowZyCtTekpd/5PdwFIIJ6QTi/UjoCmsRD0erM0uV\n1+CNKKKcnFilOnU7FZEG8JqWvVU9q8Z6q2o2gpbE0ZhJxMwZ0xa7nesSWXbsABgr\nKH7RfyEToQKBgBE63U/nm3ynILpeklR9n/8tfrQB/L2/c8eBr4qca09bXU7nJIC2\nA4vGXNZ9r2h+YuaRL1Tj0TKE3qABsEONzyjKwYTrvzv0B1i+yAMUffW8h9ZxE65y\nLUXgY3XHTIstMtBOpgR4RbY1yucntwAJf1+Rl6SM7wTg/Dh7zRdCr7KRAoGBAKLb\ns050pYeLdqkQfLoXJOeFtL1rro1zW2ALsxbpZCCTcxUQVkloC1D0Rle0hr2lU7iz\nRgCwvpcfJhTal6iebKI6O9/5/I1LzpKhuj7GdJyznM2cL/tlutLiKk5H5bZgHEAG\nb3oK93zYMSkC4I1wURWZx2Rl1ewUXgbnPashfNxBAoGAMsL0JtAmdqlmkTGAIZBi\nnhyyCZZiWQhufZFZ0jQbLFN3g/fefdMavBOBAFNGoGsbAWFjfgPHFT5R323MXCw7\ncyPlTPa5llv6JiDhiFh7bWAbdc+Pc0QHQexUCSpHEB7fDLMUz8VpNE/xkQVvyzo/\nbCmRlygf/OqO++iAYW4QYR0=\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-eqwin@answerthem-api-notification.iam.gserviceaccount.com",
+  "client_id": "104311737895189771834",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-eqwin%40answerthem-api-notification.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

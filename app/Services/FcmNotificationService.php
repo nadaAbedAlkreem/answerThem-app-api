@@ -24,7 +24,7 @@ class FcmNotificationService
     {
         $this->notificationRepository = $notificationRepository;
         $this->invitationRepository = $invitationRepository;
-        $this->credentialsFilePath = storage_path('app/private/json/gaweb7om-054422d37865.json') ;
+        $this->credentialsFilePath = storage_path('app/private/json/answerthem-api-notification-5919388940da.json') ;
 
 
     }

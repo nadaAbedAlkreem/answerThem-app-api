@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Resources\Dashboard\CategoryResource;
 use App\Models\Category;
 use App\Repositories\ICategoryRepositories;
@@ -43,9 +44,18 @@ class CategoryController extends Controller
          return view('dashboard.pages.category');
     }
 
-    public function create()
+    public function store(StoreCategoryRequest $request)
     {
+        try {
 
+            $this->categoryRepository->create($request->getData());
+            return $this->successResponse('CREATE_SUCCESS',[], 201, App::getLocale())  ;
+
+        } catch (Throwable $e) {
+            return response([
+                'message' => $e->getMessage(),
+            ], 500);
+        }
     }
 
     public  function changeLangVersion(Request $request)
@@ -57,9 +67,8 @@ class CategoryController extends Controller
     }
     public function destroy($id)
     {
-        try {
-            dd($id);
-            $result = $this->categoryRepository->delete($id);
+         try {
+             $this->categoryRepository->delete($id);
             return $this->successResponse('DELETE_SUCCESS',[], 202, App::getLocale())  ;
 
         }catch (Throwable $e){
