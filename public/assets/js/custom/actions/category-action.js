@@ -80,6 +80,7 @@ $(document).ready(function ($) {
         showSelectedRating: false    // Don't show the selected rating text
     });
     console.log(jQuery.fn.barrating);
+    var lang = window.location.pathname.split('/').pop(); // Example: 'en', 'fr', etc.
 
 
     var table = $(".data-table-category").DataTable({
@@ -91,12 +92,11 @@ $(document).ready(function ($) {
         searching: false,
         info: false,
         ajax: {
-            url: "dashboard/category",
+            url: "dashboard/category/".lang,
             data: function (d) {
-                // d.category = $('#category').val()
+                 d.lang = lang;
             },
         },
-
         columns:  [
                     { data: 'action', name: 'action', orderable: false, searchable: false },
                     { data: "name", name: "name" },
@@ -105,15 +105,44 @@ $(document).ready(function ($) {
                     ],
     });
 
-    $("#SubmitFormNews").on("submit", function (e) {
+    $("#submit_form").on("click", function (e) {
         e.preventDefault();
 
-        let formData = new FormData($("#SubmitFormNews")[0]);
+        let formData = new FormData($("#kt_modal_create_app_form")[0]);
+        let famousGamingValue = $("#radioOn").prop("checked") ? 1 : 0;
+        formData.set('famous_gaming', famousGamingValue);
+        const path = window.location.pathname;
+         const segments = path.split('/');
+         const lang = segments[segments.length - 1];
 
-        Images().forEach((e) => {
-            console.log(e);
-            formData.append("images[]", e);
-        });
+        console.log(lang);
+        console.log(formData);
+        console.log(famousGamingValue);
+        let selectedCategory = $("select[name='category_id']").val();
+
+        // Split the value into level and id
+        let [level, id] = selectedCategory.split('-');
+        console.log(id, "selectedCategory:", selectedCategory);
+
+        // Log the level and id
+        console.log("Level: " + level);
+        console.log("Category ID: " + id);
+
+        // Create a new FormData object
+
+        // You can add the level and id values manually if needed
+        formData.set('level', level);
+        formData.set('category_id', id);
+        formData.set('lang', lang);
+
+        // for (let pair of formData.entries()) {
+        //     console.log(pair[0] + ': ' + pair[1]);
+        // }
+
+        // Images().forEach((e) => {
+        //     console.log(e);
+        //     formData.append("image[]", e);
+        // });
 
         $.ajaxSetup({
             headers: {
@@ -122,7 +151,7 @@ $(document).ready(function ($) {
         });
         $.ajax({
             type: "POST",
-            url: "news",
+            url: "dashboard/category/create",
             data: formData,
             contentType: false, // determint type object
             processData: false, // processing on response
@@ -138,6 +167,8 @@ $(document).ready(function ($) {
                         confirmButton: "btn btn-primary",
                     },
                 });
+                $(".data-table-category").DataTable().ajax.reload();
+
             },
 
             error: function (response) {
@@ -173,7 +204,7 @@ $(document).ready(function ($) {
                     var token = $("meta[name='csrf-token']").attr("content");
 
                     $.ajax({
-                        url: "dashboard/category/" + id,
+                        url: "dashboard/category/delete/" + id,
                         type: "DELETE",
                         data: {
                             id: id,

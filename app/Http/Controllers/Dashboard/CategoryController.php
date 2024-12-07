@@ -26,7 +26,9 @@ class CategoryController extends Controller
 
     public function index(Request $request ,  CategoryDatatableService $categoryDatatableService)
     {
+
         $dataNative = Category::select('*')->get() ;
+        $this->lang($request);
         if ($request->ajax())
         {
             $data = CategoryResource::collection($dataNative);
@@ -40,14 +42,13 @@ class CategoryController extends Controller
             }
         }
 
-         return view('dashboard.pages.category' , ['category'=>CategoryResource::collection($dataNative)->toArray($request)]);
+         return view('dashboard.pages.category' , ['category'=>CategoryResource::collection($dataNative)->toArray($request) , 'lang' => app::getLocale()]);
     }
 
     public function store(StoreCategoryRequest $request)
     {
         try {
-
-            $this->categoryRepository->create($request->getData());
+               $this->categoryRepository->create($request->getData());
             return $this->successResponse('CREATE_SUCCESS',[], 201, App::getLocale())  ;
 
         } catch (Throwable $e) {
@@ -78,5 +79,15 @@ class CategoryController extends Controller
 
 
     }
-
+   private  function  lang($request){
+       $lang = $request->route('lang');
+       if ($lang) {
+           $validLanguages = ['en','ar'];
+           if (in_array($lang, $validLanguages)) {
+               app()->setLocale($lang);
+           } else {
+               app()->setLocale('en');
+           }
+       }
+   }
 }

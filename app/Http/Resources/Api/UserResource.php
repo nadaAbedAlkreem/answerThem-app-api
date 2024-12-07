@@ -19,8 +19,7 @@ namespace App\Http\Resources\Api;
     public function toArray($request): array
     {
         $image = (strpos($this->image, 'https://linktest.gastwerk-bern.ch/') !== false) ?  $this->image : 'https://linktest.gastwerk-bern.ch/'.$this->image   ;
-
-        return [
+         $data = [
             'id' => $this->id ,
             'image' =>  $image,
             'name' => $this->name,
@@ -31,7 +30,10 @@ namespace App\Http\Resources\Api;
             'is_online'=> $this->is_online  ?? 0 ,
             'created_at' => $this->created_at->toDateTimeString(),
             'updated_at' => $this->updated_at->toDateTimeString(),
-
         ];
+        if ($request->bearerToken()) {
+            $data['access_token'] = $request->bearerToken();
+        }
+        return  $data ;
     }
 }

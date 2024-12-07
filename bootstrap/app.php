@@ -1,6 +1,7 @@
 <?php
 
- use App\Http\Middleware\EnsureCsrfTokenIsSet;
+use App\Http\Middleware\CheckLanguage;
+use App\Http\Middleware\EnsureCsrfTokenIsSet;
  use App\Http\Middleware\UpdateLastActive;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
@@ -30,6 +31,8 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->append(StartSession::class);
         $middleware->append(UpdateLastActive::class);
         $middleware->append(EnsureCsrfTokenIsSet::class);
+        $middleware->append(CheckLanguage::class);
+
 //        $middleware->append(AddQueuedCookiesToResponse::class);
 //        $middleware->append(ShareErrorsFromSession::class);
   //        Illuminate\Cookie\Middleware\EncryptCookies

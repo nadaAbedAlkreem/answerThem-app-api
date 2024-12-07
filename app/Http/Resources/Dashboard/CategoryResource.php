@@ -14,21 +14,16 @@ class CategoryResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $lang = $request->header('lang');
+        $lang = $request->route('lang');
         $name = "";
         $description = "";
-        if($lang == 'ar')
-        {
-            $name = $this->name_ar ;
-            $description = $this->description_ar ;
-
-        }else
-        {
-
-            $name = $this->name_en ;
-            $description = $this->description_en ;
+        if ($lang == 'ar') {
+            $name = mb_convert_encoding($this->name_ar, 'UTF-8', 'auto');
+            $description = mb_convert_encoding($this->description_ar, 'UTF-8', 'auto');
+        } else {
+            $name = mb_convert_encoding($this->name_en, 'UTF-8', 'auto');
+            $description = mb_convert_encoding($this->description_en, 'UTF-8', 'auto');
         }
-
 
         return [
             'id' => $this->id,

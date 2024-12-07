@@ -17,6 +17,10 @@ return [
         'not_in' => 'The attached game type is invalid',
         'exists' => 'The game type does not exist'
     ],
+    "INVALID_TOKEN"=>'Invalid token or user.' ,
+    'TOKEN_EXPIRED'=> 'The code has expired. Try again later.'  ,
+    'TOKEN_VALID' => 'Token valid' ,
+
     'TOO_MANY_ATTEMPTS'=>'Too many attempts' ,
 
     'user1_id' => [

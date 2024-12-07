@@ -26,14 +26,14 @@
                     </div>
                 </div>
             </div>
-            <div data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start" class="menu-item  <?php echo e(request()->routeIs('dashboard.setting.create') ? 'show here' : ''); ?> menu-lg-down-accordion me-lg-1">
+            <div data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start" class="menu-item  <?php echo e(request()->routeIs('dashboard.setting.create' , ['lang' => $lang]) ? 'show here' : ''); ?> menu-lg-down-accordion me-lg-1">
 									<span class="menu-link py-3">
 										<span class="menu-title">Setting</span>
 										<span class="menu-arrow d-lg-none"></span>
 									</span>
                 <div class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown menu-rounded-0 py-lg-4 w-lg-225px">
                     <div class="menu-item">
-                        <a class="menu-link py-3" href="<?php echo e(route('dashboard.setting.create')); ?>" title="Check out over 200 in-house components, plugins and ready for use solutions" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
+                        <a class="menu-link py-3" href= "<?php echo e(route('dashboard.setting.create', ['lang' => $lang])); ?>" title="Check out over 200 in-house components, plugins and ready for use solutions" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
 												<span class="menu-icon">
 													<!--begin::Svg Icon | path: /icons/duotune/general/gen002.svg-->
 													<span class="svg-icon svg-icon-2">
@@ -49,14 +49,14 @@
                     </div>
                 </div>
             </div>
-            <div data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start" class="menu-item  <?php echo e(request()->routeIs('dashboard.category') ? 'show here' : ''); ?>  menu-lg-down-accordion me-lg-1">
+            <div data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start" class="menu-item  <?php echo e(request()->routeIs('dashboard.category' ,  ['lang' => $lang]) ? 'show here' : ''); ?>  menu-lg-down-accordion me-lg-1">
 									<span class="menu-link py-3">
 										<span class="menu-title">category</span>
 										<span class="menu-arrow d-lg-none"></span>
 									</span>
                 <div class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown menu-rounded-0 py-lg-4 w-lg-225px">
                     <div class="menu-item">
-                        <a class="menu-link py-3" href="<?php echo e(route('dashboard.category')); ?>" title="Check out over 200 in-house components, plugins and ready for use solutions" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
+                        <a class="menu-link py-3" href="<?php echo e(route('dashboard.category' , ['lang' => $lang])); ?>" title="Check out over 200 in-house components, plugins and ready for use solutions" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
 												<span class="menu-icon">
 													<!--begin::Svg Icon | path: /icons/duotune/general/gen002.svg-->
 													<span class="svg-icon svg-icon-2">

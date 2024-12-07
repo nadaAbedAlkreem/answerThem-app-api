@@ -51,7 +51,7 @@ use Twilio\Rest\Client;
          // If lockout is still in effect, return an error with remaining minutes
          if ($lockoutExpiresAt && Carbon::now()->lessThan(Carbon::parse($lockoutExpiresAt))) {
              $minutesRemaining = Carbon::now()->diffInMinutes(Carbon::parse($lockoutExpiresAt));
-             return $this->errorResponse('TOO_MANY_ATTEMPTS', ['minutes_remaining' => $minutesRemaining], 429, app()->getLocale());
+             return $this->errorResponse('TOO_MANY_ATTEMPTS', ['error' => __('messages.TOO_MANY_ATTEMPTS')], 429, app()->getLocale());
          }
 
          // If maximum attempts are exceeded, set lockout time and reset attempts
@@ -70,7 +70,7 @@ use Twilio\Rest\Client;
 
          // If user not found, return error
          if (!$user) {
-             return $this->errorResponse('USER_NOT_FOUND', [], 404, app()->getLocale());
+             return $this->errorResponse('USER_NOT_FOUND',[], 404, app()->getLocale());
          }
 
          // Generate and save a random token for password reset
@@ -118,7 +118,7 @@ use Twilio\Rest\Client;
          $identifier = $this->getIdentifier($request);
          $cachedData = Cache::get($identifier . '_token');
           if (!$cachedData || Carbon::now()->setTimezone('Asia/Baghdad')->greaterThan(Carbon::parse($cachedData['expires_at']))) {
-             return $this->errorResponse('TOKEN_EXPIRED', [], 400, app()->getLocale());
+             return $this->errorResponse('TOKEN_EXPIRED', ['error'=> __('messages.TOKEN_EXPIRED')], 400, app()->getLocale());
          }
          $user = User::where('email', $request->email)
              ->orWhere('phone', $request->phone)
@@ -127,9 +127,9 @@ use Twilio\Rest\Client;
              return $this->errorResponse('USER_NOT_FOUND', [], 404, app()->getLocale());
          }
          if ($cachedData['token'] == $request->token) {
-             return $this->successResponse('TOKEN_VALID', [], 200, app()->getLocale());
+             return $this->successResponse('TOKEN_VALID', ['error'=> __('messages.TOKEN_VALID')], 200, app()->getLocale());
          } else {
-             return $this->errorResponse('INVALID_TOKEN', [], 400, app()->getLocale());
+             return $this->errorResponse('INVALID_TOKEN', ['error'=> __('messages.INVALID_TOKEN')], 400, app()->getLocale());
          }
      }
 
@@ -143,7 +143,7 @@ use Twilio\Rest\Client;
                     ->first();
 
         if (!$user) {
-            return $this->errorResponse('INVALID_TOKEN',[], 404, app()->getLocale());
+            return $this->errorResponse('INVALID_TOKEN',['error'=> __('messages.TOKEN_VALID')], 404, app()->getLocale());
          }
 
         $user->password = Hash::make($request->password);

@@ -2501,7 +2501,8 @@
                     <!--begin::Content-->
                     <div class="flex-row-fluid py-lg-5 px-lg-15">
                         <!--begin::Form-->
-                        <form class="form" novalidate="novalidate" id="kt_modal_create_app_form">
+                        <form class="form" novalidate="novalidate" enctype="multipart/form-data" id="kt_modal_create_app_form">
+
                             <!--begin::Step 1-->
                             <div class="current" data-kt-stepper-element="content">
                                 <div class="w-100">
@@ -2515,7 +2516,7 @@
                                         <!--end::Label-->
                                         <!--begin::Input-->
                                         <input type="text" class="form-control form-control-lg form-control-solid" name="name" placeholder="category name " value="" />
-                                        <!--end::Input-->
+                                         <!--end::Input-->
                                     </div>
                                     <!--end::Input group-->
 
@@ -2589,36 +2590,37 @@
                                     </div>
                                     <!--end::Input group-->
                                     <div class="mb-4">
-                                         <select class="form-control form-control-lg form-control-solid  form-select-sm"   aria-label=".form-select-sm example">
-                                             <option value="0">Not affiliated </option>
-                                             <optgroup label="Primary Category">
+                                        <select class="form-control form-control-lg form-control-solid  form-select-sm" name = "category_id"   aria-label=".form-select-sm example">
+                                            <option value="0-0">Not affiliated </option>
+                                            <optgroup label="Primary Category">
 
-                                             @if(!empty($category))
+                                                @if(!empty($category))
 
-                                                 @foreach($category as  $key => $item)
-                                                                  @if($item['level'] == 1 )
+                                                    @foreach($category as  $key => $item)
+                                                        @if($item['level'] == 1 )
 
-                                                                  <option value="{{$item['id']}}">{{$item['name']}}</option>
-                                                                 @endif
+                                                            <option value="{{$item['level']}}-{{$item['id']}}">{{$item['name']}}</option>
+                                                        @endif
 
-                                                 @endforeach
-                                             </optgroup>
-                                             <optgroup label="Sub Category">
+                                                    @endforeach
+                                            </optgroup>
+                                            <optgroup label="Sub Category">
 
-                                             @foreach($category as $item)
-                                                         @if($item['level'] == 2 )
-                                                             <option value="{{$item['id']}}">{{$item['name']}}</option>
-                                                         @endif
+                                                @foreach($category as $item)
+                                                    @if($item['level'] == 2 )
+                                                        <option value="{{$item['level']}}-{{$item['id']}}">{{$item['name']}}</option>
+                                                    @endif
 
-                                                     @endforeach
-                                             </optgroup>
+                                                @endforeach
+                                            </optgroup>
 
 
-                                             @endif
+                                            @endif
                                         </select>
 
                                     </div>
 
+                                </div>
                                 </div>
                             </div>
                             <!--end::Step 2-->
@@ -2630,104 +2632,38 @@
                                         <!--begin::Label-->
                                         <!--end::Label-->
                                         <!--begin::Input-->
-                                        <input type="text" class="form-control form-control-lg form-control-solid" name="dbname" placeholder="" value="master_db" />
+{{--                                        <input type="text" class="form-control form-control-lg form-control-solid" name="dbname" placeholder="" value="master_db" />--}}
                                         <label for="rating" class="required fs-5 fw-bold mb-2">Rating:</label>
-                                        <select id="rating" name="rating" data-rating="3">
-                                            <option class="form-control form-control-lg form-control-solid" value="1">1 Star</option>
-                                            <option class="form-control form-control-lg form-control-solid" value="2">2 Stars</option>
-                                            <option class="form-control form-control-lg form-control-solid" value="3">3 Stars</option>
-                                            <option class="form-control form-control-lg form-control-solid" value="4">4 Stars</option>
-                                            <option class="form-control form-control-lg form-control-solid" value="5">5 Stars</option>
-                                        </select>
+{{--                                        <select id="rating" name="rating" data-rating="3">--}}
+{{--                                            <option class="form-control form-control-lg form-control-solid" value="1">1 Star</option>--}}
+{{--                                            <option class="form-control form-control-lg form-control-solid" value="2">2 Stars</option>--}}
+{{--                                            <option class="form-control form-control-lg form-control-solid" value="3">3 Stars</option>--}}
+{{--                                            <option class="form-control form-control-lg form-control-solid" value="4">4 Stars</option>--}}
+{{--                                            <option class="form-control form-control-lg form-control-solid" value="5">5 Stars</option>--}}
+{{--                                        </select>--}}
                                         <!--end::Input-->
+
+                                        <div class="ms-2 w-100px">
+                                            <select class="form-select form-select-solid form-select-sm" name = "rating"  data-control="select2" data-hide-search="true">
+                                                <option value="1" selected="selected">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                            </select>
+                                        </div>
                                     </div>
                                     <!--end::Input group-->
                                     <!--begin::Input group-->
                                     <div class="fv-row">
                                         <!--begin::Label-->
                                         <label class="d-flex align-items-center fs-5 fw-bold mb-4">
-                                            <span class="required">Select Database Engine</span>
+                                            <span class="required">famous gaming</span>
                                             <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Select your app database engine"></i>
                                         </label>
-                                        <!--end::Label-->
-                                        <!--begin:Option-->
-                                        <label class="d-flex flex-stack cursor-pointer mb-5">
-                                            <!--begin::Label-->
-                                            <span class="d-flex align-items-center me-2">
-														<!--begin::Icon-->
-														<span class="symbol symbol-50px me-6">
-															<span class="symbol-label bg-light-success">
-																<i class="fas fa-database text-success fs-2x"></i>
-															</span>
-														</span>
-                                                <!--end::Icon-->
-                                                <!--begin::Info-->
-														<span class="d-flex flex-column">
-															<span class="fw-bolder fs-6">MySQL</span>
-															<span class="fs-7 text-muted">Basic MySQL database</span>
-														</span>
-                                                <!--end::Info-->
-													</span>
-                                            <!--end::Label-->
-                                            <!--begin::Input-->
-                                            <span class="form-check form-check-custom form-check-solid">
-														<input class="form-check-input" type="radio" name="dbengine" checked="checked" value="1" />
-													</span>
-                                            <!--end::Input-->
-                                        </label>
-                                        <!--end::Option-->
-                                        <!--begin:Option-->
-                                        <label class="d-flex flex-stack cursor-pointer mb-5">
-                                            <!--begin::Label-->
-                                            <span class="d-flex align-items-center me-2">
-														<!--begin::Icon-->
-														<span class="symbol symbol-50px me-6">
-															<span class="symbol-label bg-light-danger">
-																<i class="fab fa-google text-danger fs-2x"></i>
-															</span>
-														</span>
-                                                <!--end::Icon-->
-                                                <!--begin::Info-->
-														<span class="d-flex flex-column">
-															<span class="fw-bolder fs-6">Firebase</span>
-															<span class="fs-7 text-muted">Google based app data management</span>
-														</span>
-                                                <!--end::Info-->
-													</span>
-                                            <!--end::Label-->
-                                            <!--begin::Input-->
-                                            <span class="form-check form-check-custom form-check-solid">
-														<input class="form-check-input" type="radio" name="dbengine" value="2" />
-													</span>
-                                            <!--end::Input-->
-                                        </label>
-                                        <!--end::Option-->
-                                        <!--begin:Option-->
-                                        <label class="d-flex flex-stack cursor-pointer">
-                                            <!--begin::Label-->
-                                            <span class="d-flex align-items-center me-2">
-														<!--begin::Icon-->
-														<span class="symbol symbol-50px me-6">
-															<span class="symbol-label bg-light-warning">
-																<i class="fab fa-amazon text-warning fs-2x"></i>
-															</span>
-														</span>
-                                                <!--end::Icon-->
-                                                <!--begin::Info-->
-														<span class="d-flex flex-column">
-															<span class="fw-bolder fs-6">DynamoDB</span>
-															<span class="fs-7 text-muted">Amazon Fast NoSQL Database</span>
-														</span>
-                                                <!--end::Info-->
-													</span>
-                                            <!--end::Label-->
-                                            <!--begin::Input-->
-                                            <span class="form-check form-check-custom form-check-solid">
-														<input class="form-check-input" type="radio" name="dbengine" value="3" />
-													</span>
-                                            <!--end::Input-->
-                                        </label>
-                                        <!--end::Option-->
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" name="famous_gaming" id="radioSwitch" value="on">
+                                         </div>
                                     </div>
                                     <!--end::Input group-->
                                 </div>
@@ -2767,7 +2703,7 @@
                                 <!--end::Wrapper-->
                                 <!--begin::Wrapper-->
                                 <div>
-                                    <button type="button" class="btn btn-lg btn-primary" data-kt-stepper-action="submit">
+                                    <button type="submit" id="submit_form" class="btn btn-lg btn-primary" data-kt-stepper-action="submit">
 												<span class="indicator-label">Submit
                                                     <!--begin::Svg Icon | path: icons/duotune/arrows/arr064.svg-->
 												<span class="svg-icon svg-icon-3 ms-2 me-0">

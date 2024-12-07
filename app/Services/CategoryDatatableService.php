@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Services;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
 
 class CategoryDatatableService
@@ -61,12 +63,14 @@ class CategoryDatatableService
             ->addColumn('name' , function ($data){
                 $initialOrImage = '';
 
-                // Check if the data contains an image
+                $imageUrl = asset($data['image']);
+
                 if (!empty($data['image'])) {
-                    $initialOrImage = '<img src="' . $data['image'] . '" alt="' . $data['name'] . '" class="img-fluid" style="width: 35px; height: 35px; border-radius: 50%;">';
+                    $initialOrImage = '<img src="' . $imageUrl . '" alt="' . htmlspecialchars($data['name'], ENT_QUOTES) . '" class="img-fluid" style="width: 35px; height: 35px; border-radius: 50%;">';
                 } else {
-                    $initialOrImage = '<span class="text-warning">' . substr($data['name'], 0, 1) . '</span>';
+                    $initialOrImage = '<span class="text-warning">' . mb_substr($data['name'], 0, 1, 'UTF-8') . '</span>';
                 }
+
 
                 // Return the full HTML structure
                 return '<td class="w-150px w-md-175px">' .
@@ -81,11 +85,12 @@ class CategoryDatatableService
                     '</td>';
             })
             ->addColumn('description', function ($data) {
-                 return '<td>' .
+                $description = $data['description'];
+                  return '<td>' .
                     '<div class="text-dark mb-1">' .
                     '<a class="text-dark">' .
-                    '<span class="fw-bolder">' . $data['description'] . '</span>' .
-                    '<span class="d-none d-md-inline text-muted">' . substr($data['description'], 0, 20) . '...</span>' .
+                    '<span class="fw-bolder">' . $description . '</span>' .
+                     '<span class="d-none d-md-inline text-muted">' . mb_substr($data['description'], 0, 20, 'UTF-8') . '...</span>' .
                     '</a>' .
                     '</div>' .
                     '</td>';
@@ -103,4 +108,9 @@ class CategoryDatatableService
             ->rawColumns(['action', 'name' , 'rating' , 'description'])
             ->make(true);
     }
+
+
+
+
+
 }

@@ -4,6 +4,7 @@ namespace App\Services;
 
 
 use App\Models\FriendRequest;
+use App\Models\Notification;
 use App\Models\User;
 use App\Traits\ResponseTrait;
 use Illuminate\Support\Facades\App;
@@ -34,7 +35,7 @@ class FriendRequestService
         try {
             // Find the friend request
             $friendRequest = FriendRequest::with('receiver')->find($requestId);
-            if(!$friendRequest)
+             if(!$friendRequest)
             {
                 throw new \Exception(__('messages.id_not_found'));
             }
@@ -54,6 +55,12 @@ class FriendRequestService
             $type  = "friend_request" ;
             $this->fcmNotificationService->sendNotification($friendRequest->receiver_id ,$friendRequest->sender_id , $title , $body  , $type );
             $friendRequest->delete();
+            $notification = Notification::where(['receiver_id'=>$friendRequest->receiver_id , 'sender_id' => $friendRequest->receiver_id]);
+            if ($notification) {
+                $notification->delete();
+             }
+
+
             DB::commit();
             return $this->successResponse('accept_friend_request', [], 200, App::getLocale());
         } catch (\Exception $e) {
@@ -76,6 +83,13 @@ class FriendRequestService
              $friendRequest->status = 'declined';
              $friendRequest->save();
              $friendRequest->delete();
+             $notification = Notification::where(['receiver_id'=>$friendRequest->receiver_id , 'sender_id' => $friendRequest->receiver_id]);
+            if ($notification) {
+                $notification->delete();
+            }
+
+
+
             DB::commit();
 
             return $this->successResponse('delete_friend_request', [], 200, App::getLocale());

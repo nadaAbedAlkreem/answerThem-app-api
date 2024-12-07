@@ -66,7 +66,8 @@ class UserController extends Controller
         try {
             $user = $request->user();
             $updatedUser = $request->updateUserData($user);
-            return $this->successResponse(
+
+             return $this->successResponse(
                 'PROFILE_UPDATED_SUCCESSFULLY',
                 new UserResource($updatedUser),
                 200,

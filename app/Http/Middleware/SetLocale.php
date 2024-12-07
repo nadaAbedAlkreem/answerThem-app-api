@@ -25,10 +25,6 @@ class SetLocale
             }
         }
 
-        if($request->query('locale'))
-        {
-                App::setLocale($request->query('locale') ?? 'en');
-        }
 
         return $next($request);
     }

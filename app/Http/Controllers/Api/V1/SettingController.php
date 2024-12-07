@@ -31,18 +31,20 @@ class SettingController extends Controller
 
     public function index(Request $request)
     {
+        $this->lang($request);
         $settings = Setting::where('lang', App::getLocale())->get();
-         // Aggregate all settings into a single array
-        $settingsData = $settings->reduce(function ($carry, $setting) use ($request) {
+         $settingsData = $settings->reduce(function ($carry, $setting) use ($request) {
             return array_merge($carry, (new SettingResource($setting))->toArray($request));
         }, []);
 
         return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY', ['settings' => $settingsData], 200,  App::getLocale());
     }
-    public function show()
+    public function show(Request $request)
     {
+         $this->lang($request);
           $settings = $this->settingRepositories->whereIn(['lang' => [app::getLocale(), '']]);
-         return  view('dashboard.pages.setting', compact('settings'));
+          $lang  = App::getLocale();
+        return  view('dashboard.pages.setting', compact(['settings' , $lang]));
     }
 
     public function update(Request $request)
@@ -56,5 +58,16 @@ class SettingController extends Controller
             return $this->errorResponse('ERROR_OCCURRED',  ['error' =>  $e->getMessage()] ,  404 , app()->getLocale());
 
          }
+    }
+    private  function  lang($request){
+        $lang = $request->route('lang');
+        if ($lang) {
+            $validLanguages = ['en','ar'];
+            if (in_array($lang, $validLanguages)) {
+                app()->setLocale($lang);
+            } else {
+                app()->setLocale('en');
+            }
+        }
     }
 }
