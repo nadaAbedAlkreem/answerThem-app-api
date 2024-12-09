@@ -7,8 +7,11 @@ use App\Http\Requests\StoreContactUsRequest;
 use App\Http\Resources\Api\ContactUsResource;
 use App\Models\ContactUs;
 use App\Repositories\IContactUsRepositories;
+use App\Services\ContactUsDatatableService;
 use App\Traits\ResponseTrait;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Throwable;
 
 class ContactUsController extends Controller
 {
@@ -21,12 +24,27 @@ class ContactUsController extends Controller
     {
         $this->contactUsRepository = $contactUsRepository; // Inject the repository
     }
+
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request, ContactUsDatatableService $contactUsDatatableService)
     {
-        //
+        $this->lang($request);
+
+        if ($request->ajax()) {
+            $dataNative = ContactUs::with('sender')->select('*')->orderBy('created_at', 'desc');
+
+            try {
+                return $contactUsDatatableService->handle($request, $dataNative);
+            } catch (Throwable $e) {
+                return response([
+                    'message' => $e->getMessage(),
+                ], 500);
+            }
+        }
+
+        return view('dashboard.pages.contact_us' , ['lang' => app::getLocale()]);
     }
 
     /**
@@ -42,45 +60,51 @@ class ContactUsController extends Controller
      */
     public function store(StoreContactUsRequest $request)
     {
-
         try {
             $contactUsItem = $this->contactUsRepository->create($request->validationData());
-              return $this->successResponse('CREATE_ITEM_SUCCESSFULLY',new ContactUsResource($contactUsItem->load('sender')), 201, App::getLocale())  ;
+            return $this->successResponse('CREATE_ITEM_SUCCESSFULLY', new ContactUsResource($contactUsItem->load('sender')), 201, App::getLocale());
         } catch (\Illuminate\Validation\ValidationException $e) {
-        return $this->errorResponse('VETIFICATION_ERRORS', ['error' => $e->errors()], 422  ,App::getLocale()); // Return validation errors
+            return $this->errorResponse('VETIFICATION_ERRORS', ['error' => $e->errors()], 422, App::getLocale()); // Return validation errors
         }
-
-     }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(ContactUs $contactUs)
+    }
+    public function updateStatus(Request $request)
     {
-        //
+        // Validate incoming data
+        $request->validate([
+            'id' => 'required|exists:your_table,id',  // Validate that the ID exists in your table
+            'status' => 'required|in:important,middle,not_important',  // Validate the status
+        ]);
+
+        // Find the record by ID and update its status
+        $record = ContactUs::find($request->id);
+        $record->status = $request->status;
+        $record->save();
+
+        // Return a response (optional, for AJAX success)
+        return response()->json(['success' => true]);
     }
 
-    /**
-     * Show the fIFriendsRepositoriesorm for editing the specified resource.
-     */
-    public function edit(ContactUs $contactUs)
+    public function destroy($id)
     {
-        //
-    }
+        try {
+            $this->contactUsRepository->delete($id);
+            return $this->successResponse('DELETE_SUCCESS',[], 202, App::getLocale())  ;
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateContactUsRequest $request, ContactUs $contactUs)
-    {
-        //
+        }catch (Throwable $e){
+            return response([
+                'message' => $e->getMessage(),
+            ], 500);
+        }
     }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(ContactUs $contactUs)
-    {
-        //
+    private  function  lang($request){
+        $lang = $request->route('lang');
+        if ($lang) {
+            $validLanguages = ['en','ar'];
+            if (in_array($lang, $validLanguages)) {
+                app()->setLocale($lang);
+            } else {
+                app()->setLocale('en');
+            }
+        }
     }
 }

@@ -44,7 +44,7 @@ class SettingController extends Controller
          $this->lang($request);
           $settings = $this->settingRepositories->whereIn(['lang' => [app::getLocale(), '']]);
           $lang  = App::getLocale();
-        return  view('dashboard.pages.setting', compact(['settings' , $lang]));
+        return  view('dashboard.pages.setting', compact(['settings' , 'lang']));
     }
 
     public function update(Request $request)

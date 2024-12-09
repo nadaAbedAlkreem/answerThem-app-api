@@ -35,6 +35,8 @@ class SettingService
                                      $path = 'uploads/images/settings/';
                                      $nameImage = $imageUnqName . '.' . $image->getClientOriginalExtension();
                                      Storage::disk('public')->put($path . $nameImage, file_get_contents($image));
+                                     $image->move(public_path($path), $nameImage);
+
                                      $absolutePath = storage_path('app/public/' . $path . $nameImage);
                                      if (file_exists($absolutePath)) {
                                          chmod($absolutePath, 0775);

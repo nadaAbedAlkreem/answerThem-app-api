@@ -15,5 +15,8 @@
 <script src="{{asset('assets/js/custom/apps/chat/chat.js')}}"></script>
 <script src="{{asset('assets/js/custom/utilities/modals/upgrade-plan.js')}}"></script>
 <script src="{{asset('assets/js/custom/utilities/modals/create-app.js')}}"></script>
+<script src="{{asset('assets/js/custom/utilities/modals/update-app.js')}}"></script>
+<script src="{{asset('assets/js/custom/utilities/modals/create-app-question.js')}}"></script>
+<script src="{{asset('assets/js/custom/utilities/modals/update-app-question.js')}}"></script>
 
 <script src="{{asset('assets/js/custom/utilities/modals/users-search.js')}}"></script>

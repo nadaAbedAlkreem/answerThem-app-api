@@ -29,9 +29,15 @@ class CategoryResource extends JsonResource
             'id' => $this->id,
             'name' => $name,
             'description' => $description,
+            'name_ar' => $this->name_ar,
+            'description_ar' => $this->description_ar,
+            'name_en' => $this->name_en,
+            'description_en' => $this->description_en,
             'image' =>  $this->image,
             'rating' => $this->rating,
             'level' => $this->level ,
+            'parent_id' => $this->parent_id ,
+            'famous_gaming' => $this->famous_gaming ,
 
         ];
     }

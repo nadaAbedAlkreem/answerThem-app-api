@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCategoryRequest;
+use App\Http\Requests\UpdateCategoryRequest;
 use App\Http\Resources\Dashboard\CategoryResource;
 use App\Models\Category;
 use App\Repositories\ICategoryRepositories;
@@ -27,7 +28,7 @@ class CategoryController extends Controller
     public function index(Request $request ,  CategoryDatatableService $categoryDatatableService)
     {
 
-        $dataNative = Category::select('*')->get() ;
+        $dataNative = Category::select('*')->orderBy('created_at', 'desc')->get() ;
         $this->lang($request);
         if ($request->ajax())
         {
@@ -56,8 +57,20 @@ class CategoryController extends Controller
                 'message' => $e->getMessage(),
             ], 500);
         }
-    }
+    }   //filterLevelCategory
 
+    public function update(UpdateCategoryRequest $request)
+    {
+        try {
+            $this->categoryRepository->update($request->getData() , $request['id']);
+            return $this->successResponse('UPDATE_SUCCESS',[], 201, App::getLocale())  ;
+
+        } catch (Throwable $e) {
+            return response([
+                'message' => $e->getMessage(),
+            ], 500);
+        }
+    }
     public  function changeLangVersion(Request $request)
     {
 
@@ -76,8 +89,6 @@ class CategoryController extends Controller
                 'message' => $e->getMessage(),
             ], 500);
         }
-
-
     }
    private  function  lang($request){
        $lang = $request->route('lang');

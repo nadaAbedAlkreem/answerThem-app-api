@@ -1510,30 +1510,7 @@
         <div class="wrapper d-flex flex-column flex-row-fluid container-xxl" id="kt_wrapper">
             <!--begin::Toolbar-->
             <div class="toolbar d-flex flex-stack flex-wrap py-4 gap-2" id="kt_toolbar">
-                <!--begin::Page title-->
-                <div class="page-title d-flex flex-column align-items-start me-3 gap-1">
-                    <!--begin::Title-->
-                    <h1 class="d-flex text-dark fw-bolder m-0 fs-3">Messages</h1>
-                    <!--end::Title-->
-                    <!--begin::Breadcrumb-->
-                    <ul class="breadcrumb breadcrumb-dot fw-bold text-gray-600 fs-7">
-                        <!--begin::Item-->
-                        <li class="breadcrumb-item text-gray-600">
-                            <a href="../../demo19/dist/index.html" class="text-gray-600 text-hover-primary">Home</a>
-                        </li>
-                        <!--end::Item-->
-                        <!--begin::Item-->
-                        <li class="breadcrumb-item text-gray-600">Apps</li>
-                        <!--end::Item-->
-                        <!--begin::Item-->
-                        <li class="breadcrumb-item text-gray-600">Inbox</li>
-                        <!--end::Item-->
-                        <!--begin::Item-->
-                        <li class="breadcrumb-item text-gray-500">Messages</li>
-                        <!--end::Item-->
-                    </ul>
-                    <!--end::Breadcrumb-->
-                </div>
+
                 <!--end::Page title-->
                 <!--begin::Actions-->
                 <div class="d-flex align-items-center py-1">
@@ -1567,57 +1544,56 @@
                                     <!--end::Label-->
                                     <!--begin::Input-->
                                     <div>
-                                        <select class="form-select form-select-solid" data-kt-select2="true" data-placeholder="Select option" data-dropdown-parent="#kt_menu_61cf14c9caa9b" data-allow-clear="true">
+                                        <select class="form-select form-select-solid" id = "level_category" data-kt-select2="true" data-placeholder="Select option" data-dropdown-parent="#kt_menu_61cf14c9caa9b" data-allow-clear="true">
                                             <option></option>
-                                            <option value="1">Approved</option>
-                                            <option value="2">Pending</option>
-                                            <option value="2">In Process</option>
-                                            <option value="2">Rejected</option>
-                                        </select>
+                                            <option value="1">First level categories</option>
+                                            <option value="2">Level 2 Categories</option>
+                                            <option value="3">Level 3 Categories</option>
+                                         </select>
                                     </div>
                                     <!--end::Input-->
                                 </div>
                                 <!--end::Input group-->
                                 <!--begin::Input group-->
-                                <div class="mb-10">
-                                    <!--begin::Label-->
-                                    <label class="form-label fw-bold">Member Type:</label>
-                                    <!--end::Label-->
-                                    <!--begin::Options-->
-                                    <div class="d-flex">
-                                        <!--begin::Options-->
-                                        <label class="form-check form-check-sm form-check-custom form-check-solid me-5">
-                                            <input class="form-check-input" type="checkbox" value="1" />
-                                            <span class="form-check-label">Author</span>
-                                        </label>
-                                        <!--end::Options-->
-                                        <!--begin::Options-->
-                                        <label class="form-check form-check-sm form-check-custom form-check-solid">
-                                            <input class="form-check-input" type="checkbox" value="2" checked="checked" />
-                                            <span class="form-check-label">Customer</span>
-                                        </label>
-                                        <!--end::Options-->
-                                    </div>
-                                    <!--end::Options-->
-                                </div>
+{{--                                <div class="mb-10">--}}
+{{--                                    <!--begin::Label-->--}}
+{{--                                    <label class="form-label fw-bold">Member Type:</label>--}}
+{{--                                    <!--end::Label-->--}}
+{{--                                    <!--begin::Options-->--}}
+{{--                                    <div class="d-flex">--}}
+{{--                                        <!--begin::Options-->--}}
+{{--                                        <label class="form-check form-check-sm form-check-custom form-check-solid me-5">--}}
+{{--                                            <input class="form-check-input" type="checkbox" value="1" />--}}
+{{--                                            <span class="form-check-label">Author</span>--}}
+{{--                                        </label>--}}
+{{--                                        <!--end::Options-->--}}
+{{--                                        <!--begin::Options-->--}}
+{{--                                        <label class="form-check form-check-sm form-check-custom form-check-solid">--}}
+{{--                                            <input class="form-check-input" type="checkbox" value="2" checked="checked" />--}}
+{{--                                            <span class="form-check-label">Customer</span>--}}
+{{--                                        </label>--}}
+{{--                                        <!--end::Options-->--}}
+{{--                                    </div>--}}
+{{--                                    <!--end::Options-->--}}
+{{--                                </div>--}}
                                 <!--end::Input group-->
                                 <!--begin::Input group-->
-                                <div class="mb-10">
-                                    <!--begin::Label-->
-                                    <label class="form-label fw-bold">Notifications:</label>
-                                    <!--end::Label-->
-                                    <!--begin::Switch-->
-                                    <div class="form-check form-switch form-switch-sm form-check-custom form-check-solid">
-                                        <input class="form-check-input" type="checkbox" value="" name="notifications" checked="checked" />
-                                        <label class="form-check-label">Enabled</label>
-                                    </div>
-                                    <!--end::Switch-->
-                                </div>
+{{--                                <div class="mb-10">--}}
+{{--                                    <!--begin::Label-->--}}
+{{--                                    <label class="form-label fw-bold">Notifications:</label>--}}
+{{--                                    <!--end::Label-->--}}
+{{--                                    <!--begin::Switch-->--}}
+{{--                                    <div class="form-check form-switch form-switch-sm form-check-custom form-check-solid">--}}
+{{--                                        <input class="form-check-input" type="checkbox" value="" name="notifications" checked="checked" />--}}
+{{--                                        <label class="form-check-label">Enabled</label>--}}
+{{--                                    </div>--}}
+{{--                                    <!--end::Switch-->--}}
+{{--                                </div>--}}
                                 <!--end::Input group-->
                                 <!--begin::Actions-->
                                 <div class="d-flex justify-content-end">
                                     <button type="reset" class="btn btn-sm btn-light btn-active-light-primary me-2" data-kt-menu-dismiss="true">Reset</button>
-                                    <button type="submit" class="btn btn-sm btn-primary" data-kt-menu-dismiss="true">Apply</button>
+                                    <button type="submit" id = "apply" class="btn btn-sm btn-primary" data-kt-menu-dismiss="true">Apply</button>
                                 </div>
                                 <!--end::Actions-->
                             </div>
@@ -1628,7 +1604,7 @@
                     </div>
                     <!--end::Filter-->
                     <!--begin::Button-->
-                    <a href="#" class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#kt_modal_create_app">Create</a>
+                    <a  class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#kt_modal_create_app">Create</a>
                     <!--end::Button-->
                 </div>
                 <!--end::Actions-->
@@ -1649,106 +1625,8 @@
 
                                     <!--begin::Pagination-->
                                     <div class="d-flex align-items-center flex-wrap gap-2">
-                                        <!--begin::Search-->
-                                        <div class="d-flex align-items-center position-relative">
-                                            <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
-                                            <span class="svg-icon svg-icon-2 position-absolute ms-4">
-														<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-															<rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="black" />
-															<path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="black" />
-														</svg>
-													</span>
-                                            <!--end::Svg Icon-->
-                                            <input type="text" data-kt-inbox-listing-filter="search" class="form-control form-control-sm form-control-solid mw-100 min-w-150px min-w-md-200px ps-12" placeholder="Search Inbox" />
-                                        </div>
-                                        <!--end::Search-->
-                                        <!--begin::Sort-->
-                                        <span>
-													<a href="#" class="btn btn-sm btn-icon btn-light btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-bs-toggle="tooltip" data-bs-placement="top" title="Sort">
-														<!--begin::Svg Icon | path: icons/duotune/general/gen059.svg-->
-														<span class="svg-icon svg-icon-2 m-0">
-															<svg xmlns="http://www.w3.org/2000/svg" width="16" height="15" viewBox="0 0 16 15" fill="none">
-																<rect y="6" width="16" height="3" rx="1.5" fill="black" />
-																<rect opacity="0.3" y="12" width="8" height="3" rx="1.5" fill="black" />
-																<rect opacity="0.3" width="12" height="3" rx="1.5" fill="black" />
-															</svg>
-														</span>
-                                                        <!--end::Svg Icon-->
-													</a>
-                                            <!--begin::Menu-->
-													<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
-														<!--begin::Menu item-->
-														<div class="menu-item px-3">
-															<a href="#" class="menu-link px-3" data-kt-inbox-listing-filter="filter_newest">Newest</a>
-														</div>
-                                                        <!--end::Menu item-->
-                                                        <!--begin::Menu item-->
-														<div class="menu-item px-3">
-															<a href="#" class="menu-link px-3" data-kt-inbox-listing-filter="filter_oldest">Oldest</a>
-														</div>
-                                                        <!--end::Menu item-->
-                                                        <!--begin::Menu item-->
-														<div class="menu-item px-3">
-															<a href="#" class="menu-link px-3" data-kt-inbox-listing-filter="filter_unread">Unread</a>
-														</div>
-                                                        <!--end::Menu item-->
-													</div>
-                                            <!--end::Menu-->
-												</span>
-                                        <!--end::Sort-->
-                                        <!--begin::Settings-->
-                                        <span>
-													<a href="#" class="btn btn-sm btn-icon btn-light btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-bs-toggle="tooltip" data-bs-placement="top" title="langugage">
-														<!--begin::Svg Icon | path: icons/duotune/general/gen052.svg-->
-														<span class="svg-icon svg-icon-2 m-0">
-															<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-																<rect x="10" y="10" width="4" height="4" rx="2" fill="black" />
-																<rect x="17" y="10" width="4" height="4" rx="2" fill="black" />
-																<rect x="3" y="10" width="4" height="4" rx="2" fill="black" />
-															</svg>
-														</span>
-                                                        <!--end::Svg Icon-->
-													</a>
-                                            <!--begin::Menu-->
-													<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-250px py-4" data-kt-menu="true">
-														<!--begin::Menu item-->
 
 
-                                                        <!--end::Menu item-->
-                                                        <!--begin::Menu item-->
-														<div class="menu-item px-3" >
-															<a href="#" class="menu-link px-3" data-value="ar">
-															<!--begin::Svg Icon | path: icons/duotune/communication/com014.svg-->
-															<span class="svg-icon svg-icon-3 me-3">
-																<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-																	<path d="M16.0173 9H15.3945C14.2833 9 13.263 9.61425 12.7431 10.5963L12.154 11.7091C12.0645 11.8781 12.1072 12.0868 12.2559 12.2071L12.6402 12.5183C13.2631 13.0225 13.7556 13.6691 14.0764 14.4035L14.2321 14.7601C14.2957 14.9058 14.4396 15 14.5987 15H18.6747C19.7297 15 20.4057 13.8774 19.912 12.945L18.6686 10.5963C18.1487 9.61425 17.1285 9 16.0173 9Z" fill="black" />
-																	<rect opacity="0.3" x="14" y="4" width="4" height="4" rx="2" fill="black" />
-																	<path d="M4.65486 14.8559C5.40389 13.1224 7.11161 12 9 12C10.8884 12 12.5961 13.1224 13.3451 14.8559L14.793 18.2067C15.3636 19.5271 14.3955 21 12.9571 21H5.04292C3.60453 21 2.63644 19.5271 3.20698 18.2067L4.65486 14.8559Z" fill="black" />
-																	<rect opacity="0.3" x="6" y="5" width="6" height="6" rx="3" fill="black" />
-																</svg>
-															</span>
-                                                                <!--end::Svg Icon-->Language Arbic
-															<span class="badge badge-light-primary ms-auto">new</span></a>
-														</div>
-                                                        <div class="menu-item px-3">
-															<a href="#" class="menu-link px-3" data-value="ar">
-															<!--begin::Svg Icon | path: icons/duotune/communication/com014.svg-->
-															<span class="svg-icon svg-icon-3 me-3">
-																<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-																	<path d="M16.0173 9H15.3945C14.2833 9 13.263 9.61425 12.7431 10.5963L12.154 11.7091C12.0645 11.8781 12.1072 12.0868 12.2559 12.2071L12.6402 12.5183C13.2631 13.0225 13.7556 13.6691 14.0764 14.4035L14.2321 14.7601C14.2957 14.9058 14.4396 15 14.5987 15H18.6747C19.7297 15 20.4057 13.8774 19.912 12.945L18.6686 10.5963C18.1487 9.61425 17.1285 9 16.0173 9Z" fill="black" />
-																	<rect opacity="0.3" x="14" y="4" width="4" height="4" rx="2" fill="black" />
-																	<path d="M4.65486 14.8559C5.40389 13.1224 7.11161 12 9 12C10.8884 12 12.5961 13.1224 13.3451 14.8559L14.793 18.2067C15.3636 19.5271 14.3955 21 12.9571 21H5.04292C3.60453 21 2.63644 19.5271 3.20698 18.2067L4.65486 14.8559Z" fill="black" />
-																	<rect opacity="0.3" x="6" y="5" width="6" height="6" rx="3" fill="black" />
-																</svg>
-															</span>
-                                                                <!--end::Svg Icon-->Language English
-															<span class="badge badge-light-primary ms-auto">new</span></a>
-														</div>
-
-													</div>
-                                            <!--end::Menu-->
-												</span>
-                                        <!--end::Settings-->
                                     </div>
                                     <!--end::Pagination-->
                                 </div>
@@ -1762,7 +1640,9 @@
                                             <th>Name</th>
                                             <th>Description</th>
                                             <th>rating</th>
-                                         </tr>
+                                            <th>famous gaming</th>
+
+                                        </tr>
                                         </thead>
                                         <!--end::Table head-->
                                         <!--begin::Table body-->
@@ -2450,12 +2330,14 @@
                                 <!--begin::Icon-->
                                 <!--begin::Label-->
                                 <div class="stepper-label">
-                                    <h3 class="stepper-title">Other Details</h3>
-                                    <div class="stepper-desc">Define the profile picture and the category affiliation</div>
+                                    <h3 class="stepper-title">Details</h3>
+                                    <div class="stepper-desc">description Category </div>
                                 </div>
                                 <!--begin::Label-->
                             </div>
                             <!--end::Step 2-->
+
+
                             <!--begin::Step 3-->
                             <div class="stepper-item" data-kt-stepper-element="nav">
                                 <!--begin::Line-->
@@ -2466,13 +2348,13 @@
                                     <i class="stepper-check fas fa-check"></i>
                                     <span class="stepper-number">3</span>
                                 </div>
-                                <!--end::Icon-->
+                                <!--begin::Icon-->
                                 <!--begin::Label-->
                                 <div class="stepper-label">
-                                    <h3 class="stepper-title">Evaluation</h3>
-                                    <div class="stepper-desc">Determine the category distinction</div>
+                                    <h3 class="stepper-title">Other Details</h3>
+                                    <div class="stepper-desc">Define the profile picture and the category affiliation</div>
                                 </div>
-                                <!--end::Label-->
+                                <!--begin::Label-->
                             </div>
                             <!--end::Step 3-->
                             <!--begin::Step 4-->
@@ -2488,6 +2370,25 @@
                                 <!--end::Icon-->
                                 <!--begin::Label-->
                                 <div class="stepper-label">
+                                    <h3 class="stepper-title">Evaluation</h3>
+                                    <div class="stepper-desc">Determine the category distinction</div>
+                                </div>
+                                <!--end::Label-->
+                            </div>
+                            <!--end::Step 4-->
+                            <!--begin::Step 5-->
+                            <div class="stepper-item" data-kt-stepper-element="nav">
+                                <!--begin::Line-->
+                                <div class="stepper-line w-40px"></div>
+                                <!--end::Line-->
+                                <!--begin::Icon-->
+                                <div class="stepper-icon w-40px h-40px">
+                                    <i class="stepper-check fas fa-check"></i>
+                                    <span class="stepper-number">5</span>
+                                </div>
+                                <!--end::Icon-->
+                                <!--begin::Label-->
+                                <div class="stepper-label">
                                     <h3 class="stepper-title">Completed</h3>
                                     <div class="stepper-desc">Review and Submit</div>
                                 </div>
@@ -2498,7 +2399,7 @@
                         <!--end::Nav-->
                     </div>
                     <!--begin::Aside-->
-                    <!--begin::Content-->
+                    <!--begin::Content nada-->
                     <div class="flex-row-fluid py-lg-5 px-lg-15">
                         <!--begin::Form-->
                         <form class="form" novalidate="novalidate" enctype="multipart/form-data" id="kt_modal_create_app_form">
@@ -2510,35 +2411,75 @@
                                     <div class="fv-row mb-10">
                                         <!--begin::Label-->
                                         <label class="d-flex align-items-center fs-5 fw-bold mb-2">
-                                            <span class="required">Category Name</span>
+                                            <span class="required">Category Name Arabic</span>
                                             <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify your unique app name"></i>
                                         </label>
                                         <!--end::Label-->
                                         <!--begin::Input-->
-                                        <input type="text" class="form-control form-control-lg form-control-solid" name="name" placeholder="category name " value="" />
+                                        <input type="text" class="form-control form-control-lg form-control-solid" name="name_ar" placeholder="category name  arabic " value="" />
                                          <!--end::Input-->
                                     </div>
                                     <!--end::Input group-->
 
+                                    <div class="w-100">
+                                        <!--begin::Input group-->
+                                        <div class="fv-row mb-10">
+                                            <!--begin::Label-->
+                                            <label class="d-flex align-items-center fs-5 fw-bold mb-2">
+                                                <span class="required">Category  Name English</span>
+                                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify your unique app name"></i>
+                                            </label>
+                                            <!--end::Label-->
+                                            <!--begin::Input-->
+                                            <input type="text" class="form-control form-control-lg form-control-solid" name="name_en" placeholder="category name  english " value="" />
+                                            <!--end::Input-->
+                                        </div>
+                                        <!--end::Input group-->
+
                                     <!--begin::Input group-->
-                                    <div class="fv-row mb-10">
-                                        <!--begin::Label-->
-                                        <label class="d-flex align-items-center fs-5 fw-bold mb-2">
-                                            <span class="required">Category Description</span>
-                                            <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify your unique app name"></i>
-                                        </label>
-                                        <!--end::Label-->
-                                        <!--begin::Input-->
-                                        <div class="mb-4">
-                                            <textarea class="form-control form-control-lg form-control-solid rounded-3 shadow-sm" name="description" rows="4" placeholder="Enter description text" required></textarea>
-                                        </div>                                        <!--end::Input-->
-                                    </div>
+
                                     <!--end::Input group-->
 
                                 </div>
                             </div>
                             <!--end::Step 1-->
+
+                            </div>
                             <!--begin::Step 2-->
+
+                            <div data-kt-stepper-element="content">
+                                <div class="w-100">
+                                    <div class="fv-row mb-10">
+                                        <!--begin::Label-->
+                                        <label class="d-flex align-items-center fs-5 fw-bold mb-2">
+                                            <span class="required">Category Description Arabic</span>
+                                            <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify your unique app name"></i>
+                                        </label>
+                                        <!--end::Label-->
+                                        <!--begin::Input-->
+                                        <div class="mb-4">
+                                            <textarea class="form-control form-control-lg form-control-solid rounded-3 shadow-sm" name="description_ar" rows="4" placeholder="Enter description text" required></textarea>
+                                        </div>                                        <!--end::Input-->
+                                    </div>
+
+                                    <div class="fv-row mb-10">
+                                        <!--begin::Label-->
+                                        <label class="d-flex align-items-center fs-5 fw-bold mb-2">
+                                            <span class="required">Category Description English</span>
+                                            <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify your unique app name"></i>
+                                        </label>
+                                        <!--end::Label-->
+                                        <!--begin::Input-->
+                                        <div class="mb-4">
+                                            <textarea class="form-control form-control-lg form-control-solid rounded-3 shadow-sm" name="description_en" rows="4" placeholder="Enter description text" required></textarea>
+                                        </div>                                        <!--end::Input-->
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <!--end::Step 2-->
+                            <!--begin::Step 3-->
                             <div data-kt-stepper-element="content">
                                 <div class="w-100">
                                     <!--begin::Input group-->
@@ -2622,9 +2563,9 @@
 
                                 </div>
                                 </div>
-                            </div>
-                            <!--end::Step 2-->
-                            <!--begin::Step 3-->
+
+                            <!--end::Step 3-->
+                            <!--begin::Step 4-->
                             <div data-kt-stepper-element="content">
                                 <div class="w-100">
                                     <!--begin::Input group-->
@@ -2634,14 +2575,6 @@
                                         <!--begin::Input-->
 {{--                                        <input type="text" class="form-control form-control-lg form-control-solid" name="dbname" placeholder="" value="master_db" />--}}
                                         <label for="rating" class="required fs-5 fw-bold mb-2">Rating:</label>
-{{--                                        <select id="rating" name="rating" data-rating="3">--}}
-{{--                                            <option class="form-control form-control-lg form-control-solid" value="1">1 Star</option>--}}
-{{--                                            <option class="form-control form-control-lg form-control-solid" value="2">2 Stars</option>--}}
-{{--                                            <option class="form-control form-control-lg form-control-solid" value="3">3 Stars</option>--}}
-{{--                                            <option class="form-control form-control-lg form-control-solid" value="4">4 Stars</option>--}}
-{{--                                            <option class="form-control form-control-lg form-control-solid" value="5">5 Stars</option>--}}
-{{--                                        </select>--}}
-                                        <!--end::Input-->
 
                                         <div class="ms-2 w-100px">
                                             <select class="form-select form-select-solid form-select-sm" name = "rating"  data-control="select2" data-hide-search="true">
@@ -2668,8 +2601,8 @@
                                     <!--end::Input group-->
                                 </div>
                             </div>
-                            <!--end::Step 3-->
-                            <!--begin::Step 4-->
+                            <!--end::Step 4-->
+                            <!--begin::Step 5-->
                             <div data-kt-stepper-element="content">
                                 <div class="w-100 text-center">
                                     <!--begin::Heading-->
@@ -2743,6 +2676,421 @@
     <!--end::Modal dialog-->
 </div>
 <!--end::Modal - Create App-->
+
+    <!--begin::Modal - update App-->
+<div class="modal fade" id="kt_modal_update_app" tabindex="-1" aria-hidden="true">
+        <!--begin::Modal dialog-->
+        <div class="modal-dialog modal-dialog-centered mw-900px">
+            <!--begin::Modal content-->
+            <div class="modal-content">
+                <!--begin::Modal header-->
+                <div class="modal-header">
+                    <!--begin::Modal title-->
+                    <h2>Update Category</h2>
+                    <!--end::Modal title-->
+                    <!--begin::Close-->
+                    <input type="hidden" id="id" class="form-control" value ="" placeholder="Item ID will appear here">
+
+                    <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                        <span class="svg-icon svg-icon-1">
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+									<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
+									<rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black" />
+								</svg>
+							</span>
+                        <!--end::Svg Icon-->
+                    </div>
+                    <!--end::Close-->
+                </div>
+                <!--end::Modal header-->
+                <!--begin::Modal body-->
+                <div class="modal-body py-lg-10 px-lg-10">
+                    <!--begin::Stepper-->
+                    <div class="stepper stepper-pills stepper-column d-flex flex-column flex-xl-row flex-row-fluid" id="kt_modal_update_app_stepper">
+                        <!--begin::Aside-->
+                        <div class="d-flex justify-content-center justify-content-xl-start flex-row-auto w-100 w-xl-300px">
+                            <!--begin::Nav-->
+                            <div class="stepper-nav ps-lg-10">
+                                <!--begin::Step 1-->
+                                <div class="stepper-item current" data-kt-stepper-element="nav">
+                                    <!--begin::Line-->
+                                    <div class="stepper-line w-40px"></div>
+                                    <!--end::Line-->
+                                    <!--begin::Icon-->
+                                    <div class="stepper-icon w-40px h-40px">
+                                        <i class="stepper-check fas fa-check"></i>
+                                        <span class="stepper-number">1</span>
+                                    </div>
+                                    <!--end::Icon-->
+                                    <!--begin::Label-->
+                                    <div class="stepper-label">
+                                        <h3 class="stepper-title">Details</h3>
+                                        <div class="stepper-desc">Name Category </div>
+                                    </div>
+                                    <!--end::Label-->
+                                </div>
+                                <!--end::Step 1-->
+                                <!--begin::Step 2-->
+                                <div class="stepper-item" data-kt-stepper-element="nav">
+                                    <!--begin::Line-->
+                                    <div class="stepper-line w-40px"></div>
+                                    <!--end::Line-->
+                                    <!--begin::Icon-->
+                                    <div class="stepper-icon w-40px h-40px">
+                                        <i class="stepper-check fas fa-check"></i>
+                                        <span class="stepper-number">2</span>
+                                    </div>
+                                    <!--begin::Icon-->
+                                    <!--begin::Label-->
+                                    <div class="stepper-label">
+                                        <h3 class="stepper-title">Details</h3>
+                                        <div class="stepper-desc">description Category </div>
+                                    </div>
+                                    <!--begin::Label-->
+                                </div>
+                                <!--end::Step 2-->
+
+
+                                <!--begin::Step 3-->
+                                <div class="stepper-item" data-kt-stepper-element="nav">
+                                    <!--begin::Line-->
+                                    <div class="stepper-line w-40px"></div>
+                                    <!--end::Line-->
+                                    <!--begin::Icon-->
+                                    <div class="stepper-icon w-40px h-40px">
+                                        <i class="stepper-check fas fa-check"></i>
+                                        <span class="stepper-number">3</span>
+                                    </div>
+                                    <!--begin::Icon-->
+                                    <!--begin::Label-->
+                                    <div class="stepper-label">
+                                        <h3 class="stepper-title">Other Details</h3>
+                                        <div class="stepper-desc">Define the profile picture and the category affiliation</div>
+                                    </div>
+                                    <!--begin::Label-->
+                                </div>
+                                <!--end::Step 3-->
+                                <!--begin::Step 4-->
+                                <div class="stepper-item" data-kt-stepper-element="nav">
+                                    <!--begin::Line-->
+                                    <div class="stepper-line w-40px"></div>
+                                    <!--end::Line-->
+                                    <!--begin::Icon-->
+                                    <div class="stepper-icon w-40px h-40px">
+                                        <i class="stepper-check fas fa-check"></i>
+                                        <span class="stepper-number">4</span>
+                                    </div>
+                                    <!--end::Icon-->
+                                    <!--begin::Label-->
+                                    <div class="stepper-label">
+                                        <h3 class="stepper-title">Evaluation</h3>
+                                        <div class="stepper-desc">Determine the category distinction</div>
+                                    </div>
+                                    <!--end::Label-->
+                                </div>
+                                <!--end::Step 4-->
+                                <!--begin::Step 5-->
+                                <div class="stepper-item" data-kt-stepper-element="nav">
+                                    <!--begin::Line-->
+                                    <div class="stepper-line w-40px"></div>
+                                    <!--end::Line-->
+                                    <!--begin::Icon-->
+                                    <div class="stepper-icon w-40px h-40px">
+                                        <i class="stepper-check fas fa-check"></i>
+                                        <span class="stepper-number">5</span>
+                                    </div>
+                                    <!--end::Icon-->
+                                    <!--begin::Label-->
+                                    <div class="stepper-label">
+                                        <h3 class="stepper-title">Completed</h3>
+                                        <div class="stepper-desc">Review and Submit</div>
+                                    </div>
+                                    <!--end::Label-->
+                                </div>
+                                <!--end::Step 5-->
+                            </div>
+                            <!--end::Nav-->
+                        </div>
+                        <!--begin::Aside-->
+                        <!--begin::Content-->
+                        <div class="flex-row-fluid py-lg-5 px-lg-15">
+                            <!--begin::Form-->
+                            <form class="form" novalidate="novalidate" enctype="multipart/form-data" id="kt_modal_update_app_form">
+
+                                <!--begin::Step 1-->
+                                <div class="current" data-kt-stepper-element="content">
+                                    <div class="w-100">
+                                        <!--begin::Input group-->
+                                        <div class="fv-row mb-10">
+                                            <!--begin::Label-->
+                                            <label class="d-flex align-items-center fs-5 fw-bold mb-2">
+                                                <span class="required">Category Name Arabic</span>
+                                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify your unique app name"></i>
+                                            </label>
+                                            <!--end::Label-->
+                                            <!--begin::Input-->
+                                            <input type="text" class="form-control form-control-lg form-control-solid" id ="name_ar" name="name_ar" placeholder="category name  arabic " value="" />
+                                            <!--end::Input-->
+                                        </div>
+                                        <!--end::Input group-->
+
+                                        <div class="w-100">
+                                            <!--begin::Input group-->
+                                            <div class="fv-row mb-10">
+                                                <!--begin::Label-->
+                                                <label class="d-flex align-items-center fs-5 fw-bold mb-2">
+                                                    <span class="required">Category  Name English</span>
+                                                    <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify your unique app name"></i>
+                                                </label>
+                                                <!--end::Label-->
+                                                <!--begin::Input-->
+                                                <input type="text" class="form-control form-control-lg form-control-solid" id = "name_en" name="name_en" placeholder="category name  english " value="" />
+                                                <input type="hidden" id = "id_update" name="id" value="" />
+
+                                                <!--end::Input-->
+                                            </div>
+                                            <!--end::Input group-->
+
+                                            <!--begin::Input group-->
+
+                                            <!--end::Input group-->
+
+                                        </div>
+                                    </div>
+                                    <!--end::Step 1-->
+
+                                </div>
+                                <!--begin::Step 2-->
+
+                                <div data-kt-stepper-element="content">
+                                    <div class="w-100">
+                                        <div class="fv-row mb-10">
+                                            <!--begin::Label-->
+                                            <label class="d-flex align-items-center fs-5 fw-bold mb-2">
+                                                <span class="required">Category Description Arabic</span>
+                                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify your unique app name"></i>
+                                            </label>
+                                            <!--end::Label-->
+                                            <!--begin::Input-->
+                                            <div class="mb-4">
+                                                <textarea   id = "description_ar" class="form-control form-control-lg form-control-solid rounded-3 shadow-sm" name="description_ar" rows="4" placeholder="Enter description text" required></textarea>
+                                            </div>                                        <!--end::Input-->
+                                        </div>
+
+                                        <div class="fv-row mb-10">
+                                            <!--begin::Label-->
+                                            <label class="d-flex align-items-center fs-5 fw-bold mb-2">
+                                                <span class="required">Category Description English</span>
+                                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify your unique app name"></i>
+                                            </label>
+                                            <!--end::Label-->
+                                            <!--begin::Input-->
+                                            <div class="mb-4">
+                                                <textarea id ="description_en" class="form-control form-control-lg form-control-solid rounded-3 shadow-sm" name="description_en" rows="4" placeholder="Enter description text" required></textarea>
+                                            </div>                                        <!--end::Input-->
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <!--end::Step 2-->
+                                <!--begin::Step 3-->
+                                <div data-kt-stepper-element="content">
+                                    <div class="w-100">
+                                        <!--begin::Input group-->
+                                        <div class="fv-row">
+                                            <!--begin::Label-->
+                                            <label class="d-flex align-items-center fs-5 fw-bold mb-4">
+                                                <span class="required">Select image </span>
+                                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify your apps framework"></i>
+                                            </label>
+                                            <!--end::Label-->
+                                            <div class="row mb-5">
+                                                <div class="col-lg-8">
+                                                    <!--begin::Image input-->
+                                                    <div class="image-input image-input-outline" data-kt-image-input="true" style="background-image: url('assets/media/svg/avatars/blank.svg')">
+                                                        <!--begin::Preview existing avatar-->
+                                                        <div class="image-input-wrapper image-update w-125px h-125px bgi-position-center" id = "imageUpdate" style="background-size: 75%; background-image: url('')"></div>
+                                                        <!--end::Preview existing avatar-->
+                                                        <!--begin::Label-->
+                                                        <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
+                                                            <i class="bi bi-pencil-fill fs-7"></i>
+                                                            <!--begin::Inputs-->
+                                                            <input type="file" name="image" accept=".png, .jpg, .jpeg" />
+                                                            <input type="hidden" name="avatar_remove" />
+                                                            <!--end::Inputs-->
+                                                        </label>
+                                                        <!--end::Label-->
+                                                        <!--begin::Cancel-->
+                                                        <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel avatar">
+                                                                                            <i class="bi bi-x fs-2"></i>
+                                                                                        </span>
+                                                        <!--end::Cancel-->
+                                                        <!--begin::Remove-->
+                                                        <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="Remove avatar">
+                                                                                            <i class="bi bi-x fs-2"></i>
+                                                                                        </span>
+                                                        <!--end::Remove-->
+                                                    </div>
+                                                    <!--end::Image input-->
+                                                    <!--begin::Hint-->
+                                                    <div class="form-text">Allowed file types: png, jpg, jpeg.</div>
+                                                    <!--end::Hint-->
+                                                </div>
+                                                <!--end::Col-->
+                                            </div>
+
+                                        </div>
+                                        <!--end::Input group-->
+                                        <div class="mb-4">
+                                            <select class="form-control form-control-lg form-control-solid  form-select-sm" name = "category_id" id = "category_id_update" aria-label=".form-select-sm example">
+                                                <option value="0-0">Not affiliated </option>
+                                                <optgroup label="Primary Category">
+
+                                                    @if(!empty($category))
+
+                                                        @foreach($category as  $key => $item)
+                                                            @if($item['level'] == 1 )
+
+                                                                <option value="{{$item['level']}}-{{$item['id']}}">{{$item['name']}}</option>
+                                                            @endif
+
+                                                        @endforeach
+                                                </optgroup>
+                                                <optgroup label="Sub Category">
+
+                                                    @foreach($category as $item)
+                                                        @if($item['level'] == 2 )
+                                                            <option value="{{$item['level']}}-{{$item['id']}}">{{$item['name']}}</option>
+                                                        @endif
+
+                                                    @endforeach
+                                                </optgroup>
+
+
+                                                @endif
+                                            </select>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <!--end::Step 3-->
+                                <!--begin::Step 4-->
+                                <div data-kt-stepper-element="content">
+                                    <div class="w-100">
+                                        <!--begin::Input group-->
+                                        <div class="fv-row mb-10">
+                                            <!--begin::Label-->
+                                            <!--end::Label-->
+                                            <!--begin::Input-->
+                                             <label for="rating" class="required fs-5 fw-bold mb-2">Rating:</label>
+
+                                            <div class="ms-2 w-100px">
+                                                <select id ="rating" class="form-select form-select-solid form-select-sm" name = "rating"   data-hide-search="true">
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="4">4</option>
+                                                    <option value="5">5</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <!--end::Input group-->
+                                        <!--begin::Input group-->
+                                        <div class="fv-row">
+                                            <!--begin::Label-->
+
+                                            <!--begin::Label-->
+                                            <label class="d-flex align-items-center fs-5 fw-bold mb-4">
+                                                <span class="required">famous gaming</span>
+                                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Select your app database engine"></i>
+                                            </label>
+                                            <div class="form-check form-switch">
+                                                <input id = "famous_gaming" class="form-check-input" type="checkbox" name="famous_gaming" id="radioSwitch" value="on">
+                                            </div>
+
+                                        </div>
+                                        <!--end::Input group-->
+                                    </div>
+                                </div>
+                                <!--end::Step 4-->
+                                <!--begin::Step 5-->
+                                <div data-kt-stepper-element="content">
+                                    <div class="w-100 text-center">
+                                        <!--begin::Heading-->
+                                        <h1 class="fw-bolder text-dark mb-3">Release!</h1>
+                                        <!--end::Heading-->
+                                        <!--begin::Description-->
+                                        <div class="text-muted fw-bold fs-3">Submit your app to kickstart your project.</div>
+                                        <!--end::Description-->
+                                        <!--begin::Illustration-->
+                                        <div class="text-center px-4 py-15">
+                                            <img src="assets/media/illustrations/sketchy-1/9.png" alt="" class="mw-100 mh-300px" />
+                                        </div>
+                                        <!--end::Illustration-->
+                                    </div>
+                                </div>
+                                <!--end::Step 5-->
+                                <!--begin::Actions-->
+                                <div class="d-flex flex-stack pt-10">
+                                    <!--begin::Wrapper-->
+                                    <div class="me-2">
+                                        <button type="button" class="btn btn-lg btn-light-primary me-3" data-kt-stepper-action="previous">
+                                            <!--begin::Svg Icon | path: icons/duotune/arrows/arr063.svg-->
+                                            <span class="svg-icon svg-icon-3 me-1">
+												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+													<rect opacity="0.5" x="6" y="11" width="13" height="2" rx="1" fill="black" />
+													<path d="M8.56569 11.4343L12.75 7.25C13.1642 6.83579 13.1642 6.16421 12.75 5.75C12.3358 5.33579 11.6642 5.33579 11.25 5.75L5.70711 11.2929C5.31658 11.6834 5.31658 12.3166 5.70711 12.7071L11.25 18.25C11.6642 18.6642 12.3358 18.6642 12.75 18.25C13.1642 17.8358 13.1642 17.1642 12.75 16.75L8.56569 12.5657C8.25327 12.2533 8.25327 11.7467 8.56569 11.4343Z" fill="black" />
+												</svg>
+											</span>
+                                            <!--end::Svg Icon-->Back</button>
+                                    </div>
+                                    <!--end::Wrapper-->
+                                    <!--begin::Wrapper-->
+                                    <div>
+                                        <button type="submit" id="submit_form_Update" class="btn btn-lg btn-primary" data-kt-stepper-action="submit">
+												<span class="indicator-label">Update
+                                                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr064.svg-->
+												<span class="svg-icon svg-icon-3 ms-2 me-0">
+													<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+														<rect opacity="0.5" x="18" y="13" width="13" height="2" rx="1" transform="rotate(-180 18 13)" fill="black" />
+														<path d="M15.4343 12.5657L11.25 16.75C10.8358 17.1642 10.8358 17.8358 11.25 18.25C11.6642 18.6642 12.3358 18.6642 12.75 18.25L18.2929 12.7071C18.6834 12.3166 18.6834 11.6834 18.2929 11.2929L12.75 5.75C12.3358 5.33579 11.6642 5.33579 11.25 5.75C10.8358 6.16421 10.8358 6.83579 11.25 7.25L15.4343 11.4343C15.7467 11.7467 15.7467 12.2533 15.4343 12.5657Z" fill="black" />
+													</svg>
+												</span>
+                                                    <!--end::Svg Icon--></span>
+                                            <span class="indicator-progress">Please wait...
+												<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                        </button>
+                                        <button type="button" class="btn btn-lg btn-primary" data-kt-stepper-action="next">Continue
+                                            <!--begin::Svg Icon | path: icons/duotune/arrows/arr064.svg-->
+                                            <span class="svg-icon svg-icon-3 ms-1 me-0">
+												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+													<rect opacity="0.5" x="18" y="13" width="13" height="2" rx="1" transform="rotate(-180 18 13)" fill="black" />
+													<path d="M15.4343 12.5657L11.25 16.75C10.8358 17.1642 10.8358 17.8358 11.25 18.25C11.6642 18.6642 12.3358 18.6642 12.75 18.25L18.2929 12.7071C18.6834 12.3166 18.6834 11.6834 18.2929 11.2929L12.75 5.75C12.3358 5.33579 11.6642 5.33579 11.25 5.75C10.8358 6.16421 10.8358 6.83579 11.25 7.25L15.4343 11.4343C15.7467 11.7467 15.7467 12.2533 15.4343 12.5657Z" fill="black" />
+												</svg>
+											</span>
+                                            <!--end::Svg Icon--></button>
+                                    </div>
+                                    <!--end::Wrapper-->
+                                </div>
+                                <!--end::Actions-->
+                            </form>
+                            <!--end::Form-->
+                        </div>
+                        <!--end::Content-->
+                    </div>
+                    <!--end::Stepper-->
+                </div>
+                <!--end::Modal body-->
+            </div>
+            <!--end::Modal content-->
+        </div>
+        <!--end::Modal dialog-->
+    </div>
+    <!--end::Modal - update App-->
 <!--begin::Modal - Users Search-->
 <div class="modal fade" id="kt_modal_users_search" tabindex="-1" aria-hidden="true">
     <!--begin::Modal dialog-->

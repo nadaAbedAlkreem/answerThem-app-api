@@ -78,6 +78,9 @@ class User extends Authenticatable
             $user->sentFriendRequests()->each(function ($request) {
                 $request->delete(); // Soft delete sent requests
             });
+            $user->EvaluationsUser()->each(function ($request) {
+                $request->delete(); // Soft delete sent requests
+            });
 
             $user->receivedFriendRequests()->each(function ($request) {
                 $request->delete(); // Soft delete received requests
