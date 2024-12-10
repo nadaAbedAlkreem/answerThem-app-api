@@ -31,7 +31,7 @@ class ContactUsDatatableService
             ->addColumn('status', function ($data) {
                 return '
                 <div class="mb-3">
-                     <select name="status" id="status" style ="border: none !important;" class="form-select" style="height: 40px;">
+                     <select name="status" data-id="' . $data['id'] . '" id="status" style ="border: none !important;" class="form-select" style="height: 40px;">
                         <option value="important" ' . ($data['status'] == 'important' ? 'selected' : '') . '>Important</option>
                         <option value="middle" ' . ($data['status'] == 'middle' ? 'selected' : '') . '>Middle</option>
                         <option value="not_important" ' . ($data['status'] == 'not_important' ? 'selected' : '') . '>Not Important</option>

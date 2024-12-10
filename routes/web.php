@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\V1\ContactUsController;
+use App\Http\Controllers\Dashboard\HomeController;
 use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\Dashboard\CategoryController;
 use App\Http\Controllers\Api\V1\SettingController;
@@ -25,9 +26,7 @@ Route::prefix('auth')->group(function () {
 Route::group(['middleware' =>  CheckLanguage::class  ], function () {
     Route::prefix('dashboard')->group(function ()
     {
-        Route::get('home', function (){
-            return  view('dashboard.pages.home');
-        })->name('dashboard.home');
+        Route::get('home/{lang}', [HomeController::class, 'index'])->name('dashboard.home');
 
         Route::get('setting/{lang}', [SettingController::class, 'show'])->name('dashboard.setting.create');
         Route::post('setting/update', [SettingController::class, 'update'])->name('dashboard.setting.update');
@@ -63,7 +62,7 @@ Route::group(['middleware' =>  CheckLanguage::class  ], function () {
         Route::prefix('contact_us')->group(function ()
         {
             Route::get('/{lang}', [ContactUsController::class, 'index'])->name('dashboard.contact_us');
-
+            Route::post('update', [ContactUsController::class, 'updateStatus'])->name('dashboard.contact_us.update');
 
         }
         );

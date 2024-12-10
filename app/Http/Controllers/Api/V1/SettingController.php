@@ -33,18 +33,17 @@ class SettingController extends Controller
     {
         $this->lang($request);
         $settings = Setting::where('lang', App::getLocale())->get();
-         $settingsData = $settings->reduce(function ($carry, $setting) use ($request) {
+        $settingsData = $settings->reduce(function ($carry, $setting) use ($request) {
             return array_merge($carry, (new SettingResource($setting))->toArray($request));
         }, []);
-
         return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY', ['settings' => $settingsData], 200,  App::getLocale());
     }
     public function show(Request $request)
     {
          $this->lang($request);
-          $settings = $this->settingRepositories->whereIn(['lang' => [app::getLocale(), '']]);
-          $lang  = App::getLocale();
-        return  view('dashboard.pages.setting', compact(['settings' , 'lang']));
+         $settings = $this->settingRepositories->whereIn(['lang' => [app::getLocale(), '']]);
+         $lang  = App::getLocale();
+         return  view('dashboard.pages.setting', compact(['settings' , 'lang']));
     }
 
     public function update(Request $request)

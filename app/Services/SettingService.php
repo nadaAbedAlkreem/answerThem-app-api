@@ -35,7 +35,7 @@ class SettingService
                                      $path = 'uploads/images/settings/';
                                      $nameImage = $imageUnqName . '.' . $image->getClientOriginalExtension();
                                      Storage::disk('public')->put($path . $nameImage, file_get_contents($image));
-                                     $image->move(public_path($path), $nameImage);
+                                     $image->move('storage/'.($path), $nameImage);
 
                                      $absolutePath = storage_path('app/public/' . $path . $nameImage);
                                      if (file_exists($absolutePath)) {
@@ -103,6 +103,8 @@ class SettingService
                          $nameImage = $imageUnqName . '.' . $image->getClientOriginalExtension();
                          Storage::disk('public')->put($path . $nameImage, file_get_contents($image));
                          $absolutePath = storage_path('app/public/' . $path . $nameImage);
+                         $image->move('storage/'.($path), $nameImage);
+
                          if (file_exists($absolutePath)) {
                              chmod($absolutePath, 0775);
                          } else {

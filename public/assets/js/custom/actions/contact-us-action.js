@@ -3,6 +3,7 @@ $(document).ready(function ($) {
 
 
     var lang = window.location.pathname.split('/').pop(); // Example: 'en', 'fr', etc.
+    var token = $("meta[name='csrf-token']").attr("content");
 
 
     var table = $(".data-contact-us").DataTable({
@@ -36,21 +37,36 @@ $(document).ready(function ($) {
 
 
 
-    $(".data-contact-us").on("chooes", "#status", function (e)
+    $(".data-contact-us").on("change", "#status[data-id]", function (e)
     {
         e.preventDefault();
-
-                    $.ajax({
-                        url: "dashboard/status/update/" + id,
-                        type: "DELETE",
+         const dropdown = document.getElementById("status");
+         var token = $("meta[name='csrf-token']").attr("content");
+         const status = dropdown.value;
+         var id = $(this).data("id");
+        console.log("Selected value:", id);
+                     $.ajax({
+                        url: "dashboard/contact_us/update/",
+                        type: "post",
                         data: {
-                            id: id,
+                            id:id ,
+                            status : status,
                             _token: token,
                         },
                         success: function () {
                             console.log("it Works");
-                            $(".data-users").DataTable().ajax.reload();
-                        },
+                            Swal.fire({
+                                text: "You have successfully Update Status !",
+                                icon: "success",
+                                buttonsStyling: false,
+                                confirmButtonText: "Ok, got it!",
+                                customClass: {
+                                    confirmButton: "btn btn-primary",
+                                },
+                            });
+
+
+                         },
                     });
     });
 
@@ -76,7 +92,7 @@ $(document).ready(function ($) {
                     var token = $("meta[name='csrf-token']").attr("content");
 
                     $.ajax({
-                        url: "dashboard/users/delete/" + id,
+                        url: "dashboard/contact_us/delete/" + id,
                         type: "DELETE",
                         data: {
                             id: id,
@@ -84,7 +100,7 @@ $(document).ready(function ($) {
                         },
                         success: function () {
                             console.log("it Works");
-                            $(".data-users").DataTable().ajax.reload();
+                            $(".data-contact-us").DataTable().ajax.reload();
                         },
                     });
                 }

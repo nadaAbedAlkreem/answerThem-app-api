@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\ContactUs;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -10,6 +11,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class ContactUsFactory extends Factory
 {
+    protected $model = ContactUs::class;
+
     /**
      * Define the model's default state.
      *
@@ -18,7 +21,7 @@ class ContactUsFactory extends Factory
     public function definition(): array
     {
         return [
-            'sender_id' => User::factory(5),
+            'sender_id' => User::factory(),
             'title' => $this->faker->sentence(),
             'description' => $this->faker->paragraph(),
             'status' => $this->faker->randomElement(['important', 'middle', 'not_important']),

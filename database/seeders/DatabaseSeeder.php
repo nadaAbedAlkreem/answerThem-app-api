@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use App\Models\Category;
 use App\Models\Challenge;
+use App\Models\ContactUs;
+use App\Models\Evaluation;
 use App\Models\Friend;
 use App\Models\FriendRequest;
 use App\Models\User;
@@ -29,11 +31,18 @@ class DatabaseSeeder extends Seeder
 
             QuestionSeeder::class,
             AnswerSeeder::class,
+
         ]);
 
-//        $users = User::factory()
-//            ->count(5)
-//            ->create();
+        $users = User::factory()
+            ->count(20)
+            ->create();
+          ContactUs::factory()
+            ->count(20)
+            ->create();
+            Evaluation::factory()
+                  ->count(40)
+                  ->create();
 //        FriendRequest::factory()->count(5)->create([
 //            'sender_id' => $users->random()->id,  // Randomly select a user as sender
 //            'receiver_id' => $users->random()->id, // Randomly select another user as receiver
@@ -69,38 +78,41 @@ class DatabaseSeeder extends Seeder
 //        $level3->each(function ($category) {
 //            Question::factory(25)->for($category)->create(); // Creating 25 questions for each level 3 category
 //        });
-//        $categories=  Category::factory()->count(15)->create([
-//            'level' => 3,
-//            'parent_id' => function () use ($level2Ids) {
-//                return $level2Ids[array_rand($level2Ids)];
-//            },
-//        ]);
+        $categories=  Category::factory()->count(15)->create([
+            'level' => 3,
+            'parent_id' =>  1
+        ]);
 //
 //
-//        $categories->each(function ($category) {
-//            Question::factory(25)->for($category)->create();
-//        });
+        $categories->each(function ($category) {
+            Question::factory(25)->for($category)->create();
+        });
 //
 
-//        $teams = Team::factory()->count(5)->create();
+        $teams = Team::factory()->count(5)->create();
 //         $answers= Question::factory()->count(25)->create([
 //            'category_id' => $categories->random()->id,
 //        ]);
 //        Answer::factory()->count(5)->create([
 //            'question_id' => $answers->random()->id,
 //        ]);
-//       $teamMembers = TeamMember::factory()->count(5)->create([
-//             'team_id' => $teams->random()->id,
-//             'user_id' => $users->random()->id,
-//         ]);
-//       $challenges = Challenge::factory()->count(5)->create([
-//            'team_member1_id' => $teamMembers->random()->id,
-//            'team_member2_id' => $teamMembers->random()->id,
-//            'user1_id' => $users->random()->id,
-//            'user2_id' => $users->random()->id,
-//            'category_id' => $categories->random()->id,
-//
-//        ]);
+       $teamMembers = TeamMember::factory()->count(5)->create([
+             'team_id' => $teams->random()->id,
+             'user_id' => $users->random()->id,
+         ]);
+       $challenges = Challenge::factory()->count(50)->create([
+            'team_member1_id' => $teamMembers->random()->id,
+            'team_member2_id' => $teamMembers->random()->id,
+            'user1_id' => $users->random()->id,
+            'user2_id' => $users->random()->id,
+            'category_id' => $categories->random()->id,
+
+        ]);
+        $challenges->each(function ($challenge) {
+            $challenge->update([
+                'created_at' => now()->subDays(rand(30, 90)), // Set created_at to a random date in the last 3 months
+            ]);
+        });
 //        Invitation::factory()->count(5)->create([
 //            'sender_id' => $teamMembers->random()->id,
 //            'receiver_id' => $teamMembers->random()->id,

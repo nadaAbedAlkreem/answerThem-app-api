@@ -29,6 +29,8 @@ class ChallengeFactory extends Factory
             'number_of_questions' => $this->faker->numberBetween(5, 50),
             'time_per_question' => $this->faker->numberBetween(10, 60), // seconds
             'status' => $this->faker->randomElement(['ongoing', 'pending', 'end']),
+            'created_at' => $this->faker->dateTimeBetween('-3 months', 'now'), // Custom timestamp
+            'updated_at' => now(),
         ];
     }
 }

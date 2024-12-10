@@ -71,13 +71,7 @@ class CategoryController extends Controller
             ], 500);
         }
     }
-    public  function changeLangVersion(Request $request)
-    {
 
-        $language = $request->input('language'); // Retrieve the language parameter
-        dd($language);
-
-    }
     public function destroy($id)
     {
          try {

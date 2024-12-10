@@ -71,17 +71,13 @@ class ContactUsController extends Controller
     {
         // Validate incoming data
         $request->validate([
-            'id' => 'required|exists:your_table,id',  // Validate that the ID exists in your table
+            'id' => 'required|exists:contact_us,id',  // Validate that the ID exists in your table
             'status' => 'required|in:important,middle,not_important',  // Validate the status
         ]);
-
-        // Find the record by ID and update its status
         $record = ContactUs::find($request->id);
         $record->status = $request->status;
         $record->save();
-
-        // Return a response (optional, for AJAX success)
-        return response()->json(['success' => true]);
+        return $this->successResponse('UPDATE_SUCCESS',  [], 201, App::getLocale());
     }
 
     public function destroy($id)

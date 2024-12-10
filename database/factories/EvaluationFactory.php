@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,9 @@ class EvaluationFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'user_id' => User::factory(), // Generates a user and assigns its ID
+            'rating' => $this->faker->numberBetween(1, 5), // Random rating between 1 and 5
+            'descriptive_evaluation' =>$this->faker->randomElement(['high', 'medium', 'low']), // Random sentence
         ];
     }
 }

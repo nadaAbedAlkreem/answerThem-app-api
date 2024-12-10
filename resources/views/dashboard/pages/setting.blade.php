@@ -1519,7 +1519,7 @@
                         <ul class="breadcrumb breadcrumb-dot fw-bold text-gray-600 fs-7">
                             <!--begin::Item-->
                             <li class="breadcrumb-item text-gray-600">
-                                <a href="{{route('dashboard.home')}}" class="text-gray-600 text-hover-primary">Home</a>
+                                <a href="{{route('dashboard.home' , ['lang' => $lang])}}" class="text-gray-600 text-hover-primary">Home</a>
                             </li>
                             <li class="breadcrumb-item text-gray-500">Settings</li>
                             <!--end::Item-->
@@ -1740,17 +1740,28 @@
                                                                             </div>
                                                                         @endif
 
+
                                                                         @if($setting->base_term == 'app contact us')
-                                                                            <div class="mb-4">
+                                                                             <div class="mb-4">
                                                                                 <label class="form-label fw-bold text-dark">
                                                                                     <i class="bi bi-globe me-2"></i> {{$index}}
                                                                                 </label>
-                                                                                <input type="text" class="form-control rounded-3 shadow-sm" name="{{$setting->id}}-{{$index}}" value="{{$json}}" required placeholder="Enter contact us "  required/>
+                                                                                <input type="text" class="form-control rounded-3 shadow-sm" name="{{$setting->id}}-{{$index}}" value="{{$json}}"  placeholder="Enter contact us "  required/>
 
                                                                             </div>
                                                                         @endif
 
 
+
+                                                                        @if($setting->base_term == 'app terms and conditions')
+                                                                            <div class="mb-4">
+                                                                                <label class="form-label fw-bold text-dark">
+                                                                                    <i class="bi bi-globe me-2"></i> app terms and condition
+                                                                                </label>
+                                                                                <input type="text" class="form-control rounded-3 shadow-sm" name="{{$setting->id}}-{{$index}}" value="{{$json}}" placeholder="Enter contact us " required />
+
+                                                                            </div>
+                                                                        @endif
 
                                                                         @if($setting->base_term == 'problem suggestions')
                                                                             <div class="mb-4">
@@ -1761,6 +1772,7 @@
 
                                                                             </div>
                                                                         @endif
+
 
 
                                                                     </div>

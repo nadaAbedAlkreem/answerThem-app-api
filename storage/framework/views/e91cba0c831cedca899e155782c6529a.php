@@ -1517,7 +1517,7 @@
                         <ul class="breadcrumb breadcrumb-dot fw-bold text-gray-600 fs-7">
                             <!--begin::Item-->
                             <li class="breadcrumb-item text-gray-600">
-                                <a href="<?php echo e(route('dashboard.home')); ?>" class="text-gray-600 text-hover-primary">Home</a>
+                                <a href="<?php echo e(route('dashboard.home' , ['lang' => $lang])); ?>" class="text-gray-600 text-hover-primary">Home</a>
                             </li>
                             <li class="breadcrumb-item text-gray-500">Settings</li>
                             <!--end::Item-->
@@ -1739,18 +1739,29 @@
                                                                             </div>
                                                                         <?php endif; ?>
 
+
                                                                         <?php if($setting->base_term == 'app contact us'): ?>
-                                                                            <div class="mb-4">
+                                                                             <div class="mb-4">
                                                                                 <label class="form-label fw-bold text-dark">
                                                                                     <i class="bi bi-globe me-2"></i> <?php echo e($index); ?>
 
                                                                                 </label>
-                                                                                <input type="text" class="form-control rounded-3 shadow-sm" name="<?php echo e($setting->id); ?>-<?php echo e($index); ?>" value="<?php echo e($json); ?>" required placeholder="Enter contact us "  required/>
+                                                                                <input type="text" class="form-control rounded-3 shadow-sm" name="<?php echo e($setting->id); ?>-<?php echo e($index); ?>" value="<?php echo e($json); ?>"  placeholder="Enter contact us "  required/>
 
                                                                             </div>
                                                                         <?php endif; ?>
 
 
+
+                                                                        <?php if($setting->base_term == 'app terms and conditions'): ?>
+                                                                            <div class="mb-4">
+                                                                                <label class="form-label fw-bold text-dark">
+                                                                                    <i class="bi bi-globe me-2"></i> app terms and condition
+                                                                                </label>
+                                                                                <input type="text" class="form-control rounded-3 shadow-sm" name="<?php echo e($setting->id); ?>-<?php echo e($index); ?>" value="<?php echo e($json); ?>" placeholder="Enter contact us " required />
+
+                                                                            </div>
+                                                                        <?php endif; ?>
 
                                                                         <?php if($setting->base_term == 'problem suggestions'): ?>
                                                                             <div class="mb-4">
@@ -1761,6 +1772,7 @@
 
                                                                             </div>
                                                                         <?php endif; ?>
+
 
 
                                                                     </div>

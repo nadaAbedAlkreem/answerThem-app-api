@@ -111,31 +111,31 @@ class SettingsTableSeeder extends Seeder
                     [
                         [
                             'name' => 'Egypt',
-                            'flag' => 'https://linktest.gastwerk-bern.ch/storage/uploads/images/settings/Frame.png',
+                            'image' => 'https://linktest.gastwerk-bern.ch/storage/uploads/images/settings/Frame.png',
                             'code' => '+20',
                         ]
                         ,
                         [
                             'name' => 'Kuwait',
-                            'flag' => 'https://linktest.gastwerk-bern.ch/storage/uploads/images/settings/Frame_(2).png',
+                            'image' => 'https://linktest.gastwerk-bern.ch/storage/uploads/images/settings/Frame_(2).png',
                             'code' => '+965',
                         ]
                         ,
                         [
                             'name' => 'Saudi Arabia',
-                            'flag' => 'https://linktest.gastwerk-bern.ch/storage/uploads/images/settings/s.png',
+                            'image' => 'https://linktest.gastwerk-bern.ch/storage/uploads/images/settings/s.png',
                             'code' => '+966',
                         ]
                         ,
                         [
                             'name' => 'UAE',
-                            'flag' => 'https://linktest.gastwerk-bern.ch/storage/uploads/images/settings/Frame_13.png',
+                            'image' => 'https://linktest.gastwerk-bern.ch/storage/uploads/images/settings/Frame_13.png',
                             'code' => '+971',
                         ]
                         ,
                         [
                             'name' => 'Palestine',
-                            'flag' => 'https://linktest.gastwerk-bern.ch/storage/uploads/images/settings/Frame_23.png',
+                            'image' => 'https://linktest.gastwerk-bern.ch/storage/uploads/images/settings/Frame_23.png',
                             'code' => '+970',
                         ]
                     ]
@@ -155,31 +155,31 @@ class SettingsTableSeeder extends Seeder
                     [
                         [
                             'name' => 'Egypt',
-                            'flag' => 'https://linktest.gastwerk-bern.ch/storage/uploads/images/settings/Frame.png',
+                            'image' => 'https://linktest.gastwerk-bern.ch/storage/uploads/images/settings/Frame.png',
                             'code' => '+20',
                         ]
                         ,
                         [
                             'name' => 'Kuwait',
-                            'flag' => 'https://linktest.gastwerk-bern.ch/storage/uploads/images/settings/Frame_(2).png',
+                            'image' => 'https://linktest.gastwerk-bern.ch/storage/uploads/images/settings/Frame_(2).png',
                             'code' => '+965',
                         ]
                         ,
                         [
                             'name' => 'Saudi Arabia',
-                            'flag' => 'https://linktest.gastwerk-bern.ch/storage/uploads/images/settings/s.png',
+                            'image' => 'https://linktest.gastwerk-bern.ch/storage/uploads/images/settings/s.png',
                             'code' => '+966',
                         ]
                         ,
                         [
                             'name' => 'UAE',
-                            'flag' => 'https://linktest.gastwerk-bern.ch/storage/uploads/images/settings/Frame_13.png',
+                            'image' => 'https://linktest.gastwerk-bern.ch/storage/uploads/images/settings/Frame_13.png',
                             'code' => '+971',
                         ]
                         ,
                         [
                             'name' => 'Palestine',
-                            'flag' => 'https://linktest.gastwerk-bern.ch/storage/uploads/images/settings/Frame_23.png',
+                            'image' => 'https://linktest.gastwerk-bern.ch/storage/uploads/images/settings/Frame_23.png',
                             'code' => '+970',
                         ]
                     ]
@@ -361,7 +361,7 @@ class SettingsTableSeeder extends Seeder
             ],
              [
                 'key' => 'contact_us',
-                'value' => json_encode([
+                'value' => json_encode(
                     [
                         'gmail' => 'mailto:elkahloutnada@gmail.com',
                         'facebook' => 'https://www.facebook.com/',
@@ -371,11 +371,8 @@ class SettingsTableSeeder extends Seeder
                         'Twitter' => 'https://www.snapchat.com/',
                         'TikTok' => 'https://www.snapchat.com/',
                         'LinkedIn' => 'https://www.snapchat.com/',
-
-
                     ]
-
-                ]),
+                ),
                 'description' => 'contact us information',
                 'base_term' => 'app contact us',
                 'lang' => 'en', // You can choose a default language here
