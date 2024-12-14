@@ -39,7 +39,7 @@ $(document).ready(function ($) {
     $("#submit_form_question").on("click", function (e) {
         e.preventDefault();
 
-        let formData = new FormData($("#kt_modal_create_app_form")[0]);
+        let formData = new FormData($("#kt_modal_create_app_question_form")[0]);
 
 
 
@@ -159,7 +159,7 @@ $(document).ready(function ($) {
     $("#submit_form_question_update").on("click", function (e) {
         e.preventDefault();
 
-        let formData = new FormData($("#kt_modal_update_app_form")[0]);
+        let formData = new FormData($("#kt_modal_update_questions_app_form")[0]);
         console.log(formData);
 
 

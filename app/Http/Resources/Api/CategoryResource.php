@@ -29,7 +29,9 @@ class CategoryResource extends JsonResource
             'parent' => new CategoryResource($this->whenLoaded('parent')),
             'grandparent' => new CategoryResource($this->whenLoaded('parent.parent')),
             'level' => $this->level ,
-            'questions' => QuestionResource::collection($this->whenLoaded('questions')),
+            'questions' => QuestionResource::collection(
+                $this->whenLoaded('questions')->shuffle()->take(25)
+            ),
         ];
       }
 }

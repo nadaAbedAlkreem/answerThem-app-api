@@ -49,11 +49,7 @@ return [
             'provider' => 'admins',  // Add this custom provider
         ],
 
-        'admins' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\Admin::class,
-            'hash' => false, // Ensure you hash passwords for real applications
-        ],
+
 
 
     ],
@@ -80,7 +76,11 @@ return [
             'driver' => 'eloquent',
             'model' => env('AUTH_MODEL', App\Models\User::class),
         ],
-
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Admin::class,
+            'hash' => false, // Ensure you hash passwords for real applications
+        ],
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',

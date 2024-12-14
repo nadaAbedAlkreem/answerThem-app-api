@@ -5,7 +5,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const changedData = []; // Array to store changed inputs
 
     // Track changes in form inputs
-    form.addEventListener("input", function (event) {
+    form.addEventListener("input", trackChange);
+    form.addEventListener("paste", trackChange);
+    form.addEventListener("cut", trackChange);
+
+    function trackChange(event) {
         const input = event.target;
 
         if (input.name && input.value !== input.defaultValue) {
@@ -19,14 +23,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 changedData.push({ key: input.name, value: input.value });
             }
         }
-    });
+    }
 
 
     $(document).ready(function () {
         $('#setting_form').click(function (event) {
             event.preventDefault();
-
-            console.log(changedData.length);
             if (changedData.length === 0) {
                 Swal.fire({
                     text: "Successfully updated changes.",
@@ -39,11 +41,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
                 return;
             }
+            console.log(changedData);
 
             const formData = new FormData(document.getElementById("kt_project_settings_form"));
             formData.append('changedData', JSON.stringify(changedData)); // Append changed data
-
-            console.log(formData); // Debug the form data content
 
             $.ajaxSetup({
                 headers: {
@@ -71,9 +72,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     });
                 },
                 error: function (response) {
-                     console.log('error in setting home  : '.response);
-                    Swal.fire({
-                        text: 'The value cannot be null',
+                     Swal.fire({
+                        text: response.responseJSON.data.error,
                         icon: "error",
                         buttonsStyling: false,
                         confirmButtonText: "Ok!",

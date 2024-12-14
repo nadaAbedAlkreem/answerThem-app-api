@@ -7,6 +7,7 @@ use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\Dashboard\CategoryController;
 use App\Http\Controllers\Api\V1\SettingController;
 use App\Http\Controllers\Dashboard\QuestionController;
+use App\Http\Middleware\AdminGuardMiddleware;
 use App\Http\Middleware\CheckLanguage;
 use App\Http\Middleware\SetLocale;
 use Illuminate\Support\Facades\Route;
@@ -16,14 +17,17 @@ use Illuminate\Support\Facades\Route;
 
 include_once __DIR__.'/api.php';
 
-Route::prefix('auth')->group(callback: function () {
-    Route::get('login', [LoginController::class , 'index'])->name('admin.login');
-    Route::post('login', [LoginController::class , 'login'])->name('admin.login.store');
 
-});
+    Route::prefix('admin')->group(callback: function () {
+        Route::get('login', [LoginController::class , 'index'])->name('admin.login');
+        Route::post('login', [LoginController::class , 'login'])->name('admin.login.store');
+
+    });
 
 
-Route::group(['middleware' =>  CheckLanguage::class  ], function () {
+Route::group(['middleware' =>  CheckLanguage::class  , AdminGuardMiddleware::class ], function () {
+
+    Route::get('admin/logout', [LoginController::class , 'logout'])->name('admin.logout');
 
     Route::prefix('dashboard')->group(function ()
     {
