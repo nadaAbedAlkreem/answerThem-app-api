@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\V1\ContactUsController;
+use App\Http\Controllers\Dashboard\Auth\LoginController;
 use App\Http\Controllers\Dashboard\HomeController;
 use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\Dashboard\CategoryController;
@@ -15,15 +16,15 @@ use Illuminate\Support\Facades\Route;
 
 include_once __DIR__.'/api.php';
 
-
-Route::prefix('auth')->group(function () {
-    Route::get('login', function () {
-        return view('dashboard.auth.pages.sign_in');
-    });
+Route::prefix('auth')->group(callback: function () {
+    Route::get('login', [LoginController::class , 'index'])->name('admin.login');
+    Route::post('login', [LoginController::class , 'login'])->name('admin.login.store');
 
 });
 
+
 Route::group(['middleware' =>  CheckLanguage::class  ], function () {
+
     Route::prefix('dashboard')->group(function ()
     {
         Route::get('home/{lang}', [HomeController::class, 'index'])->name('dashboard.home');

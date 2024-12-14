@@ -44,6 +44,16 @@ return [
             'driver' => 'sanctum',
             'provider' => 'users',
         ],
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admins',  // Add this custom provider
+        ],
+
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Admin::class,
+            'hash' => false, // Ensure you hash passwords for real applications
+        ],
 
 
     ],

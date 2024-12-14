@@ -40,6 +40,8 @@ class UserFactory extends Factory
             'provider' => null,
             'provider_id' => null,
             'fcm_token' => Str::random(20),
+            'created_at' => $this->faker->dateTimeBetween('-3 months', 'now'), // Custom timestamp
+
             'remember_token' => Str::random(10),
         ];
     }

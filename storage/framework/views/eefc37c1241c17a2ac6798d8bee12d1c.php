@@ -7,13 +7,10 @@
         <div class="d-flex flex-column flex-column-fluid bgi-position-y-bottom position-x-center bgi-no-repeat bgi-size-contain bgi-attachment-fixed" style="background-image: url(assets/media/illustrations/sketchy-1/14.png">
             <!--begin::Content-->
             <div class="d-flex flex-center flex-column flex-column-fluid p-10 pb-lg-20">
-                <!--begin::Logo-->
-         
-                <!--end::Logo-->
-                <!--begin::Wrapper-->
                 <div class="w-lg-500px bg-body rounded shadow-sm p-10 p-lg-15 mx-auto">
                     <!--begin::Form-->
-                    <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form" action="#">
+                    <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form"  >
+                        <?php echo csrf_field(); ?>
                         <!--begin::Heading-->
                         <div class="text-center mb-10">
                             <!--begin::Title-->
@@ -74,6 +71,7 @@
     <!--end::Global Javascript Bundle-->
     <!--begin::Page Custom Javascript(used by this page)-->
     <script src="<?php echo e(asset('assets/js/custom/authentication/sign-in/general.js')); ?>"></script>
+    <script src="<?php echo e(asset('assets/js/custom/authentication/sign-in/login-action.js')); ?>"></script>
     <!--end::Page Custom Javascript-->
     <!--end::Javascript-->
     </body>

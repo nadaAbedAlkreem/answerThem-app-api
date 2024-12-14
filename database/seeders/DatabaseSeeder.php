@@ -28,9 +28,9 @@ class DatabaseSeeder extends Seeder
         $this->call([
             SettingsTableSeeder::class,
             CategorySeeder::class,
-
             QuestionSeeder::class,
             AnswerSeeder::class,
+            AdminSeeder::class,
 
         ]);
 
@@ -43,6 +43,11 @@ class DatabaseSeeder extends Seeder
             Evaluation::factory()
                   ->count(40)
                   ->create();
+        $users->each(function ($users) {
+            $users->update([
+                'created_at' => now()->subDays(rand(0, 365)), // Set created_at to a random date in the last year
+            ]);
+        });
 //        FriendRequest::factory()->count(5)->create([
 //            'sender_id' => $users->random()->id,  // Randomly select a user as sender
 //            'receiver_id' => $users->random()->id, // Randomly select another user as receiver
@@ -110,7 +115,7 @@ class DatabaseSeeder extends Seeder
         ]);
         $challenges->each(function ($challenge) {
             $challenge->update([
-                'created_at' => now()->subDays(rand(30, 90)), // Set created_at to a random date in the last 3 months
+                'created_at' => now()->subDays(rand(0, 365)), // Set created_at to a random date in the last year
             ]);
         });
 //        Invitation::factory()->count(5)->create([

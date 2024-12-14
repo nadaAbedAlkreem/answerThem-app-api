@@ -11,7 +11,8 @@
             <div class="d-flex flex-center flex-column flex-column-fluid p-10 pb-lg-20">
                 <div class="w-lg-500px bg-body rounded shadow-sm p-10 p-lg-15 mx-auto">
                     <!--begin::Form-->
-                    <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form" action="#">
+                    <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form"  >
+                        @csrf
                         <!--begin::Heading-->
                         <div class="text-center mb-10">
                             <!--begin::Title-->
@@ -71,7 +72,8 @@
     <script src="{{asset('assets/js/scripts.bundle.js')}}"></script>
     <!--end::Global Javascript Bundle-->
     <!--begin::Page Custom Javascript(used by this page)-->
-    <script src="{{asset('assets/js/custom/authentication/sign-in/general.js')}}"></script>
+{{--    <script src="{{asset('assets/js/custom/authentication/sign-in/general.js')}}"></script>--}}
+    <script src="{{asset('assets/js/custom/authentication/sign-in/login-action.js')}}"></script>
     <!--end::Page Custom Javascript-->
     <!--end::Javascript-->
     </body>

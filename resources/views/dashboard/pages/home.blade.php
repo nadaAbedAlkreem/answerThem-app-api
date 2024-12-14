@@ -2,15 +2,52 @@
 
 @section('content')
 <style>
-    .vertical-labels {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
+    canvas {
+        border-radius: 10px;
+        background: #f8f9fa; /* لون خلفية ناعم */
+        padding: 15px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
-    .vertical-labels .item {
-        margin-bottom: 10px; /* Spacing between items */
+
+    .card {
+        border-bottom: 3px solid #3498db; /* تغيير اللون حسب الكارد */
     }
-    </style>
+
+    .card-header {
+        padding-top: 20px;
+    }
+
+    .card-body {
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+
+    .card-icon {
+        font-size: 30px;
+        margin-right: 10px;
+    }
+
+    /* إضافة لون خط أسفل الكارد بناءً على المحتوى */
+    .card-reviews {
+        border-bottom: 3px solid #ff5733; /* اللون الأحمر لمراجعات التطبيقات */
+    }
+
+    .card-questions {
+        border-bottom: 3px solid #28a745; /* اللون الأخضر للأسئلة */
+    }
+
+    .card-categories {
+        border-bottom: 3px solid #f39c12; /* اللون الأصفر للفئات */
+    }
+
+    .card-users {
+        border-bottom: 3px solid #1e90ff; /* اللون الأزرق للمستخدمين */
+    }
+
+
+</style>
+{{--<script src="{{asset('assets/css/home.css')}}"></script>--}}
+
 <div class="d-flex flex-column flex-root">
     <!--begin::Page-->
     <div class="page d-flex flex-column flex-column-fluid">
@@ -1532,221 +1569,81 @@
                 <!--begin::Content-->
                 <div class="content flex-row-fluid" id="kt_content">
                     <!--begin::Row-->
-                    <div class="row g-5 g-xl-10 mb-xl-10">
-                        <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-3 mb-md-5 mb-xl-10">
-                            <!--begin::Card widget 4-->
-                            <div class="card card-flush h-md-50 mb-5 mb-xl-10">
-                                <!--begin::Header-->
-                                <div class="card-header pt-5">
-                                    <!--begin::Title-->
-                                    <div class="card-title d-flex flex-column">
-                                        <!--begin::Info-->
-                                        <div class="d-flex align-items-center">
+                    <div class="row ">
 
-                                            <!--begin::Amount-->
-                                            <span class="fs-2hx fw-bolder text-dark me-2 lh-1">{{$totalRatings}}</span>
+
+                        <div class="row justify-content-center g-3" style ="margin-bottom: 20px"> <!-- أضف g-3 لتقليل الفواصل -->
+                            <div class="col-md-3 col-lg-3 col-xl-3 col-xxl-3">
+                                <div class="card card-flush h-md-100 card-reviews" style="max-width: 100%; margin: 0 auto;">
+                                    <div class="card-header pt-5 d-flex justify-content-between">
+                                        <div class="card-title d-flex flex-column">
+                                            <div class="d-flex align-items-center">
+                                                <span class="fs-2hx fw-bolder text-dark me-2 lh-1">{{$totalRatings}}</span>
+                                            </div>
                                             <span class="text-gray-400 pt-1 fw-bold fs-6">App Reviews</span>
-
                                         </div>
-                                        <!--end::Info-->
-                                        <!--begin::Subtitle-->
-                                         <!--end::Subtitle-->
+                                        <i class="card-icon fas fa-star"></i>
                                     </div>
-                                    <!--end::Title-->
-                                </div>
-                                <!--end::Header-->
-                                <!--begin::Card body-->
-                                <div class="card-body pt-2 pb-4 d-flex align-items-center">
-                                    <!--begin::Chart-->
-                                    <div class="d-flex flex-center me-5 me-xxl-7 pt-2">
-                                        <div id="kt_card_widget_4_chart" style="min-width: 70px; min-height: 70px" data-kt-size="70" data-kt-line="11"></div>
-                                    </div>
-                                    <!--end::Chart-->
-                                    <div class="vertical-labels">
-                                        <div class="item">
-
-                                    @foreach ($ratingsByEvaluation as $evaluation)
-                                                <!--begin::Labels-->
-                                                    <div class="d-flex flex-column align-items-start">
-                                                        <!--begin::Label-->
-                                                        <div class="d-flex flex-column fs-6 fw-bold text-start">
-                                                            <!--begin::Bullet-->
-                                                             <!--end::Bullet-->
-                                                            <!--begin::Label-->
-                                                            <div class="text-gray-500 pe-1">{{ $evaluation->descriptive_evaluation }}</div>
-                                                            <!--end::Label-->
-                                                            <!--begin::Stats-->
-                                                            <div class="fw-boldest text-gray-700 mt-1">{{ $evaluation->count }}</div>
-                                                            <!--end::Stats-->
-                                                        </div>
-                                                        <!--end::Label-->
-                                                    </div>
-                                                    <!--end::Labels-->
-                                            @endforeach
-                                        </div>
+                                    <div class="card-body pt-2 pb-4 d-flex align-items-center">
+                                        <!-- محتوى الكارد -->
                                     </div>
                                 </div>
-                                <!--end::Card body-->
                             </div>
-                            <!--end::Card widget 4-->
-                            <!--begin::Card widget 5-->
-                            <div class="card card-flush h-md-50 mb-xl-10">
-                                <!--begin::Header-->
-                                <div class="card-header pt-5">
-                                    <!--begin::Title-->
-                                    <div class="card-title d-flex flex-column">
-                                        <!--begin::Info-->
-                                        <div class="d-flex align-items-center">
-                                            <!--begin::Amount-->
-                                            <span class="fs-2hx fw-bolder text-dark me-2 lh-1">{{$totalQuestions}}</span>
-                                            <!--end::Amount-->
 
+                            <div class="col-md-3 col-lg-3 col-xl-3 col-xxl-3">
+                                <div class="card card-flush h-md-100 card-questions" style="max-width: 100%; margin: 0 auto;">
+                                    <div class="card-header pt-5 d-flex justify-content-between">
+                                        <div class="card-title d-flex flex-column">
+                                            <div class="d-flex align-items-center">
+                                                <span class="fs-2hx fw-bolder text-dark me-2 lh-1">{{$totalQuestions}}</span>
+                                            </div>
+                                            <span class="text-gray-400 pt-1 fw-bold fs-6">App questions</span>
                                         </div>
-                                        <!--end::Info-->
-                                        <!--begin::Subtitle-->
-                                        <span class="text-gray-400 pt-1 fw-bold fs-6">Total number of application question</span>
-                                        <!--end::Subtitle-->
+                                        <i class="card-icon fas fa-question-circle"></i>
                                     </div>
-                                    <!--end::Title-->
-                                </div>
-                                <!--end::Header-->
-                                <!--begin::Card body-->
-                                <div class="card-body d-flex align-items-end pt-0">
-                                    <!--begin::Progress-->
-                                    <div class="d-flex align-items-center flex-column mt-3 w-100">
-                                        <div class="d-flex justify-content-between w-100 mt-auto mb-2">
-                                            <span class="fw-boldest fs-6 text-dark">1,048 to Goal</span>
-                                            <span class="fw-bolder fs-6 text-gray-400">62%</span>
-                                        </div>
-                                        <div class="h-8px mx-3 w-100 bg-light-success rounded">
-                                            <div class="bg-success rounded h-8px" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
+                                    <div class="card-body d-flex align-items-end pt-0">
+                                        <!-- محتوى الكارد -->
                                     </div>
-                                    <!--end::Progress-->
                                 </div>
-                                <!--end::Card body-->
                             </div>
-                            <!--end::Card widget 5-->
+
+                            <div class="col-md-3 col-lg-3 col-xl-3 col-xxl-3">
+                                <div class="card card-flush h-md-100 card-categories" style="max-width: 100%; margin: 0 auto;">
+                                    <div class="card-header pt-5 d-flex justify-content-between">
+                                        <div class="card-title d-flex flex-column">
+                                            <div class="d-flex align-items-center">
+                                                <span class="fs-2hx fw-bolder text-dark me-2 lh-1">{{$totalCategory}}</span>
+                                            </div>
+                                            <span class="text-gray-400 pt-1 fw-bold fs-6">App Categories</span>
+                                        </div>
+                                        <i class="card-icon fas fa-th-large"></i>
+                                    </div>
+                                    <div class="card-body pt-2 pb-4 d-flex align-items-center">
+                                        <!-- محتوى الكارد -->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3 col-lg-3 col-xl-3 col-xxl-3">
+                                <div class="card card-flush h-md-100 card-users" style="max-width: 100%; margin: 0 auto;">
+                                    <div class="card-header pt-5 d-flex justify-content-between">
+                                        <div class="card-title d-flex flex-column">
+                                            <div class="d-flex align-items-center">
+                                                <span class="fs-2hx fw-bolder text-dark me-2 lh-1">{{$totalUser}}</span>
+                                            </div>
+                                            <span class="text-gray-400 pt-1 fw-bold fs-6">App users</span>
+                                        </div>
+                                        <i class="card-icon fas fa-users"></i>
+                                    </div>
+                                    <div class="card-body d-flex flex-column justify-content-end">
+                                        <!-- محتوى الكارد -->
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-3 mb-md-5 mb-xl-10">
-                            <!--begin::Card widget 6-->
-                            <div class="card card-flush h-md-50 mb-5 mb-xl-10">
-                                <!--begin::Header-->
-                                <div class="card-header pt-5">
-                                    <!--begin::Title-->
-                                    <div class="card-title d-flex flex-column">
-                                        <!--begin::Info-->
-                                        <div class="d-flex align-items-center">
-                                            <!--begin::Amount-->
-                                            <span class="fs-2hx fw-bolder text-dark me-2 lh-1">{{$totalCategory}}</span>
-                                            <!--end::Amount-->
 
-                                        </div>
-                                        <!--end::Info-->
-                                        <!--begin::Subtitle-->
-                                        <span class="text-gray-400 pt-1 fw-bold fs-6">Total number of application Categories</span>
-                                        <!--end::Subtitle-->
-                                    </div>
-                                    <!--end::Title-->
-                                </div>
-                                <!--end::Header-->
-                                <!--begin::Card body-->
-                                 <div class="card-body pt-2 pb-4 d-flex align-items-center">
-                                    <!--begin::Chart-->
-                                     <div class="d-flex flex-center me-5 me-xxl-7 pt-2">
-                                         <div
-                                             id="kt_card_widget_4_chart"
-                                             class="chart-icon"
-                                             style="min-width: 70px; min-height: 70px"
-                                             data-kt-size="70"
-                                             data-kt-line="11">
-                                             <!-- Inner Content (Icon or Chart Representation) -->
-                                             <svg width="70" height="70" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                                                 <circle cx="50" cy="50" r="45" stroke="#ddd" stroke-width="10" fill="none" />
-                                                 <circle cx="50" cy="50" r="45" stroke="#4CAF50" stroke-width="10" fill="none"
-                                                         stroke-dasharray="283" stroke-dashoffset="85" />
-                                                 <text x="50%" y="50%" text-anchor="middle" fill="#000" font-size="16px" font-family="Arial" dy=".3em"></text>
-                                             </svg>
-                                         </div>
-                                     </div>
-                                    <!--end::Chart-->
-                                    <div class="vertical-labels">
-                                        <div class="item">
 
-                                            @foreach ($categoryByLevel as $category)
-                                                <!--begin::Labels-->
-                                                <div class="d-flex flex-column align-items-start">
-                                                    <!--begin::Label-->
-                                                    <div class="d-flex flex-column fs-6 fw-bold text-start">
-                                                        <!--begin::Bullet-->
-                                                        <!--end::Bullet-->
-                                                        <!--begin::Label-->
-                                                        <div class="text-gray-500 pe-1">{{ $category->level }}</div>
-                                                        <!--end::Label-->
-                                                        <!--begin::Stats-->
-                                                        <div class="fw-boldest text-gray-700 mt-1">{{ $category->count }}</div>
-                                                        <!--end::Stats-->
-                                                    </div>
-                                                    <!--end::Label-->
-                                                </div>
-                                                <!--end::Labels-->
-                                            @endforeach
-                                        </div>
-                                    </div>
-                                </div>
-                                 <!--end::Card body-->
-                            </div>
-                            <!--end::Card widget 6-->
-                            <!--begin::Card widget 7-->
-                            <div class="card card-flush h-md-50 mb-xl-10">
-                                <!--begin::Header-->
-                                <div class="card-header pt-5">
-                                    <!--begin::Title-->
-                                    <div class="card-title d-flex flex-column">
-                                        <!--begin::Amount-->
-                                        <span class="fs-2hx fw-bolder text-dark me-2 lh-1">{{$totalUser}}</span>
-                                        <!--end::Amount-->
-                                        <!--begin::Subtitle-->
-                                        <span class="text-gray-400 pt-1 fw-bold fs-6">Total number of application users</span>
-                                        <!--end::Subtitle-->
-                                    </div>
-                                    <!--end::Title-->
-                                </div>
-                                <!--end::Header-->
-                                <!--begin::Card body-->
-                                <div class="card-body d-flex flex-column justify-content-end">
-                                    <!--begin::Title-->
-                                     <!--end::Title-->
-                                    <!--begin::Users group-->
-                                    <div class="symbol-group symbol-hover">
-                                        <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" title="Alan Warden">
-                                            <span class="symbol-label bg-warning text-inverse-warning fw-bolder">A</span>
-                                        </div>
-                                        <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" title="Michael Eberon">
-                                            <img alt="Pic" src="assets/media/avatars/300-11.jpg" />
-                                        </div>
-                                        <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" title="Susan Redwood">
-                                            <span class="symbol-label bg-primary text-inverse-primary fw-bolder">S</span>
-                                        </div>
-                                        <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" title="Melody Macy">
-                                            <img alt="Pic" src="assets/media/avatars/300-2.jpg" />
-                                        </div>
-                                        <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" title="Perry Matthew">
-                                            <span class="symbol-label bg-danger text-inverse-danger fw-bolder">P</span>
-                                        </div>
-                                        <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" title="Barry Walter">
-                                            <img alt="Pic" src="assets/media/avatars/300-12.jpg" />
-                                        </div>
-                                        <a href="#" class="symbol symbol-35px symbol-circle" data-bs-toggle="modal" data-bs-target="#kt_modal_view_users">
-                                            <span class="symbol-label bg-gray-900 text-gray-300 fs-8 fw-bolder">+42</span>
-                                        </a>
-                                    </div>
-                                    <!--end::Users group-->
-                                </div>
-                                <!--end::Card body-->
-                            </div>
-                            <!--end::Card widget 7-->
-                        </div>
+
                         <!--begin::Col-->
                         <div class="col-lg-12 col-xl-12 col-xxl-6 mb-5 mb-xl-0">
                             <!--begin::Chart widget 3-->
@@ -1820,14 +1717,151 @@
                                     </div>
                                     <!--end::Statistics-->
                                     <!--begin::Chart-->
-                                    <canvas id="accountCreationChart" class="min-h-auto ps-4 pe-6" style="height: 300px"></canvas>
+                                    <canvas id="accountCreationChart" class="min-h-auto ps-4 pe-6" style="height: 500px"></canvas>
                                     <!--end::Chart-->
                                 </div>
                                 <!--end::Card body-->
                             </div>
-                            <!--end::Chart widget 3-->
+{{--                            <div class="col-lg-12 col-xl-12 col-xxl-6 mb-5 mb-xl-0">--}}
+
+{{--                                <!--end::Chart widget 3 begin::Chart Widget 1-->--}}
+{{--                                <div class="card card-flush h-lg-100">--}}
+{{--                                    <!--begin::Header-->--}}
+{{--                                    <div class="card-header pt-5">--}}
+{{--                                        <!--begin::Title-->--}}
+{{--                                        <h3 class="card-title align-items-start flex-column">--}}
+{{--                                            <span class="card-label fw-bolder text-dark">Instagram Subscribers</span>--}}
+{{--                                            <span class="text-gray-400 pt-2 fw-bold fs-6">75% activity growth</span>--}}
+{{--                                        </h3>--}}
+{{--                                        <!--end::Title-->--}}
+{{--                                        <!--begin::Toolbar-->--}}
+{{--                                        <div class="card-toolbar">--}}
+{{--                                            <!--begin::Menu-->--}}
+{{--                                            <button class="btn btn-icon btn-color-gray-400 btn-active-color-primary justify-content-end" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-overflow="true">--}}
+{{--                                                <!--begin::Svg Icon | path: icons/duotune/general/gen023.svg-->--}}
+{{--                                                <span class="svg-icon svg-icon-1 svg-icon-gray-300 me-n1">--}}
+{{--                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">--}}
+{{--                                                                <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="4" fill="black" />--}}
+{{--                                                                <rect x="11" y="11" width="2.6" height="2.6" rx="1.3" fill="black" />--}}
+{{--                                                                <rect x="15" y="11" width="2.6" height="2.6" rx="1.3" fill="black" />--}}
+{{--                                                                <rect x="7" y="11" width="2.6" height="2.6" rx="1.3" fill="black" />--}}
+{{--                                                            </svg>--}}
+{{--                                                        </span>--}}
+{{--                                                <!--end::Svg Icon-->--}}
+{{--                                            </button>--}}
+{{--                                            <!--begin::Menu 2-->--}}
+{{--                                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-bold w-200px" data-kt-menu="true">--}}
+{{--                                                <!--begin::Menu item-->--}}
+{{--                                                <div class="menu-item px-3">--}}
+{{--                                                    <div class="menu-content fs-6 text-dark fw-bolder px-3 py-4">Quick Actions</div>--}}
+{{--                                                </div>--}}
+{{--                                                <!--end::Menu item-->--}}
+{{--                                                <!--begin::Menu separator-->--}}
+{{--                                                <div class="separator mb-3 opacity-75"></div>--}}
+{{--                                                <!--end::Menu separator-->--}}
+{{--                                                <!--begin::Menu item-->--}}
+{{--                                                <div class="menu-item px-3">--}}
+{{--                                                    <a href="#" class="menu-link px-3">New Ticket</a>--}}
+{{--                                                </div>--}}
+{{--                                                <!--end::Menu item-->--}}
+{{--                                                <!--begin::Menu item-->--}}
+{{--                                                <div class="menu-item px-3">--}}
+{{--                                                    <a href="#" class="menu-link px-3">New Customer</a>--}}
+{{--                                                </div>--}}
+{{--                                                <!--end::Menu item-->--}}
+{{--                                                <!--begin::Menu item-->--}}
+{{--                                                <div class="menu-item px-3" data-kt-menu-trigger="hover" data-kt-menu-placement="right-start">--}}
+{{--                                                    <!--begin::Menu item-->--}}
+{{--                                                    <a href="#" class="menu-link px-3">--}}
+{{--                                                        <span class="menu-title">New Group</span>--}}
+{{--                                                        <span class="menu-arrow"></span>--}}
+{{--                                                    </a>--}}
+{{--                                                    <!--end::Menu item-->--}}
+{{--                                                    <!--begin::Menu sub-->--}}
+{{--                                                    <div class="menu-sub menu-sub-dropdown w-175px py-4">--}}
+{{--                                                        <!--begin::Menu item-->--}}
+{{--                                                        <div class="menu-item px-3">--}}
+{{--                                                            <a href="#" class="menu-link px-3">Admin Group</a>--}}
+{{--                                                        </div>--}}
+{{--                                                        <!--end::Menu item-->--}}
+{{--                                                        <!--begin::Menu item-->--}}
+{{--                                                        <div class="menu-item px-3">--}}
+{{--                                                            <a href="#" class="menu-link px-3">Staff Group</a>--}}
+{{--                                                        </div>--}}
+{{--                                                        <!--end::Menu item-->--}}
+{{--                                                        <!--begin::Menu item-->--}}
+{{--                                                        <div class="menu-item px-3">--}}
+{{--                                                            <a href="#" class="menu-link px-3">Member Group</a>--}}
+{{--                                                        </div>--}}
+{{--                                                        <!--end::Menu item-->--}}
+{{--                                                    </div>--}}
+{{--                                                    <!--end::Menu sub-->--}}
+{{--                                                </div>--}}
+{{--                                                <!--end::Menu item-->--}}
+{{--                                                <!--begin::Menu item-->--}}
+{{--                                                <div class="menu-item px-3">--}}
+{{--                                                    <a href="#" class="menu-link px-3">New Contact</a>--}}
+{{--                                                </div>--}}
+{{--                                                <!--end::Menu item-->--}}
+{{--                                                <!--begin::Menu separator-->--}}
+{{--                                                <div class="separator mt-3 opacity-75"></div>--}}
+{{--                                                <!--end::Menu separator-->--}}
+{{--                                                <!--begin::Menu item-->--}}
+{{--                                                <div class="menu-item px-3">--}}
+{{--                                                    <div class="menu-content px-3 py-3">--}}
+{{--                                                        <a class="btn btn-primary btn-sm px-4" href="#">Generate Reports</a>--}}
+{{--                                                    </div>--}}
+{{--                                                </div>--}}
+{{--                                                <!--end::Menu item-->--}}
+{{--                                            </div>--}}
+{{--                                            <!--end::Menu 2-->--}}
+{{--                                            <!--end::Menu-->--}}
+{{--                                        </div>--}}
+{{--                                        <!--end::Toolbar-->--}}
+{{--                                    </div>--}}
+{{--                                    <!--end::Header-->--}}
+{{--                                    <!--begin::Body-->--}}
+{{--                                    <div class="card-body pt-0 px-0">--}}
+{{--                                        <!--begin::Chart-->--}}
+{{--                                        <div id="kt_charts_widget_1" class="min-h-auto ps-4 pe-6 mb-3" style="height: 350px"></div>--}}
+{{--                                        <!--end::Chart-->--}}
+{{--                                        <!--begin::Info-->--}}
+{{--                                        <div class="d-flex align-items-center px-9">--}}
+{{--                                            <!--begin::Item-->--}}
+{{--                                            <div class="d-flex align-items-center me-6">--}}
+{{--                                                <!--begin::Bullet-->--}}
+{{--                                                <span class="rounded-1 bg-primary me-2 h-10px w-10px"></span>--}}
+{{--                                                <!--end::Bullet-->--}}
+{{--                                                <!--begin::Label-->--}}
+{{--                                                <span class="fw-bold fs-6 text-gray-600">Gained</span>--}}
+{{--                                                <!--end::Label-->--}}
+{{--                                            </div>--}}
+{{--                                            <!--ed::Item-->--}}
+{{--                                            <!--begin::Item-->--}}
+{{--                                            <div class="d-flex align-items-center">--}}
+{{--                                                <!--begin::Bullet-->--}}
+{{--                                                <span class="rounded-1 bg-success me-2 h-10px w-10px"></span>--}}
+{{--                                                <!--end::Bullet-->--}}
+{{--                                                <!--begin::Label-->--}}
+{{--                                                <span class="fw-bold fs-6 text-gray-600">Lost</span>--}}
+{{--                                                <!--end::Label-->--}}
+{{--                                            </div>--}}
+{{--                                            <!--ed::Item-->--}}
+{{--                                        </div>--}}
+{{--                                        <!--ed::Info-->--}}
+{{--                                    </div>--}}
+{{--                                    <!--end::Body-->--}}
+{{--                                </div>--}}
+{{--                                <!--end::Chart Widget 1-->--}}
+{{--                            </div> --}}
+
+
+
                         </div>
-                        <!--end::Col-->
+
+
+
+
 
                     </div>
 
@@ -2487,61 +2521,115 @@
 <!--end::Activities drawer-->
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <script>
     document.addEventListener("DOMContentLoaded", function () {
+
+
+
         const ctx = document.getElementById('kt_charts_widget_3').getContext('2d');
         const chartData = @json($chartData); // Pass PHP data to JavaScript
 
         const chart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: Object.keys(chartData),
+                labels: Object.keys(chartData), // تسميات المحاور
                 datasets: [{
                     label: 'Challenges',
-                    data: Object.values(chartData),
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    borderWidth: 1
+                    data: Object.values(chartData), // البيانات
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)', // خلفية الأعمدة
+                    borderColor: 'rgba(54, 162, 235, 1)', // لون حواف الأعمدة
+                    borderWidth: 1 // عرض الحدود
                 }]
             },
             options: {
                 responsive: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        labels: {
+                            color: '#333' // لون النص
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                        titleColor: '#fff',
+                        bodyColor: '#fff'
+                    }
+                },
                 scales: {
+                    x: {
+                        grid: {
+                            display: false // إخفاء الشبكة الأفقية
+                        }
+                    },
                     y: {
-                        beginAtZero: true
+                        beginAtZero: true,
+                        grid: {
+                            color: 'rgba(200, 200, 200, 0.2)', // لون الشبكة العمودية
+                        },
+                        ticks: {
+                            color: '#666' // لون الأرقام
+                        }
                     }
                 }
             }
         });
-    });
 
 
-    const ctx = document.getElementById('accountCreationChart').getContext('2d');
+    const account = document.getElementById('accountCreationChart').getContext('2d');
 
-    const chartDataCreate = {
-        labels: @json($formattedData).map(item => `Month ${item.month}`), // Month labels
-        datasets: [{
-            label: 'Accounts Created',
-            data: @json($formattedData).map(item => item.total), // Total counts
-            backgroundColor: 'rgba(54, 162, 235, 0.2)',
-            borderColor: 'rgba(54, 162, 235, 1)',
-            borderWidth: 2,
-            fill: true, // Fill the area under the curve
-            tension: 0.4, // Creates the wave effect
-        }]
-    };
+        const chartDataCreate = {
+            labels: @json($formattedData).map(item => `Month ${item.month}`), // Month labels
+            datasets: [{
+                label: 'Accounts Created',
+                data: @json($formattedData).map(item => item.total), // Total counts
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 2,
+                fill: true, // Fill the area under the curve
+                tension: 0.4, // Creates the wave effect
+            }]
+        };
 
-    new Chart(ctx, {
-        type: 'line', // Line chart
-        data: chartDataCreate,
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
+        new Chart(account, {
+            type: 'line', // Line chart
+            data: chartDataCreate,
+            options: {
+                scales: {
+                    x: {
+                        grid: {
+                            display: false // Removes the grid lines on the x-axis
+                        }
+                    },
+                    y: {
+                        grid: {
+                            display: false // Removes the grid lines on the y-axis
+                        },
+                        beginAtZero: true
+                    }
+                },
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false,
+                        labels: {
+                            color: '#333' // Text color
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                        titleColor: '#fff',
+                        bodyColor: '#fff'
+                    }
                 }
             }
-        }
+        });
+
     });
+
+
+
 
 
 
