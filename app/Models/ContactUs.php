@@ -24,4 +24,5 @@ class ContactUs extends Model
 
 
 
+
 }

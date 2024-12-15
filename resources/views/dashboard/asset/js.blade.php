@@ -9,8 +9,6 @@
 <script src="{{asset('assets/plugins/custom/vis-timeline/vis-timeline.bundle.js')}}"></script>
 <!--end::Page Vendors Javascript-->
 <!--begin::Page Custom Javascript(used by this page)-->
-
-<script src="{{asset('assets/js/custom/apps/inbox/listing.js')}}"></script>
  <script src="{{asset('assets/js/widgets.bundle.js')}}"></script>
 <script src="{{asset('assets/js/custom/widgets.js')}}"></script>
 <script src="{{asset('assets/js/custom/apps/chat/chat.js')}}"></script>

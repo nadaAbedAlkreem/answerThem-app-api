@@ -64,8 +64,7 @@ $(document).ready(function ($) {
                             _token: token,
                         },
                         success: function () {
-                            console.log("it Works");
-                            $(".data-users").DataTable().ajax.reload();
+                             $(".data-users").DataTable().ajax.reload();
                         },
                     });
                 }

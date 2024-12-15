@@ -36,6 +36,19 @@ class TeamMember extends Model
     {
         return $this->hasMany(Challenge::class, 'team2_id'); // Challenges where this team member is team 2
     }
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($teamMember) {
+
+            $teamMember->challengesAsTeam2()->each(function ($challengesAsTeam2) {
+                $challengesAsTeam2->delete(); // Soft delete sent requests
+            });
+
+        });
+    }
+
 
 
 

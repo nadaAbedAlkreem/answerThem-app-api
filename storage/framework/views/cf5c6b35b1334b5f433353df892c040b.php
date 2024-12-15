@@ -61,20 +61,8 @@
                                 <a href="<?php echo e(route('admin.logout')); ?>" class="menu-link px-5">Sign Out</a>
                             </div>
                             <!--end::Menu item-->
-                            <!--begin::Menu separator-->
-                            <div class="separator my-2"></div>
-                            <!--end::Menu separator-->
-                            <!--begin::Menu item-->
-                            <div class="menu-item px-5">
-                                <div class="menu-content px-5">
-                                    <label class="form-check form-switch form-check-custom form-check-solid pulse pulse-success" for="kt_user_menu_dark_mode_toggle">
-                                        <input class="form-check-input w-30px h-20px" type="checkbox" value="1" name="mode" id="kt_user_menu_dark_mode_toggle" data-kt-url="../../demo19/dist/index.html" />
-                                        <span class="pulse-ring ms-n1"></span>
-                                        <span class="form-check-label text-gray-600 fs-7">Dark Mode</span>
-                                    </label>
-                                </div>
-                            </div>
-                            <!--end::Menu item-->
+
+
                         </div>
                         <!--end::User account menu-->
                         <!--end::Menu wrapper-->
@@ -179,7 +167,7 @@
                                 </div>
                                 <div class="card-body p-2">
                                     <!--begin::Table-->
-                                    <table class="table data-table-category table-hover table-row-dashed fs-6 gy-5 my-0" id="kt_inbox_listing">
+                                    <table class="table data-table-category table-hover table-row-dashed fs-6 gy-5 my-0">
                                         <!--begin::Table head-->
                                         <thead >
                                         <tr>
@@ -573,7 +561,7 @@
                                             <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Select your app database engine"></i>
                                         </label>
                                         <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" name="famous_gaming" id="radioSwitch" value="on">
+                                            <input class="form-check-input" type="checkbox" name="famous_gaming" id="famous_gaming_create" value="on">
                                          </div>
                                     </div>
                                     <!--end::Input group-->
@@ -987,7 +975,7 @@
                                                 <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Select your app database engine"></i>
                                             </label>
                                             <div class="form-check form-switch">
-                                                <input id = "famous_gaming" class="form-check-input" type="checkbox" name="famous_gaming" id="radioSwitch" value="on">
+                                                <input id = "famous_gaming" class="form-check-input" type="checkbox" name="famous_gaming"  value="on">
                                             </div>
 
                                         </div>
@@ -1029,7 +1017,7 @@
                                     <!--end::Wrapper-->
                                     <!--begin::Wrapper-->
                                     <div>
-                                        <button type="submit" id="submit_form_Update" class="btn btn-lg btn-primary" data-kt-stepper-action="submit">
+                                        <button type="submit" id="submit_form_Update_Category" class="btn btn-lg btn-primary" data-kt-stepper-action="submit">
 												<span class="indicator-label">Update
                                                     <!--begin::Svg Icon | path: icons/duotune/arrows/arr064.svg-->
 												<span class="svg-icon svg-icon-3 ms-2 me-0">

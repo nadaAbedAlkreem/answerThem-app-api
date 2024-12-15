@@ -37,5 +37,17 @@ class Team extends Model
     {
         return $this->hasMany(TeamMember::class, 'team_id');
     }
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($teamMembers) {
+
+            $teamMembers->questions()->each(function ($teamMembers) {
+                $teamMembers->delete(); // Soft delete sent requests
+            });
+
+        });
+    }
 
 }

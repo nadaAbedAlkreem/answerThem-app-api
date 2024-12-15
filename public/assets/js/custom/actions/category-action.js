@@ -1,8 +1,7 @@
 
 $(document).ready(function ($) {
 
-    console.log(jQuery.fn.barrating);
-    var lang = window.location.pathname.split('/').pop(); // Example: 'en', 'fr', etc.
+     var lang = window.location.pathname.split('/').pop(); // Example: 'en', 'fr', etc.
 
 
     var table = $(".data-table-category").DataTable({
@@ -41,32 +40,16 @@ $(document).ready(function ($) {
         e.preventDefault();
 
         let formData = new FormData($("#kt_modal_create_app_form")[0]);
-        let famousGamingValue = $("#radioOn").prop("checked") ? 1 : 0;
-        formData.set('famous_gaming', famousGamingValue);
+        let famousGamingValue = $("#famous_gaming_create").prop("checked") ? 1 : 0;
         const path = window.location.pathname;
-         const segments = path.split('/');
-         const lang = segments[segments.length - 1];
-
-        console.log(lang);
-        console.log(formData);
-        console.log(famousGamingValue);
+        const segments = path.split('/');
+        const lang = segments[segments.length - 1];
         let selectedCategory = $("select[name='category_id']").val();
-
-        // Split the value into level and id
         let [level, id] = selectedCategory.split('-');
-        console.log(id, "selectedCategory:", selectedCategory);
-
-        // Log the level and id
-        console.log("Level: " + level);
-        console.log("Category ID: " + id);
-
-        // Create a new FormData object
-
-        // You can add the level and id values manually if needed
         formData.set('level', level);
         formData.set('category_id', id);
         formData.set('lang', lang);
-
+        formData.set('famous_gaming', famousGamingValue);
 
 
         $.ajaxSetup({
@@ -82,7 +65,6 @@ $(document).ready(function ($) {
             processData: false, // processing on response
             success: function (response) {
                 $("#successMsg").show();
-                console.log(response);
                 Swal.fire({
                     text: "You have successfully add data!",
                     icon: "success",
@@ -97,8 +79,6 @@ $(document).ready(function ($) {
             },
 
             error: function (response) {
-                console.log(response);
-                console.log("response");
                 Swal.fire({
                     text: response.responseJSON.message,
                     icon: "error",
@@ -136,7 +116,6 @@ $(document).ready(function ($) {
                             _token: token,
                         },
                         success: function () {
-                            console.log("it Works");
                             $(".data-table-category").DataTable().ajax.reload();
                         },
                     });
@@ -160,7 +139,6 @@ $(document).ready(function ($) {
         var level = $(this).data("level");
         var category_id = $(this).data("category_id");
         var image = $(this).data("image");
-        console.log(description_en);
 
         $('#id_update').val(id);
         $('#name_ar').val(name_ar);
@@ -178,18 +156,12 @@ $(document).ready(function ($) {
          dropdown.value = Math.floor(rating);
 
         var imageWrapper = document.querySelector('.image-update');
-        console.log(imageWrapper);
 
         if (image) {
              imageWrapper.style.backgroundImage = `url('${image}')`;
-            console.log('Image URL set:', image);
-        } else {
-            console.log('Image URL is not defined.');
-        }
+         } else {
+         }
         var selectedValue = (level-1) + '-' + category_id;
-        console.log(selectedValue);
-        console.log(level);
-        console.log(category_id);
 
          var dropdown_ = document.getElementById('category_id_update');
          dropdown_.value = selectedValue;
@@ -199,30 +171,18 @@ $(document).ready(function ($) {
 
 
     });
-});
-    $("#submit_form_Update").on("click", function (e) {
+
+    $("#submit_form_Update_Category").on("click", function (e) {
         e.preventDefault();
 
         let formData = new FormData($("#kt_modal_update_app_form")[0]);
-        console.log(formData);
         let famousGamingValue = $("#famous_gaming").prop("checked") ? 1 : 0;
         formData.set('famous_gaming', famousGamingValue);
         let selectedCategory = $("select[id='category_id_update']").val();
-
-        // Split the value into level and id
         let [level, id] = selectedCategory.split('-');
-        console.log(id, "selectedCategory:", selectedCategory);
 
-        // Log the level and id
-        console.log("Level: " + level);
-        console.log("Category ID: " + id);
-
-        // Create a new FormData object
-
-        // You can add the level and id values manually if needed
         formData.set('level', level);
         formData.set('category_id', id);
-        formData.set('lang', lang);
 
         $.ajaxSetup({
             headers: {
@@ -237,8 +197,7 @@ $(document).ready(function ($) {
             processData: false, // processing on response
             success: function (response) {
                 $("#successMsg").show();
-                console.log(response);
-                Swal.fire({
+                 Swal.fire({
                     text: "You have successfully Update data !",
                     icon: "success",
                     buttonsStyling: false,
@@ -251,8 +210,6 @@ $(document).ready(function ($) {
             },
 
             error: function (response) {
-                console.log(response);
-                console.log("response");
                 Swal.fire({
                     text: response.responseJSON.message,
                     icon: "error",
@@ -265,4 +222,4 @@ $(document).ready(function ($) {
             },
         });
     });
-
+});

@@ -44,7 +44,6 @@ $(document).ready(function ($) {
          var token = $("meta[name='csrf-token']").attr("content");
          const status = dropdown.value;
          var id = $(this).data("id");
-        console.log("Selected value:", id);
                      $.ajax({
                         url: "dashboard/contact_us/update/",
                         type: "post",
@@ -54,7 +53,6 @@ $(document).ready(function ($) {
                             _token: token,
                         },
                         success: function () {
-                            console.log("it Works");
                             Swal.fire({
                                 text: "You have successfully Update Status !",
                                 icon: "success",
@@ -99,7 +97,6 @@ $(document).ready(function ($) {
                             _token: token,
                         },
                         success: function () {
-                            console.log("it Works");
                             $(".data-contact-us").DataTable().ajax.reload();
                         },
                     });

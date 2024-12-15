@@ -57,21 +57,7 @@
                         <div class="menu-item px-5">
                             <a href="{{route('admin.logout')}}" class="menu-link px-5">Sign Out</a>
                         </div>
-                        <!--end::Menu item-->
-                        <!--begin::Menu separator-->
-                        <div class="separator my-2"></div>
-                        <!--end::Menu separator-->
-                        <!--begin::Menu item-->
-                        <div class="menu-item px-5">
-                            <div class="menu-content px-5">
-                                <label class="form-check form-switch form-check-custom form-check-solid pulse pulse-success" for="kt_user_menu_dark_mode_toggle">
-                                    <input class="form-check-input w-30px h-20px" type="checkbox" value="1" name="mode" id="kt_user_menu_dark_mode_toggle" data-kt-url="../../demo19/dist/index.html" />
-                                    <span class="pulse-ring ms-n1"></span>
-                                    <span class="form-check-label text-gray-600 fs-7">Dark Mode</span>
-                                </label>
-                            </div>
-                        </div>
-                        <!--end::Menu item-->
+
                     </div>
                     <!--end::User account menu-->
                     <!--begin::Heaeder menu toggle-->
@@ -186,7 +172,7 @@
                                 </div>
                                 <div class="card-body p-2">
                                     <!--begin::Table-->
-                                    <table class="table  table-hover table-row-dashed fs-6 gy-5 my-0 data-question" id="kt_inbox_listing">
+                                    <table id="questions-table" class="table  table-hover table-row-dashed fs-6 gy-5 my-0 data-question">
                                         <!--begin::Table head-->
                                         <thead >
                                         <tr>

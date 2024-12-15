@@ -19,6 +19,8 @@ class Question extends Model
         return $this->belongsTo(Category::class , 'category_id');
     }
 
+
+
     // A question can have many answers
     public function answers()
     {

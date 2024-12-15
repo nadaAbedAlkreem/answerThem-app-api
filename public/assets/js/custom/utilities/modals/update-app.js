@@ -1,5 +1,5 @@
 "use strict";
-var KTUpdateApp = function () {
+var KTUpdateCategoryApp = function () {
     var e, t, o, r, a, i, n = [];
     return {
         init: function () {
@@ -188,5 +188,5 @@ var KTUpdateApp = function () {
 }();
 
 KTUtil.onDOMContentLoaded(function () {
-    KTUpdateApp.init();
+    KTUpdateCategoryApp.init();
 });

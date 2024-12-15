@@ -4,8 +4,7 @@ $(document).ready(function ($) {
 
     var lang = window.location.pathname.split('/').pop(); // Example: 'en', 'fr', etc.
 
-
-    var table = $(".data-question").DataTable({
+     $("#questions-table").DataTable({
         processing: true,
         serverSide: true,
         ordering: false,
@@ -33,7 +32,7 @@ $(document).ready(function ($) {
         dom: '<"top"f>rt<"bottom"lp><"clear">', // Customize DataTable layout (pagination, search, etc.)
     });
     $('#apply').on('click', function () {
-        table.ajax.reload();  // Reload the table with the new filters
+        $("#questions-table").DataTable().ajax.reload();
     });
 
     $("#submit_form_question").on("click", function (e) {
@@ -56,8 +55,7 @@ $(document).ready(function ($) {
             processData: false, // processing on response
             success: function (response) {
                 $("#successMsg").show();
-                console.log(response);
-                Swal.fire({
+                 Swal.fire({
                     text: "You have successfully add data!",
                     icon: "success",
                     buttonsStyling: false,
@@ -66,13 +64,12 @@ $(document).ready(function ($) {
                         confirmButton: "btn btn-primary",
                     },
                 });
-                table.ajax.reload();
+                $("#questions-table").DataTable().ajax.reload();
 
             },
 
             error: function (response) {
-                console.log(response);
-                console.log("response");
+
                 Swal.fire({
                     text: response.responseJSON.message,
                     icon: "error",
@@ -85,26 +82,21 @@ $(document).ready(function ($) {
             },
         });
     });
-    $(".data-question").on("click", ".updateRecord", function (e)
+    $("#questions-table").on("click", ".updateRecord", function (e)
     {
         e.preventDefault();
         var id = $(this).data("id");
         var category_id = $(this).data("category");
         var answer_text_ar = $(this).data("answer_text_ar_1");
         var is_correct_index = $(this).data("is_correct");
-
-        console.log(id);
-        console.log(is_correct_index);
-        console.log(answer_text_ar);
-         var question_en_text = $(this).data("question_en_text");
+        var question_en_text = $(this).data("question_en_text");
         var question_ar_text = $(this).data("question_ar_text");
-         var image = $(this).data("image");
+        var image = $(this).data("image");
 
         // Find the radio button with the   value
 
         // Select the radio button with the matching value
         const radioToCheck = document.querySelector(`input[class="correct_answer_ar_update"][value="${is_correct_index}"]`);
-        console.log(radioToCheck);
 
         if (radioToCheck) {
             radioToCheck.checked = true;
@@ -113,14 +105,6 @@ $(document).ready(function ($) {
 
         }
 
-        // let selectedCategory = $([id='correct_answer_ar']".val();
-
-        // console.log(selectedCategory);
-        // if (famous_gaming === 1) {
-        //     checkbox.checked = true;
-        // } else {
-        //     checkbox.checked = false;
-        // }
         $('#id_update').val(id);
         $('#answer_text_en_1').val($(this).data("answer_text_en_1"));
         $('#answer_text_en_2').val($(this).data("answer_text_en_2"));
@@ -139,20 +123,13 @@ $(document).ready(function ($) {
 
         var dropdown = document.getElementById('category_id');
         dropdown.value = category_id;
-        console.log("category_id");
 
         var imageWrapper = document.querySelector('.image-update');
-        console.log("imageWrapper");
-        console.log(image);
-
-        console.log(imageWrapper);
 
         if (image) {
             imageWrapper.style.backgroundImage = `url('${image}')`;
-            console.log('Image URL set:', image);
-        } else {
-            console.log('Image URL is not defined.');
-        }
+         } else {
+         }
 
     });
 
@@ -160,7 +137,6 @@ $(document).ready(function ($) {
         e.preventDefault();
 
         let formData = new FormData($("#kt_modal_update_questions_app_form")[0]);
-        console.log(formData);
 
 
         $.ajaxSetup({
@@ -176,7 +152,6 @@ $(document).ready(function ($) {
             processData: false, // processing on response
             success: function (response) {
                 $("#successMsg").show();
-                console.log(response);
                 Swal.fire({
                     text: "You have successfully Update data !",
                     icon: "success",
@@ -186,12 +161,10 @@ $(document).ready(function ($) {
                         confirmButton: "btn btn-primary",
                     },
                 });
-                $(".data-question").DataTable().ajax.reload();
+                $("#questions-table").DataTable().ajax.reload();
             },
 
             error: function (response) {
-                console.log(response);
-                console.log("response");
                 Swal.fire({
                     text: response.responseJSON.message,
                     icon: "error",
@@ -208,7 +181,7 @@ $(document).ready(function ($) {
 
 
 
-    $(".data-question").on("click", ".deleteRecord[data-id]", function (e)
+    $("#questions-table").on("click", ".deleteRecord[data-id]", function (e)
     {
         e.preventDefault();
         $(".show_confirm").click(function (event) {
@@ -233,8 +206,7 @@ $(document).ready(function ($) {
                             _token: token,
                         },
                         success: function () {
-                            console.log("it Works");
-                            $(".data-question").DataTable().ajax.reload();
+                             $("#questions-table").DataTable().ajax.reload();
                         },
                     });
                 }

@@ -1,5 +1,5 @@
 "use strict";
-var KTCreateApp = function () {
+var KTCreateQuestApp = function () {
     var e, t, o, r, a, i, n = [];
     return {
         init: function () {
@@ -254,5 +254,5 @@ var KTCreateApp = function () {
 }();
 
 KTUtil.onDOMContentLoaded(function () {
-    KTCreateApp.init();
+    KTCreateQuestApp.init();
 });
