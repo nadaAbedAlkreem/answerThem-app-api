@@ -243,7 +243,7 @@
                 <h2>Create Category</h2>
                 <!--end::Modal title-->
                 <!--begin::Close-->
-                <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                <div class="btn btn-sm btn-icon btn-active-color-primary" id ="dismiss_create_category" data-bs-dismiss="modal">
                     <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
                     <span class="svg-icon svg-icon-1">
 								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -502,11 +502,13 @@
                                             <optgroup label="Primary Category">
 
                                                 <?php if(!empty($category)): ?>
-
                                                     <?php $__currentLoopData = $category; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                         <?php if($item['level'] == 1 ): ?>
+                                                            <option value="<?php echo e($item['level']); ?>-<?php echo e($item['id']); ?>" ><?php echo e($item['name']); ?>
 
-                                                            <option value="<?php echo e($item['level']); ?>-<?php echo e($item['id']); ?>"><?php echo e($item['name']); ?></option>
+                                                               <span>  - (Category Not affiliated)
+                                                               </span>
+                                                            </option>
                                                         <?php endif; ?>
 
                                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -515,7 +517,12 @@
 
                                                 <?php $__currentLoopData = $category; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                     <?php if($item['level'] == 2 ): ?>
-                                                        <option value="<?php echo e($item['level']); ?>-<?php echo e($item['id']); ?>"><?php echo e($item['name']); ?></option>
+                                                         <option value="<?php echo e($item['level']); ?>-<?php echo e($item['id']); ?>">
+                                                            <?php echo e($item['name']); ?>
+
+                                                             <span >(Category belongs to <?php echo e(app()->getLocale() === 'ar' ? $item['parent']['name_ar'] ?? '' : $item['parent']['name_en'] ?? ''); ?>)</span>
+
+                                                        </option>
                                                     <?php endif; ?>
 
                                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -656,8 +663,7 @@
                     <!--end::Modal title-->
                     <!--begin::Close-->
                     <input type="hidden" id="id" class="form-control" value ="" placeholder="Item ID will appear here">
-
-                    <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                    <div class="btn btn-sm btn-icon btn-active-color-primary"  id ="dismiss_update_category" data-bs-dismiss="modal">
                         <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
                         <span class="svg-icon svg-icon-1">
 								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -919,16 +925,23 @@
                                                         <?php $__currentLoopData = $category; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                             <?php if($item['level'] == 1 ): ?>
 
-                                                                <option value="<?php echo e($item['level']); ?>-<?php echo e($item['id']); ?>"><?php echo e($item['name']); ?></option>
+                                                                <option value="<?php echo e($item['level']); ?>-<?php echo e($item['id']); ?>"><?php echo e($item['name']); ?>
+
+                                                                    <span > - (Category Not affiliated)</span>
+                                                                </option>
+
                                                             <?php endif; ?>
 
                                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                 </optgroup>
                                                 <optgroup label="Sub Category">
-
                                                     <?php $__currentLoopData = $category; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                         <?php if($item['level'] == 2 ): ?>
-                                                            <option value="<?php echo e($item['level']); ?>-<?php echo e($item['id']); ?>"><?php echo e($item['name']); ?></option>
+                                                            <option value="<?php echo e($item['level']); ?>-<?php echo e($item['id']); ?>"><?php echo e($item['name']); ?>
+
+                                                                <span >(Category belongs to <?php echo e(app()->getLocale() === 'ar' ? $item['parent']['name_ar'] ?? '' : $item['parent']['name_en'] ?? ''); ?>)</span>
+
+                                                            </option>
                                                         <?php endif; ?>
 
                                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

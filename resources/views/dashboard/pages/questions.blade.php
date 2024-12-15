@@ -259,7 +259,7 @@
                 <h2>Create Question</h2>
                 <!--end::Modal title-->
                 <!--begin::Close-->
-                <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                <div class="btn btn-sm btn-icon btn-active-color-primary" id ="dismiss_create"  data-bs-dismiss="modal">
                     <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
                     <span class="svg-icon svg-icon-1">
 								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -565,17 +565,13 @@
                                             <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify your apps framework"></i>
                                         </label>
                                         <select class="form-control form-control-lg form-control-solid  form-select-sm" name = "category_id"   aria-label=".form-select-sm example">
-                                            <option value=""> </option>
-                                                @if(!empty($category))
+                                                 @if(!empty($category))
 
                                                     @foreach($category as  $key => $item)
-                                                        @if($lang == 'ar')
-                                                            <option value="{{$item['id']}}">{{$item['name_ar']}}</option>
-                                                        @else
-                                                        <option value="{{$item['id']}}">{{$item['name_en']}}</option>
-
-                                                    @endif
-                                                    @endforeach
+                                                             <option value="{{$item['id']}}">{{$item['name']}}
+                                                             <span>({{ app()->getLocale() === 'ar' ? $item['parent']['name_ar'] ?? '' : $item['parent']['name_en'] ?? '' }}) -  ({{ app()->getLocale() === 'ar' ? $item['parent']['parent']['name_ar'] ?? '' : $item['parent']['parent']['name_en'] ?? '' }})</span>
+                                                             </option>
+                                                     @endforeach
                                             @endif
                                         </select>
 
@@ -661,7 +657,7 @@
 <!--end::Modal - Create App-->
 
     <!--begin::Modal - Update App-->
-    <div class="modal fade" id="kt_modal_update_question_app" tabindex="-1" aria-hidden="true">
+ <div class="modal fade" id="kt_modal_update_question_app" tabindex="-1" aria-hidden="true">
         <!--begin::Modal dialog-->
         <div class="modal-dialog modal-dialog-centered mw-900px">
             <!--begin::Modal content-->
@@ -672,7 +668,7 @@
                     <h2>Update Question</h2>
                     <!--end::Modal title-->
                     <!--begin::Close-->
-                    <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                    <div class="btn btn-sm btn-icon btn-active-color-primary" id ="dismiss_update" data-bs-dismiss="modal">
                         <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
                         <span class="svg-icon svg-icon-1">
 								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -983,12 +979,9 @@
                                                 @if(!empty($category))
 
                                                     @foreach($category as  $key => $item)
-                                                        @if($lang == 'ar')
-                                                            <option value="{{$item['id']}}">{{$item['name_ar']}}</option>
-                                                        @else
-                                                            <option value="{{$item['id']}}">{{$item['name_en']}}</option>
-
-                                                        @endif
+                                                        <option value="{{$item['id']}}">{{$item['name']}}
+                                                            <span>({{ app()->getLocale() === 'ar' ? $item['parent']['name_ar'] ?? '' : $item['parent']['name_en'] ?? '' }}) -  ({{ app()->getLocale() === 'ar' ? $item['parent']['parent']['name_ar'] ?? '' : $item['parent']['parent']['name_en'] ?? '' }})</span>
+                                                        </option>>
                                                     @endforeach
                                                 @endif
                                             </select>

@@ -257,7 +257,7 @@
                 <h2>Create Question</h2>
                 <!--end::Modal title-->
                 <!--begin::Close-->
-                <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                <div class="btn btn-sm btn-icon btn-active-color-primary" id ="dismiss_create"  data-bs-dismiss="modal">
                     <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
                     <span class="svg-icon svg-icon-1">
 								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -563,17 +563,14 @@
                                             <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify your apps framework"></i>
                                         </label>
                                         <select class="form-control form-control-lg form-control-solid  form-select-sm" name = "category_id"   aria-label=".form-select-sm example">
-                                            <option value=""> </option>
-                                                <?php if(!empty($category)): ?>
+                                                 <?php if(!empty($category)): ?>
 
                                                     <?php $__currentLoopData = $category; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                        <?php if($lang == 'ar'): ?>
-                                                            <option value="<?php echo e($item['id']); ?>"><?php echo e($item['name_ar']); ?></option>
-                                                        <?php else: ?>
-                                                        <option value="<?php echo e($item['id']); ?>"><?php echo e($item['name_en']); ?></option>
+                                                             <option value="<?php echo e($item['id']); ?>"><?php echo e($item['name']); ?>
 
-                                                    <?php endif; ?>
-                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                             <span>(<?php echo e(app()->getLocale() === 'ar' ? $item['parent']['name_ar'] ?? '' : $item['parent']['name_en'] ?? ''); ?>) -  (<?php echo e(app()->getLocale() === 'ar' ? $item['parent']['parent']['name_ar'] ?? '' : $item['parent']['parent']['name_en'] ?? ''); ?>)</span>
+                                                             </option>
+                                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                             <?php endif; ?>
                                         </select>
 
@@ -659,7 +656,7 @@
 <!--end::Modal - Create App-->
 
     <!--begin::Modal - Update App-->
-    <div class="modal fade" id="kt_modal_update_question_app" tabindex="-1" aria-hidden="true">
+ <div class="modal fade" id="kt_modal_update_question_app" tabindex="-1" aria-hidden="true">
         <!--begin::Modal dialog-->
         <div class="modal-dialog modal-dialog-centered mw-900px">
             <!--begin::Modal content-->
@@ -670,7 +667,7 @@
                     <h2>Update Question</h2>
                     <!--end::Modal title-->
                     <!--begin::Close-->
-                    <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                    <div class="btn btn-sm btn-icon btn-active-color-primary" id ="dismiss_update" data-bs-dismiss="modal">
                         <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
                         <span class="svg-icon svg-icon-1">
 								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -981,12 +978,10 @@
                                                 <?php if(!empty($category)): ?>
 
                                                     <?php $__currentLoopData = $category; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                        <?php if($lang == 'ar'): ?>
-                                                            <option value="<?php echo e($item['id']); ?>"><?php echo e($item['name_ar']); ?></option>
-                                                        <?php else: ?>
-                                                            <option value="<?php echo e($item['id']); ?>"><?php echo e($item['name_en']); ?></option>
+                                                        <option value="<?php echo e($item['id']); ?>"><?php echo e($item['name']); ?>
 
-                                                        <?php endif; ?>
+                                                            <span>(<?php echo e(app()->getLocale() === 'ar' ? $item['parent']['name_ar'] ?? '' : $item['parent']['name_en'] ?? ''); ?>) -  (<?php echo e(app()->getLocale() === 'ar' ? $item['parent']['parent']['name_ar'] ?? '' : $item['parent']['parent']['name_en'] ?? ''); ?>)</span>
+                                                        </option>>
                                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                 <?php endif; ?>
                                             </select>

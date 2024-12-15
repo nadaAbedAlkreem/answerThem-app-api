@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreQuestionRequest;
 use App\Http\Requests\UpdateQuestionRequest;
+use App\Http\Resources\Dashboard\CategoryResource;
 use App\Http\Resources\Dashboard\QuestionResource;
 use App\Models\Answer;
 use App\Models\Category;
@@ -31,9 +32,9 @@ class QuestionController extends Controller
 
         $dataNative = Question::select('*')->orderBy('created_at', 'desc')->get() ;
         $name = (app::getLocale() == 'ar')? 'name_ar' : 'name_en'  ;
-        $category = Category::where('level', 3)->get() ;
-         $this->lang($request);
-        if ($request->ajax())
+        $category = Category::with('parent' , 'parent.parent')->where('level', 3)->get() ;
+        $this->lang($request);
+         if ($request->ajax())
         {
             $data = QuestionResource::collection($dataNative);
 
@@ -46,7 +47,7 @@ class QuestionController extends Controller
             }
         }
 
-        return view('dashboard.pages.questions' , ['lang' => app::getLocale()  , 'category' => $category ]);
+        return view('dashboard.pages.questions' , ['lang' => app::getLocale()  ,  'category'=>CategoryResource::collection($category)->toArray($request) ]);
     }
     public function store(StoreQuestionRequest $request)
     {

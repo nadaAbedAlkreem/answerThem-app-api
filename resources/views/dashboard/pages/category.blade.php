@@ -245,7 +245,7 @@
                 <h2>Create Category</h2>
                 <!--end::Modal title-->
                 <!--begin::Close-->
-                <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                <div class="btn btn-sm btn-icon btn-active-color-primary" id ="dismiss_create_category" data-bs-dismiss="modal">
                     <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
                     <span class="svg-icon svg-icon-1">
 								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -504,11 +504,12 @@
                                             <optgroup label="Primary Category">
 
                                                 @if(!empty($category))
-
                                                     @foreach($category as  $key => $item)
                                                         @if($item['level'] == 1 )
-
-                                                            <option value="{{$item['level']}}-{{$item['id']}}">{{$item['name']}}</option>
+                                                            <option value="{{$item['level']}}-{{$item['id']}}" >{{$item['name']}}
+                                                               <span>  - (Category Not affiliated)
+                                                               </span>
+                                                            </option>
                                                         @endif
 
                                                     @endforeach
@@ -517,7 +518,11 @@
 
                                                 @foreach($category as $item)
                                                     @if($item['level'] == 2 )
-                                                        <option value="{{$item['level']}}-{{$item['id']}}">{{$item['name']}}</option>
+                                                         <option value="{{$item['level']}}-{{$item['id']}}">
+                                                            {{$item['name']}}
+                                                             <span >(Category belongs to {{ app()->getLocale() === 'ar' ? $item['parent']['name_ar'] ?? '' : $item['parent']['name_en'] ?? '' }})</span>
+
+                                                        </option>
                                                     @endif
 
                                                 @endforeach
@@ -658,8 +663,7 @@
                     <!--end::Modal title-->
                     <!--begin::Close-->
                     <input type="hidden" id="id" class="form-control" value ="" placeholder="Item ID will appear here">
-
-                    <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                    <div class="btn btn-sm btn-icon btn-active-color-primary"  id ="dismiss_update_category" data-bs-dismiss="modal">
                         <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
                         <span class="svg-icon svg-icon-1">
 								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -921,16 +925,21 @@
                                                         @foreach($category as  $key => $item)
                                                             @if($item['level'] == 1 )
 
-                                                                <option value="{{$item['level']}}-{{$item['id']}}">{{$item['name']}}</option>
+                                                                <option value="{{$item['level']}}-{{$item['id']}}">{{$item['name']}}
+                                                                    <span > - (Category Not affiliated)</span>
+                                                                </option>
+
                                                             @endif
 
                                                         @endforeach
                                                 </optgroup>
                                                 <optgroup label="Sub Category">
-
                                                     @foreach($category as $item)
                                                         @if($item['level'] == 2 )
-                                                            <option value="{{$item['level']}}-{{$item['id']}}">{{$item['name']}}</option>
+                                                            <option value="{{$item['level']}}-{{$item['id']}}">{{$item['name']}}
+                                                                <span >(Category belongs to {{ app()->getLocale() === 'ar' ? $item['parent']['name_ar'] ?? '' : $item['parent']['name_en'] ?? '' }})</span>
+
+                                                            </option>
                                                         @endif
 
                                                     @endforeach

@@ -64,16 +64,11 @@ $(document).ready(function ($) {
             contentType: false, // determint type object
             processData: false, // processing on response
             success: function (response) {
-                $("#successMsg").show();
-                Swal.fire({
-                    text: "You have successfully add data!",
-                    icon: "success",
-                    buttonsStyling: false,
-                    confirmButtonText: "Ok, got it!",
-                    customClass: {
-                        confirmButton: "btn btn-primary",
-                    },
-                });
+                const dismissButton = document.getElementById('dismiss_create_category');
+
+                if (dismissButton) {
+                    dismissButton.click();
+                }
                 $(".data-table-category").DataTable().ajax.reload();
 
             },
@@ -196,16 +191,11 @@ $(document).ready(function ($) {
             contentType: false, // determint type object
             processData: false, // processing on response
             success: function (response) {
-                $("#successMsg").show();
-                 Swal.fire({
-                    text: "You have successfully Update data !",
-                    icon: "success",
-                    buttonsStyling: false,
-                    confirmButtonText: "Ok, got it!",
-                    customClass: {
-                        confirmButton: "btn btn-primary",
-                    },
-                });
+
+                const dismissButton = document.getElementById('dismiss_update_category');
+                if (dismissButton) {
+                    dismissButton.click();
+                }
                 $(".data-table-category").DataTable().ajax.reload();
             },
 

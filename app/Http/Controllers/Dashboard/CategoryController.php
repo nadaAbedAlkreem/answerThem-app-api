@@ -28,7 +28,7 @@ class CategoryController extends Controller
     public function index(Request $request ,  CategoryDatatableService $categoryDatatableService)
     {
 
-        $dataNative = Category::select('*')->orderBy('created_at', 'desc')->get() ;
+        $dataNative = Category::with('parent' , 'parent.parent')->select('*')->orderBy('created_at', 'desc')->get() ;
         $this->lang($request);
         if ($request->ajax())
         {
