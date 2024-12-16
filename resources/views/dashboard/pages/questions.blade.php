@@ -49,13 +49,52 @@
                                     <div class="d-flex flex-column">
                                         <div class="fw-bolder d-flex align-items-center fs-5">admin
                                             <span class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2"></span></div>
-                                        <a href="#" class="fw-bold text-muted text-hover-primary fs-7">admin@gmail.com</a>
+                                        <a class="fw-bold text-muted text-hover-primary fs-7">admin@gmail.com</a>
                                     </div>
                                     <!--end::Username-->
+
+
                                 </div>
                             </div>
                             <!--end::Menu item-->
+                            <!--begin::Menu item-->
+                            <div class="menu-item px-5" data-kt-menu-trigger="hover">
+                                <a  class="menu-link px-5">
+											<span class="menu-title position-relative">{{__('setting.language')}}
+                                                @if(app()->getLocale()  == 'en')
+                                                    <span class="fs-8 rounded bg-light px-3 py-2 position-absolute translate-middle-y top-50 end-0">{{__('setting.english')}}
+                                                       <img class="w-15px h-15px rounded-1 ms-2" src="assets/media/flags/united-states.svg" alt="" /></span></span>
 
+                                    @else
+
+                                        <span class="fs-8 rounded bg-light px-3 py-2 position-absolute translate-middle-y top-50 end-0">{{__('setting.arabic')}}
+                                                      <img class="w-15px h-15px rounded-1 ms-2" src="assets/media/flags/saudi-arabia.svg" alt="" /></span></span>
+
+                                    @endif
+                                </a>
+                                <!--begin::Menu sub-->
+                                <div class="menu-sub menu-sub-dropdown w-175px py-4">
+                                    <!--begin::Menu item-->
+                                    <div class="menu-item px-3">
+                                        <a href="{{route('dashboard.question' , ['lang' => 'en'])}}" class="menu-link d-flex px-5  @if(app()->getLocale() == 'en') active @endif">
+												<span class="symbol symbol-20px me-4">
+													<img class="rounded-1" src="assets/media/flags/united-states.svg" alt="" />
+												</span>{{__('setting.english')}}</a>
+                                    </div>
+
+                                    <!--end::Menu item-->
+                                    <!--begin::Menu item-->
+                                    <div class="menu-item px-3">
+                                        <a href="{{route('dashboard.question' , ['lang' => 'ar'])}}" class="menu-link d-flex px-5  @if(app()->getLocale() == 'ar') active @endif">
+												<span class="symbol symbol-20px me-4">
+													<img class="rounded-1" src="assets/media/flags/saudi-arabia.svg" alt="" />
+												</span>{{__('setting.arabic')}}</a>
+                                    </div>
+                                    <!--end::Menu item-->
+                                </div>
+                                <!--end::Menu sub-->
+                            </div>
+                            <!--end::Menu item-->
 
                             <!--end::Menu item-->
                             <!--begin::Menu item-->
@@ -63,9 +102,12 @@
                                 <a href="{{route('admin.logout')}}" class="menu-link px-5">Sign Out</a>
                             </div>
 
+
                             <!--end::Menu item-->
                         </div>
                         <!--end::User account menu-->
+
+
                         <!--end::Menu wrapper-->
                     </div>
                     <!--end::User -->
@@ -85,6 +127,7 @@
             <div class="toolbar d-flex flex-stack flex-wrap py-4 gap-2" id="kt_toolbar">
 
                 <!--end::Page title-->
+
                 <!--begin::Actions-->
                 <div class="d-flex align-items-center py-1">
                     <!--begin::Filter-->
@@ -137,9 +180,8 @@
                                     <!--end::Input-->
                                 </div>
                                 <!--end::Input group-->
-                                <!--begin::Input group-->
 
-                                <!--begin::Actions-->
+
                                 <div class="d-flex justify-content-end">
                                     <button type="reset" class="btn btn-sm btn-light btn-active-light-primary me-2" data-kt-menu-dismiss="true">Reset</button>
                                     <button type="submit" id = "apply" class="btn btn-sm btn-primary" data-kt-menu-dismiss="true">Apply</button>
@@ -150,11 +192,13 @@
                         </div>
                         <!--end::Menu 1-->
                         <!--end::Menu-->
+
                     </div>
                     <!--end::Filter-->
                     <!--begin::Button-->
                     <a  class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#kt_modal_create_question_app">Create</a>
                     <!--end::Button-->
+
                 </div>
                 <!--end::Actions-->
             </div>
@@ -176,6 +220,17 @@
                                     <div class="d-flex align-items-center flex-wrap gap-2">
 
 
+                                    </div>
+                                    <div class="d-flex align-items-center position-relative">
+                                        <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
+                                        <span class="svg-icon svg-icon-2 position-absolute ms-4">
+														<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+															<rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="black"></rect>
+															<path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="black"></path>
+														</svg>
+													</span>
+                                        <!--end::Svg Icon-->
+                                        <input type="text"  name ="name_question"  id ="name_question" data-kt-inbox-listing-filter="search" class="form-control form-control-sm form-control-solid mw-100 min-w-150px min-w-md-200px ps-12" placeholder="Search Inbox">
                                     </div>
                                     <!--end::Pagination-->
                                 </div>
@@ -380,7 +435,7 @@
                                         </label>
                                         <!--end::Label-->
                                         <!--begin::Input-->
-                                        <input type="text" class="form-control form-control-lg form-control-solid" name="question_ar_text" placeholder="Question text in arabic" value="" />
+                                        <input type="text" class="form-control form-control-lg form-control-solid" name="question_text_ar" placeholder="Question text in arabic" value="" />
                                          <!--end::Input-->
                                     </div>
                                     <!--end::Input group-->
@@ -395,7 +450,7 @@
                                             </label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="text" class="form-control form-control-lg form-control-solid" name="question_en_text" placeholder=" Question text in english" value="" />
+                                            <input type="text" class="form-control form-control-lg form-control-solid" name="question_text_en" placeholder=" Question text in english" value="" />
                                             <!--end::Input-->
                                         </div>
                                         <!--end::Input group-->
@@ -426,7 +481,7 @@
                                             <!-- Answer 1 -->
                                             <div class="input-group mb-3">
                                                         <span class="input-group-text">
-                                                            <input type="radio" name="correct_answer_ar" value="1" required>
+                                                            <input type="radio" name="correct_answer_ar" value="1" required disabled checked>
                                                         </span>
                                                 <input type="text" class="form-control form-control-lg form-control-solid rounded-3 shadow-sm" name="answer_text_ar_1" placeholder="Enter Answer 1" required>
                                             </div>
@@ -434,7 +489,7 @@
                                             <!-- Answer 2 -->
                                             <div class="input-group mb-3">
                                             <span class="input-group-text">
-                                                <input type="radio" name="correct_answer_ar" value="2" required>
+                                                <input type="radio" name="correct_answer_ar" value="2" disabled>
                                             </span>
                                                 <input type="text" class="form-control form-control-lg form-control-solid rounded-3 shadow-sm" name="answer_text_ar_2" placeholder="Enter Answer 2" required>
                                             </div>
@@ -442,7 +497,7 @@
                                             <!-- Answer 3 -->
                                             <div class="input-group mb-3">
                                                 <span class="input-group-text">
-                                                    <input type="radio" name="correct_answer_ar" value="3" required>
+                                                    <input type="radio" name="correct_answer_ar" value="3" disabled>
                                                 </span>
                                                 <input type="text" class="form-control form-control-lg form-control-solid rounded-3 shadow-sm" name="answer_text_ar_3" placeholder="Enter Answer 3" required>
                                             </div>
@@ -450,7 +505,7 @@
                                             <!-- Answer 4 -->
                                             <div class="input-group mb-3">
                                                 <span class="input-group-text">
-                                                    <input type="radio" name="correct_answer_ar" value="4" required>
+                                                    <input type="radio" name="correct_answer_ar" value="4" disabled>
                                                 </span>
                                                         <input type="text" class="form-control form-control-lg form-control-solid rounded-3 shadow-sm" name="answer_text_ar_4" placeholder="Enter Answer 4" required>
                                             </div>
@@ -472,7 +527,7 @@
                                             <!-- Answer 1 -->
                                             <div class="input-group mb-3">
                                             <span class="input-group-text">
-                                                <input type="radio" name="correct_answer_en" value="1" required disabled>
+                                                <input type="radio" name="correct_answer_en" value="1" required disabled checked>
                                             </span>
                                                 <input type="text" class="form-control form-control-lg form-control-solid rounded-3 shadow-sm" name="answer_text_en_1" placeholder="Enter Answer 1" required>
                                             </div>
@@ -836,7 +891,7 @@
                                                 <!-- Answer 1 -->
                                                 <div class="input-group mb-3">
                                                         <span class="input-group-text">
-                                                            <input type="radio"  id ="correct_answer_ar1" class="correct_answer_ar_update" name="correct_answer_ar" value="1" required>
+                                                            <input type="radio"  id ="correct_answer_ar1" class="correct_answer_ar_update" name="correct_answer_ar" value="1" disabled checked>
                                                         </span>
                                                     <input type="text" id = "answer_text_ar_1" class="form-control form-control-lg form-control-solid rounded-3 shadow-sm" name="answer_text_ar_1" placeholder="Enter Answer 1" required>
                                                 </div>
@@ -844,7 +899,7 @@
                                                 <!-- Answer 2 -->
                                                 <div class="input-group mb-3">
                                             <span class="input-group-text">
-                                                <input type="radio"  id = "correct_answer_ar2"  class="correct_answer_ar_update" name="correct_answer_ar" value="2" required>
+                                                <input type="radio"  id = "correct_answer_ar2"  class="correct_answer_ar_update" name="correct_answer_ar" value="2" disabled >
                                             </span>
                                                     <input type="text" class="form-control form-control-lg form-control-solid rounded-3 shadow-sm" id="answer_text_ar_2" name="answer_text_ar_2" placeholder="Enter Answer 2" required>
                                                 </div>
@@ -852,7 +907,7 @@
                                                 <!-- Answer 3 -->
                                                 <div class="input-group mb-3">
                                                 <span class="input-group-text">
-                                                    <input type="radio" id = "correct_answer_ar3" class="correct_answer_ar_update" name="correct_answer_ar" value="3" required>
+                                                    <input type="radio" id = "correct_answer_ar3" class="correct_answer_ar_update" name="correct_answer_ar" value="3" disabled >
                                                 </span>
                                                     <input type="text" class="form-control form-control-lg form-control-solid rounded-3 shadow-sm"  id = "answer_text_ar_3" name="answer_text_ar_3" placeholder="Enter Answer 3" required>
                                                 </div>
@@ -860,7 +915,7 @@
                                                 <!-- Answer 4 -->
                                                 <div class="input-group mb-3">
                                                 <span class="input-group-text">
-                                                    <input type="radio" id ="correct_answer_ar4" class="correct_answer_ar_update"   name="correct_answer_ar" value="4" required>
+                                                    <input type="radio" id ="correct_answer_ar4" class="correct_answer_ar_update"   name="correct_answer_ar" value="4" disabled >
                                                 </span>
                                                     <input type="text" class="form-control form-control-lg form-control-solid rounded-3 shadow-sm" id ="answer_text_ar_4" name="answer_text_ar_4" placeholder="Enter Answer 4" required>
                                                 </div>
@@ -882,7 +937,7 @@
                                                 <!-- Answer 1 -->
                                                 <div class="input-group mb-3">
                                             <span class="input-group-text">
-                                                <input type="radio" id ="correct_answer_en" class="correct_answer_en_update" name="correct_answer_en" value="1" required disabled>
+                                                <input type="radio" id ="correct_answer_en" class="correct_answer_en_update" name="correct_answer_en" value="1" required  checked disabled>
                                             </span>
                                                     <input type="text" id ="answer_text_en_1" class="form-control form-control-lg form-control-solid rounded-3 shadow-sm" name="answer_text_en_1" placeholder="Enter Answer 1" required>
                                                 </div>
@@ -890,7 +945,7 @@
                                                 <!-- Answer 2 -->
                                                 <div class="input-group mb-3">
                                                 <span class="input-group-text">
-                                                    <input type="radio" id="correct_answer_en" class ="correct_answer_en_update" name="correct_answer_en" value="2" required disabled>
+                                                    <input type="radio" id="correct_answer_en" class ="correct_answer_en_update" name="correct_answer_en" value="2" required checked disabled>
                                                 </span>
                                                     <input type="text" class="form-control form-control-lg form-control-solid rounded-3 shadow-sm" id ="answer_text_en_2" name="answer_text_en_2" placeholder="Enter Answer 2" required>
                                                 </div>
@@ -906,7 +961,7 @@
                                                 <!-- Answer 4 -->
                                                 <div class="input-group mb-3">
                                                 <span class="input-group-text">
-                                                    <input type="radio" id ="correct_answer_en" class="correct_answer_en_update"name="correct_answer_en" value="4" required disabled>
+                                                    <input type="radio" id ="correct_answer_en" class="correct_answer_en_update" name="correct_answer_en" value="4" required checked disabled>
                                                 </span>
                                                     <input type="text" class="form-control form-control-lg form-control-solid rounded-3 shadow-sm"  id = "answer_text_en_4" name="answer_text_en_4" placeholder="Enter Answer 4" required>
                                                 </div>

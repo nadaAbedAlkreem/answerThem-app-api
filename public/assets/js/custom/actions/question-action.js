@@ -16,6 +16,7 @@ $(document).ready(function ($) {
             data: function (d) {
                 d.lang = lang;
                 d.category = $('#category').val();  // Get the selected value from dropdown
+                d.name_question = $('#name_question').val();  // Get the selected value from dropdown
 
             },
         },
@@ -34,6 +35,10 @@ $(document).ready(function ($) {
     $('#apply').on('click', function () {
         $("#questions-table").DataTable().ajax.reload();
     });
+    $('#name_question').on('input', function () {
+        $("#questions-table").DataTable().ajax.reload();
+    });
+
 
     $("#submit_form_question").on("click", function (e) {
         e.preventDefault();

@@ -42,8 +42,10 @@ Route::group(['middleware' =>  CheckLanguage::class  , AdminGuardMiddleware::cla
             Route::get('/{lang}', [CategoryController::class, 'index'])->name('dashboard.category');
             Route::post('create/', [CategoryController::class, 'store'])->name('dashboard.category.create');
             Route::post('update', [CategoryController::class, 'update'])->name('dashboard.category.update');
-            Route::post('filter', [CategoryController::class, 'filterLevelCategory'])->name('dashboard.category.filter');
             Route::delete('delete/{id}', [CategoryController::class, 'destroy'])->name('dashboard.category.delete');
+            Route::get('/get-categories', [CategoryController::class, 'getCategories']);
+            Route::get('/search/filter', [CategoryController::class, 'searchCategories'])->name('categories.search');
+
 
         }
         );

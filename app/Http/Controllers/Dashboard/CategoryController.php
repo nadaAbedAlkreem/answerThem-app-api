@@ -27,10 +27,8 @@ class CategoryController extends Controller
 
     public function index(Request $request ,  CategoryDatatableService $categoryDatatableService)
     {
-
         $dataNative = Category::with('parent' , 'parent.parent')->select('*')->orderBy('created_at', 'desc')->get() ;
-        $this->lang($request);
-        if ($request->ajax())
+          if ($request->ajax())
         {
             $data = CategoryResource::collection($dataNative);
 
@@ -45,25 +43,22 @@ class CategoryController extends Controller
 
          return view('dashboard.pages.category' , ['category'=>CategoryResource::collection($dataNative)->toArray($request) , 'lang' => app::getLocale()]);
     }
-
     public function store(StoreCategoryRequest $request)
     {
         try {
-               $this->categoryRepository->create($request->getData());
+            $this->categoryRepository->create($request->getData());
             return $this->successResponse('CREATE_SUCCESS',[], 201, App::getLocale())  ;
-
         } catch (Throwable $e) {
             return response([
                 'message' => $e->getMessage(),
             ], 500);
         }
-    }   //filterLevelCategory
-
+    }
     public function update(UpdateCategoryRequest $request)
     {
         try {
             $this->categoryRepository->update($request->getData() , $request['id']);
-            return $this->successResponse('UPDATE_SUCCESS',[], 201, App::getLocale())  ;
+             return $this->successResponse('UPDATE_SUCCESS',[], 201, App::getLocale())  ;
 
         } catch (Throwable $e) {
             return response([
@@ -71,7 +66,6 @@ class CategoryController extends Controller
             ], 500);
         }
     }
-
     public function destroy($id)
     {
          try {
@@ -84,15 +78,26 @@ class CategoryController extends Controller
             ], 500);
         }
     }
-   private  function  lang($request){
-       $lang = $request->route('lang');
-       if ($lang) {
-           $validLanguages = ['en','ar'];
-           if (in_array($lang, $validLanguages)) {
-               app()->setLocale($lang);
-           } else {
-               app()->setLocale('en');
-           }
-       }
-   }
+    public function searchCategories(Request $request)
+    {
+         $searchTerm = $request->input('q');
+        $categories = Category::where(function($query) use ($searchTerm) {
+            $query->where('name_en', 'LIKE', "%{$searchTerm}%")
+                ->orWhere('name_ar', 'LIKE', "%{$searchTerm}%");
+          })
+             ->where('level', 1)->orWhere('level', 2)
+             ->get(['id', 'name_en', 'name_ar', 'level']);
+
+        return response()->json([
+            'results' => $categories->map(function ($category) {
+                return [
+                    'id' => $category->id,
+                    'text' => app()->getLocale() === 'ar' ? $category->name_ar : $category->name_en
+                ];
+            }),
+        ]);
+    }
+
+
+
 }

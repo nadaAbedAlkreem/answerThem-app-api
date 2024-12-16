@@ -49,18 +49,68 @@
                                     <!--end::Avatar-->
                                     <!--begin::Username-->
                                     <div class="d-flex flex-column">
-                                        <div class="fw-bolder d-flex align-items-center fs-5">Max Smith
-                                            <span class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2">Pro</span></div>
-                                        <a href="#" class="fw-bold text-muted text-hover-primary fs-7">max@kt.com</a>
+                                        <div class="fw-bolder d-flex align-items-center fs-5">admin
+                                            <span class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2"></span></div>
+                                        <a class="fw-bold text-muted text-hover-primary fs-7">admin@gmail.com</a>
                                     </div>
                                     <!--end::Username-->
+
+
                                 </div>
+                            </div>
+                            <!--end::Menu item-->
+                            <!--begin::Menu item-->
+                            <div class="menu-item px-5" data-kt-menu-trigger="hover">
+                                <a  class="menu-link px-5">
+											<span class="menu-title position-relative">{{__('setting.language')}}
+                                                @if(app()->getLocale()  == 'en')
+                                                    <span class="fs-8 rounded bg-light px-3 py-2 position-absolute translate-middle-y top-50 end-0">{{__('setting.english')}}
+                                                       <img class="w-15px h-15px rounded-1 ms-2" src="assets/media/flags/united-states.svg" alt="" /></span></span>
+
+                                    @else
+
+                                        <span class="fs-8 rounded bg-light px-3 py-2 position-absolute translate-middle-y top-50 end-0">{{__('setting.arabic')}}
+                                                      <img class="w-15px h-15px rounded-1 ms-2" src="assets/media/flags/saudi-arabia.svg" alt="" /></span></span>
+
+                                    @endif
+                                </a>
+                                <!--begin::Menu sub-->
+                                <div class="menu-sub menu-sub-dropdown w-175px py-4">
+                                    <!--begin::Menu item-->
+                                    <div class="menu-item px-3">
+                                        <a href="{{route('dashboard.users' , ['lang' => 'en'])}}" class="menu-link d-flex px-5  @if(app()->getLocale() == 'en') active @endif">
+												<span class="symbol symbol-20px me-4">
+													<img class="rounded-1" src="assets/media/flags/united-states.svg" alt="" />
+												</span>{{__('setting.english')}}</a>
+                                    </div>
+
+                                    <!--end::Menu item-->
+                                    <!--begin::Menu item-->
+                                    <div class="menu-item px-3">
+                                        <a href="{{route('dashboard.users' , ['lang' => 'ar'])}}" class="menu-link d-flex px-5  @if(app()->getLocale() == 'ar') active @endif">
+												<span class="symbol symbol-20px me-4">
+													<img class="rounded-1" src="assets/media/flags/saudi-arabia.svg" alt="" />
+												</span>{{__('setting.arabic')}}</a>
+                                    </div>
+                                    <!--end::Menu item-->
+                                </div>
+                                <!--end::Menu sub-->
+                            </div>
+                            <!--end::Menu item-->
+
+                            <!--end::Menu item-->
+                            <!--begin::Menu item-->
+                            <div class="menu-item px-5">
+                                <a href="{{route('admin.logout')}}" class="menu-link px-5">Sign Out</a>
                             </div>
 
 
                             <!--end::Menu item-->
                         </div>
                         <!--end::User account menu-->
+
+
+
                         <!--end::Menu wrapper-->
                     </div>
                     <!--end::User -->

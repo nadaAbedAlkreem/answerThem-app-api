@@ -13,7 +13,13 @@ class QuestionDatatableService
         $transformedData = $data->toArray($request);
           if ($request->has('category') && !empty($request->category)) {
             $transformedData = array_filter($transformedData, function ($item) use ($request ) {
-                 return $item['category']['id'] == $request->category;  // Check the level filter condition
+                 return $item['category']['id'] == $request->category;
+            });
+        }
+        if ($request->has('name_question') && !empty($request->name_question)) {
+            $searchTerm = $request->name_question;
+            $transformedData = array_filter($transformedData, function ($item) use ($searchTerm) {
+                 return (stripos($item['question_text'], $searchTerm) !== false  ) ;
             });
         }
 

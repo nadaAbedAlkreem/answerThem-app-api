@@ -91,15 +91,5 @@ class HomeController extends Controller
         return $categoryByLevel ;
 
     }
-    private  function  lang($request){
-        $lang = $request->route('lang');
-        if ($lang) {
-            $validLanguages = ['en','ar'];
-            if (in_array($lang, $validLanguages)) {
-                app()->setLocale($lang);
-            } else {
-                app()->setLocale('en');
-            }
-        }
-    }
+
 }

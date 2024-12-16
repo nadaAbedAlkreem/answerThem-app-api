@@ -16,11 +16,11 @@ class CheckLanguage
     public function handle(Request $request, Closure $next): Response
     {
 
-        $lang = $request->route('lang');
-          if ($lang) {
+        $locale = $request->segment(count($request->segments()));
+          if ($locale) {
              $validLanguages = ['en','ar'];
-            if (in_array($lang, $validLanguages)) {
-                app()->setLocale($lang);
+            if (in_array($locale, $validLanguages)) {
+                app()->setLocale($locale);
             } else {
                  app()->setLocale('en');
             }

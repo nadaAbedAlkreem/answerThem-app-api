@@ -33,7 +33,6 @@ class QuestionController extends Controller
         $dataNative = Question::select('*')->orderBy('created_at', 'desc')->get() ;
         $name = (app::getLocale() == 'ar')? 'name_ar' : 'name_en'  ;
         $category = Category::with('parent' , 'parent.parent')->where('level', 3)->get() ;
-        $this->lang($request);
          if ($request->ajax())
         {
             $data = QuestionResource::collection($dataNative);
@@ -78,6 +77,7 @@ class QuestionController extends Controller
     public function update(UpdateQuestionRequest $request)
     {
         try {
+
             $question = $this->questionRepository->update($request->getData(), $request['id']);
 
             if ($question) {
@@ -113,18 +113,6 @@ class QuestionController extends Controller
                 'message' => $e->getMessage(),
             ], 500);
         }
-
-
     }
-    private  function  lang($request){
-        $lang = $request->route('lang');
-        if ($lang) {
-            $validLanguages = ['en','ar'];
-            if (in_array($lang, $validLanguages)) {
-                app()->setLocale($lang);
-            } else {
-                app()->setLocale('en');
-            }
-        }
-    }
+
 }

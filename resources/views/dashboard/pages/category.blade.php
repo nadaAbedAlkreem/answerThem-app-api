@@ -1,7 +1,50 @@
 @extends('dashboard.layout.app')
 
 @section('content')
+<style>
+    /* Change the look of the select box */
+    .select2-container .select2-selection--single {
+        height: 40px; /* Adjust the height */
+        border-radius: 8px; /* Rounded corners */
+        border: 1px solid #ccc; /* Border color */
+        padding: 0 10px; /* Padding inside the box */
+    }
 
+    /* Change the arrow inside the select box */
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+        height: 34px; /* Adjust the height of the arrow */
+        width: 34px; /* Adjust the width of the arrow */
+    }
+
+    /* Change the background of the dropdown list */
+    .select2-dropdown {
+        background-color: #f4f4f4; /* Background color */
+        border-radius: 8px; /* Rounded corners */
+    }
+
+    /* Style the dropdown list when scrolling */
+    .select2-container--default .select2-results > .select2-results__options {
+        max-height: 200px; /* Limit the height */
+        overflow-y: auto; /* Enable scrolling if there are many options */
+    }
+
+    .select2-search__field {
+        width: 100%; /* Full width of the dropdown */
+        padding: 8px 12px; /* Add padding for spacing */
+        font-size: 14px; /* Set font size */
+        border: 1px solid #ccc; /* Add border to the input field */
+        border-radius: 4px; /* Rounded corners */
+        background-color: #fff; /* Set background color */
+    }
+
+    /* Optional: Change border color on focus */
+    .select2-search__field:focus {
+        border-color: #007bff; /* Blue border when focused */
+        outline: none; /* Remove default outline */
+    }
+
+
+</style>
     <div class="d-flex flex-column flex-root">
     <!--begin::Page-->
     <div class="page d-flex flex-column flex-column-fluid">
@@ -55,7 +98,44 @@
                                 </div>
                             </div>
                             <!--end::Menu item-->
+                            <!--begin::Menu item-->
+                            <div class="menu-item px-5" data-kt-menu-trigger="hover">
+                                <a  class="menu-link px-5">
+											<span class="menu-title position-relative">{{__('setting.language')}}
+                                                @if(app()->getLocale()  == 'en')
+                                                    <span class="fs-8 rounded bg-light px-3 py-2 position-absolute translate-middle-y top-50 end-0">{{__('setting.english')}}
+                                                       <img class="w-15px h-15px rounded-1 ms-2" src="assets/media/flags/united-states.svg" alt="" /></span></span>
 
+                                    @else
+
+                                        <span class="fs-8 rounded bg-light px-3 py-2 position-absolute translate-middle-y top-50 end-0">{{__('setting.arabic')}}
+                                                      <img class="w-15px h-15px rounded-1 ms-2" src="assets/media/flags/saudi-arabia.svg" alt="" /></span></span>
+
+                                    @endif
+                                </a>
+                                <!--begin::Menu sub-->
+                                <div class="menu-sub menu-sub-dropdown w-175px py-4">
+                                    <!--begin::Menu item-->
+                                    <div class="menu-item px-3">
+                                        <a href="{{route('dashboard.category' , ['lang' => 'en'])}}" class="menu-link d-flex px-5  @if(app()->getLocale() == 'en') active @endif">
+												<span class="symbol symbol-20px me-4">
+													<img class="rounded-1" src="assets/media/flags/united-states.svg" alt="" />
+												</span>{{__('setting.english')}}</a>
+                                    </div>
+
+                                    <!--end::Menu item-->
+                                    <!--begin::Menu item-->
+                                    <div class="menu-item px-3">
+                                        <a href="{{route('dashboard.category' , ['lang' => 'ar'])}}" class="menu-link d-flex px-5  @if(app()->getLocale() == 'ar') active @endif">
+												<span class="symbol symbol-20px me-4">
+													<img class="rounded-1" src="assets/media/flags/saudi-arabia.svg" alt="" />
+												</span>{{__('setting.arabic')}}</a>
+                                    </div>
+                                    <!--end::Menu item-->
+                                </div>
+                                <!--end::Menu sub-->
+                            </div>
+                            <!--end::Menu item-->
 
                             <!--end::Menu item-->
                             <!--begin::Menu item-->
@@ -89,6 +169,7 @@
                 <!--begin::Actions-->
                 <div class="d-flex align-items-center py-1">
                     <!--begin::Filter-->
+
                     <div class="me-2">
                         <!--begin::Menu-->
                         <a href="#" class="btn btn-sm btn-flex btn-light" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
@@ -125,6 +206,18 @@
                                             <option value="3">Level 3 Categories</option>
                                          </select>
                                     </div>
+                                    <!--end::Input-->
+                                </div>
+                                <div class="mb-10">
+                                    <!--begin::Label-->
+                                    <label class="form-label fw-bold">Show dependencies :</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <div>
+                                        <select id="categorySelect" name="categorySelect" data-kt-select2="true" data-placeholder="Select a category" data-dropdown-parent="#kt_menu_61cf14c9caa9b" data-allow-clear="true" style="width: 100%"></select>
+                                    </div>
+
+
                                     <!--end::Input-->
                                 </div>
 
@@ -176,8 +269,9 @@
                                             <th>Actions</th>
                                             <th>Name</th>
                                             <th>Description</th>
-                                            <th>rating</th>
-                                            <th>famous gaming</th>
+                                            <th>Dependency</th>
+                                            <th>Rating</th>
+                                            <th>Famous gaming</th>
 
                                         </tr>
                                         </thead>

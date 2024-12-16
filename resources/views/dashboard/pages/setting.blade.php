@@ -55,7 +55,27 @@
                                 </div>
                             </div>
                             <!--end::Menu item-->
+                            <!--begin::Menu sub-->
+                            <div class="menu-sub menu-sub-dropdown w-175px py-4">
+                                <!--begin::Menu item-->
+                                <div class="menu-item px-3">
+                                    <a href="{{route('dashboard.setting' , ['lang' => 'en'])}}" class="menu-link d-flex px-5  @if(app()->getLocale() == 'en') active @endif">
+												<span class="symbol symbol-20px me-4">
+													<img class="rounded-1" src="assets/media/flags/united-states.svg" alt="" />
+												</span>{{__('setting.english')}}</a>
+                                </div>
 
+                                <!--end::Menu item-->
+                                <!--begin::Menu item-->
+                                <div class="menu-item px-3">
+                                    <a href="{{route('dashboard.setting' , ['lang' => 'ar'])}}" class="menu-link d-flex px-5  @if(app()->getLocale() == 'ar') active @endif">
+												<span class="symbol symbol-20px me-4">
+													<img class="rounded-1" src="assets/media/flags/saudi-arabia.svg" alt="" />
+												</span>{{__('setting.arabic')}}</a>
+                                </div>
+                                <!--end::Menu item-->
+                            </div>
+                            <!--end::Menu sub-->
 
                             <!--end::Menu item-->
                             <!--begin::Menu item-->

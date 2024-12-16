@@ -6,10 +6,10 @@
 <!--end::Global Javascript Bundle-->
 <!--begin::Page Vendors Javascript(used by this page)-->
 <script src="<?php echo e(asset('assets/plugins/custom/datatables/datatables.bundle.js')); ?>"></script>
-<script src="<?php echo e(asset('assets/plugins/custom/vis-timeline/vis-timeline.bundle.js')); ?>"></script>
+<script src="<?php echo e(asset('assetsript src="{{asset(/plugins/custom/vis-timeline/vis-timeline.bundle.js')); ?>"></script>
 <!--end::Page Vendors Javascript-->
 <!--begin::Page Custom Javascript(used by this page)-->
- <script src="<?php echo e(asset('assets/js/widgets.bundle.js')); ?>"></script>
+ <sc'assets/js/widgets.bundle.js')}}"></script>
 <script src="<?php echo e(asset('assets/js/custom/widgets.js')); ?>"></script>
 <script src="<?php echo e(asset('assets/js/custom/apps/chat/chat.js')); ?>"></script>
 <script src="<?php echo e(asset('assets/js/custom/utilities/modals/upgrade-plan.js')); ?>"></script>
