@@ -57,6 +57,18 @@ class Challenge extends Model
     {
         return $this->hasMany(Question::class);
     }
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($question) {
+            // Soft delete related friend requests
+            $question->Question()->each(function ($question) {
+                $question->delete(); // Soft delete sent requests
+            });
+
+        });
+    }
     public function result()
     {
         return $this->hasOne(Result::class , 'challenge_id');

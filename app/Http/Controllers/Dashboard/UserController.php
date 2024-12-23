@@ -21,7 +21,7 @@ class UserController extends Controller
      }
     public function index(Request $request ,  UsersDatatableService $userDatatableService)
     {
-          if ($request->ajax())
+           if ($request->ajax())
             {
                 $dataNative = User::select('*')->orderBy('created_at', 'desc') ;
                 try {

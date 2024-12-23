@@ -117,7 +117,7 @@ class SettingsTableSeeder extends Seeder
                         ,
                         [
                             'name' => 'Kuwait',
-                            'image' => 'https://linktest.gastwerk-bern.ch/storage/uploads/images/settings/Frame_(2).png',
+                            'image' => 'https://linktest.gastwerk-bern.ch/storage/uploads/images/settings/s.png',
                             'code' => '+965',
                         ]
                         ,
@@ -161,7 +161,7 @@ class SettingsTableSeeder extends Seeder
                         ,
                         [
                             'name' => 'Kuwait',
-                            'image' => 'https://linktest.gastwerk-bern.ch/storage/uploads/images/settings/Frame_(2).png',
+                            'image' => 'https://linktest.gastwerk-bern.ch/storage/uploads/images/settings/s.png',
                             'code' => '+965',
                         ]
                         ,

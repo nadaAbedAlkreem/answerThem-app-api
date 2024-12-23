@@ -1,12 +1,44 @@
 
 $(document).ready(function ($) {
-
+    var OK = window.translations.OK;
+    var are_sure = window.translations.are_sure;
+    var revert = window.translations.revert;
+    var yes = window.translations.yes;
 
     var lang = window.location.pathname.split('/').pop(); // Example: 'en', 'fr', etc.
+    var language_datatables = null;
+
+    if (lang === "ar")
+    {
+        language_datatables = {
+            sEmptyTable: "لا يوجد بيانات ",
+            sInfo: "يتم عرض _START_ إلى _END_ من _TOTAL_ من الإدخالات",
+            sInfoEmpty: "عرض 0 إلى 0 من أصل 0 إدخالات",
+            sInfoFiltered: "(تمت التصفية من إجمالي _MAX_ الإدخالات)",
+            sInfoPostFix: "",
+            sInfoThousands: "",
+            sLengthMenu: "إظهار إدخالات _MENU_",
+            sLoadingRecords: "جارٍ التحميل...",
+            sProcessing: "جارٍ المعالجة...",
+            sSearch: "البحث:",
+            sZeroRecords: "لم يتم العثور على سجلات مطابقة",
+            oPaginate: {
+                sFirst: "الأولى",
+                sLast: "الأخير",
+                sNext: "التالي",
+                sPrevious: "السابق",
+            },
+            oAria: {
+                sSortAscending: ": التنشيط لفرز الأعمدة تصاعديًا",
+                sSortDescending: ": التنشيط لفرز الأعمدة تنازليًا",
+            },
+        };
 
 
-    var table = $(".data-question").DataTable({
-        processing: true,
+    }
+     $("#questions-table").DataTable({
+         language: language_datatables,
+         processing: true,
         serverSide: true,
         ordering: false,
         lengthChange: false,
@@ -17,6 +49,7 @@ $(document).ready(function ($) {
             data: function (d) {
                 d.lang = lang;
                 d.category = $('#category').val();  // Get the selected value from dropdown
+                d.name_question = $('#name_question').val();  // Get the selected value from dropdown
 
             },
         },
@@ -33,13 +66,17 @@ $(document).ready(function ($) {
         dom: '<"top"f>rt<"bottom"lp><"clear">', // Customize DataTable layout (pagination, search, etc.)
     });
     $('#apply').on('click', function () {
-        table.ajax.reload();  // Reload the table with the new filters
+        $("#questions-table").DataTable().ajax.reload();
     });
+    $('#name_question').on('input', function () {
+        $("#questions-table").DataTable().ajax.reload();
+    });
+
 
     $("#submit_form_question").on("click", function (e) {
         e.preventDefault();
 
-        let formData = new FormData($("#kt_modal_create_app_form")[0]);
+        let formData = new FormData($("#kt_modal_create_app_question_form")[0]);
 
 
 
@@ -50,34 +87,27 @@ $(document).ready(function ($) {
         });
         $.ajax({
             type: "POST",
-            url: "dashboard/question/create",
+            url: "dashboard/question/create?lang="+lang,
             data: formData,
             contentType: false, // determint type object
             processData: false, // processing on response
             success: function (response) {
-                $("#successMsg").show();
-                console.log(response);
-                Swal.fire({
-                    text: "You have successfully add data!",
-                    icon: "success",
-                    buttonsStyling: false,
-                    confirmButtonText: "Ok, got it!",
-                    customClass: {
-                        confirmButton: "btn btn-primary",
-                    },
-                });
-                table.ajax.reload();
+                const dismissButton = document.getElementById('dismiss_create');
+
+                if (dismissButton) {
+                    dismissButton.click();
+                }
+                $("#questions-table").DataTable().ajax.reload();
 
             },
 
             error: function (response) {
-                console.log(response);
-                console.log("response");
+
                 Swal.fire({
-                    text: response.responseJSON.message,
+                    text: response.responseJSON.data.error,
                     icon: "error",
                     buttonsStyling: false,
-                    confirmButtonText: "Ok, got it!",
+                    confirmButtonText: OK,
                     customClass: {
                         confirmButton: "btn btn-primary",
                     },
@@ -85,26 +115,21 @@ $(document).ready(function ($) {
             },
         });
     });
-    $(".data-question").on("click", ".updateRecord", function (e)
+    $("#questions-table").on("click", ".updateRecord", function (e)
     {
         e.preventDefault();
         var id = $(this).data("id");
         var category_id = $(this).data("category");
         var answer_text_ar = $(this).data("answer_text_ar_1");
         var is_correct_index = $(this).data("is_correct");
-
-        console.log(id);
-        console.log(is_correct_index);
-        console.log(answer_text_ar);
-         var question_en_text = $(this).data("question_en_text");
+        var question_en_text = $(this).data("question_en_text");
         var question_ar_text = $(this).data("question_ar_text");
-         var image = $(this).data("image");
+        var image = $(this).data("image");
 
         // Find the radio button with the   value
 
         // Select the radio button with the matching value
         const radioToCheck = document.querySelector(`input[class="correct_answer_ar_update"][value="${is_correct_index}"]`);
-        console.log(radioToCheck);
 
         if (radioToCheck) {
             radioToCheck.checked = true;
@@ -113,14 +138,6 @@ $(document).ready(function ($) {
 
         }
 
-        // let selectedCategory = $([id='correct_answer_ar']".val();
-
-        // console.log(selectedCategory);
-        // if (famous_gaming === 1) {
-        //     checkbox.checked = true;
-        // } else {
-        //     checkbox.checked = false;
-        // }
         $('#id_update').val(id);
         $('#answer_text_en_1').val($(this).data("answer_text_en_1"));
         $('#answer_text_en_2').val($(this).data("answer_text_en_2"));
@@ -139,28 +156,20 @@ $(document).ready(function ($) {
 
         var dropdown = document.getElementById('category_id');
         dropdown.value = category_id;
-        console.log("category_id");
 
         var imageWrapper = document.querySelector('.image-update');
-        console.log("imageWrapper");
-        console.log(image);
-
-        console.log(imageWrapper);
 
         if (image) {
             imageWrapper.style.backgroundImage = `url('${image}')`;
-            console.log('Image URL set:', image);
-        } else {
-            console.log('Image URL is not defined.');
-        }
+         } else {
+         }
 
     });
 
     $("#submit_form_question_update").on("click", function (e) {
         e.preventDefault();
 
-        let formData = new FormData($("#kt_modal_update_app_form")[0]);
-        console.log(formData);
+        let formData = new FormData($("#kt_modal_update_questions_app_form")[0]);
 
 
         $.ajaxSetup({
@@ -170,33 +179,24 @@ $(document).ready(function ($) {
         });
         $.ajax({
             type: "post",
-            url: "dashboard/question/update",
+            url: "dashboard/question/update?lang="+lang,
             data: formData,
             contentType: false, // determint type object
             processData: false, // processing on response
             success: function (response) {
-                $("#successMsg").show();
-                console.log(response);
-                Swal.fire({
-                    text: "You have successfully Update data !",
-                    icon: "success",
-                    buttonsStyling: false,
-                    confirmButtonText: "Ok, got it!",
-                    customClass: {
-                        confirmButton: "btn btn-primary",
-                    },
-                });
-                $(".data-question").DataTable().ajax.reload();
+                const dismissButton = document.getElementById('dismiss_update');
+                if (dismissButton) {
+                    dismissButton.click();
+                }
+                $("#questions-table").DataTable().ajax.reload();
             },
 
             error: function (response) {
-                console.log(response);
-                console.log("response");
                 Swal.fire({
-                    text: response.responseJSON.message,
+                    text: response.responseJSON.data.error,
                     icon: "error",
                     buttonsStyling: false,
-                    confirmButtonText: "Ok, got it!",
+                    confirmButtonText: OK,
                     customClass: {
                         confirmButton: "btn btn-primary",
                     },
@@ -208,18 +208,17 @@ $(document).ready(function ($) {
 
 
 
-    $(".data-question").on("click", ".deleteRecord[data-id]", function (e)
+    $("#questions-table").on("click", ".deleteRecord[data-id]", function (e)
     {
         e.preventDefault();
         $(".show_confirm").click(function (event) {
             Swal.fire({
-                title: "Are you sure?",
-                text: "You won't be able to revert this!",
+                title: are_sure,
+                text: revert,
                 icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
+                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
-                confirmButtonText: "Yes, delete it!",
+                confirmButtonText: yes,
             }).then((willDelete) => {
                 if (willDelete.isConfirmed) {
                     var id = $(this).data("id");
@@ -233,8 +232,7 @@ $(document).ready(function ($) {
                             _token: token,
                         },
                         success: function () {
-                            console.log("it Works");
-                            $(".data-question").DataTable().ajax.reload();
+                             $("#questions-table").DataTable().ajax.reload();
                         },
                     });
                 }

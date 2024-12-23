@@ -15,16 +15,6 @@ class AdminSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('admins')->insert([
-            [
-                'name' => 'admin',
-                'email' => 'admin@gmail.com',
-                'phone' => '+123456779',
-                'password' => Hash::make('admin'),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            // Add more challenges as needed
-        ]);
+
     }
 }

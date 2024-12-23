@@ -1,5 +1,11 @@
 "use strict";
-var KTCreateApp = function () {
+var Sorry = window.translations.Sorry;
+var OK = window.translations.OK;
+var name = window.translations.name;
+var image = window.translations.image;
+var desc = window.translations.desc;
+
+var KTCreateCategoryApp = function () {
     var e, t, o, r, a, i, n = [];
     return {
         init: function () {
@@ -33,10 +39,10 @@ var KTCreateApp = function () {
                                     e.goNext();
                                 } else {
                                     Swal.fire({
-                                        text: "Sorry, looks like there are some errors detected, please try again.",
+                                        text: Sorry,
                                         icon: "error",
                                         buttonsStyling: false,
-                                        confirmButtonText: "Ok, got it!",
+                                        confirmButtonText: OK,
                                         customClass: { confirmButton: "btn btn-light" }
                                     }).then(function () { });
                                 }
@@ -65,10 +71,10 @@ var KTCreateApp = function () {
                                 }, 2000);
                             } else {
                                 Swal.fire({
-                                    text: "Sorry, looks like there are some errors detected, please try again.",
+                                    text: Sorry,
                                     icon: "error",
                                     buttonsStyling: false,
-                                    confirmButtonText: "Ok, got it!",
+                                    confirmButtonText: OK,
                                     customClass: { confirmButton: "btn btn-light" }
                                 }).then(function () {
                                     KTUtil.scrollTop();
@@ -86,12 +92,12 @@ var KTCreateApp = function () {
                         fields: {
                             name_ar: {
                                 validators: {
-                                    notEmpty: { message: "Category name arabic is required" }
+                                    notEmpty: { message: name }
                                 }
                             },
                             name_en: {
                                 validators: {
-                                    notEmpty: { message: "Category name english is required" }
+                                    notEmpty: { message: name}
                                 }
                             },
 
@@ -111,7 +117,7 @@ var KTCreateApp = function () {
                             description_ar: {
                                 validators: {
                                     notEmpty: {
-                                        message: "Category Description in Arabic is required"
+                                        message: desc
                                     }
                                 }
                             }
@@ -120,7 +126,7 @@ var KTCreateApp = function () {
                             description_en: {
                                 validators: {
                                     notEmpty: {
-                                        message: "Category Description in English is required"
+                                        message: desc
                                     }
                                 }
                             }
@@ -139,7 +145,7 @@ var KTCreateApp = function () {
                         fields: {
                             image: {
                                 validators: {
-                                    notEmpty: { message: "Image is required" }
+                                    notEmpty: { message:image }
                                 }
                             },
                         },
@@ -192,5 +198,5 @@ var KTCreateApp = function () {
 }();
 
 KTUtil.onDOMContentLoaded(function () {
-    KTCreateApp.init();
+    KTCreateCategoryApp.init();
 });

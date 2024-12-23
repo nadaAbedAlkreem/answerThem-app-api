@@ -1,5 +1,10 @@
 "use strict";
-var KTUpdateApp = function () {
+var Sorry = window.translations.Sorry;
+var OK = window.translations.OK;
+var name = window.translations.name;
+var image = window.translations.image;
+var desc = window.translations.desc;
+var KTUpdateCategoryApp = function () {
     var e, t, o, r, a, i, n = [];
     return {
         init: function () {
@@ -33,10 +38,10 @@ var KTUpdateApp = function () {
                                     e.goNext();
                                 } else {
                                     Swal.fire({
-                                        text: "Sorry, looks like there are some errors detected, please try again.",
+                                        text: Sorry,
                                         icon: "error",
                                         buttonsStyling: false,
-                                        confirmButtonText: "Ok, got it!",
+                                        confirmButtonText: Ok,
                                         customClass: { confirmButton: "btn btn-light" }
                                     }).then(function () { });
                                 }
@@ -65,10 +70,10 @@ var KTUpdateApp = function () {
                                 }, 2000);
                             } else {
                                 Swal.fire({
-                                    text: "Sorry, looks like there are some errors detected, please try again.",
+                                    text: Sorry,
                                     icon: "error",
                                     buttonsStyling: false,
-                                    confirmButtonText: "Ok, got it!",
+                                    confirmButtonText: Ok,
                                     customClass: { confirmButton: "btn btn-light" }
                                 }).then(function () {
                                     KTUtil.scrollTop();
@@ -86,12 +91,12 @@ var KTUpdateApp = function () {
                         fields: {
                             name_ar: {
                                 validators: {
-                                    notEmpty: { message: "Category name arabic is required" }
+                                    notEmpty: { message:  name}
                                 }
                             },
                             name_en: {
                                 validators: {
-                                    notEmpty: { message: "Category name english is required" }
+                                    notEmpty: { message:  name }
                                 }
                             },
 
@@ -111,7 +116,7 @@ var KTUpdateApp = function () {
                             description_ar: {
                                 validators: {
                                     notEmpty: {
-                                        message: "Category Description in Arabic is required"
+                                        message:desc
                                     }
                                 }
                             }
@@ -120,7 +125,7 @@ var KTUpdateApp = function () {
                             description_en: {
                                 validators: {
                                     notEmpty: {
-                                        message: "Category Description in English is required"
+                                        message: desc
                                     }
                                 }
                             }
@@ -152,7 +157,7 @@ var KTUpdateApp = function () {
                         fields: {
                             ie: {
                                 validators: {
-                                    notEmpty: { message: "Image is required" }
+                                    notEmpty: { message: image}
                                 }
                             },
                         },
@@ -169,7 +174,7 @@ var KTUpdateApp = function () {
                 fields: {
                     ie: {
                         validators: {
-                            notEmpty: { message: "Image is required" }
+                            notEmpty: { message: image}
                         }
                     },
                 },
@@ -188,5 +193,5 @@ var KTUpdateApp = function () {
 }();
 
 KTUtil.onDOMContentLoaded(function () {
-    KTUpdateApp.init();
+    KTUpdateCategoryApp.init();
 });

@@ -23,7 +23,21 @@ class Category extends Model
         'famous_gaming'
     ];
     protected $dates = ['deleted_at'];
+    protected static function boot()
+    {
+        parent::boot();
 
+        static::deleting(function ($category) {
+            // Soft delete related friend requests
+            $category->children()->each(function ($children) {
+                $children->delete(); // Soft delete sent requests
+            });
+            $category->questions()->each(function ($questions) {
+                $questions->delete(); // Soft delete sent requests
+            });
+
+        });
+    }
     public function parent()
     {
         return $this->belongsTo(Category::class, 'parent_id');
@@ -44,10 +58,6 @@ class Category extends Model
 
     // A category can have sub-categories (parent-child relationship)
 
-    public function challenge()
-    {
-        return $this->hasMany(Category::class, 'category_id');
-    }
 
     // A category can belong to a parent category
 

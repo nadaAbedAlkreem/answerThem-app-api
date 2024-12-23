@@ -33,7 +33,9 @@ class ContactUsController extends Controller
         $this->lang($request);
 
         if ($request->ajax()) {
-            $dataNative = ContactUs::with('sender')->select('*')->orderBy('created_at', 'desc');
+            $dataNative = ContactUs::with('sender')->select('*')
+                ->orderBy('created_at', 'desc')
+                ->orderBy('status', 'asc')->get();
 
             try {
                 return $contactUsDatatableService->handle($request, $dataNative);

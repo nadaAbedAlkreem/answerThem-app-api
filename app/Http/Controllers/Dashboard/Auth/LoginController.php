@@ -7,6 +7,7 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Resources\Api\UserWithTokenAccessResource;
 use App\Services\UserService;
 use App\Traits\ResponseTrait;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
@@ -23,22 +24,35 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
+
          try {
-
             $credentials = $request->only('email', 'password');
-             dd(Auth::guard('admin'));
-            if (Auth::guard('admin')->attempt($credentials)) {
-                 return redirect()->route('dashboard.home' , ['lang'=>app::getLocale()]);
-            }
+               if (auth('admin')->attempt($credentials)) {
+                   $user =auth('admin')->user();
 
+                   if($user->getRoleNames()[0] == 'staff')
+                  {
+                      return redirect()->route('dashboard.question' , ['lang' => app()->getLocale()]);
+
+                  }
+
+                   return redirect()->route('dashboard.home' , ['lang' => app()->getLocale()]);
+             }
+            else
+            {
+                throw new Exception(__('messages.invalid_credentials'));
+
+            }
         } catch (\Exception $e) {
-             dd($e->getMessage());
-             return $this->errorResponse(
-                'ERROR_OCCURRED',
-                ['error' =>'The attached data is incorrect, either the email or the password'],
-                500,
-                app()->getLocale()
-            );
-        }
+             return redirect()->route('admin.login' , ['error' => $e->getMessage()]);
+         }
+    }
+    public function logout()
+    {
+        Auth::guard('admin')->logout();
+        request()->session()->invalidate();
+        request()->session()->regenerateToken();
+        return redirect()->route('admin.login')->with('success', 'You have been logged out.');
+
     }
 }

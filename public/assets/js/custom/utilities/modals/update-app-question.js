@@ -3,10 +3,10 @@ var KTCreateApp = function () {
     var e, t, o, r, a, i, n = [];
     return {
         init: function () {
-            (e = document.querySelector("#kt_modal_create_app"))
+            (e = document.querySelector("#kt_modal_update_question_app"))
             && (new bootstrap.Modal(e),
-                    t = document.querySelector("#kt_modal_update_app_stepper"),
-                    o = document.querySelector("#kt_modal_update_app_form"),
+                    t = document.querySelector("#kt_modal_update_question_app_stepper"),
+                    o = document.querySelector("#kt_modal_update_questions_app_form"),
                     r = t.querySelector('[data-kt-stepper-action="submit"]'),
                     a = t.querySelector('[data-kt-stepper-action="next"]'),
                     (i = new KTStepper(t)).on("kt.stepper.changed", function (e) {

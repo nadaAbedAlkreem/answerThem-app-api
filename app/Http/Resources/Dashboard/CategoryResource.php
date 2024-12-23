@@ -37,6 +37,8 @@ class CategoryResource extends JsonResource
             'rating' => $this->rating,
             'level' => $this->level ,
             'parent_id' => $this->parent_id ,
+            'parent' => new \App\Http\Resources\Api\CategoryResource($this->whenLoaded('parent')),
+            'grandparent' => new CategoryResource($this->whenLoaded('parent.parent')),
             'famous_gaming' => $this->famous_gaming ,
 
         ];

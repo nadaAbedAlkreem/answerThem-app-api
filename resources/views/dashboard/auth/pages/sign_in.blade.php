@@ -11,16 +11,22 @@
             <div class="d-flex flex-center flex-column flex-column-fluid p-10 pb-lg-20">
                 <div class="w-lg-500px bg-body rounded shadow-sm p-10 p-lg-15 mx-auto">
                     <!--begin::Form-->
-                    <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form"  >
+
+                    <form class="form w-100" action="{{route('admin.login.store')}}" method="post" novalidate="novalidate" id="kt_sign_in_form"  >
                         @csrf
                         <!--begin::Heading-->
-                        <div class="text-center mb-10">
+                        <div class="mb-10 text-center">
                             <!--begin::Title-->
-                            <h1 class="text-dark mb-3">Sign In to </h1>
-
+                            <h1 class="text-dark mb-3">Create an Account</h1>
+                            <!--end::Title-->
+                            <!--begin::Link-->
+                            <div class="text-gray-400 fw-bold fs-4">Already have an account?
+                                <a href="{{route('admin.register')}}" class="link-primary fw-bolder">Sign up here</a></div>
+                            <!--end::Link-->
                         </div>
-                        <!--begin::Heading-->
-                        <!--begin::Input group-->
+                        <!--end::Heading-->
+
+                         <!--begin::Input group-->
                         <div class="fv-row mb-10">
                             <!--begin::Label-->
                             <label class="form-label fs-6 fw-bolder text-dark">Email</label>
@@ -45,13 +51,11 @@
                         <!--end::Input group-->
                         <!--begin::Actions-->
                         <div class="text-center">
-                            <!--begin::Submit button-->
                             <button type="submit" id="kt_sign_in_submit" class="btn btn-lg btn-primary w-100 mb-5">
                                 <span class="indicator-label">Continue</span>
                                 <span class="indicator-progress">Please wait...
 									<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                             </button>
-
                         </div>
                         <!--end::Actions-->
                     </form>
@@ -70,12 +74,20 @@
     <!--begin::Global Javascript Bundle(used by all pages)-->
     <script src="{{asset('assets/plugins/global/plugins.bundle.js')}}"></script>
     <script src="{{asset('assets/js/scripts.bundle.js')}}"></script>
-    <!--end::Global Javascript Bundle-->
-    <!--begin::Page Custom Javascript(used by this page)-->
-{{--    <script src="{{asset('assets/js/custom/authentication/sign-in/general.js')}}"></script>--}}
-    <script src="{{asset('assets/js/custom/authentication/sign-in/login-action.js')}}"></script>
-    <!--end::Page Custom Javascript-->
-    <!--end::Javascript-->
+
+    @if (request('error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: "{{ request('error') }}",
+                customClass: {
+                    confirmButton: "btn btn-primary",
+                },
+            });
+        </script>
+    @endif
+
     </body>
 
 @endsection

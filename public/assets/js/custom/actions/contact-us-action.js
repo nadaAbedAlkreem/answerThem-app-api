@@ -4,9 +4,44 @@ $(document).ready(function ($) {
 
     var lang = window.location.pathname.split('/').pop(); // Example: 'en', 'fr', etc.
     var token = $("meta[name='csrf-token']").attr("content");
+    var language_datatables = null;
+    var OK = window.translations.OK;
+    var success_message = window.translations.success_message;
+    var are_sure = window.translations.are_sure;
+    var revert = window.translations.revert;
+    var yes = window.translations.yes;
 
+    if (lang === "ar")
+    {
+        language_datatables = {
+            sEmptyTable: "لا يوجد بيانات ",
+            sInfo: "يتم عرض _START_ إلى _END_ من _TOTAL_ من الإدخالات",
+            sInfoEmpty: "عرض 0 إلى 0 من أصل 0 إدخالات",
+            sInfoFiltered: "(تمت التصفية من إجمالي _MAX_ الإدخالات)",
+            sInfoPostFix: "",
+            sInfoThousands: "",
+            sLengthMenu: "إظهار إدخالات _MENU_",
+            sLoadingRecords: "جارٍ التحميل...",
+            sProcessing: "جارٍ المعالجة...",
+            sSearch: "البحث:",
+            sZeroRecords: "لم يتم العثور على سجلات مطابقة",
+            oPaginate: {
+                sFirst: "الأولى",
+                sLast: "الأخير",
+                sNext: "التالي",
+                sPrevious: "السابق",
+            },
+            oAria: {
+                sSortAscending: ": التنشيط لفرز الأعمدة تصاعديًا",
+                sSortDescending: ": التنشيط لفرز الأعمدة تنازليًا",
+            },
+        };
+
+
+    }
 
     var table = $(".data-contact-us").DataTable({
+        language: language_datatables,
         processing: true,
         serverSide: true,
         ordering: false,
@@ -44,7 +79,6 @@ $(document).ready(function ($) {
          var token = $("meta[name='csrf-token']").attr("content");
          const status = dropdown.value;
          var id = $(this).data("id");
-        console.log("Selected value:", id);
                      $.ajax({
                         url: "dashboard/contact_us/update/",
                         type: "post",
@@ -54,12 +88,11 @@ $(document).ready(function ($) {
                             _token: token,
                         },
                         success: function () {
-                            console.log("it Works");
                             Swal.fire({
-                                text: "You have successfully Update Status !",
+                                text: success_message,
                                 icon: "success",
                                 buttonsStyling: false,
-                                confirmButtonText: "Ok, got it!",
+                                confirmButtonText: OK ,
                                 customClass: {
                                     confirmButton: "btn btn-primary",
                                 },
@@ -79,13 +112,12 @@ $(document).ready(function ($) {
         e.preventDefault();
         $(".show_confirm").click(function (event) {
             Swal.fire({
-                title: "Are you sure?",
-                text: "You won't be able to revert this!",
+                title: are_sure,
+                text: revert,
                 icon: "warning",
-                showCancelButton: true,
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
-                confirmButtonText: "Yes, delete it!",
+                confirmButtonText: yes,
             }).then((willDelete) => {
                 if (willDelete.isConfirmed) {
                     var id = $(this).data("id");
@@ -99,7 +131,6 @@ $(document).ready(function ($) {
                             _token: token,
                         },
                         success: function () {
-                            console.log("it Works");
                             $(".data-contact-us").DataTable().ajax.reload();
                         },
                     });

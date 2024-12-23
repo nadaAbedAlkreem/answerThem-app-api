@@ -23,6 +23,7 @@ class StoreCategoryRequest extends FormRequest
      */
     public function rules(): array
     {
+        app::setLocale($this->input('lang'));
 
         return [
             'name_ar' => 'required|string|unique:categories,name_ar|max:255',
@@ -91,6 +92,58 @@ class StoreCategoryRequest extends FormRequest
 
 
         return $data;
+    }
+    protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
+    {
+        $errors = $validator->errors()->all();
+        $formattedErrors = ['error' => $errors[0]] ;
+        throw new \Illuminate\Validation\ValidationException($validator, response()->json([
+            'success' => false,
+            'message' => __('messages.ERROR_OCCURRED'),
+            'data' => $formattedErrors,
+            'status' => 'Internal Server Error'
+        ], 500));
+    }
+    public function messages()
+    {
+        return [
+            'name_ar.required' => __('messages.name_ar.required'),
+            'name_ar.string' => __('messages.name_ar.string'),
+            'name_ar.unique' => __('messages.name_ar.unique'),
+            'name_ar.max' => __('messages.name_ar.max'),
+
+            'name_en.required' => __('messages.name_en.required'),
+            'name_en.string' => __('messages.name_en.string'),
+            'name_en.unique' => __('messages.name_en.unique'),
+            'name_en.max' => __('messages.name_en.max'),
+
+            'description_ar.required' => __('messages.description_ar.required'),
+            'description_ar.string' => __('messages.description_ar.string'),
+            'description_ar.max' => __('messages.description_ar.max'),
+
+            'description_en.required' => __('messages.description_en.required'),
+            'description_en.string' => __('messages.description_en.string'),
+            'description_en.max' => __('messages.description_en.max'),
+
+            'rating.required' => __('messages.rating.required'),
+            'rating.numeric' => __('messages.rating.numeric'),
+            'rating.min' => __('messages.rating.min'),
+            'rating.max' => __('messages.rating.max'),
+
+            'image.required' => __('messages.image.required'),
+            'image.file' => __('messages.image.file'),
+            'image.mimes' => __('messages.image.mimes'),
+            'image.max' => __('messages.image.max'),
+
+            'parent_id.integer' => __('messages.parent_id.integer'),
+            'parent_id.min' => __('messages.parent_id.min'),
+            'parent_id.exists' => __('messages.parent_id.exists'),
+
+            'famous_gaming.boolean' => __('messages.famous_gaming.boolean'),
+
+            'category_id.required' => __('messages.category_id.required'),
+
+         ];
     }
 
 

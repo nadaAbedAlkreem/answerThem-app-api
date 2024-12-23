@@ -1,12 +1,19 @@
 "use strict";
-var KTCreateApp = function () {
+var Sorry = window.translations.Sorry;
+var OK = window.translations.OK;
+var answer = window.translations.answer;
+var image = window.translations.image;
+var que = window.translations.que;
+var category_a = window.translations.category_a;
+
+var KTCreateQuestApp = function () {
     var e, t, o, r, a, i, n = [];
     return {
         init: function () {
-            (e = document.querySelector("#kt_modal_create_app"))
+            (e = document.querySelector("#kt_modal_create_question_app"))
             && (new bootstrap.Modal(e),
-                    t = document.querySelector("#kt_modal_create_app_stepper"),
-                    o = document.querySelector("#kt_modal_create_app_form"),
+                    t = document.querySelector("#kt_modal_create_app_question_stepper"),
+                    o = document.querySelector("#kt_modal_create_app_question_form"),
                     r = t.querySelector('[data-kt-stepper-action="submit"]'),
                     a = t.querySelector('[data-kt-stepper-action="next"]'),
                     (i = new KTStepper(t)).on("kt.stepper.changed", function (e) {
@@ -33,10 +40,10 @@ var KTCreateApp = function () {
                                     e.goNext();
                                 } else {
                                     Swal.fire({
-                                        text: "Sorry, looks like there are some errors detected, please try again.",
+                                        text: Sorry,
                                         icon: "error",
                                         buttonsStyling: false,
-                                        confirmButtonText: "Ok, got it!",
+                                        confirmButtonText: OK,
                                         customClass: { confirmButton: "btn btn-light" }
                                     }).then(function () { });
                                 }
@@ -65,10 +72,10 @@ var KTCreateApp = function () {
                                 }, 2000);
                             } else {
                                 Swal.fire({
-                                    text: "Sorry, looks like there are some errors detected, please try again.",
+                                    text: Sorry,
                                     icon: "error",
                                     buttonsStyling: false,
-                                    confirmButtonText: "Ok, got it!",
+                                    confirmButtonText: OK,
                                     customClass: { confirmButton: "btn btn-light" }
                                 }).then(function () {
                                     KTUtil.scrollTop();
@@ -86,12 +93,12 @@ var KTCreateApp = function () {
                         fields: {
                             question_ar_text: {
                                 validators: {
-                                    notEmpty: { message: "Answer Text arabic is required" }
+                                    notEmpty: { message: que }
                                 }
                             },
                             question_en_text: {
                                 validators: {
-                                    notEmpty: { message: "Answer Text english is required" }
+                                    notEmpty: { message: que }
                                 }
                             },
 
@@ -108,26 +115,11 @@ var KTCreateApp = function () {
                     })),
                     n.push(FormValidation.formValidation(o, {
                         fields: {
-                            correct_answer_ar: {
-                                validators: {
-                                    notEmpty: {
-                                        message: "You must specify the correct answer."
-                                    }
-                                }
-                            }
-                            ,
-                            correct_answer_en: {
-                                validators: {
-                                    notEmpty: {
-                                        message: "You must specify the correct answer."
-                                    }
-                                }
-                            }
-                            ,
+
                             answer_text_ar_1: {
                                 validators: {
                                     notEmpty: {
-                                        message: "answer text 1 in arabic is required"
+                                        message: answer
                                     }
                                 }
                             }
@@ -135,28 +127,28 @@ var KTCreateApp = function () {
                             answer_text_ar_2: {
                                 validators: {
                                     notEmpty: {
-                                        message: "answer text 2 in arabic is required"
+                                        message: answer
                                     }
                                 }
                             } ,
                             answer_text_ar_3 : {
                                 validators: {
                                     notEmpty: {
-                                        message: "answer text 3 in arabic is required"
+                                        message: answer
                                     }
                                 }
                             } ,
                             answer_text_ar_4 : {
                                 validators: {
                                     notEmpty: {
-                                        message: "answer text 4 in arabic is required"
+                                        message: answer
                                     }
                                 }
                             },
                             answer_text_en_1: {
                                 validators: {
                                     notEmpty: {
-                                        message: "answer text 1 in english is required"
+                                        message: answer
                                     }
                                 }
                             }
@@ -164,21 +156,21 @@ var KTCreateApp = function () {
                             answer_text_en_2: {
                                 validators: {
                                     notEmpty: {
-                                        message: "answer text 2 in english is required"
+                                        message: answer
                                     }
                                 }
                             } ,
                             answer_text_en_3 : {
                                 validators: {
                                     notEmpty: {
-                                        message: "answer text 3 in english is required"
+                                        message: answer
                                     }
                                 }
                             } ,
                             answer_text_en_4 : {
                                 validators: {
                                     notEmpty: {
-                                        message: "answer text 4 in english is required"
+                                        message: answer
                                     }
                                 }
                             },
@@ -196,12 +188,13 @@ var KTCreateApp = function () {
                         fields: {
                             image: {
                                 validators: {
-                                    notEmpty: { message: "Image is required" }
+                                    notEmpty: {
+                                        message: image }
                                 }
                             },
                             category_id: {
                                 validators: {
-                                    notEmpty: { message: "Category is required" }
+                                    notEmpty: { message: category_a}
                                 }
                             },
                         },
@@ -231,28 +224,28 @@ var KTCreateApp = function () {
                             })
                         }
                     })),
-            n.push(FormValidation.formValidation(o, {
-                fields: {
-                    ie: {
-                        validators: {
-                            notEmpty: { message: "Image is required" }
+                    n.push(FormValidation.formValidation(o, {
+                        fields: {
+                            ie: {
+                                validators: {
+                                    notEmpty: { message: "Image is required" }
+                                }
+                            },
+                        },
+                        plugins: {
+                            trigger: new FormValidation.plugins.Trigger(),
+                            bootstrap: new FormValidation.plugins.Bootstrap5({
+                                rowSelector: ".fv-row",
+                                eleInvalidClass: "",
+                                eleValidClass: ""
+                            })
                         }
-                    },
-                },
-                plugins: {
-                    trigger: new FormValidation.plugins.Trigger(),
-                    bootstrap: new FormValidation.plugins.Bootstrap5({
-                        rowSelector: ".fv-row",
-                        eleInvalidClass: "",
-                        eleValidClass: ""
-                    })
-                }
-            }))
+                    }))
             );
         }
     };
 }();
 
 KTUtil.onDOMContentLoaded(function () {
-    KTCreateApp.init();
+    KTCreateQuestApp.init();
 });

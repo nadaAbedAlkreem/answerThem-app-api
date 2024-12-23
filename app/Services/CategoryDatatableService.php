@@ -10,17 +10,22 @@ class CategoryDatatableService
 
     public function handle($request, $data)
     {
+
         $transformedData = $data->toArray($request);
         if ($request->has('level_category') && !empty($request->level_category)) {
-//                     $query->where('level', $request->level_category);  // Apply the filter
             $transformedData = array_filter($transformedData, function ($item) use ($request) {
-                return $item['level'] == $request->level_category;  // Check the level filter condition
+                return $item['level'] == $request->level_category;
+            });
+        }
+        if ($request->has('categorySelect') && !empty($request->categorySelect)) {
+            $transformedData = array_filter($transformedData, function ($item) use ($request) {
+                return $item['parent_id'] == $request->categorySelect;
             });
         }
         return DataTables::of($transformedData)
             ->addIndexColumn()
             ->addColumn('action', function ($data) {
-                                        return  '
+                return  '
 
                                                   <a  class="btn btn-icon btn-color-gray-400 btn-sm btn-active-color-primary deleteRecord btn btn-xs btn show_confirm "  data-id="' . $data['id'] . '" data-bs-toggle="tooltip" data-bs-placement="right" title="Mark as important">
                                                          <span class="svg-icon svg-icon-3 mt-1">
@@ -49,19 +54,19 @@ class CategoryDatatableService
                 $data = ($data['famous_gaming'])  ;
                 $result = ' ' ;
 
-                 if($data == 1)
+                if($data == 1)
                 {
-                     $result = '<td class="min-w-80px">
+                    $result = '<td class="min-w-80px">
 
-                                        <div class="form-check form-switch">
+                                        <div class=" form-switch">
                                             <input class="form-check-input" type="checkbox" name="famous_gaming" id="radioSwitch" value="on" checked disabled>
                                          </div>
                                </td>
                 ' ;
                 }else
                 {
-                    $result = '<td class="min-w-80px">
-                              <div class="form-check form-switch">
+                    $result = '<td class="min-w-80px" >
+                              <div class=" form-switch">
                                             <input class="form-check-input" type="checkbox" name="famous_gaming" id="radioSwitch" value="off" disabled>
                                          </div>
                             </td>
@@ -83,9 +88,9 @@ class CategoryDatatableService
 
 
                 // Return the full HTML structure
-                return '<td class="w-150px w-md-175px">' .
+                return '<td class="w-150px w-md-175px" >' .
                     '<a class="d-flex align-items-center text-dark">' .
-                    '<div class="symbol symbol-35px me-3">' .
+                    '<div class="symbol symbol-35px me-3" style = "padding:5px">' .
                     '<div class="symbol-label bg-light-warning">' .
                     $initialOrImage .
                     '</div>' .
@@ -96,11 +101,10 @@ class CategoryDatatableService
             })
             ->addColumn('description', function ($data) {
                 $description = $data['description'];
-                  return '<td>' .
+                return '<td>' .
                     '<div class="text-dark mb-1">' .
                     '<a class="text-dark">' .
                     '<span class="fw-bolder">' . $description . '</span>' .
-                     '<span class="d-none d-md-inline text-muted">' . mb_substr($data['description'], 0, 20, 'UTF-8') . '...</span>' .
                     '</a>' .
                     '</div>' .
                     '</td>';
@@ -113,9 +117,35 @@ class CategoryDatatableService
                              </td>' ;
 
             })
+            ->addColumn('dependency',function ($data){
+                $dependency = "" ;
+                 $name = (app::getLocale() == 'ar')?  'name_ar': 'name_en';  ;
+                if($data['level'] == 1)
+                {
+                    $dependency .= '<td class="w-100px text-end fs-7 pe-9">
+                                           <span class="fw-bold text-muted">'.__('setting.Not affiliated').'</span>
+                                  </td>';
+
+                }elseif ($data['level'] == 2)
+                {
+                    $dependency .= '<td class="w-100px text-end fs-7 pe-9">
+                                           <span class="fw-bold text-muted">'.$data['parent'][$name].'</span>
+                                  </td>';
+
+                }
+                elseif ($data['level'] == 3)
+                {
+                    $dependency .= '<td class="w-100px text-end fs-7 pe-9">
+                                           <span class="fw-bold text-muted">'.$data['parent'][$name].'-'.$data['parent']['parent'][$name].'</span>
+                                  </td>';
+
+                }
+                return $dependency;
+
+            })
 
 
-            ->rawColumns(['action', 'name'  , 'famous gaming', 'rating' , 'description'])
+            ->rawColumns(['action',  'dependency',  'name'  , 'famous gaming', 'rating' , 'description'])
             ->make(true);
     }
 

@@ -1,11 +1,63 @@
 
+
+
 $(document).ready(function ($) {
+    var OK = window.translations.OK;
+    var are_sure = window.translations.are_sure;
+    var revert = window.translations.revert;
+    var yes = window.translations.yes;
+    var cansel = window.translations.cansel;
 
-    console.log(jQuery.fn.barrating);
-    var lang = window.location.pathname.split('/').pop(); // Example: 'en', 'fr', etc.
+    $('#categorySelect').select2({
+        ajax: {
+            url: 'dashboard/category/search/filter',  // URL to the search endpoint
+            dataType: 'json',
+            delay: 250,  // Delay before sending the request
+            processResults: function (data) {
+                return {
+                    results: data.results || []  // Ensure data.results is always an array
+                };
+            },
+            cache: true
+        },
+        placeholder: 'Select a category',  // Placeholder text
+        minimumInputLength: 1,
+        dropdownParent: $("#kt_menu_61cf14c9caa9b"),
+        width: '100%'
+     });
+    var language_datatables = null;
+    var lang = window.location.pathname.split('/').pop();
+
+    if (lang === "ar")
+    {
+        language_datatables = {
+            sEmptyTable: "لا يوجد بيانات ",
+            sInfo: "يتم عرض _START_ إلى _END_ من _TOTAL_ من الإدخالات",
+            sInfoEmpty: "عرض 0 إلى 0 من أصل 0 إدخالات",
+            sInfoFiltered: "(تمت التصفية من إجمالي _MAX_ الإدخالات)",
+            sInfoPostFix: "",
+            sInfoThousands: "",
+            sLengthMenu: "إظهار إدخالات _MENU_",
+            sLoadingRecords: "جارٍ التحميل...",
+            sProcessing: "جارٍ المعالجة...",
+            sSearch: "البحث:",
+            sZeroRecords: "لم يتم العثور على سجلات مطابقة",
+            oPaginate: {
+                sFirst: "الأولى",
+                sLast: "الأخير",
+                sNext: "التالي",
+                sPrevious: "السابق",
+            },
+            oAria: {
+                sSortAscending: ": التنشيط لفرز الأعمدة تصاعديًا",
+                sSortDescending: ": التنشيط لفرز الأعمدة تنازليًا",
+            },
+        };
 
 
+    }
     var table = $(".data-table-category").DataTable({
+        language: language_datatables,
         processing: true,
         serverSide: true,
         ordering: false,
@@ -17,6 +69,7 @@ $(document).ready(function ($) {
             data: function (d) {
                  d.lang = lang;
                  d.level_category = $('#level_category').val();  // Get the selected value from dropdown
+                 d.categorySelect = $('#categorySelect').val();  // Get the selected value from dropdown
 
             },
         },
@@ -24,6 +77,7 @@ $(document).ready(function ($) {
                     { data: 'action', name: 'action', orderable: false, searchable: false },
                     { data: "name", name: "name" },
                     { data: "description", name: "description" },
+                    { data: "dependency", name: "dependency" },
                     { data: "rating", name: "rating" },
                     { data: "famous gaming", name: "famous gaming" },
                     ],
@@ -37,36 +91,21 @@ $(document).ready(function ($) {
         table.ajax.reload();  // Reload the table with the new filters
     });
 
+
     $("#submit_form").on("click", function (e) {
         e.preventDefault();
 
         let formData = new FormData($("#kt_modal_create_app_form")[0]);
-        let famousGamingValue = $("#radioOn").prop("checked") ? 1 : 0;
-        formData.set('famous_gaming', famousGamingValue);
+        let famousGamingValue = $("#famous_gaming_create").prop("checked") ? 1 : 0;
         const path = window.location.pathname;
-         const segments = path.split('/');
-         const lang = segments[segments.length - 1];
-
-        console.log(lang);
-        console.log(formData);
-        console.log(famousGamingValue);
+        const segments = path.split('/');
+        const lang = segments[segments.length - 1];
         let selectedCategory = $("select[name='category_id']").val();
-
-        // Split the value into level and id
         let [level, id] = selectedCategory.split('-');
-        console.log(id, "selectedCategory:", selectedCategory);
-
-        // Log the level and id
-        console.log("Level: " + level);
-        console.log("Category ID: " + id);
-
-        // Create a new FormData object
-
-        // You can add the level and id values manually if needed
         formData.set('level', level);
         formData.set('category_id', id);
         formData.set('lang', lang);
-
+        formData.set('famous_gaming', famousGamingValue);
 
 
         $.ajaxSetup({
@@ -76,34 +115,27 @@ $(document).ready(function ($) {
         });
         $.ajax({
             type: "POST",
-            url: "dashboard/category/create",
+            url: "dashboard/category/create?lang="+lang,
             data: formData,
-            contentType: false, // determint type object
+            contentType: false,
             processData: false, // processing on response
             success: function (response) {
-                $("#successMsg").show();
-                console.log(response);
-                Swal.fire({
-                    text: "You have successfully add data!",
-                    icon: "success",
-                    buttonsStyling: false,
-                    confirmButtonText: "Ok, got it!",
-                    customClass: {
-                        confirmButton: "btn btn-primary",
-                    },
-                });
+                const dismissButton = document.getElementById('dismiss_create_category');
+
+                if (dismissButton) {
+                    dismissButton.click();
+                }
                 $(".data-table-category").DataTable().ajax.reload();
 
             },
 
             error: function (response) {
                 console.log(response);
-                console.log("response");
                 Swal.fire({
-                    text: response.responseJSON.message,
+                    text: response.responseJSON.data.error,
                     icon: "error",
                     buttonsStyling: false,
-                    confirmButtonText: "Ok, got it!",
+                    confirmButtonText: OK,
                     customClass: {
                         confirmButton: "btn btn-primary",
                     },
@@ -116,13 +148,12 @@ $(document).ready(function ($) {
         e.preventDefault();
         $(".show_confirm").click(function (event) {
             Swal.fire({
-                title: "Are you sure?",
-                text: "You won't be able to revert this!",
+                title: are_sure,
+                text: revert,
                 icon: "warning",
-                showCancelButton: true,
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
-                confirmButtonText: "Yes, delete it!",
+                confirmButtonText: yes,
             }).then((willDelete) => {
                 if (willDelete.isConfirmed) {
                     var id = $(this).data("id");
@@ -136,7 +167,6 @@ $(document).ready(function ($) {
                             _token: token,
                         },
                         success: function () {
-                            console.log("it Works");
                             $(".data-table-category").DataTable().ajax.reload();
                         },
                     });
@@ -160,7 +190,6 @@ $(document).ready(function ($) {
         var level = $(this).data("level");
         var category_id = $(this).data("category_id");
         var image = $(this).data("image");
-        console.log(description_en);
 
         $('#id_update').val(id);
         $('#name_ar').val(name_ar);
@@ -178,18 +207,12 @@ $(document).ready(function ($) {
          dropdown.value = Math.floor(rating);
 
         var imageWrapper = document.querySelector('.image-update');
-        console.log(imageWrapper);
 
         if (image) {
              imageWrapper.style.backgroundImage = `url('${image}')`;
-            console.log('Image URL set:', image);
-        } else {
-            console.log('Image URL is not defined.');
-        }
+         } else {
+         }
         var selectedValue = (level-1) + '-' + category_id;
-        console.log(selectedValue);
-        console.log(level);
-        console.log(category_id);
 
          var dropdown_ = document.getElementById('category_id_update');
          dropdown_.value = selectedValue;
@@ -199,30 +222,18 @@ $(document).ready(function ($) {
 
 
     });
-});
-    $("#submit_form_Update").on("click", function (e) {
+
+    $("#submit_form_Update_Category").on("click", function (e) {
         e.preventDefault();
 
         let formData = new FormData($("#kt_modal_update_app_form")[0]);
-        console.log(formData);
         let famousGamingValue = $("#famous_gaming").prop("checked") ? 1 : 0;
         formData.set('famous_gaming', famousGamingValue);
         let selectedCategory = $("select[id='category_id_update']").val();
-
-        // Split the value into level and id
         let [level, id] = selectedCategory.split('-');
-        console.log(id, "selectedCategory:", selectedCategory);
 
-        // Log the level and id
-        console.log("Level: " + level);
-        console.log("Category ID: " + id);
-
-        // Create a new FormData object
-
-        // You can add the level and id values manually if needed
         formData.set('level', level);
         formData.set('category_id', id);
-        formData.set('lang', lang);
 
         $.ajaxSetup({
             headers: {
@@ -231,33 +242,25 @@ $(document).ready(function ($) {
         });
         $.ajax({
             type: "post",
-            url: "dashboard/category/update",
+            url: "dashboard/category/update?lang="+lang,
             data: formData,
             contentType: false, // determint type object
             processData: false, // processing on response
             success: function (response) {
-                $("#successMsg").show();
-                console.log(response);
-                Swal.fire({
-                    text: "You have successfully Update data !",
-                    icon: "success",
-                    buttonsStyling: false,
-                    confirmButtonText: "Ok, got it!",
-                    customClass: {
-                        confirmButton: "btn btn-primary",
-                    },
-                });
+
+                const dismissButton = document.getElementById('dismiss_update_category');
+                if (dismissButton) {
+                    dismissButton.click();
+                }
                 $(".data-table-category").DataTable().ajax.reload();
             },
 
             error: function (response) {
-                console.log(response);
-                console.log("response");
                 Swal.fire({
-                    text: response.responseJSON.message,
+                    text: response.responseJSON.data.error,
                     icon: "error",
                     buttonsStyling: false,
-                    confirmButtonText: "Ok, got it!",
+                    confirmButtonText: OK,
                     customClass: {
                         confirmButton: "btn btn-primary",
                     },
@@ -265,4 +268,4 @@ $(document).ready(function ($) {
             },
         });
     });
-
+});

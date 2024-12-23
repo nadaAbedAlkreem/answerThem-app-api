@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreQuestionRequest;
 use App\Http\Requests\UpdateQuestionRequest;
+use App\Http\Resources\Dashboard\CategoryResource;
 use App\Http\Resources\Dashboard\QuestionResource;
 use App\Models\Answer;
 use App\Models\Category;
@@ -21,19 +22,23 @@ class QuestionController extends Controller
 {
     use ResponseTrait ;
     protected $questionRepository , $answerRepository;
+
     public function __construct(IQuestionRepositories $questionRepository , IAnswerRepositories  $answerRepository)
     {
         $this->questionRepository = $questionRepository;
         $this->answerRepository = $answerRepository;
+        $this->middleware('permission:view questions', ['only' => ['index']]);
+        $this->middleware('permission:create questions', ['only' => ['create','store']]);
+        $this->middleware('permission:update questions', ['only' => ['update','edit']]);
+        $this->middleware('permission:delete questions', ['only' => ['destroy']]);
     }
     public function index(Request $request ,  QuestionDatatableService $questionDatatableService)
     {
 
         $dataNative = Question::select('*')->orderBy('created_at', 'desc')->get() ;
         $name = (app::getLocale() == 'ar')? 'name_ar' : 'name_en'  ;
-        $category = Category::where('level', 3)->get() ;
-         $this->lang($request);
-        if ($request->ajax())
+        $category = Category::with('parent' , 'parent.parent')->where('level', 3)->get() ;
+         if ($request->ajax())
         {
             $data = QuestionResource::collection($dataNative);
 
@@ -46,7 +51,7 @@ class QuestionController extends Controller
             }
         }
 
-        return view('dashboard.pages.questions' , ['lang' => app::getLocale()  , 'category' => $category ]);
+        return view('dashboard.pages.questions' , ['lang' => app::getLocale()  ,  'category'=>CategoryResource::collection($category)->toArray($request) ]);
     }
     public function store(StoreQuestionRequest $request)
     {
@@ -77,6 +82,7 @@ class QuestionController extends Controller
     public function update(UpdateQuestionRequest $request)
     {
         try {
+
             $question = $this->questionRepository->update($request->getData(), $request['id']);
 
             if ($question) {
@@ -112,18 +118,6 @@ class QuestionController extends Controller
                 'message' => $e->getMessage(),
             ], 500);
         }
-
-
     }
-    private  function  lang($request){
-        $lang = $request->route('lang');
-        if ($lang) {
-            $validLanguages = ['en','ar'];
-            if (in_array($lang, $validLanguages)) {
-                app()->setLocale($lang);
-            } else {
-                app()->setLocale('en');
-            }
-        }
-    }
+
 }

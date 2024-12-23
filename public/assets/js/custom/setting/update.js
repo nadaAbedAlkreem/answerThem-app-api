@@ -1,11 +1,17 @@
 
-
 document.addEventListener("DOMContentLoaded", function () {
     const form = document.getElementById("kt_project_settings_form");
     const changedData = []; // Array to store changed inputs
+    var successMessage = window.translations.success_message;
+    var OK = window.translations.OK;
+    var lang = window.location.pathname.split('/').pop();
 
     // Track changes in form inputs
-    form.addEventListener("input", function (event) {
+    form.addEventListener("input", trackChange);
+    form.addEventListener("paste", trackChange);
+    form.addEventListener("cut", trackChange);
+
+    function trackChange(event) {
         const input = event.target;
 
         if (input.name && input.value !== input.defaultValue) {
@@ -19,31 +25,28 @@ document.addEventListener("DOMContentLoaded", function () {
                 changedData.push({ key: input.name, value: input.value });
             }
         }
-    });
+    }
 
 
     $(document).ready(function () {
         $('#setting_form').click(function (event) {
             event.preventDefault();
-
-            console.log(changedData.length);
             if (changedData.length === 0) {
                 Swal.fire({
-                    text: "Successfully updated changes.",
+                    text: successMessage,
                     icon: "success",
                     buttonsStyling: false,
-                    confirmButtonText: "Ok!",
+                    confirmButtonText: OK,
                     customClass: {
                         confirmButton: "btn btn-primary"
                     }
                 });
                 return;
             }
+            console.log(changedData);
 
             const formData = new FormData(document.getElementById("kt_project_settings_form"));
             formData.append('changedData', JSON.stringify(changedData)); // Append changed data
-
-            console.log(formData); // Debug the form data content
 
             $.ajaxSetup({
                 headers: {
@@ -55,28 +58,27 @@ document.addEventListener("DOMContentLoaded", function () {
 
             $.ajax({
                 type: "POST",
-                url: "dashboard/setting/update",
+                url: "dashboard/setting/update?lang="+lang,
                 data: formData,
                 processData: false, // Disable jQuery's default data processing
                 contentType: false, // Let FormData handle content type
-                success: function () {
+                success: function (response) {
                     Swal.fire({
-                        text: "Successfully updated changes.",
+                        text: successMessage,
                         icon: "success",
                         buttonsStyling: false,
-                        confirmButtonText: "Ok!",
+                        confirmButtonText: OK,
                         customClass: {
                             confirmButton: "btn btn-primary"
                         }
                     });
                 },
                 error: function (response) {
-                     console.log('error in setting home  : '.response);
-                    Swal.fire({
-                        text: 'The value cannot be null',
+                     Swal.fire({
+                        text: response.responseJSON.data.error,
                         icon: "error",
                         buttonsStyling: false,
-                        confirmButtonText: "Ok!",
+                        confirmButtonText: OK,
                         customClass: {
                             confirmButton: "btn btn-primary"
                         }

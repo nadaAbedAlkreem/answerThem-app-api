@@ -13,7 +13,13 @@ class QuestionDatatableService
         $transformedData = $data->toArray($request);
           if ($request->has('category') && !empty($request->category)) {
             $transformedData = array_filter($transformedData, function ($item) use ($request ) {
-                 return $item['category']['id'] == $request->category;  // Check the level filter condition
+                 return $item['category']['id'] == $request->category;
+            });
+        }
+        if ($request->has('name_question') && !empty($request->name_question)) {
+            $searchTerm = $request->name_question;
+            $transformedData = array_filter($transformedData, function ($item) use ($searchTerm) {
+                 return (stripos($item['question_text'], $searchTerm) !== false  ) ;
             });
         }
 
@@ -41,7 +47,7 @@ class QuestionDatatableService
 //                                                                    </svg>
                                                                     </span>
                                                      </a>
-                                                 <a  class="btn btn-icon btn-color-gray-400 btn-sm btn-active-color-primary updateRecord" data-bs-toggle="modal" data-category="' . $data['category']['id'] . '" data-is_correct="' . $isCorrectIndex. '" data-question_en_text="' . $data['question_en_text'] . '" data-question_ar_text="' . $data['question_ar_text'] . '" data-image="' . $data['image'] . '"    data-id="' . $data['id'] . '"  data-answer_text_ar_1="' . $data['answers'][0]['answer_text_ar'] . '" data-answer_text_ar_2="' . $data['answers'][1]['answer_text_ar'] . '" data-answer_text_ar_3="' . $data['answers'][2]['answer_text_ar'] . '" data-answer_text_ar_4="' . $data['answers'][3]['answer_text_ar'] . '"  data-answer_text_en_1="' . $data['answers'][0]['answer_text_en'] . '" data-answer_text_en_2="' . $data['answers'][1]['answer_text_en'] . '"  data-answer_text_en_3="' . $data['answers'][2]['answer_text_en'] . '" data-answer_text_en_4="' . $data['answers'][3]['answer_text_en'] . '" data-bs-target="#kt_modal_update_app"     data-bs-toggle="tooltip" data-bs-placement="right" title="Mark as important">
+                                                 <a  class="btn btn-icon btn-color-gray-400 btn-sm btn-active-color-primary  updateRecord" data-bs-toggle="modal" data-category="' . $data['category']['id'] . '" data-is_correct="' . $isCorrectIndex. '" data-question_en_text="' . $data['question_en_text'] . '" data-question_ar_text="' . $data['question_ar_text'] . '" data-image="' . $data['image'] . '"    data-id="' . $data['id'] . '"  data-answer_text_ar_1="' . $data['answers'][0]['answer_text_ar'] . '" data-answer_text_ar_2="' . $data['answers'][1]['answer_text_ar'] . '" data-answer_text_ar_3="' . $data['answers'][2]['answer_text_ar'] . '" data-answer_text_ar_4="' . $data['answers'][3]['answer_text_ar'] . '"  data-answer_text_en_1="' . $data['answers'][0]['answer_text_en'] . '" data-answer_text_en_2="' . $data['answers'][1]['answer_text_en'] . '"  data-answer_text_en_3="' . $data['answers'][2]['answer_text_en'] . '" data-answer_text_en_4="' . $data['answers'][3]['answer_text_en'] . '" data-bs-target="#kt_modal_update_question_app"     data-bs-toggle="tooltip" data-bs-placement="right" title="Mark as important">
                                                      <span class="svg-icon svg-icon-3 mt-1">
 																	<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                                                                 <path d="M14.06 2.939l6.364 6.364c.195.195.195.51 0 .707l-9.182 9.182c-.195.195-.51.195-.707 0l-6.364-6.364c-.195-.195-.195-.51 0-.707l9.182-9.182c.195-.195.51-.195.707 0zm-3.88 9.056L4.5 16.939v3.061h3.061l5.686-5.686-3.061-3.061z" fill="currentColor"/>
@@ -72,7 +78,7 @@ class QuestionDatatableService
                 // Return the full HTML structure
                 return '<td class="w-150px w-md-175px">' .
                     '<a class="d-flex align-items-center text-dark">' .
-                    '<div class="symbol symbol-35px me-3">' .
+                    '<div class="symbol symbol-35px me-3"  style = "padding:5px">' .
                     '<div class="symbol-label bg-light-warning">' .
                     $initialOrImage .
                     '</div>' .

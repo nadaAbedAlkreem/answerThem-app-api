@@ -17,8 +17,8 @@ return new class extends Migration
         $table->string('email')->unique();
         $table->string('phone')->unique()->nullable();
         $table->string('image')->nullable()->index();
-        $table->string('country')->nullable();
         $table->string('password');
+        $table->rememberToken();
         $table->timestamps();
         $table->softDeletes(); // Add soft deletes column
 

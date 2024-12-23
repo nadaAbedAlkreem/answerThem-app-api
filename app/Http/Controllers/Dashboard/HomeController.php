@@ -10,13 +10,15 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
 
-    public  function  index (Request $request)
+    public  function  index ()
     {
+
         $ratingsByEvaluation = $this->analysisEvaluation() ;
         $categoryByLevel = $this->analysisCategory() ;
         $chartData = $this->analysisTrackUserEngagementRoundsOnApp() ;
@@ -91,15 +93,5 @@ class HomeController extends Controller
         return $categoryByLevel ;
 
     }
-    private  function  lang($request){
-        $lang = $request->route('lang');
-        if ($lang) {
-            $validLanguages = ['en','ar'];
-            if (in_array($lang, $validLanguages)) {
-                app()->setLocale($lang);
-            } else {
-                app()->setLocale('en');
-            }
-        }
-    }
+
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Storage;
 
 class StoreQuestionRequest extends FormRequest
@@ -22,7 +23,9 @@ class StoreQuestionRequest extends FormRequest
      */
     public function rules(): array
     {
-         return [
+        app::setLocale($this->input('lang'));
+
+        return [
              'question_ar_text' => 'required|string|unique:questions,question_ar_text|max:255',
              'question_en_text' => 'required|string|unique:questions,question_en_text|max:255',
              'image' =>  $this->hasFile('image')
@@ -60,6 +63,38 @@ class StoreQuestionRequest extends FormRequest
 
 
         return $data;
+    }
+    protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
+    {
+        $errors = $validator->errors()->all();
+        $formattedErrors = ['error' => $errors[0]] ;
+        throw new \Illuminate\Validation\ValidationException($validator, response()->json([
+            'success' => false,
+            'message' => __('messages.ERROR_OCCURRED'),
+            'data' => $formattedErrors,
+            'status' => 'Internal Server Error'
+        ], 500));
+    }
+    public function messages()
+    {
+        return [
+            'question_ar_text.required' => __('messages.question_ar_text.required'),
+            'question_ar_text.string' => __('messages.question_ar_text.string'),
+            'question_ar_text.unique' => __('messages.question_ar_text.unique'),
+            'question_ar_text.max' => __('messages.question_ar_text.max'),
+
+            'question_en_text.required' => __('messages.question_en_text.required'),
+            'question_en_text.string' => __('messages.question_en_text.string'),
+            'question_en_text.unique' => __('messages.question_en_text.unique'),
+            'question_en_text.max' => __('messages.question_en_text.max'),
+
+            'image.required' => __('messages.image.required'),
+            'image.file' => __('messages.image.file'),
+            'image.mimes' => __('messages.image.mimes'),
+            'image.max' => __('messages.image.max'),
+
+            'category_id.required' => __('messages.category_id.required'),
+        ];
     }
 
 }

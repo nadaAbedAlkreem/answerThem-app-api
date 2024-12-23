@@ -1,54 +1,42 @@
-.card {
-    background-color: #fff;
+canvas {
     border-radius: 10px;
+    background: #f8f9fa; /* لون خلفية ناعم */
+    padding: 15px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+.card {
+    border-bottom: 3px solid #3498db; /* تغيير اللون حسب الكارد */
 }
 
 .card-header {
-    background-color: #f5f5f5;
-    padding: 20px;
-    border-bottom: 1px solid #ddd;
-    border-radius: 10px 10px 0 0;
-}
-
-.card-title {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #333;
+    padding-top: 20px;
 }
 
 .card-body {
-    padding: 20px;
+    padding-top: 15px;
+    padding-bottom: 15px;
 }
 
-.text-dark {
-    color: #333 !important;
+.card-icon {
+    font-size: 30px;
+    margin-right: 10px;
 }
 
-.text-gray-400 {
-    color: #aaa;
+/* إضافة لون خط أسفل الكارد بناءً على المحتوى */
+.card-reviews {
+    border-bottom: 3px solid #ff5733; /* اللون الأحمر لمراجعات التطبيقات */
 }
 
-.progress-bar {
-    height: 8px;
-    background-color: #4caf50;
-    border-radius: 4px;
+.card-questions {
+    border-bottom: 3px solid #28a745; /* اللون الأخضر للأسئلة */
 }
 
-.symbol {
-    display: inline-block;
-    margin-right: 5px;
-    border-radius: 50%;
-    overflow: hidden;
+.card-categories {
+    border-bottom: 3px solid #f39c12; /* اللون الأصفر للفئات */
 }
 
-.symbol img {
-    width: 100%;
-    height: auto;
+.card-users {
+    border-bottom: 3px solid #1e90ff; /* اللون الأزرق للمستخدمين */
 }
+

@@ -24,5 +24,8 @@ return [
     'enter_verification' => 'ادخل رمز التحقق' ,
     'enter_verification_text' => 'ادخل رمز التحقق الذي تم ارسالة الى' ,
     'verification' => 'تحقق' ,
-    'enter_new_password' => 'ادخل كلمة سر الجديدة لتسجيل الدخول'
+    'enter_new_password' => 'ادخل كلمة سر الجديدة لتسجيل الدخول',
+    'roles'=> '',
+    'permissions' =>'' ,
+    'admins' =>''
 ];

@@ -38,35 +38,25 @@ class SettingController extends Controller
         }, []);
         return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY', ['settings' => $settingsData], 200,  App::getLocale());
     }
+
     public function show(Request $request)
     {
-         $this->lang($request);
-         $settings = $this->settingRepositories->whereIn(['lang' => [app::getLocale(), '']]);
+        $settings = $this->settingRepositories->whereIn(['lang' => [app::getLocale(), '']]);
          $lang  = App::getLocale();
          return  view('dashboard.pages.setting', compact(['settings' , 'lang']));
     }
 
     public function update(Request $request)
     {
+         app::setLocale($request->input('lang'));
+
         try {
             $setting = $this->settingService->updateSetting($request);
-             return $this->successResponse('UPDATE_SUCCESS', [new SettingResource($setting)] , 200,  App::getLocale());
+             return $this->successResponse('UPDATE_SUCCESS', ['success' => __('setting.Successfully updated changes.')] , 200,  App::getLocale());
 
         } catch (\Exception $e) {
-
-            return $this->errorResponse('ERROR_OCCURRED',  ['error' =>  $e->getMessage()] ,  404 , app()->getLocale());
-
+              return $this->errorResponse('ERROR_OCCURRED',  ['error' =>  $e->getMessage()] ,  404 , app()->getLocale());
          }
     }
-    private  function  lang($request){
-        $lang = $request->route('lang');
-        if ($lang) {
-            $validLanguages = ['en','ar'];
-            if (in_array($lang, $validLanguages)) {
-                app()->setLocale($lang);
-            } else {
-                app()->setLocale('en');
-            }
-        }
-    }
+
 }

@@ -16,14 +16,13 @@ $(document).ready(function ($) {
         });
         $.ajax({
             type: "POST",
-            url: "auth/login",
+            url: "admin/login",
             data: formData,
             contentType: false, // determint type object
             processData: false, // processing on response
             success: function (response) {
                 $("#successMsg").show();
-                console.log(response);
-                Swal.fire({
+                 Swal.fire({
                     text: "You have successfully login data!",
                     icon: "success",
                     buttonsStyling: false,
@@ -32,14 +31,14 @@ $(document).ready(function ($) {
                         confirmButton: "btn btn-primary",
                     },
                 });
+                 window.location.href = 'dashboard/home/en';
+
 
             },
 
             error: function (response) {
-                console.log(response);
-                console.log("response");
-                Swal.fire({
-                    text: response.responseJSON.message,
+                 Swal.fire({
+                    text: response.responseJSON.data.error,
                     icon: "error",
                     buttonsStyling: false,
                     confirmButtonText: "Ok, got it!",

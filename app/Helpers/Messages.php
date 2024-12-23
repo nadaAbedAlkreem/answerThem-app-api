@@ -39,7 +39,7 @@ class Messages
         'profile_exam' => 'please complate your profile',
         'ITEM_NOT_FOUND' => 'We can not found this record',
         'SEND_FAILED' => 'You have been alrdey send',
-        'BASKET_IS_EMPTY' => 'Your Basket Empty',
+        'Not_IS_EMPTY' => 'The value cannot be null . ',
         'CREATE_USER_SUCCESSFULLY' => 'Create user successfully' ,
         'PASSWORD_RESET_SUCCESFULL'=>'Password reset successfully.' ,
         'TOO_MANY_ATTEMPTS'=>'Too many attempts' ,
@@ -153,6 +153,7 @@ class Messages
         'GAME_END' =>'The game has been completed.' ,
         'STORE_SCORE_SUCCESSFULLY' => 'store score success',
         'USER_DELETE_SUCCESS' => 'User account has been successfully deleted',
+        'format_code' => 'The value must be in the format of + followed by one or more digits (e.g., "+2", "+970").' ,
 
     ];
 
@@ -160,6 +161,8 @@ class Messages
 
     private static $Messages_AR = [
         // General
+        'format_code' => 'يجب أن تكون القيمة بتنسيق + متبوعة برقم واحد أو أكثر (على سبيل المثال، "+2"، "+970").' ,
+        'Not_IS_EMPTY' => 'لا يجب ان تكون القيمة فارغة ',
         'INVALID_LEVEL'=> 'مستوى غير صالح',
         'EXPIRED_TIME'=> 'انتهى وقت الانتظار حاول مرة اخرى ' ,
         'NO_GAMES' => 'لم يتم العثور على ألعاب لهذا المستخدم',

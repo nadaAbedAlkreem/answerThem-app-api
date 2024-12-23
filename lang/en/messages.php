@@ -22,6 +22,7 @@ return [
     'TOKEN_VALID' => 'Token valid' ,
 
     'TOO_MANY_ATTEMPTS'=>'Too many attempts' ,
+    'Successfully updated changes.'=>'Successfully updated changes.' ,
 
     'user1_id' => [
         'required' => 'The value of the game origin does not exist',
@@ -146,4 +147,49 @@ return [
         'required' => 'Verification method is required.',
         'in' => 'The verification method must be either email or phone.',
     ],
+    'name_ar' => [
+        'required' => 'The game name in Arabic is required.',
+        'string' => 'The game name in Arabic must be text.',
+        'unique' => 'The game name in Arabic already exists.',
+        'max' => 'The game name in Arabic must not exceed 255 characters.',
+    ],
+
+    'name_en' => [
+        'required' => 'The game name in Arabic is required.',
+        'string' => 'The game name in Arabic must be text.',
+        'unique' => 'The game name in Arabic already exists.',
+        'max' => 'The game name in Arabic must not exceed 255 characters.',
+    ],
+
+    'description_ar' => [
+        'required' => 'The description in Arabic is required.',
+        'string' => 'The description in Arabic must be text.',
+        'max' => 'The description in Arabic must not exceed 255 characters.',
+    ],
+    'description_en' => [
+        'required' => 'The description in Arabic is required.',
+        'string' => 'The description in Arabic must be text.',
+        'max' => 'The description in Arabic must not exceed 255 characters.',
+    ],
+
+    'rating' => [
+        'required' => 'Rating is required.',
+        'numeric' => 'Rating must be a number.',
+        'min' => 'Rating must be greater than or equal to 0.',
+        'max' => 'Rating must be less than or equal to 5.',
+    ],
+
+
+
+    'parent_id' => [
+        'integer' => 'Parent ID must be an integer.',
+        'min' => 'Parent ID must be greater than or equal to 0.',
+        'exists' => 'Parent ID does not exist.',
+    ],
+
+    'famous_gaming' => [
+        'boolean' => 'Property must be a boolean (true/false).',
+    ],
+
+
 ];
