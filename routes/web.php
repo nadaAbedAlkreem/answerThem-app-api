@@ -39,13 +39,13 @@ Route::middleware(['web', 'auth:admin', CheckLanguage::class ,'role:super-admin|
         ->name('roles.give-permissions');
     Route::post('roles/{roleId}/update-permissions', [RoleController::class, 'givePermissionToRole'])
         ->name('roles.update-permissions');
-    Route::get('permissions/{permissions}/delete', [PermissionController::class, 'destroy'])->name('permissions.destroy');
 
 
 
         Route::resource('roles', RoleController::class);
         Route::resource('admins', AdminController::class);
         Route::resource('permissions', PermissionController::class);
+
     Route::get('dashboard/permissions/{lang}', [PermissionController::class , 'index'])->name('permissions.index.lang');
     Route::get('dashboard/admins/{lang}', [AdminController::class , 'index'])->name('admins.index.lang');
     Route::get('dashboard/roles/{lang}', [RoleController::class , 'index'])->name('roles.index.lang');
