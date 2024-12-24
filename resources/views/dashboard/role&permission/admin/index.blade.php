@@ -1,5 +1,5 @@
 
-@extends('Dashboard.layout.app')
+@extends('dashboard.layout.app')
 @section('content')
 
   <div class="d-flex flex-column flex-root">
