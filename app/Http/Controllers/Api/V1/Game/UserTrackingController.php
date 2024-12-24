@@ -23,6 +23,7 @@ class UserTrackingController extends Controller
 
     public function __construct(IUserTrackingRepositories $userTrackingRepository ,IUserRepositories $userRepository ,  IResultRepositories $resultRepository)
     {
+        $this->middleware('auth:sanctum');
         $this->userTrackingRepository = $userTrackingRepository;
         $this->resultRepository = $resultRepository;
         $this->userRepository = $userRepository; // Inject the repository

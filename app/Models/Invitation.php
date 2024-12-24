@@ -30,4 +30,10 @@ class Invitation extends Model
     {
         return $this->belongsTo(Challenge::class);
     }
+    public function scopeWithActiveChallenges($query)
+    {
+        return $query->whereHas('challenge', function ($q) {
+            $q->where('status', 'ongoing')->orWhere('status', 'pending');
+        });
+    }
 }

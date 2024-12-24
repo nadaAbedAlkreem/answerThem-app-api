@@ -22,6 +22,7 @@ class ContactUsController extends Controller
 
     public function __construct(IContactUsRepositories $contactUsRepository)
     {
+        $this->middleware('auth:sanctum');
         $this->contactUsRepository = $contactUsRepository; // Inject the repository
     }
 

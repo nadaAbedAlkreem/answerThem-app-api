@@ -73,6 +73,25 @@
 
  @yield('content')
  </body>
+<script>
+
+    window.translations = {
+        OK: @json(__('setting.OK!')),
+        Sorry: @json(__('setting.Sorry')),
+        name: @json(__('setting.name')),
+
+        que: @json(__('setting.que')),
+        answer: @json(__('setting.answer')),
+        image: @json(__('setting.image')),
+        desc: @json(__('setting.desc')),//category_a
+        category_a: @json(__('setting.category_a')),//
+        are_sure: @json(__('setting.are_sure')),
+        revert: @json(__('setting.revert')),
+        yes: @json(__('setting.yes')),
+
+        // Add more translations as needed
+    };
+</script>
 
 
 @include('dashboard.asset.js');

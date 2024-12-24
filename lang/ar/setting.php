@@ -32,6 +32,7 @@ return [
     'view'=>'عرض',
     'Project Settings' => 'إعدادات المشروع',
     'gaweb7om app' => 'تطبيق جاوبهم',
+    'invitation_to_join'=>'هناك تحدي الآن، انضم إليه' ,
     'Answer them game application, a competition on a set of questions' => 'تطبيق لعبة جاوبهم ، منافسة على مجموعة من الأسئلة ',
     'In Progress' => 'قيد التنفيذ',
     'app name' => 'اسم التطبيق',

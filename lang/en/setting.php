@@ -2,6 +2,7 @@
 
 
 return  [
+    'invitation_to_join'=>'There is a challenge now, join it' ,
    'language' => 'language',
     'english' => 'English',
     'arabic' => 'Arabic',

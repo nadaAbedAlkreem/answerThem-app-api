@@ -22,6 +22,7 @@ class SettingController extends Controller
 
     public function __construct(SettingService $settingService   , ISettingRepositories $settingRepositories)
     {
+        $this->middleware('auth:sanctum');
         $this->settingService = $settingService;
         $this->settingRepositories = $settingRepositories;
 

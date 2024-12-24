@@ -54,6 +54,7 @@
             </div>
         </div>
     </div>
+    <input type="hidden" name="locale"  id="locale" value="{{app()->getLocale()}}" />
 
     <script>var hostUrl = "assets/";</script>
     <!--begin::Global Javascript Bundle(used by all pages)-->

@@ -25,17 +25,20 @@ class ChallengeController extends Controller
     public function __construct(IFriendRepositories $friendRepository   , IChallengeRepositories $challengeRepository  , FcmNotificationService $fcmNotificationService
     )
     {
+        $this->middleware('auth:sanctum');
         $this->friendRepository = $friendRepository;
         $this->fcmNotificationService = $fcmNotificationService;
         $this->challengeRepository = $challengeRepository;
     }
+
     /**
      * Display a listing of the resource.
      */
     public function getFriendsWithSearch(Request $request)
     {
-        $user =  $request->user();
-        if (!$user) {
+
+         $user =  $request->user();
+         if (!$user) {
             return $this->errorResponse('UNAUTHENTICATED', [], 401, app()->getLocale());
         }
         $searchValue = $request->query('name');
@@ -144,7 +147,6 @@ class ChallengeController extends Controller
         }
 
     }
-
 
     private  function  expiredTime($challenge)
     {

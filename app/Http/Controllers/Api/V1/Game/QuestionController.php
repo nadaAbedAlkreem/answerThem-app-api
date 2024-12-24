@@ -5,17 +5,37 @@ namespace App\Http\Controllers\Api\V1\Game;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreQuestionRequest;
 use App\Http\Requests\UpdateQuestionRequest;
+use App\Http\Resources\Api\QuestionResource;
 use App\Models\Question;
+use App\Repositories\IQuestionRepositories;
+use App\Traits\ResponseTrait;
+use Illuminate\Http\Request;
 
 class QuestionController extends Controller
 {
+    use ResponseTrait ;
+    protected $questionRepo;
+    public function __construct(IQuestionRepositories $questionRepo  )
+    {
+        $this->middleware('auth:sanctum');
+        $this->questionRepo = $questionRepo;
+
+    }
+    /*
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    function  tryChallengeAlone(Request $request)
     {
-        //
+        $user =  $request->user();
+        if (!$user) {
+            return $this->errorResponse('UNAUTHENTICATED', [], 401, app()->getLocale());
+        }
+      $randomQuestion = $this->questionRepo->getRandom();
+      return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY',QuestionResource::collection($randomQuestion) , 202, app()->getLocale());
+
     }
+
 
     /**
      * Show the form for creating a new resource.

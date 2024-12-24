@@ -39,7 +39,7 @@ class AdminController extends Controller
                 ], 500);
             }
         }
-         return view('Dashboard.role&permission.admin.index'  ,[ 'lang' => app::getLocale(), 'roles' => $roles]);
+         return view('dashboard.role&permission.admin.index'  ,[ 'lang' => app::getLocale(), 'roles' => $roles]);
     }
 
     // public function create()
@@ -70,11 +70,11 @@ class AdminController extends Controller
 
     public function edit(Admin $admins, $id)
     {
-        $admins_ =  $admins::select('*')->where('id', $id)->first();
+         $admins_ =  $admins::select('*')->where('id', $id)->first();
         $roles = Role::pluck('name','name')->all();
 
         $userRoles = $admins_->roles->pluck('name','name')->all();
-        return view('Dashboard.role&permission.admin.edit', [
+        return view('dashboard.role&permission.admin.edit', [
             'user' => $admins_,
             'roles' => $roles,
             'userRoles' => $userRoles
@@ -90,12 +90,12 @@ class AdminController extends Controller
                 'name' => 'required|string|max:255',
                 'roles' => [
                     'required',
-                    function ($attribute, $value, $fail) {
+                    function ($attribute, $value, $fail ) use ($admins) {
                      $superAdminsCount = Admin::role('super-admin')->count();
-                        if ($value[0] !=  "super-admin" && $superAdminsCount == 1 ) {
-                            $fail('You cannot assign a role other than "super admin" as there is no "super admin" in the table.');
-                        }
 
+                        if ($admins->hasRole('super-admin') && !in_array('super-admin', $value) && $superAdminsCount <= 1) {
+                            $fail('You cannot assign a role other than "super admin" as there is no other "super admin" in the table.');
+                        }
                     },
                 ],
             ]);

@@ -49,9 +49,9 @@
                                         <!--end::Avatar-->
                                         <!--begin::Username-->
                                         <div class="d-flex flex-column">
-                                            <div class="fw-bolder d-flex align-items-center fs-5">{{auth()->user()->name}}
+                                            <div class="fw-bolder d-flex align-items-center fs-5">{{auth('admin')->user()->name}}
                                                 <span class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2"></span></div>
-                                            <a class="fw-bold text-muted text-hover-primary fs-7">{{auth()->user()->email}}</a>
+                                            <a class="fw-bold text-muted text-hover-primary fs-7">{{auth('admin')->user()->email}}</a>
                                         </div>
                                         <!--end::Username-->
 

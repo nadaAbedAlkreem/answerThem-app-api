@@ -18,6 +18,7 @@ class EvaluationController extends Controller
 
     public function __construct(IEvaluationRepositories $evaluationRepository )
     {
+        $this->middleware('auth:sanctum');
         $this->evaluationRepository = $evaluationRepository;
     }
     /**

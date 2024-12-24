@@ -1,4 +1,5 @@
 <?php $__env->startSection('content'); ?>
+
 <style>
     /* Change the look of the select box */
     .select2-container .select2-selection--single {
@@ -1137,10 +1138,10 @@
         // Add more translations as needed
     };
 </script>
+
 <script src="<?php echo e(url('assets/plugins/custom/datatables/datatables.bundle.js')); ?>"></script>
 
      <script src="<?php echo e(url('assets/js/custom/actions/category-action.js')); ?>"></script>
-
 
 <?php $__env->stopSection(); ?>
 

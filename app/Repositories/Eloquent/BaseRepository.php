@@ -59,6 +59,11 @@ abstract class BaseRepository implements BaseRepositoryInterface
     {
         return $this->model->insert($data);
     }
+    public function getRandom()
+    {
+      return $this->model->inRandomOrder()->limit(25)->get();
+
+    }
 
 
     /**

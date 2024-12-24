@@ -30,7 +30,7 @@
                                 <input type="text" name="name" value="{{ $role->name }}" class="form-control" />
                             </div>
                             <div class="mb-3">
-                                <button type="submit" id="submitRoles"  class="btn btn-primary">{{__('setting.Update')}}</button>
+                                <button type="submit" id="submitRolesUpdate"  class="btn btn-primary">{{__('setting.Update')}}</button>
                             </div>
                         </form>
                     </div>
@@ -38,6 +38,8 @@
             </div>
         </div>
     </div>
+    <input type="hidden" name="locale"  id="locale" value="{{app()->getLocale()}}" />
+
     <script>var hostUrl = "assets/";</script>
     <!--begin::Global Javascript Bundle(used by all pages)-->
     <script src="{{url('assets/plugins/global/plugins.bundle.js')}}"></script>

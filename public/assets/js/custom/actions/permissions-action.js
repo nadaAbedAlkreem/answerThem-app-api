@@ -81,8 +81,8 @@ $(document).ready(function($)
 
                         $.ajax(
                             {
-                                url: "permissions/"+id+"/delete",
-                                type: 'get',
+                                url: "permissions/"+id,
+                                type: 'DELETE',
                                 data:
                                     {
                                         "id": id,

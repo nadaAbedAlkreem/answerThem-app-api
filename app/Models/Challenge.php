@@ -11,12 +11,12 @@ class Challenge extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'name_game' ,
+        'name_game',
         'team1_id',
         'team2_id',
         'user1_id',
         'user2_id',
-        'category_id' ,
+        'category_id',
         'number_of_questions',
         'time_per_question',
         'status'

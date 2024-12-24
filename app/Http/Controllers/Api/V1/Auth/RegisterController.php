@@ -18,7 +18,7 @@ class RegisterController extends Controller
 
     public function __construct(UserService $userService)
     {
-        $this->userService = $userService;
+         $this->userService = $userService;
     }
 
 
@@ -26,6 +26,7 @@ class RegisterController extends Controller
     {
         try {
             $user = $this->userService->register($request->getDataWithImage());
+
          return $this->successResponse('CREATE_USER_SUCCESSFULLY',new UserWithTokenAccessResource($user), 201, app()->getLocale());
         } catch (\Exception $e) {
             if ($e->getCode() === '23000') {

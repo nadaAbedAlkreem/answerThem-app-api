@@ -30,6 +30,7 @@ class FriendRequestController extends Controller
            FcmNotificationService $fcmNotificationService
     )
     {
+        $this->middleware('auth:sanctum');
         $this->notificationRepo = $notificationRepo;
         $this->friendRequestService = $friendRequestService;
         $this->friendRequestsRepository= $friendRequestsRepository ;

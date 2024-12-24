@@ -37,12 +37,12 @@ class PermissionController extends Controller
             }
         }
 
-        return view('Dashboard.role&permission.permission.index' ,compact('lang'));
+        return view('dashboard.role&permission.permission.index' ,compact('lang'));
     }
 
     public function create()
     {
-         return view('Dashboard.role&permission.permission.create');
+         return view('dashboard.role&permission.permission.create');
     }
 
     public function store(Request $request)
@@ -74,7 +74,7 @@ class PermissionController extends Controller
 
     public function edit(Permission $permission)
     {
-        return view('Dashboard.role&permission.permission.edit', ['permission' => $permission]);
+        return view('dashboard.role&permission.permission.edit', ['permission' => $permission]);
     }
 
     public function update(Request $request, Permission $permission)

@@ -11,6 +11,8 @@ use App\Http\Controllers\Api\V1\Friends\FriendController;
 use App\Http\Controllers\Api\V1\Friends\FriendRequestController;
 use App\Http\Controllers\Api\V1\Game\CategoryController;
 use App\Http\Controllers\Api\V1\Game\ChallengeController;
+use App\Http\Controllers\Api\V1\Game\InvitationController;
+use App\Http\Controllers\Api\V1\Game\QuestionController;
 use App\Http\Controllers\Api\V1\Game\ResultController;
 use App\Http\Controllers\Api\V1\Game\UserTrackingController;
 use App\Http\Controllers\Api\V1\NotificationController;
@@ -26,7 +28,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 
 
-Route::group(['middleware' =>  SetLocale::class  , UpdateLastActive::class], function () {
+Route::middleware([ SetLocale::class  , UpdateLastActive::class])->group( function () {
                 Route::prefix('auth')->group(function ()
             {
                 Route::get('/translate', [UserController::class, 'getTranslatedPagesAuthentication']);
@@ -43,8 +45,9 @@ Route::group(['middleware' =>  SetLocale::class  , UpdateLastActive::class], fun
                 Route::post('verifyToken', [ForgotPasswordController::class, 'verifyToken']);
 
             });
-        Route::group(['middleware' =>'auth:api'], function ()
-        {
+    Route::middleware(['auth:sanctum' ,\Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class , 'throttle:api' , Illuminate\Routing\Middleware\SubstituteBindings::class  ,  ])->group(function () {
+
+
             Route::post('/logout', [LoginController::class, 'logout']);
             Route::get('/user/{userId}', [UserTrackingController::class, 'getCurrentUser']);
 
@@ -102,6 +105,7 @@ Route::group(['middleware' =>  SetLocale::class  , UpdateLastActive::class], fun
             });
             Route::prefix('challenges')->group(function ()
             {
+
                 Route::get('competitors', [ChallengeController::class, 'getFriendsWithSearch']);
                 Route::post('create', [ChallengeController::class, 'create']);
                 Route::get('show/{challengeId}', [ChallengeController::class, 'show'])->name('challenge.show');
@@ -109,12 +113,13 @@ Route::group(['middleware' =>  SetLocale::class  , UpdateLastActive::class], fun
                 Route::post('send/accept', [ChallengeController::class, 'statusStartGaming']);
                 Route::get('end/{challengeId}', [ChallengeController::class, 'endOFChallenge']);
                 Route::post('score', [ResultController::class, 'storeCompetitorsScore']);
+                Route::get('test-yourself', [QuestionController::class, 'tryChallengeAlone']);
 
 
             });
 
            Route::post('evaluation', [EvaluationController::class, 'store']);
-
+           Route::get('invitation/current', [InvitationController::class, 'currentInvitationJoinChallenge']);
 
 
 

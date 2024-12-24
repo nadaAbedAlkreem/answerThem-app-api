@@ -35,6 +35,7 @@ class User extends Authenticatable
         'password'
 
     ];
+    protected $guard_name = 'api';
 
     protected $dates = ['deleted_at'];
 

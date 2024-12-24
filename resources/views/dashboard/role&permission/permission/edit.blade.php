@@ -20,7 +20,7 @@
 
             <div class="card">
                 <div class="card-body">
-                    <h4>{{__('setting.Edit')}}
+                    <h4>Edit
                         <a href="{{ url('dashboard/permissions/' . request('lang')) }}" class="btn btn-danger float-end">{{__('setting.Back')}}</a>
                     </h4>
                 </div>
@@ -43,6 +43,8 @@
         </div>
     </div>
 </div>
+<input type="hidden" name="locale"  id="locale" value="{{app()->getLocale()}}" />
+
 
 <script>var hostUrl = "assets/";</script>
 <!--begin::Global Javascript Bundle(used by all pages)-->

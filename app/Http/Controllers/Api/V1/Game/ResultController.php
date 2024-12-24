@@ -20,6 +20,7 @@ class ResultController extends Controller
     protected $resultRepository  , $challengeRepositories , $fcmNotificationService ;
     public function __construct(IResultRepositories $resultRepository , IChallengeRepositories $challengeRepositories ,  FcmNotificationService $fcmNotificationService)
     {
+        $this->middleware('auth:sanctum');
         $this->resultRepository = $resultRepository;
         $this->challengeRepositories = $challengeRepositories;
         $this->fcmNotificationService = $fcmNotificationService;

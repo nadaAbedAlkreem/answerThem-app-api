@@ -39,12 +39,12 @@ class RoleController extends Controller
         }
 
         // $roles = Role::get();
-        return view('Dashboard.role&permission.role.index' , ['lang' => app::getLocale()]);
+        return view('dashboard.role&permission.role.index' , ['lang' => app::getLocale()]);
     }
 
     public function create()
     {
-        return view('Dashboard.role&permission.role.create');
+        return view('dashboard.role&permission.role.create');
     }
 
     public function store(Request $request)
@@ -81,7 +81,7 @@ class RoleController extends Controller
             ->pluck('role_has_permissions.permission_id','role_has_permissions.permission_id')
             ->all();
 
-        return view('Dashboard.role&permission.role.edit',compact('role','permission','rolePermissions'));
+        return view('dashboard.role&permission.role.edit',compact('role','permission','rolePermissions'));
     }
 
     public function update(Request $request, Role $role)
@@ -115,7 +115,12 @@ class RoleController extends Controller
     public function destroy($id)
     {
         $role = Role::find($id);
-        return  $role->delete() ? $id : parent::errorResponse() ;
+        return  $role->delete() ? $id :  $this->errorResponse(
+        'ERROR_OCCURRED',
+        [],
+        500,
+        app()->getLocale()
+    );
     }
 
     public function addPermissionToRole($roleId)
@@ -127,7 +132,7 @@ class RoleController extends Controller
             ->pluck('role_has_permissions.permission_id','role_has_permissions.permission_id')
             ->all();
 
-        return view('Dashboard.role&permission.role.add-permissions', [
+        return view('dashboard.role&permission.role.add-permissions', [
             'role' => $role,
             'permissions' => $permissions,
             'rolePermissions' => $rolePermissions

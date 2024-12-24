@@ -21,7 +21,9 @@ use Illuminate\Support\Facades\Route;
 
 
 
-include_once __DIR__.'/api.php';
+
+//$admins->syncRoles($request->roles)
+
 
 Route::middleware(CustomRedirectIfAuthenticated::class)->group(function () {
     Route::prefix('admin')->group(callback: function () {
@@ -32,7 +34,7 @@ Route::middleware(CustomRedirectIfAuthenticated::class)->group(function () {
     });
 });
 
-Route::middleware(['web', 'auth:admin', CheckLanguage::class ,'role:super-admin|admin'])->group(function () {
+Route::middleware([ 'auth:admin', CheckLanguage::class ,'role:super-admin|admin'])->group(function () {
 
 
     Route::get('roles/{role}/give-permissions', [RoleController::class, 'addPermissionToRole'])

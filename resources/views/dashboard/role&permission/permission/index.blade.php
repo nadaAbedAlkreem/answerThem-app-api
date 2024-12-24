@@ -44,9 +44,9 @@
                                         <!--end::Avatar-->
                                         <!--begin::Username-->
                                         <div class="d-flex flex-column">
-                                            <div class="fw-bolder d-flex align-items-center fs-5">{{auth()->user()->name}}
+                                            <div class="fw-bolder d-flex align-items-center fs-5">{{auth('admin')->user()->name}}
                                                 <span class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2"></span></div>
-                                            <a  class="fw-bold text-muted text-hover-primary fs-7">{{auth()->user()->email}}</a>
+                                            <a  class="fw-bold text-muted text-hover-primary fs-7">{{auth('admin')->user()->email}}</a>
                                         </div>
                                         <!--end::Username-->
                                     </div>
@@ -162,43 +162,13 @@
                 </div>
                 <!--end::Main-->
                 <!--begin::Footer-->
-                <div class="footer py-4 d-flex flex-column flex-md-row align-items-center justify-content-between" id="kt_footer">
-                    <!--begin::Copyright-->
-                    <div class="order-2 order-md-1">
-                        <span class="text-white opacity-75 fw-bold me-1">2021©</span>
-                        <a href="https://keenthemes.com" target="_blank" class="text-white text-hover-primary opacity-75">Keenthemes</a>
-                    </div>
-                    <!--end::Copyright-->
-                    <!--begin::Menu-->
-                    <ul class="menu menu-white menu-hover-primary fw-bold order-1 opacity-75">
-                        <li class="menu-item">
-                            <a href="https://keenthemes.com" target="_blank" class="menu-link px-2">About</a>
-                        </li>
-                        <li class="menu-item">
-                            <a href="https://devs.keenthemes.com" target="_blank" class="menu-link px-2">Support</a>
-                        </li>
-                        <li class="menu-item">
-                            <a href="https://1.envato.market/EA4JP" target="_blank" class="menu-link px-2">Purchase</a>
-                        </li>
-                    </ul>
-                    <!--end::Menu-->
-                </div>
-                <!--end::Footer-->
+                 <!--end::Footer-->
             </div>
             <!--end::Wrapper-->
             <input type="hidden" name="locale"  id="locale" value="{{app()->getLocale()}}" />
 
     <script>var hostUrl = "assets/";</script>
-            <script>
-                window.translations = {
 
-                    are_sure: @json(__('setting.are_sure')),
-                    revert: @json(__('setting.revert')),
-                    yes: @json(__('setting.yes')),
-
-                    // Add more translations as needed
-                }
-            </script>
     <!--end::Global Javascript Bundle-->
     <!--begin::Page Vendors Javascript(used by this page)-->
     <script src="{{url('assets/plugins/custom/datatables/datatables.bundle.js')}}"></script>

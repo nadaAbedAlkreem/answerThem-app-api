@@ -14,7 +14,8 @@ class ChallengeResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-         return  [
+
+           return  [
             'id' => $this->id,
             'name_game' => $this->name_game ,
             'creator' =>  new UserResource($this->whenLoaded('user1')),

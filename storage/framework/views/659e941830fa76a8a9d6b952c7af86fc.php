@@ -73,6 +73,25 @@
 
  <?php echo $__env->yieldContent('content'); ?>
  </body>
+<script>
+
+    window.translations = {
+        OK: <?php echo json_encode(__('setting.OK!'), 15, 512) ?>,
+        Sorry: <?php echo json_encode(__('setting.Sorry'), 15, 512) ?>,
+        name: <?php echo json_encode(__('setting.name'), 15, 512) ?>,
+
+        que: <?php echo json_encode(__('setting.que'), 15, 512) ?>,
+        answer: <?php echo json_encode(__('setting.answer'), 15, 512) ?>,
+        image: <?php echo json_encode(__('setting.image'), 15, 512) ?>,
+        desc: <?php echo json_encode(__('setting.desc'), 15, 512) ?>,//category_a
+        category_a: <?php echo json_encode(__('setting.category_a'), 15, 512) ?>,//
+        are_sure: <?php echo json_encode(__('setting.are_sure'), 15, 512) ?>,
+        revert: <?php echo json_encode(__('setting.revert'), 15, 512) ?>,
+        yes: <?php echo json_encode(__('setting.yes'), 15, 512) ?>,
+
+        // Add more translations as needed
+    };
+</script>
 
 
 <?php echo $__env->make('dashboard.asset.js', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>;

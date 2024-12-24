@@ -4,10 +4,7 @@ $(document).ready(function($)
      $('#filter_column_type_user').on('change', function() {
         table.ajax.reload();
     });
-    var OK = window.translations.OK;
-    var are_sure = window.translations.are_sure;
-    var revert = window.translations.revert;
-    var yes = window.translations.yes;
+
     var language_datatables = null;
 
     if (locale === "ar")
@@ -70,7 +67,7 @@ $(document).ready(function($)
 
         let formData = new FormData($("#formUpdateAdmins")[0]);
         let userId = document.getElementById('userId').value;
-
+        console.log('formData' +formData)
         $.ajaxSetup({
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -101,7 +98,7 @@ $(document).ready(function($)
                     text: response.responseJSON.data.error,
                     icon: "error",
                     buttonsStyling: false,
-                    confirmButtonText: OK,
+                    confirmButtonText: 'ok !',
                     customClass: {
                         confirmButton: "btn btn-primary",
                     },

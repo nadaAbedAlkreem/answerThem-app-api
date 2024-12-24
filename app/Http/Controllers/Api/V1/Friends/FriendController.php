@@ -23,6 +23,7 @@ class FriendController extends Controller
     protected $friendRepository   , $userRepository ;
     public function __construct(IFriendRepositories $friendRepository  , IUserRepositories  $userRepository)
     {
+        $this->middleware('auth:sanctum');
         $this->friendRepository = $friendRepository; // Inject the repository
         $this->userRepository = $userRepository; // Inject the repository
     }

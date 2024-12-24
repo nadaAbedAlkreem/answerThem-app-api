@@ -107,6 +107,53 @@ $(document).ready(function($)
 
 
     });
+    $("#submitRolesUpdate").on("click", function (e) {
+        e.preventDefault();
+
+        let formData = new FormData($("#formUpdateRoles")[0]);
+        let roleId = document.getElementById('roleId').value;
+        console.log('role' + roleId);
+
+        $.ajaxSetup({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+        });
+        // action="{{ url('roles/'.$role->id) }}" method="POST"
+        $.ajax({
+            type: "POST",
+            url: 'roles/'+roleId,
+            data: formData,
+            contentType: false, // determint type object
+            processData: false, // processing on response
+            success: function (response) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Done',
+                    text: "Update data success",
+                    customClass: {
+                        confirmButton: "btn btn-primary",
+                    },
+                });
+                window.history.back();
+                location.reload(true);
+
+            },
+
+            error: function (response) {
+                Swal.fire({
+                    text: response.responseJSON.data.error,
+                    icon: "error",
+                    buttonsStyling: false,
+                    confirmButtonText: "Ok, got it!",
+                    customClass: {
+                        confirmButton: "btn btn-primary",
+                    },
+                });
+            },
+        });
+    });
+
     $("#submitRolesAdd").on("click", function (e) {
         e.preventDefault();
 
@@ -149,51 +196,6 @@ $(document).ready(function($)
         });
     });
 
-    ("#submitRoles").on("click", function (e) {
-        e.preventDefault();
-
-        let formData = new FormData($("#formUpdateRoles")[0]);
-        let roleId = document.getElementById('roleId').value;
-
-        $.ajaxSetup({
-            headers: {
-                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-            },
-        });
-        // action="{{ url('roles/'.$role->id) }}" method="POST"
-        $.ajax({
-            type: "POST",
-            url: 'roles/'+roleId,
-            data: formData,
-            contentType: false, // determint type object
-            processData: false, // processing on response
-            success: function (response) {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Done',
-                    text: "Update data success",
-                    customClass: {
-                        confirmButton: "btn btn-primary",
-                    },
-                });
-                window.history.back();
-                location.reload(true);
-
-            },
-
-            error: function (response) {
-                Swal.fire({
-                    text: response.responseJSON.data.error,
-                    icon: "error",
-                    buttonsStyling: false,
-                    confirmButtonText: "Ok, got it!",
-                    customClass: {
-                        confirmButton: "btn btn-primary",
-                    },
-                });
-            },
-        });
-    });
 
 
 

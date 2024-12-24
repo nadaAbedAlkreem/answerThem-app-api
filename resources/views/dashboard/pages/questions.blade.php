@@ -52,9 +52,9 @@
                                     <!--end::Avatar-->
                                     <!--begin::Username-->
                                     <div class="d-flex flex-column flex-row">
-                                        <div class="fw-bolder d-flex align-items-center fs-5 flex-row">{{auth()->user()->name}}
+                                        <div class="fw-bolder d-flex align-items-center fs-5 flex-row">{{auth('admin')->user()->name}}
                                             <span class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2"></span></div>
-                                        <a class="fw-bold text-muted text-hover-primary fs-7 flex-row">{{auth()->user()->email}}</a>
+                                        <a class="fw-bold text-muted text-hover-primary fs-7 flex-row">{{auth('admin')->user()->email}}</a>
                                     </div>
                                     <!--end::Username-->
 
@@ -1102,8 +1102,12 @@
 
 
     <!--begin::Modal - Invite Friends-->
+
+
      <script src="{{url('assets/js/custom/actions/question-action.js')}}"></script>
     <script src="{{url('assets/plugins/custom/datatables/datatables.bundle.js')}}"></script>
+
+
 
     <script>
         window.translations = {

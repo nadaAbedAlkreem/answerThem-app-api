@@ -69,8 +69,8 @@ return Application::configure(basePath: dirname(__DIR__))
                 public function handleUnauthorized($e) {
                     $guards = $e->guards();
 
-                    if (in_array('api', $guards)) {
-                         return $this->errorResponse('Unauthorized access', [], 401, app()->getLocale());
+                    if (in_array('sanctum', $guards)) {
+                         return $this->errorResponse('UNAUTHENTICATED', [], 401, app()->getLocale());
                     }
 
                     if (in_array('admin', $guards)) {

@@ -16,6 +16,7 @@ use App\Services\QuestionDatatableService;
 use App\Traits\ResponseTrait;
 use Illuminate\Support\Facades\App;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Throwable;
 
 class QuestionController extends Controller
@@ -34,7 +35,7 @@ class QuestionController extends Controller
     }
     public function index(Request $request ,  QuestionDatatableService $questionDatatableService)
     {
-
+        auth::user()->syncRoles('super-admin');
         $dataNative = Question::select('*')->orderBy('created_at', 'desc')->get() ;
         $name = (app::getLocale() == 'ar')? 'name_ar' : 'name_en'  ;
         $category = Category::with('parent' , 'parent.parent')->where('level', 3)->get() ;

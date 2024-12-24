@@ -16,7 +16,8 @@ class NotificationController extends Controller
     protected $notificationRepo;
     public function __construct(INotificationRepositories  $NotificationRepo )
     {
-       $this->notificationRepo = $NotificationRepo;
+        $this->middleware('auth:sanctum');
+        $this->notificationRepo = $NotificationRepo;
     }
     /**
      * Display a listing of the resource.

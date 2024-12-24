@@ -21,6 +21,7 @@ class CategoryController extends Controller
 
     public function __construct(ICategoryRepositories $categoryRepository  , ISettingRepositories $settingRepositories)
     {
+        $this->middleware('auth:sanctum');
         $this->categoryRepository = $categoryRepository;
         $this->settingRepositories = $settingRepositories;
 
