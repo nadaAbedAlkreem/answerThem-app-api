@@ -23,6 +23,7 @@ class CategorySeeder extends Seeder
                 'rating' => 4.5,
                 'image' => 'https://linktest.gastwerk-bern.ch/storage/uploads/images/categories/Capa_1.png',
                 'parent_id' => 0,
+
                 'level' => 1,
                 'color'=> '#03BOFA' ,
 
