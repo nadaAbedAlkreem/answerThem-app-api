@@ -35,7 +35,7 @@
                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-primary fw-bold py-4 fs-6 w-275px" data-kt-menu="true">
                                 <!--begin::Menu item-->
                                 <div class="menu-item px-3">
-                                    <div class="menu-content d-flex align-items-center px-3">
+                                    <div class="menu-content d-flex align-items-center px-3" style ="padding:5px">
                                         <!--begin::Avatar-->
                                         <div class="symbol symbol-50px me-5">
                                             <img alt="Logo" src="assets/media/avatars/300-1.jpg" />
@@ -43,10 +43,10 @@
                                         <!--end::Avatar-->
                                         <!--begin::Username-->
                                         <div class="d-flex flex-column">
-                                            <div class="fw-bolder d-flex align-items-center fs-5"><?php echo e(auth()->user()->name); ?>
+                                            <div class="fw-bolder d-flex align-items-center fs-5"><?php echo e(auth('admin')->user()->name); ?>
 
                                                 <span class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2"></span></div>
-                                            <a class="fw-bold text-muted text-hover-primary fs-7"><?php echo e(auth()->user()->email); ?></a>
+                                            <a class="fw-bold text-muted text-hover-primary fs-7"><?php echo e(auth('admin')->user()->email); ?></a>
                                         </div>
                                         <!--end::Username-->
                                     </div>
@@ -186,4 +186,4 @@
 
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('Dashboard.layout.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\answerThem-api-main\resources\views/dashboard/role&permission/role/index.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('dashboard.layout.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\answerThem-api-main\resources\views/dashboard/role&permission/role/index.blade.php ENDPATH**/ ?>

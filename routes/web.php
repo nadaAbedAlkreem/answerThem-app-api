@@ -33,6 +33,8 @@ Route::middleware(CustomRedirectIfAuthenticated::class)->group(function () {
         Route::post('login', [LoginController::class , 'login'])->name('admin.login.store');
     });
 });
+Route::get('admin/logout', [LoginController::class , 'logout'])->name('admin.logout');
+
 
 Route::middleware([ 'auth:admin', CheckLanguage::class ,'role:super-admin|admin'])->group(function () {
 
@@ -51,7 +53,6 @@ Route::middleware([ 'auth:admin', CheckLanguage::class ,'role:super-admin|admin'
     Route::get('dashboard/permissions/{lang}', [PermissionController::class , 'index'])->name('permissions.index.lang');
     Route::get('dashboard/admins/{lang}', [AdminController::class , 'index'])->name('admins.index.lang');
     Route::get('dashboard/roles/{lang}', [RoleController::class , 'index'])->name('roles.index.lang');
-    Route::get('admin/logout', [LoginController::class , 'logout'])->name('admin.logout');
 
     Route::prefix('dashboard')->group(function ()
     {
