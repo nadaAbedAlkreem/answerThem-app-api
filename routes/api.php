@@ -45,6 +45,13 @@ Route::middleware([ SetLocale::class  , UpdateLastActive::class])->group( functi
                 Route::post('verifyToken', [ForgotPasswordController::class, 'verifyToken']);
 
             });
+    Route::prefix('setting')->group(function ()
+    {
+        Route::get('', [SettingController::class, 'index']);
+        Route::get('{id}', [SettingController::class, 'show'])->name('setting.show');
+        Route::post('update/{id}', [SettingController::class, 'update'])->name('setting.update');
+
+    });
     Route::middleware(['auth:sanctum' ,\Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class , 'throttle:api' , Illuminate\Routing\Middleware\SubstituteBindings::class  ,  ])->group(function () {
 
 
@@ -87,13 +94,7 @@ Route::middleware([ SetLocale::class  , UpdateLastActive::class])->group( functi
                 Route::get('{id}/category', [CategoryController::class, 'getSubAndPrimeCategoryById']);
                 Route::get('home', [CategoryController::class, 'getCategoriesDetails']);
             });
-            Route::prefix('setting')->group(function ()
-            {
-                Route::get('', [SettingController::class, 'index']);
-                Route::get('{id}', [SettingController::class, 'show'])->name('setting.show');
-                Route::post('update/{id}', [SettingController::class, 'update'])->name('setting.update');
 
-            });
 
             Route::prefix('contact-us')->group(function ()
             {

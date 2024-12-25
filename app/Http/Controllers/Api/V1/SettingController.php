@@ -22,7 +22,6 @@ class SettingController extends Controller
 
     public function __construct(SettingService $settingService   , ISettingRepositories $settingRepositories)
     {
-        $this->middleware('auth:sanctum');
         $this->settingService = $settingService;
         $this->settingRepositories = $settingRepositories;
 
@@ -32,8 +31,7 @@ class SettingController extends Controller
 
     public function index(Request $request)
     {
-        $this->lang($request);
-        $settings = Setting::where('lang', App::getLocale())->get();
+        $settings =$this->settingRepositories->whereIn(['lang' => [app::getLocale(), '']]);
         $settingsData = $settings->reduce(function ($carry, $setting) use ($request) {
             return array_merge($carry, (new SettingResource($setting))->toArray($request));
         }, []);
