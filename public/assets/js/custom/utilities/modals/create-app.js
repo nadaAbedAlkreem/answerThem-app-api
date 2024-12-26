@@ -7,6 +7,7 @@ var desc = window.translations.desc;
 
 var KTCreateCategoryApp = function () {
     var e, t, o, r, a, i, n = [];
+
     return {
         init: function () {
             (e = document.querySelector("#kt_modal_create_app"))
@@ -82,9 +83,11 @@ var KTCreateCategoryApp = function () {
                             }
                         });
                     }),
-                    $(o.querySelector('[name="card_expiry_month"]')).on("change", function () {
-                        n[3].revalidateField("card_expiry_month");
-                    }),
+                    $(o.querySelector('[id="image-input-create-categroy"]')).on("change", function () {
+
+
+
+                     }),
                     $(o.querySelector('[name="card_expiry_year"]')).on("change", function () {
                         n[3].revalidateField("card_expiry_year");
                     }),
@@ -100,8 +103,6 @@ var KTCreateCategoryApp = function () {
                                     notEmpty: { message: name}
                                 }
                             },
-
-
                         },
                         plugins: {
                             trigger: new FormValidation.plugins.Trigger(),
@@ -120,9 +121,7 @@ var KTCreateCategoryApp = function () {
                                         message: desc
                                     }
                                 }
-                            }
-                            ,
-
+                            },
                             description_en: {
                                 validators: {
                                     notEmpty: {
@@ -130,7 +129,6 @@ var KTCreateCategoryApp = function () {
                                     }
                                 }
                             }
-
                         },
                         plugins: {
                             trigger: new FormValidation.plugins.Trigger(),
@@ -141,11 +139,27 @@ var KTCreateCategoryApp = function () {
                             })
                         }
                     })),
+                    // Image size validation inside FormValidation
                     n.push(FormValidation.formValidation(o, {
                         fields: {
                             image: {
                                 validators: {
-                                    notEmpty: { message:image }
+                                    notEmpty: { message:image },
+                                    callback: {
+                                        message: 'حجم الصورة يتجاوز الحد المسموح به (2MB).',
+                                        // callback: function(value, validator, $field) {
+                                        //     const fileInput = $field[0];
+                                        //     const file = fileInput.files[0];
+                                        //     console.log(file + fileInput);
+                                        //     if (file) {
+                                        //         const MAX_SIZE = 20; // 2MB in KB
+                                        //         if (file.size > MAX_SIZE * 1024) {
+                                        //             return false; // Reject the file if it exceeds the size
+                                        //         }
+                                        //     }
+                                        //     return true; // File is valid
+                                        // }
+                                    }
                                 }
                             },
                         },
@@ -157,41 +171,8 @@ var KTCreateCategoryApp = function () {
                                 eleValidClass: ""
                             })
                         }
-                    })),
-                    n.push(FormValidation.formValidation(o, {
-                        fields: {
-                            ie: {
-                                validators: {
-                                    notEmpty: { message: "Image is required" }
-                                }
-                            },
-                        },
-                        plugins: {
-                            trigger: new FormValidation.plugins.Trigger(),
-                            bootstrap: new FormValidation.plugins.Bootstrap5({
-                                rowSelector: ".fv-row",
-                                eleInvalidClass: "",
-                                eleValidClass: ""
-                            })
-                        }
-                    })),
-            n.push(FormValidation.formValidation(o, {
-                fields: {
-                    ie: {
-                        validators: {
-                            notEmpty: { message: "Image is required" }
-                        }
-                    },
-                },
-                plugins: {
-                    trigger: new FormValidation.plugins.Trigger(),
-                    bootstrap: new FormValidation.plugins.Bootstrap5({
-                        rowSelector: ".fv-row",
-                        eleInvalidClass: "",
-                        eleValidClass: ""
-                    })
-                }
-            }))
+                    }))
+
             );
         }
     };

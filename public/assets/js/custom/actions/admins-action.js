@@ -80,16 +80,21 @@ $(document).ready(function($)
             contentType: false, // determint type object
             processData: false, // processing on response
             success: function (response) {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Done',
-                    text: "Update data success",
-                    customClass: {
-                        confirmButton: "btn btn-primary",
-                    },
-                });
-                window.history.back();
-                location.reload(true);
+                // Swal.fire({
+                //     icon: 'success',
+                //     title: 'Done',
+                //     text: "Update data success",
+                //     customClass: {
+                //         confirmButton: "btn btn-primary",
+                //     },
+                // });
+                // window.history.back();
+                // location.reload(true);
+                const queryString = window.location.search;
+                const params = new URLSearchParams(queryString);
+                const lang = params.get('lang');
+                window.location.href = "/dashboard/admins/"+ lang;
+
 
             },
 

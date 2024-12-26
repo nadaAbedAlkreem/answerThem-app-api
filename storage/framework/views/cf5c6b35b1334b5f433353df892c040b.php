@@ -84,7 +84,7 @@
                         <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-primary fw-bold py-4 fs-6 w-275px" data-kt-menu="true">
                             <!--begin::Menu item-->
                             <div class="menu-item px-3">
-                                <div class="menu-content d-flex align-items-center px-3">
+                                <div class="menu-content d-flex align-items-center px-3" style ="padding:5px">
                                     <!--begin::Avatar-->
                                     <div class="symbol symbol-50px me-5">
                                         <img alt="Logo" src="assets/media/avatars/300-1.jpg" />
@@ -92,10 +92,10 @@
                                     <!--end::Avatar-->
                                     <!--begin::Username-->
                                     <div class="d-flex flex-column">
-                                        <div class="fw-bolder d-flex align-items-center fs-5"><?php echo e(auth()->user()->name); ?>
+                                        <div class="fw-bolder d-flex align-items-center fs-5"><?php echo e(auth('admin')->user()->name); ?>
 
                                             <span class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2"></span></div>
-                                        <a  class="fw-bold text-muted text-hover-primary fs-7"><?php echo e(auth()->user()->email); ?></a>
+                                        <a  class="fw-bold text-muted text-hover-primary fs-7"><?php echo e(auth('admin')->user()->email); ?></a>
                                     </div>
                                     <!--end::Username-->
                                 </div>
@@ -524,7 +524,7 @@
                                         <div class="row mb-5">
                                             <div class="col-lg-8">
                                                 <!--begin::Image input-->
-                                                <div class="image-input image-input-outline" data-kt-image-input="true" style="background-image: url('assets/media/svg/avatars/blank.svg')">
+                                                <div class="image-input image-input-outline"  id ="image-input-create-categroy" data-kt-image-input="true" style="background-image: url('assets/media/svg/avatars/blank.svg')">
                                                     <!--begin::Preview existing avatar-->
                                                     <div class="image-input-wrapper w-125px h-125px bgi-position-center" style="background-size: 75%; background-image: url()"></div>
                                                     <!--end::Preview existing avatar-->
@@ -551,6 +551,8 @@
                                                 <!--end::Image input-->
                                                 <!--begin::Hint-->
                                                 <div class="form-text"><?php echo e(__('setting.Allowed file types')); ?></div>
+                                                <div id="error-message" style="color: red; display: none;"></div>
+
                                                 <!--end::Hint-->
                                             </div>
                                         </div>
@@ -658,12 +660,11 @@
                         <path d="M15.4343 12.5657L11.25 16.75C10.8358 17.1642 10.8358 17.8358 11.25 18.25C11.6642 18.6642 12.3358 18.6642 12.75 18.25L18.2929 12.7071C18.6834 12.3166 18.6834 11.6834 18.2929 11.2929L12.75 5.75C12.3358 5.33579 11.6642 5.33579 11.25 5.75C10.8358 6.16421 10.8358 6.83579 11.25 7.25L15.4343 11.4343C15.7467 11.7467 15.7467 12.2533 15.4343 12.5657Z" fill="black" />
                     </svg>
                 </span>
-                <!--end::Svg Icon-->
-            </span>
+                <!--end::Svg Icon--></span>
                                         <span class="indicator-progress"><?php echo e(__('setting.Please wait...')); ?>
 
-                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-            </span>
+                                         <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                        </span>
                                     </button>
                                     <button type="button" class="btn btn-lg btn-primary" data-kt-stepper-action="next"><?php echo e(__('setting.Continue')); ?>
 
@@ -843,34 +844,23 @@
                                 <!--بداية الخطوة 1-->
                                 <div class="current" data-kt-stepper-element="content">
                                     <div class="w-100">
-                                        <!--بداية مجموعة المدخلات-->
-                                        <div class="fv-row mb-10">
-                                            <!--بداية التسمية-->
-                                            <label class="d-flex align-items-center fs-5 fw-bold mb-2">
+                                         <div class="fv-row mb-10">
+                                             <label class="d-flex align-items-center fs-5 fw-bold mb-2">
                                                 <span class="required"><?php echo e(__('setting.Category Name Arabic')); ?></span>
                                                 <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="<?php echo e(__('setting.Specify your unique app name')); ?>"></i>
                                             </label>
-                                            <!--نهاية التسمية-->
-                                            <!--بداية المدخل-->
-                                            <input type="text" class="form-control form-control-lg form-control-solid" id="name_ar" name="name_ar" placeholder="<?php echo e(__('setting.Category Name Arabic')); ?>" value="" />
-                                            <!--نهاية المدخل-->
-                                        </div>
-                                        <!--نهاية مجموعة المدخلات-->
+                                              <input type="text" class="form-control form-control-lg form-control-solid" id="name_ar" name="name_ar" placeholder="<?php echo e(__('setting.Category Name Arabic')); ?>" value="" />
+                                         </div>
 
                                         <div class="w-100">
-                                            <!--بداية مجموعة المدخلات-->
-                                            <div class="fv-row mb-10">
-                                                <!--بداية التسمية-->
-                                                <label class="d-flex align-items-center fs-5 fw-bold mb-2">
+                                             <div class="fv-row mb-10">
+                                                 <label class="d-flex align-items-center fs-5 fw-bold mb-2">
                                                     <span class="required"><?php echo e(__('setting.Category Name English')); ?></span>
                                                     <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="<?php echo e(__('setting.Specify your unique app name')); ?>"></i>
                                                 </label>
-                                                <!--نهاية التسمية-->
-                                                <!--بداية المدخل-->
-                                                <input type="text" class="form-control form-control-lg form-control-solid" id="name_en" name="name_en" placeholder="<?php echo e(__('setting.Category Name English')); ?>" value="" />
+                                                 <input type="text" class="form-control form-control-lg form-control-solid" id="name_en" name="name_en" placeholder="<?php echo e(__('setting.Category Name English')); ?>" value="" />
                                                 <input type="hidden" id="id_update" name="id" value="" />
-                                                <!--نهاية المدخل-->
-                                            </div>
+                                             </div>
                                             <!--نهاية مجموعة المدخلات-->
                                         </div>
                                     </div>
@@ -928,7 +918,7 @@
                                             <div class="row mb-5">
                                                 <div class="col-lg-8">
                                                     <!--begin::Image input-->
-                                                    <div class="image-input image-input-outline" data-kt-image-input="true" style="background-image: url('assets/media/svg/avatars/blank.svg')">
+                                                    <div class="image-input image-input-outline" id ="image-input-upadate-categroy" data-kt-image-input="true" style="background-image: url('assets/media/svg/avatars/blank.svg')">
                                                         <!--begin::Preview existing avatar-->
                                                         <div class="image-input-wrapper image-update w-125px h-125px bgi-position-center" id="imageUpdate" style="background-size: 75%; background-image: url('')"></div>
                                                         <!--end::Preview existing avatar-->
@@ -943,18 +933,20 @@
                                                         <!--end::Label-->
                                                         <!--begin::Cancel-->
                                                         <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="<?php echo e(__('setting.Cancel avatar')); ?>">
-                            <i class="bi bi-x fs-2"></i>
-                        </span>
+                                                            <i class="bi bi-x fs-2"></i>
+                                                        </span>
                                                         <!--end::Cancel-->
                                                         <!--begin::Remove-->
                                                         <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="<?php echo e(__('setting.Remove avatar')); ?>">
-                            <i class="bi bi-x fs-2"></i>
-                        </span>
+                                                                <i class="bi bi-x fs-2"></i>
+                                                            </span>
                                                         <!--end::Remove-->
                                                     </div>
                                                     <!--end::Image input-->
                                                     <!--begin::Hint-->
                                                     <div class="form-text"><?php echo e(__('setting.Allowed file types')); ?></div>
+                                                    <div id="error-message-update" style="color: red; display: none;"></div>
+
                                                     <!--end::Hint-->
                                                 </div>
                                                 <!--end::Col-->
@@ -1124,9 +1116,8 @@
         <!--end::Modal dialog-->
     </div>
 <script>
-
     window.translations = {
-         OK: <?php echo json_encode(__('setting.OK!'), 15, 512) ?>,
+        OK: <?php echo json_encode(__('setting.OK!'), 15, 512) ?>,
         Sorry: <?php echo json_encode(__('setting.Sorry'), 15, 512) ?>,
         name: <?php echo json_encode(__('setting.name'), 15, 512) ?>,
         image: <?php echo json_encode(__('setting.image'), 15, 512) ?>,
@@ -1134,14 +1125,11 @@
         are_sure: <?php echo json_encode(__('setting.are_sure'), 15, 512) ?>,
         revert: <?php echo json_encode(__('setting.revert'), 15, 512) ?>,
         yes: <?php echo json_encode(__('setting.yes'), 15, 512) ?>,
-
-        // Add more translations as needed
     };
 </script>
-
+<script src="<?php echo e(url('assets/js/custom/actions/style-validation.js')); ?>"></script>
 <script src="<?php echo e(url('assets/plugins/custom/datatables/datatables.bundle.js')); ?>"></script>
-
-     <script src="<?php echo e(url('assets/js/custom/actions/category-action.js')); ?>"></script>
+<script src="<?php echo e(url('assets/js/custom/actions/category-action.js')); ?>"></script>
 
 <?php $__env->stopSection(); ?>
 

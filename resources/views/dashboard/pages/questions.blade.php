@@ -558,7 +558,7 @@
                                             <!--begin::Col-->
                                             <div class="col-lg-8">
                                                 <!--begin::Image input-->
-                                                <div class="image-input image-input-outline" data-kt-image-input="true" style="background-image: url('assets/media/svg/avatars/blank.svg')">
+                                                <div class="image-input image-input-outline"  id ="image-input-create-categroy" data-kt-image-input="true" style="background-image: url('assets/media/svg/avatars/blank.svg')">
                                                     <!--begin::Preview existing avatar-->
                                                     <div class="image-input-wrapper w-125px h-125px bgi-position-center" style="background-size: 75%; background-image: url()"></div>
                                                     <!--end::Preview existing avatar-->
@@ -969,7 +969,7 @@
                                                 <!--begin::Col-->
                                                 <div class="col-lg-8">
                                                     <!--begin::Image input-->
-                                                    <div class="image-input image-input-outline" data-kt-image-input="true" style="background-image: url('assets/media/svg/avatars/blank.svg')">
+                                                    <div class="image-input image-input-outline"  id='image-input-upadate-categroy'  data-kt-image-input="true" style="background-image: url('assets/media/svg/avatars/blank.svg')">
                                                         <!--begin::Preview existing avatar-->
                                                         <div class="image-input-wrapper image-update w-125px h-125px bgi-position-center" style="background-size: 75%; background-image: url()"></div>
                                                         <!--end::Preview existing avatar-->
@@ -1103,9 +1103,9 @@
 
     <!--begin::Modal - Invite Friends-->
 
-
-     <script src="{{url('assets/js/custom/actions/question-action.js')}}"></script>
-    <script src="{{url('assets/plugins/custom/datatables/datatables.bundle.js')}}"></script>
+<script src="{{url('assets/js/custom/actions/style-validation-question.js')}}"></script>
+<script src="{{url('assets/js/custom/actions/question-action.js')}}"></script>
+<script src="{{url('assets/plugins/custom/datatables/datatables.bundle.js')}}"></script>
 
 
 
@@ -1124,26 +1124,6 @@
 
             // Add more translations as needed
         };
-        document.addEventListener('DOMContentLoaded', function () {
-
-            // Get all Arabic radio buttons
-            const arabicRadios = document.querySelectorAll('input[name="correct_answer_ar"]');
-            // Get all English radio buttons
-            const englishRadios = document.querySelectorAll('input[name="correct_answer_en"]');
-
-            // Add change event listener to Arabic radio buttons
-            arabicRadios.forEach((radio) => {
-                radio.addEventListener('change', function () {
-                    // Get the selected value from Arabic radios
-                    const selectedValue = this.value;
-
-                    // Set the corresponding English radio to checked
-                    englishRadios.forEach((englishRadio) => {
-                        englishRadio.checked = (englishRadio.value === selectedValue);
-                    });
-                });
-            });
-        });
     </script>
 
 

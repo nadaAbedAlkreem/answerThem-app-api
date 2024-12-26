@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 
 class StoreCategoryRequest extends FormRequest
 {
@@ -26,8 +27,8 @@ class StoreCategoryRequest extends FormRequest
         app::setLocale($this->input('lang'));
 
         return [
-            'name_ar' => 'required|string|unique:categories,name_ar|max:255',
-            'name_en' => 'required|string|unique:categories,name_ar|max:255',
+            'name_ar' => 'required|string|unique:categories,name_ar,NULL,id,deleted_at,NULL|max:255',
+            'name_en' => 'required|string|unique:categories,name_en,NULL,id,deleted_at,NULL|max:255',
             'description_ar' => 'required|string|max:255',
             'description_en' => 'required|string|max:255',
             'rating' => 'required|numeric|min:0|max:5', // Assuming rating should not exceed 5

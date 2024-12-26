@@ -524,7 +524,7 @@
                                         <div class="row mb-5">
                                             <div class="col-lg-8">
                                                 <!--begin::Image input-->
-                                                <div class="image-input image-input-outline" data-kt-image-input="true" style="background-image: url('assets/media/svg/avatars/blank.svg')">
+                                                <div class="image-input image-input-outline"  id ="image-input-create-categroy" data-kt-image-input="true" style="background-image: url('assets/media/svg/avatars/blank.svg')">
                                                     <!--begin::Preview existing avatar-->
                                                     <div class="image-input-wrapper w-125px h-125px bgi-position-center" style="background-size: 75%; background-image: url()"></div>
                                                     <!--end::Preview existing avatar-->
@@ -551,6 +551,8 @@
                                                 <!--end::Image input-->
                                                 <!--begin::Hint-->
                                                 <div class="form-text">{{ __('setting.Allowed file types') }}</div>
+                                                <div id="error-message" style="color: red; display: none;"></div>
+
                                                 <!--end::Hint-->
                                             </div>
                                         </div>
@@ -654,11 +656,10 @@
                         <path d="M15.4343 12.5657L11.25 16.75C10.8358 17.1642 10.8358 17.8358 11.25 18.25C11.6642 18.6642 12.3358 18.6642 12.75 18.25L18.2929 12.7071C18.6834 12.3166 18.6834 11.6834 18.2929 11.2929L12.75 5.75C12.3358 5.33579 11.6642 5.33579 11.25 5.75C10.8358 6.16421 10.8358 6.83579 11.25 7.25L15.4343 11.4343C15.7467 11.7467 15.7467 12.2533 15.4343 12.5657Z" fill="black" />
                     </svg>
                 </span>
-                <!--end::Svg Icon-->
-            </span>
+                <!--end::Svg Icon--></span>
                                         <span class="indicator-progress">{{ __('setting.Please wait...') }}
-                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-            </span>
+                                         <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                        </span>
                                     </button>
                                     <button type="button" class="btn btn-lg btn-primary" data-kt-stepper-action="next">{{ __('setting.Continue') }}
                                         <!--begin::Svg Icon | path: icons/duotune/arrows/arr064.svg-->
@@ -837,34 +838,23 @@
                                 <!--بداية الخطوة 1-->
                                 <div class="current" data-kt-stepper-element="content">
                                     <div class="w-100">
-                                        <!--بداية مجموعة المدخلات-->
-                                        <div class="fv-row mb-10">
-                                            <!--بداية التسمية-->
-                                            <label class="d-flex align-items-center fs-5 fw-bold mb-2">
+                                         <div class="fv-row mb-10">
+                                             <label class="d-flex align-items-center fs-5 fw-bold mb-2">
                                                 <span class="required">{{ __('setting.Category Name Arabic') }}</span>
                                                 <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="{{ __('setting.Specify your unique app name') }}"></i>
                                             </label>
-                                            <!--نهاية التسمية-->
-                                            <!--بداية المدخل-->
-                                            <input type="text" class="form-control form-control-lg form-control-solid" id="name_ar" name="name_ar" placeholder="{{ __('setting.Category Name Arabic') }}" value="" />
-                                            <!--نهاية المدخل-->
-                                        </div>
-                                        <!--نهاية مجموعة المدخلات-->
+                                              <input type="text" class="form-control form-control-lg form-control-solid" id="name_ar" name="name_ar" placeholder="{{ __('setting.Category Name Arabic') }}" value="" />
+                                         </div>
 
                                         <div class="w-100">
-                                            <!--بداية مجموعة المدخلات-->
-                                            <div class="fv-row mb-10">
-                                                <!--بداية التسمية-->
-                                                <label class="d-flex align-items-center fs-5 fw-bold mb-2">
+                                             <div class="fv-row mb-10">
+                                                 <label class="d-flex align-items-center fs-5 fw-bold mb-2">
                                                     <span class="required">{{ __('setting.Category Name English') }}</span>
                                                     <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="{{ __('setting.Specify your unique app name') }}"></i>
                                                 </label>
-                                                <!--نهاية التسمية-->
-                                                <!--بداية المدخل-->
-                                                <input type="text" class="form-control form-control-lg form-control-solid" id="name_en" name="name_en" placeholder="{{ __('setting.Category Name English') }}" value="" />
+                                                 <input type="text" class="form-control form-control-lg form-control-solid" id="name_en" name="name_en" placeholder="{{ __('setting.Category Name English') }}" value="" />
                                                 <input type="hidden" id="id_update" name="id" value="" />
-                                                <!--نهاية المدخل-->
-                                            </div>
+                                             </div>
                                             <!--نهاية مجموعة المدخلات-->
                                         </div>
                                     </div>
@@ -922,7 +912,7 @@
                                             <div class="row mb-5">
                                                 <div class="col-lg-8">
                                                     <!--begin::Image input-->
-                                                    <div class="image-input image-input-outline" data-kt-image-input="true" style="background-image: url('assets/media/svg/avatars/blank.svg')">
+                                                    <div class="image-input image-input-outline" id ="image-input-upadate-categroy" data-kt-image-input="true" style="background-image: url('assets/media/svg/avatars/blank.svg')">
                                                         <!--begin::Preview existing avatar-->
                                                         <div class="image-input-wrapper image-update w-125px h-125px bgi-position-center" id="imageUpdate" style="background-size: 75%; background-image: url('')"></div>
                                                         <!--end::Preview existing avatar-->
@@ -937,18 +927,20 @@
                                                         <!--end::Label-->
                                                         <!--begin::Cancel-->
                                                         <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="{{ __('setting.Cancel avatar') }}">
-                            <i class="bi bi-x fs-2"></i>
-                        </span>
+                                                            <i class="bi bi-x fs-2"></i>
+                                                        </span>
                                                         <!--end::Cancel-->
                                                         <!--begin::Remove-->
                                                         <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="{{ __('setting.Remove avatar') }}">
-                            <i class="bi bi-x fs-2"></i>
-                        </span>
+                                                                <i class="bi bi-x fs-2"></i>
+                                                            </span>
                                                         <!--end::Remove-->
                                                     </div>
                                                     <!--end::Image input-->
                                                     <!--begin::Hint-->
                                                     <div class="form-text">{{ __('setting.Allowed file types') }}</div>
+                                                    <div id="error-message-update" style="color: red; display: none;"></div>
+
                                                     <!--end::Hint-->
                                                 </div>
                                                 <!--end::Col-->
@@ -1110,9 +1102,8 @@
         <!--end::Modal dialog-->
     </div>
 <script>
-
     window.translations = {
-         OK: @json(__('setting.OK!')),
+        OK: @json(__('setting.OK!')),
         Sorry: @json(__('setting.Sorry')),
         name: @json(__('setting.name')),
         image: @json(__('setting.image')),
@@ -1120,13 +1111,10 @@
         are_sure: @json(__('setting.are_sure')),
         revert: @json(__('setting.revert')),
         yes: @json(__('setting.yes')),
-
-        // Add more translations as needed
     };
 </script>
-
+<script src="{{url('assets/js/custom/actions/style-validation.js')}}"></script>
 <script src="{{url('assets/plugins/custom/datatables/datatables.bundle.js')}}"></script>
-
-     <script src="{{url('assets/js/custom/actions/category-action.js')}}"></script>
+<script src="{{url('assets/js/custom/actions/category-action.js')}}"></script>
 
 @endsection

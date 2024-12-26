@@ -37,7 +37,7 @@
                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-primary fw-bold py-4 fs-6 w-275px" data-kt-menu="true">
                                 <!--begin::Menu item-->
                                 <div class="menu-item px-3">
-                                    <div class="menu-content d-flex align-items-center px-3">
+                                    <div class="menu-content d-flex align-items-center px-3" style ="padding:5px">
                                         <!--begin::Avatar-->
                                         <div class="symbol symbol-50px me-5">
                                             <img alt="Logo" src="assets/media/avatars/300-1.jpg" />
@@ -45,10 +45,10 @@
                                         <!--end::Avatar-->
                                         <!--begin::Username-->
                                         <div class="d-flex flex-column">
-                                            <div class="fw-bolder d-flex align-items-center fs-5"><?php echo e(auth()->user()->name); ?>
+                                            <div class="fw-bolder d-flex align-items-center fs-5"><?php echo e(auth('admin')->user()->name); ?>
 
                                                 <span class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2"></span></div>
-                                            <a href="#" class="fw-bold text-muted text-hover-primary fs-7"><?php echo e(auth()->user()->email); ?></a>
+                                            <a  class="fw-bold text-muted text-hover-primary fs-7"><?php echo e(auth('admin')->user()->email); ?></a>
                                         </div>
                                         <!--end::Username-->
                                     </div>
@@ -59,18 +59,7 @@
                                     <a  class="menu-link px-5">
 											<span class="menu-title position-relative"><?php echo e(__('setting.language')); ?>
 
-                                                <?php if(app()->getLocale()  == 'en'): ?>
-                                                    <span class="fs-8 rounded bg-light px-3 py-2 position-absolute translate-middle-y top-50 end-0"><?php echo e(__('setting.english')); ?>
 
-                                                       <img class="w-15px h-15px rounded-1 ms-2" src="assets/media/flags/united-states.svg" alt="" /></span></span>
-
-                                        <?php else: ?>
-
-                                            <span class="fs-8 rounded bg-light px-3 py-2 position-absolute translate-middle-y top-50 end-0"><?php echo e(__('setting.arabic')); ?>
-
-                                                      <img class="w-15px h-15px rounded-1 ms-2" src="assets/media/flags/saudi-arabia.svg" alt="" /></span></span>
-
-                                        <?php endif; ?>
                                     </a>
                                     <!--begin::Menu sub-->
                                     <div class="menu-sub menu-sub-dropdown w-175px py-4">
@@ -186,7 +175,17 @@
     </div>
     <!--end::Root-->
     <!--begin::Drawers-->
+ <script>
+     window.translations = {
+         OK: <?php echo json_encode(__('setting.OK!'), 15, 512) ?>,
+         success_message: <?php echo json_encode(__('setting.Successfully_updated_changes'), 15, 512) ?>,
+         are_sure: <?php echo json_encode(__('setting.are_sure'), 15, 512) ?>,
+         revert: <?php echo json_encode(__('setting.revert'), 15, 512) ?>,
+         yes: <?php echo json_encode(__('setting.yes'), 15, 512) ?>,
 
+         // Add more translations as needed
+     };
+ </script>
     <!--begin::Modals-->
     <script src="<?php echo e(url('assets/plugins/custom/datatables/datatables.bundle.js')); ?>"></script>
 

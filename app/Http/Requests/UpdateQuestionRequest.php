@@ -80,12 +80,10 @@ class UpdateQuestionRequest extends FormRequest
         return [
             'question_ar_text.required' => __('messages.question_ar_text.required'),
             'question_ar_text.string' => __('messages.question_ar_text.string'),
-            'question_ar_text.unique' => __('messages.question_ar_text.unique'),
             'question_ar_text.max' => __('messages.question_ar_text.max'),
 
             'question_en_text.required' => __('messages.question_en_text.required'),
             'question_en_text.string' => __('messages.question_en_text.string'),
-            'question_en_text.unique' => __('messages.question_en_text.unique'),
             'question_en_text.max' => __('messages.question_en_text.max'),
 
             'image.required' => __('messages.image.required'),

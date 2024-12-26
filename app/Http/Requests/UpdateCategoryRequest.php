@@ -108,12 +108,10 @@ class UpdateCategoryRequest extends FormRequest
         return [
             'name_ar.required' => __('messages.name_ar.required'),
             'name_ar.string' => __('messages.name_ar.string'),
-            'name_ar.unique' => __('messages.name_ar.unique'),
             'name_ar.max' => __('messages.name_ar.max'),
 
             'name_en.required' => __('messages.name_en.required'),
             'name_en.string' => __('messages.name_en.string'),
-            'name_en.unique' => __('messages.name_en.unique'),
             'name_en.max' => __('messages.name_en.max'),
 
             'description_ar.required' => __('messages.description_ar.required'),
