@@ -297,7 +297,7 @@
                 <h2>{{__('setting.Create Question')}}</h2>
                 <!--end::Modal title-->
                 <!--begin::Close-->
-                <div class="btn btn-sm btn-icon btn-active-color-primary" id ="dismiss_create"  data-bs-dismiss="modal">
+                <div class="btn btn-sm btn-icon btn-active-color-primary" id ="dismiss_create" data-bs-dismiss="modal">
                     <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
                     <span class="svg-icon svg-icon-1">
 								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -577,7 +577,7 @@
                                                     </label>
                                                     <!--end::Label-->
                                                     <!--begin::Cancel-->
-                                                    <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="{{__('setting.Cancel avatar')}}">
+                                                    <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="cancel" id="canselquestion" data-bs-toggle="tooltip" title="{{__('setting.Cancel avatar')}}">
                                                                                             <i class="bi bi-x fs-2"></i>
                                                                                         </span>
                                                     <!--end::Cancel-->
@@ -997,7 +997,7 @@
                                                         </label>
                                                         <!--end::Label-->
                                                         <!--begin::Cancel-->
-                                                        <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="{{__('setting.Cancel avatar')}}">
+                                                        <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow"  data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="{{__('setting.Cancel avatar')}}">
                                                                                             <i class="bi bi-x fs-2"></i>
                                                                                         </span>
                                                         <!--end::Cancel-->

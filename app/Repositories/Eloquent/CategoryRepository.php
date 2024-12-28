@@ -107,6 +107,7 @@ class CategoryRepository  extends BaseRepository implements ICategoryRepositorie
         $famousGames = Category::where('level', 3)
             ->where('famous_gaming', '<>', 0)
             ->with(['parent', 'parent.parent']) // Load parent and grandparent
+            ->take(7)
             ->get();
 
         // Return the results

@@ -95,7 +95,7 @@ class CategoryController extends Controller
     {
         try {
             $categories = $this->categoryRepository->getCategoriesDetails();
-             $banner = $this->settingRepositories->getWhereFirst(['base_term' => 'app banner' , 'lang' => App::getLocale()]);
+            $banner = $this->settingRepositories->getWhereFirst(['base_term' => 'app banner' , 'lang' => App::getLocale()]);
             $this->onlineUserActive($request);
             return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY',
                 [

@@ -108,6 +108,10 @@ $(document).ready(function ($) {
                 if (resetButtonQuestion) {
                     resetButtonQuestion.click();
                 }
+                const canselquestion = document.getElementById('canselquestion'); //
+                if (canselquestion) {
+                    canselquestion.click();
+                }
 
                 $("#questions-table").DataTable().ajax.reload();
 
