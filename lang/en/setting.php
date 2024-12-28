@@ -172,6 +172,10 @@ return  [
     'are_sure' => 'Are you sure?' ,
     'revert' => 'You wont be able to revert this!' ,
     'yes'=> 'Yes, delete it !',
+    'First level categories' =>'First level categories',
+    'Level 2 Categories' => 'Level 2 Categories',
+    'Level 3 Categories'=>  'Level 3 Categories',
+
 
 
 ];

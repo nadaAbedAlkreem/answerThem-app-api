@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Http\Resources\Dashboard\CategoryResource;
+use App\Models\Admin;
 use App\Models\Category;
+use App\Models\User;
 use App\Repositories\ICategoryRepositories;
 use App\Services\CategoryDatatableService;
 use App\Traits\ResponseTrait;
@@ -47,8 +49,22 @@ class CategoryController extends Controller
     public function store(StoreCategoryRequest $request)
     {
 
-        try {
-            $this->categoryRepository->create($request->getData());
+         try {
+            $category = $this->categoryRepository->create($request->getData());
+            $usersWithoutCategory = Admin::whereNull('category_id')->whereHas('roles', function($query) {
+                $query->where('name', 'staff');
+            })->first();
+            if ($usersWithoutCategory != null)
+            {
+                if($category->level == '3')
+                {
+                    $usersWithoutCategory->category_id = $category->id;
+                    $usersWithoutCategory->save();
+
+                }
+
+            }
+
             return $this->successResponse('CREATE_SUCCESS',[], 201, App::getLocale())  ;
         } catch (\Exception $e) {
              return response([
@@ -97,6 +113,27 @@ class CategoryController extends Controller
         ]);
     }
 
+    public function getCategories(Request $request)
+    {
+        app::setLocale($request->query('lang'));
+        $name = (app::getLocale() == 'ar')? 'name_ar' : 'name_en' ;
+        $categories = Category::with('parent')
+        ->select('id', 'level', $name, 'parent_id')
+            ->get()
+            ->map(function ($category) use ($name) {
+                return [
+                    'id' => $category->id,
+                    'level' => $category->level,
+                    'name' => $category->$name,
+                    'parent_name' => $category->parent ? $category->parent->$name : null,
 
+                ];
+            });
+
+
+
+         return response()->json($categories);
+
+    }
 
 }

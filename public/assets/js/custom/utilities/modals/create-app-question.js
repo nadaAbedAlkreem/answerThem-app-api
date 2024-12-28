@@ -29,6 +29,9 @@ var KTCreateQuestApp = function () {
                             r.classList.remove("d-none");
                             a.classList.remove("d-none");
                         }
+                        document.getElementById("resetButtonQuestion").addEventListener("click", function () {
+                            i.goTo(1);
+                        });
                     }),
                     i.on("kt.stepper.next", function (e) {
                         console.log("stepper.next");
@@ -52,6 +55,7 @@ var KTCreateQuestApp = function () {
                             e.goNext();
                             KTUtil.scrollTop();
                         }
+
                     }),
                     i.on("kt.stepper.previous", function (e) {
                         console.log("stepper.previous");

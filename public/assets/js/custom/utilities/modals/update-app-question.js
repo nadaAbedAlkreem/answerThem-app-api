@@ -22,6 +22,9 @@ var KTCreateApp = function () {
                             r.classList.remove("d-none");
                             a.classList.remove("d-none");
                         }
+                        document.getElementById("resetButtonQuestionUpdate").addEventListener("click", function () {
+                            i.goTo(1);
+                        });
                     }),
                     i.on("kt.stepper.next", function (e) {
                         console.log("stepper.next");

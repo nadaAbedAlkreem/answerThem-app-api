@@ -12,9 +12,9 @@ use Spatie\Permission\Traits\HasRoles;
 class Admin extends Authenticatable
 {
     use HasFactory, SoftDeletes , HasRoles;
-    protected $fillable = ['name', 'email', 'phone' , 'password'];
+    protected $fillable = ['name', 'email', 'phone' , 'password'  , 'category_id'];
     protected $dates = ['deleted_at'];
-    protected $guard_name = 'admin'; // تأكد من أن الحارس هنا هو نفسه الحارس المستخدم للدور
+    protected $guard_name = 'admin';
 
     protected $hidden = [
         'password',
@@ -22,10 +22,13 @@ class Admin extends Authenticatable
 
     protected $guarded = [];
 
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
     public function isAdmin()
     {
         return $this->hasRole('admin');
     }
-
 
 }

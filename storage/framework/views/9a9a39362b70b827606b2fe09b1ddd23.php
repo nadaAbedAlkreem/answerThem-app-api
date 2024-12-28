@@ -3,6 +3,9 @@
     .stepper-label{
         padding:7px;
     }
+    .hidden {
+        display: none;
+    }
  </style>
 
     <div class="d-flex flex-column flex-root">
@@ -161,21 +164,23 @@
                                     <!--end::Label-->
                                     <!--begin::Input-->
                                     <div>
-                                        <select class="form-select form-select-solid" id = "category" data-kt-select2="true" data-placeholder="<?php echo e(__('Setting.Select Option')); ?>" data-dropdown-parent="#kt_menu_61cf14c9caa9b" data-allow-clear="true">
-                                            <option></option>
-                                            <?php if(!empty($category)): ?>
+                                        <?php if($isCollection == true): ?>
+                                            <select class="form-select form-select-solid" id = "category" data-kt-select2="true" data-placeholder="<?php echo e(__('Setting.Select Option')); ?>" data-dropdown-parent="#kt_menu_61cf14c9caa9b" data-allow-clear="true">
+                                                <option></option>
+                                                <?php if(!empty($category)): ?>
 
-                                            <?php $__currentLoopData = $category; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                      <?php if($lang == 'ar'): ?>
-                                                            <option value = "<?php echo e($value['id']); ?>"> <?php echo e($value['name_ar']); ?></option>
-                                                      <?php else: ?>
-                                                        <option value = "<?php echo e($value['id']); ?>"> <?php echo e($value['name_en']); ?></option>
+                                                <?php $__currentLoopData = $category; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                          <?php if($lang == 'ar'): ?>
+                                                                <option value = "<?php echo e($value['id']); ?>"> <?php echo e($value['name_ar']); ?></option>
+                                                          <?php else: ?>
+                                                            <option value = "<?php echo e($value['id']); ?>"> <?php echo e($value['name_en']); ?></option>
 
-                                                    <?php endif; ?>
+                                                        <?php endif; ?>
 
-                                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                            <?php endif; ?>
-                                         </select>
+                                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                <?php endif; ?>
+                                             </select>
+                                        <?php endif; ?>
                                     </div>
                                     <!--end::Input-->
                                 </div>
@@ -460,7 +465,7 @@
                                         <div class="mb-4">
                                             <!-- Answer 1 -->
                                             <div class="input-group mb-3">
-                                                        <span class="input-group-text">
+                                                <span class="input-group-text">
                                                             <input type="radio" name="correct_answer_ar" value="1" required disabled checked>
                                                         </span>
                                                 <input type="text" class="form-control form-control-lg form-control-solid rounded-3 shadow-sm" name="answer_text_ar_1" placeholder="<?php echo e(__('setting.Enter Answer')); ?> " required>
@@ -601,14 +606,21 @@
                                         </label>
                                         <select class="form-control form-control-lg form-control-solid  form-select-sm" name = "category_id"  id="category_id" required aria-label=".form-select-sm example">
                                                  <?php if(!empty($category)): ?>
-
+                                                    <?php if($isCollection == true): ?>
                                                     <?php $__currentLoopData = $category; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                             <option value="<?php echo e($item['id']); ?>"><?php echo e($item['name']); ?>
 
-                                                             <span>(<?php echo e(app()->getLocale() === 'ar' ? $item['parent']['name_ar'] ?? '' : $item['parent']['name_en'] ?? ''); ?>) -  (<?php echo e(app()->getLocale() === 'ar' ? $item['parent']['parent']['name_ar'] ?? '' : $item['parent']['parent']['name_en'] ?? ''); ?>)</span>
-                                                             </option>
-                                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                            <?php endif; ?>
+                                                        <option value="<?php echo e($item['id']); ?>"> <?php echo e(app()->getLocale() === 'ar' ? $item['name_ar'] ?? '' : $item['name_en'] ?? ''); ?>
+
+                                                            <span>(<?php echo e(app()->getLocale() === 'ar' ? $item['parent']['name_ar'] ?? '' : $item['parent']['name_en'] ?? ''); ?>) -  (<?php echo e(app()->getLocale() === 'ar' ? $item['parent']['parent']['name_ar'] ?? '' : $item['parent']['parent']['name_en'] ?? ''); ?>)</span>
+                                                        </option>
+                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                     <?php else: ?>
+                                                     <option value="<?php echo e($category['id']); ?>"><?php echo e(app()->getLocale() === 'ar' ? $category['name_ar'] ?? '' : $category['name_en'] ?? ''); ?>
+
+                                                        <span>(<?php echo e(app()->getLocale() === 'ar' ? $category['parent']['name_ar'] ?? '' : $category['parent']['name_en'] ?? ''); ?>) -  (<?php echo e(app()->getLocale() === 'ar' ? $category['parent']['parent']['name_ar'] ?? '' : $category['parent']['parent']['name_en'] ?? ''); ?>)</span>
+                                                    </option>
+                                                    <?php endif; ?>
+                                                <?php endif; ?>
                                         </select>
 
                                     </div>
@@ -662,9 +674,12 @@
 													</svg>
 												</span>
                                                     <!--end::Svg Icon--></span>
-                                        <span class="indicator-progress"><?php echo e(__('setting.Please wait...')); ?>
+                                        <span class="indicator-label-progress hidden"><?php echo e(__('setting.Please wait...')); ?>
 
 												<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                    </button>
+                                    <button type="button" id="resetButtonQuestion" class="btn btn-secondary d-none">
+                                        إعادة تعيين
                                     </button>
                                     <button type="button" class="btn btn-lg btn-primary" data-kt-stepper-action="next">
                                         <?php echo e(__('setting.Continue')); ?>
@@ -1014,15 +1029,21 @@
                                                 <span class="required"><?php echo e(__('setting.Category')); ?> </span>
                                                 <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="<?php echo e(__('setting.Specify your apps framework')); ?>"></i>
                                             </label>
-                                            <select class="form-control form-control-lg form-control-solid  form-select-sm"  id= "category_id" name = "category_id"   aria-label=".form-select-sm example" required>
-                                                 <?php if(!empty($category)): ?>
+                                            <select class="form-control form-control-lg form-control-solid  form-select-sm"  id= "category_id_update" name = "category_id"   aria-label=".form-select-sm example" required>
+                                                <?php if(!empty($category)): ?>
+                                                    <?php if($isCollection == true): ?>
+                                                         <?php $__currentLoopData = $category; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $cate => $eleme): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                             <option value="<?php echo e($eleme['id']); ?>"><?php echo e(( app()->getLocale() === 'ar' )? $eleme['name_ar'] ?? '' : $eleme['name_en'] ?? ''); ?>
 
-                                                    <?php $__currentLoopData = $category; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                        <option value="<?php echo e($item['id']); ?>"><?php echo e($item['name']); ?>
+                                                                <span>(<?php echo e((app()->getLocale() === 'ar') ? $eleme['parent']['name_ar'] ?? '' : $eleme['parent']['name_en'] ?? ''); ?>) -  (<?php echo e((app()->getLocale() === 'ar' )? $eleme['parent']['parent']['name_ar'] ?? '' : $eleme['parent']['parent']['name_en'] ?? ''); ?>)</span>
+                                                            </option>
+                                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                    <?php else: ?>
+                                                        <option value="<?php echo e($category['id']); ?>"><?php echo e(app()->getLocale() === 'ar' ? $category['name_ar'] ?? '' : $category['name_en'] ?? ''); ?>
 
-                                                            <span>(<?php echo e(app()->getLocale() === 'ar' ? $item['parent']['name_ar'] ?? '' : $item['parent']['name_en'] ?? ''); ?>) -  (<?php echo e(app()->getLocale() === 'ar' ? $item['parent']['parent']['name_ar'] ?? '' : $item['parent']['parent']['name_en'] ?? ''); ?>)</span>
-                                                        </option>>
-                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                            <span>(<?php echo e((app()->getLocale() === 'ar') ? $category['parent']['name_ar'] ?? '' : $category['parent']['name_en'] ?? ''); ?>) -  (<?php echo e((app()->getLocale() === 'ar' )? $category['parent']['parent']['name_ar'] ?? '' : $category['parent']['parent']['name_en'] ?? ''); ?>)</span>
+                                                        </option>
+                                                    <?php endif; ?>
                                                 <?php endif; ?>
                                             </select>
 
@@ -1077,9 +1098,13 @@
 													</svg>
 												</span>
                                                     <!--end::Svg Icon--></span>
-                                            <span class="indicator-progress"><?php echo e(__('setting.Please wait...')); ?>
+
+                                            <span class="indicator-label-progress hidden"><?php echo e(__('setting.Please wait...')); ?>
 
 												<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                        </button>
+                                        <button type="button" id="resetButtonQuestion" class="btn btn-secondary d-none">
+                                            إعادة تعيين
                                         </button>
                                         <button type="button" class="btn btn-lg btn-primary" data-kt-stepper-action="next">Continue
                                             <!--begin::Svg Icon | path: icons/duotune/arrows/arr064.svg-->

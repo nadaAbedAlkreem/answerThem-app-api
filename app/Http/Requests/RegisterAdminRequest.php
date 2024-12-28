@@ -2,6 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Admin;
+use App\Models\Category;
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
@@ -36,7 +39,7 @@ class RegisterAdminRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'email' => 'required|string|email|max:255|unique:admins',
             'phone' => [
                 'required',
                 'string',
@@ -55,8 +58,53 @@ class RegisterAdminRequest extends FormRequest
 
             $data['password'] = Hash::make($data['password']);
         }
+        $category = Category::where('level' , 3 )->orderBy('created_at', 'asc')->first();
+         if ($category != null )
+        {
+            $usersCount = Admin::whereHas('roles', function($query) {
+                $query->where('name', 'staff');
+            })->count();
+            $data['category_id'] = $category->id;
+
+        }
 
         return $data;
+    }
+    public function messages()
+    {
+        return [
+            'image.required' => __('messages.image.required'),
+            'image.file' => __('messages.image.file'),
+            'image.mimes' => __('messages.image.mimes'),
+            'image.max' => __('messages.image.max'),
+
+            'name.required' => __('messages.name.required'),
+            'name.string' => __('messages.name.string'),
+            'name.max' => __('messages.name.max'),
+
+            'full_name.required' => __('messages.full_name.required'),
+            'full_name.string' => __('messages.full_name.string'),
+            'full_name.max' => __('messages.full_name.max'),
+
+            'email.required' => __('messages.email.required'),
+            'email.string' => __('messages.email.string'),
+            'email.email' => __('messages.email.email'),
+            'email.max' => __('messages.email.max'),
+            'email.unique' => __('messages.email.unique'),
+
+            'phone.required' => __('messages.phone.required'),
+            'phone.string' => __('messages.phone.string'),
+            'phone.unique' => __('messages.phone.unique'),
+            'phone.prefix' => __('messages.phone.prefix'),
+
+            'country.required' => __('messages.country.required'),
+
+            'password.required' => __('messages.password.required'),
+            'password.string' => __('messages.password.string'),
+            'password.min' => __('messages.password.min', ['min' => 8]),
+            'password.confirmed' => __('messages.password.confirmed'),
+
+        ];
     }
 
 }

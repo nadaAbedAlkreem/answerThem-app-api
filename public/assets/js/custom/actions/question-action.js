@@ -75,9 +75,12 @@ $(document).ready(function ($) {
 
     $("#submit_form_question").on("click", function (e) {
         e.preventDefault();
+        const button = document.getElementById('submit_form_question');
+        const progress = button.querySelector('.indicator-label-progress');
+        progress.classList.remove('hidden');
 
         let formData = new FormData($("#kt_modal_create_app_question_form")[0]);
-
+        const form = document.getElementById('kt_modal_create_app_question_form');
 
 
         $.ajaxSetup({
@@ -92,16 +95,26 @@ $(document).ready(function ($) {
             contentType: false, // determint type object
             processData: false, // processing on response
             success: function (response) {
+                progress.classList.add('hidden');
+                form.reset();
+
                 const dismissButton = document.getElementById('dismiss_create');
 
                 if (dismissButton) {
                     dismissButton.click();
                 }
+                const resetButtonQuestion = document.getElementById('resetButtonQuestion');
+
+                if (resetButtonQuestion) {
+                    resetButtonQuestion.click();
+                }
+
                 $("#questions-table").DataTable().ajax.reload();
 
             },
 
             error: function (response) {
+                progress.classList.add('hidden');
 
                 Swal.fire({
                     text: response.responseJSON.data.error,
@@ -118,6 +131,7 @@ $(document).ready(function ($) {
     $("#questions-table").on("click", ".updateRecord", function (e)
     {
         e.preventDefault();
+
         var id = $(this).data("id");
         var category_id = $(this).data("category");
         var answer_text_ar = $(this).data("answer_text_ar_1");
@@ -154,7 +168,8 @@ $(document).ready(function ($) {
         $('#question_en_text').val(question_en_text);
 
 
-        var dropdown = document.getElementById('category_id');
+        var dropdown = document.getElementById('category_id_update');
+        console.log(category_id) ;
         dropdown.value = category_id;
 
         var imageWrapper = document.querySelector('.image-update');
@@ -168,7 +183,9 @@ $(document).ready(function ($) {
 
     $("#submit_form_question_update").on("click", function (e) {
         e.preventDefault();
-
+        const button = document.getElementById('submit_form_question_update');
+        const progress = button.querySelector('.indicator-label-progress');
+        progress.classList.remove('hidden');
         let formData = new FormData($("#kt_modal_update_questions_app_form")[0]);
 
 
@@ -184,14 +201,22 @@ $(document).ready(function ($) {
             contentType: false, // determint type object
             processData: false, // processing on response
             success: function (response) {
+                progress.classList.add('hidden');
                 const dismissButton = document.getElementById('dismiss_update');
                 if (dismissButton) {
                     dismissButton.click();
+                }
+                const resetButtonQuestionUpdate = document.getElementById('resetButtonQuestionUpdate');
+
+                if (resetButtonQuestionUpdate) {
+                    resetButtonQuestionUpdate.click();
                 }
                 $("#questions-table").DataTable().ajax.reload();
             },
 
             error: function (response) {
+                progress.classList.add('hidden');
+
                 Swal.fire({
                     text: response.responseJSON.data.error,
                     icon: "error",

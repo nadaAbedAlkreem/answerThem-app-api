@@ -37,8 +37,21 @@ class QuestionController extends Controller
     {
         $dataNative = Question::select('*')->orderBy('created_at', 'desc')->get() ;
         $name = (app::getLocale() == 'ar')? 'name_ar' : 'name_en'  ;
-        $category = Category::with('parent' , 'parent.parent')->where('level', 3)->get() ;
-         if ($request->ajax())
+        $category = [] ;
+        $structureCategory =  null ;
+        $isCollection  = false ;
+          if( auth()->user()->getRoleNames()[0]  == 'super-admin')
+        {
+            $isCollection = true;
+            $category = Category::with('parent' , 'parent.parent')->where('level', 3)->get() ;
+          }else if( auth()->user()->getRoleNames()[0]  == 'staff')
+        {
+            $isCollection = false ;
+            $category = auth()->user()->category()->with(['admin' , 'parent' , 'parent.parent'])->first();
+
+        }
+
+        if ($request->ajax())
         {
             $data = QuestionResource::collection($dataNative);
 
@@ -51,16 +64,16 @@ class QuestionController extends Controller
             }
         }
 
-        return view('dashboard.pages.questions' , ['lang' => app::getLocale()  ,  'category'=>CategoryResource::collection($category)->toArray($request) ]);
+        return view('dashboard.pages.questions' , ['lang' => app::getLocale()  , 'isCollection' => $isCollection ,   'category'=>$category ]);
     }
     public function store(StoreQuestionRequest $request)
     {
         try {
-             $question = $this->questionRepository->create($request->getData());
+              $question = $this->questionRepository->create($request->getData());
              if($question)
              {
                  for ($i = 1; $i <= 4; $i++) {
-                     $isCorrectAr = ($request->input('correct_answer_ar') == $i) ? 1 : 0;
+                     $isCorrectAr = (1 == $i) ? 1 : 0;
                      $this->answerRepository->create([
                          'question_id' => $question->id,
                          'answer_text_ar' => $request->input("answer_text_ar_$i"),

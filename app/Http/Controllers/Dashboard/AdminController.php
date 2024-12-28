@@ -68,9 +68,11 @@ class AdminController extends Controller
     //     return redirect('/users')->with('status','User created successfully with roles');
     // }
 
-    public function edit(Admin $admins, $id)
+    public function edit(Admin $admins, $id , Request $request)
     {
-         $admins_ =  $admins::select('*')->where('id', $id)->first();
+
+        app::setLocale($request->query('lang'));
+        $admins_ =  $admins::select('*')->where('id', $id)->first();
         $roles = Role::pluck('name','name')->all();
 
         $userRoles = $admins_->roles->pluck('name','name')->all();

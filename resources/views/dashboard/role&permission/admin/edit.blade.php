@@ -2,7 +2,6 @@
 @section('content')
 
 
-
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-12">
@@ -10,8 +9,8 @@
 
                 <div class="card">
                     <div class="card-body">
-                        <h4>Edit
-                            <a href="{{ url('dashboard/admins/' .  request('lang')) }}" class="btn btn-danger float-end">Back</a>
+                        <h4>
+                            <a href="{{ url('dashboard/admins/' .  request('lang')) }}" class="btn btn-danger float-end">{{__('setting.Back')}}</a>
                         </h4>
                     </div>
                     <div class="card-body">
@@ -21,19 +20,19 @@
                             @method('PUT')
                             <input type="hidden" name="id" id="userId" value="{{ $user->id }}" class="form-control" />
                             <div class="mb-3">
-                                <label for="">Name</label>
+                                <label for="">{{__('setting.Name')}}</label>
                                 <input type="text" name="name" value="{{ $user->name }}" class="form-control" />
                                 @error('name') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                             <div class="mb-3">
-                                <label for="">Email</label>
+                                <label for="">{{__('setting.Email')}}</label>
                                 <input type="text" name="email" readonly value="{{ $user->email }}" class="form-control" />
                             </div>
 
                             <div class="mb-3">
-                                <label for="">Roles</label>
+                                <label for="">{{__('setting.Roles')}}</label>
                                 <select name="roles[]" class="form-control" multiple>
-                                    <option value="">Select Role</option>
+                                    <option value="">{{__('setting.Select Role')}}</option>
                                     @foreach ($roles as $role)
                                         <option
                                             value="{{ $role }}"
@@ -46,7 +45,7 @@
                                 @error('roles') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                             <div class="mb-3">
-                                <button type="submit" id ="submitAdmins" class="btn btn-primary">Update</button>
+                                <button type="submit" id ="submitAdmins" class="btn btn-primary">{{__('setting.Update')}}</button>
                             </div>
                         </form>
                     </div>

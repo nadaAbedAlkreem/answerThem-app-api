@@ -5,6 +5,9 @@
     .stepper-label{
         padding:7px;
     }
+    .hidden {
+        display: none;
+    }
  </style>
 
     <div class="d-flex flex-column flex-root">
@@ -159,21 +162,23 @@
                                     <!--end::Label-->
                                     <!--begin::Input-->
                                     <div>
-                                        <select class="form-select form-select-solid" id = "category" data-kt-select2="true" data-placeholder="{{__('Setting.Select Option')}}" data-dropdown-parent="#kt_menu_61cf14c9caa9b" data-allow-clear="true">
-                                            <option></option>
-                                            @if(!empty($category))
+                                        @if($isCollection == true)
+                                            <select class="form-select form-select-solid" id = "category" data-kt-select2="true" data-placeholder="{{__('Setting.Select Option')}}" data-dropdown-parent="#kt_menu_61cf14c9caa9b" data-allow-clear="true">
+                                                <option></option>
+                                                @if(!empty($category))
 
-                                            @foreach($category as $key => $value)
-                                                      @if($lang == 'ar')
-                                                            <option value = "{{$value['id']}}"> {{$value['name_ar']}}</option>
-                                                      @else
-                                                        <option value = "{{$value['id']}}"> {{$value['name_en']}}</option>
+                                                @foreach($category as $key => $value)
+                                                          @if($lang == 'ar')
+                                                                <option value = "{{$value['id']}}"> {{$value['name_ar']}}</option>
+                                                          @else
+                                                            <option value = "{{$value['id']}}"> {{$value['name_en']}}</option>
 
-                                                    @endif
+                                                        @endif
 
-                                                 @endforeach
-                                            @endif
-                                         </select>
+                                                     @endforeach
+                                                @endif
+                                             </select>
+                                        @endif
                                     </div>
                                     <!--end::Input-->
                                 </div>
@@ -458,7 +463,7 @@
                                         <div class="mb-4">
                                             <!-- Answer 1 -->
                                             <div class="input-group mb-3">
-                                                        <span class="input-group-text">
+                                                <span class="input-group-text">
                                                             <input type="radio" name="correct_answer_ar" value="1" required disabled checked>
                                                         </span>
                                                 <input type="text" class="form-control form-control-lg form-control-solid rounded-3 shadow-sm" name="answer_text_ar_1" placeholder="{{__('setting.Enter Answer')}} " required>
@@ -599,13 +604,19 @@
                                         </label>
                                         <select class="form-control form-control-lg form-control-solid  form-select-sm" name = "category_id"  id="category_id" required aria-label=".form-select-sm example">
                                                  @if(!empty($category))
-
+                                                    @if($isCollection == true)
                                                     @foreach($category as  $key => $item)
-                                                             <option value="{{$item['id']}}">{{$item['name']}}
-                                                             <span>({{ app()->getLocale() === 'ar' ? $item['parent']['name_ar'] ?? '' : $item['parent']['name_en'] ?? '' }}) -  ({{ app()->getLocale() === 'ar' ? $item['parent']['parent']['name_ar'] ?? '' : $item['parent']['parent']['name_en'] ?? '' }})</span>
-                                                             </option>
-                                                     @endforeach
-                                            @endif
+
+                                                        <option value="{{$item['id']}}"> {{ app()->getLocale() === 'ar' ? $item['name_ar'] ?? '' : $item['name_en'] ?? '' }}
+                                                            <span>({{ app()->getLocale() === 'ar' ? $item['parent']['name_ar'] ?? '' : $item['parent']['name_en'] ?? '' }}) -  ({{ app()->getLocale() === 'ar' ? $item['parent']['parent']['name_ar'] ?? '' : $item['parent']['parent']['name_en'] ?? '' }})</span>
+                                                        </option>
+                                                    @endforeach
+                                                     @else
+                                                     <option value="{{$category['id']}}">{{ app()->getLocale() === 'ar' ? $category['name_ar'] ?? '' : $category['name_en'] ?? '' }}
+                                                        <span>({{ app()->getLocale() === 'ar' ? $category['parent']['name_ar'] ?? '' : $category['parent']['name_en'] ?? '' }}) -  ({{ app()->getLocale() === 'ar' ? $category['parent']['parent']['name_ar'] ?? '' : $category['parent']['parent']['name_en'] ?? '' }})</span>
+                                                    </option>
+                                                    @endif
+                                                @endif
                                         </select>
 
                                     </div>
@@ -658,8 +669,11 @@
 													</svg>
 												</span>
                                                     <!--end::Svg Icon--></span>
-                                        <span class="indicator-progress">{{__('setting.Please wait...')}}
+                                        <span class="indicator-label-progress hidden">{{__('setting.Please wait...')}}
 												<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                    </button>
+                                    <button type="button" id="resetButtonQuestion" class="btn btn-secondary d-none">
+                                        إعادة تعيين
                                     </button>
                                     <button type="button" class="btn btn-lg btn-primary" data-kt-stepper-action="next">
                                         {{__('setting.Continue')}}
@@ -1008,14 +1022,19 @@
                                                 <span class="required">{{__('setting.Category')}} </span>
                                                 <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="{{__('setting.Specify your apps framework')}}"></i>
                                             </label>
-                                            <select class="form-control form-control-lg form-control-solid  form-select-sm"  id= "category_id" name = "category_id"   aria-label=".form-select-sm example" required>
-                                                 @if(!empty($category))
-
-                                                    @foreach($category as  $key => $item)
-                                                        <option value="{{$item['id']}}">{{$item['name']}}
-                                                            <span>({{ app()->getLocale() === 'ar' ? $item['parent']['name_ar'] ?? '' : $item['parent']['name_en'] ?? '' }}) -  ({{ app()->getLocale() === 'ar' ? $item['parent']['parent']['name_ar'] ?? '' : $item['parent']['parent']['name_en'] ?? '' }})</span>
-                                                        </option>>
-                                                    @endforeach
+                                            <select class="form-control form-control-lg form-control-solid  form-select-sm"  id= "category_id_update" name = "category_id"   aria-label=".form-select-sm example" required>
+                                                @if(!empty($category))
+                                                    @if($isCollection == true)
+                                                         @foreach($category as  $cate => $eleme)
+                                                             <option value="{{$eleme['id']}}">{{( app()->getLocale() === 'ar' )? $eleme['name_ar'] ?? '' : $eleme['name_en'] ?? '' }}
+                                                                <span>({{ (app()->getLocale() === 'ar') ? $eleme['parent']['name_ar'] ?? '' : $eleme['parent']['name_en'] ?? '' }}) -  ({{ (app()->getLocale() === 'ar' )? $eleme['parent']['parent']['name_ar'] ?? '' : $eleme['parent']['parent']['name_en'] ?? '' }})</span>
+                                                            </option>
+                                                        @endforeach
+                                                    @else
+                                                        <option value="{{$category['id']}}">{{ app()->getLocale() === 'ar' ? $category['name_ar'] ?? '' : $category['name_en'] ?? '' }}
+                                                            <span>({{ (app()->getLocale() === 'ar') ? $category['parent']['name_ar'] ?? '' : $category['parent']['name_en'] ?? '' }}) -  ({{ (app()->getLocale() === 'ar' )? $category['parent']['parent']['name_ar'] ?? '' : $category['parent']['parent']['name_en'] ?? '' }})</span>
+                                                        </option>
+                                                    @endif
                                                 @endif
                                             </select>
 
@@ -1069,8 +1088,12 @@
 													</svg>
 												</span>
                                                     <!--end::Svg Icon--></span>
-                                            <span class="indicator-progress">{{__('setting.Please wait...')}}
+
+                                            <span class="indicator-label-progress hidden">{{__('setting.Please wait...')}}
 												<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                        </button>
+                                        <button type="button" id="resetButtonQuestion" class="btn btn-secondary d-none">
+                                            إعادة تعيين
                                         </button>
                                         <button type="button" class="btn btn-lg btn-primary" data-kt-stepper-action="next">Continue
                                             <!--begin::Svg Icon | path: icons/duotune/arrows/arr064.svg-->

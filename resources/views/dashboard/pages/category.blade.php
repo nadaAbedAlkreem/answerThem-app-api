@@ -3,6 +3,10 @@
 @section('content')
 
 <style>
+    .hidden {
+        display: none;
+    }
+
     /* Change the look of the select box */
     .select2-container .select2-selection--single {
         height: 40px; /* Adjust the height */
@@ -28,7 +32,13 @@
         max-height: 200px; /* Limit the height */
         overflow-y: auto; /* Enable scrolling if there are many options */
     }
-
+    #categoryDropdown {
+        width: 100%;
+        height: 40px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
     .select2-search__field {
         width: 100%; /* Full width of the dropdown */
         padding: 8px 12px; /* Add padding for spacing */
@@ -196,9 +206,9 @@
                                     <div>
                                         <select class="form-select form-select-solid" id = "level_category" data-kt-select2="true" data-placeholder="{{__('setting.Select Option')}}" data-dropdown-parent="#kt_menu_61cf14c9caa9b" data-allow-clear="true">
                                             <option></option>
-                                            <option value="1">First level categories</option>
-                                            <option value="2">Level 2 Categories</option>
-                                            <option value="3">Level 3 Categories</option>
+                                            <option value="1">{{__('setting.First level categories')}}</option>
+                                            <option value="2">{{__('setting.Level 2 Categories')}}</option>
+                                            <option value="3">{{__('setting.Level 3 Categories')}}</option>
                                          </select>
                                     </div>
                                     <!--end::Input-->
@@ -231,7 +241,7 @@
                     </div>
                     <!--end::Filter-->
                     <!--begin::Button-->
-                    <a  class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#kt_modal_create_app">{{__('setting.Create')}}</a>
+                    <a  class="btn btn-sm btn-info" data-bs-toggle="modal" id ="create-category" data-bs-target="#kt_modal_create_app">{{__('setting.Create')}}</a>
                     <!--end::Button-->
                 </div>
                 <!--end::Actions-->
@@ -538,14 +548,14 @@
                                                     </label>
                                                     <!--end::Label-->
                                                     <!--begin::Cancel-->
-                                                    <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="{{ __('setting.Cancel avatar') }}">
-                            <i class="bi bi-x fs-2"></i>
-                        </span>
+                                                    <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" id="cansel" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="{{ __('setting.Cancel avatar') }}">
+                                                    <i class="bi bi-x fs-2"></i>
+                                                   </span>
                                                     <!--end::Cancel-->
                                                     <!--begin::Remove-->
-                                                    <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="{{ __('setting.Remove avatar') }}">
-                            <i class="bi bi-x fs-2"></i>
-                        </span>
+                                                    <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow"   data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="{{ __('setting.Remove avatar') }}">
+                                                       <i class="bi bi-x fs-2"></i>
+                                                     </span>
                                                     <!--end::Remove-->
                                                 </div>
                                                 <!--end::Image input-->
@@ -560,32 +570,33 @@
                                     <!--end::Input group-->
 
                                     <div class="mb-4">
-                                        <select class="form-control form-control-lg form-control-solid form-select-sm" name="category_id" aria-label=".form-select-sm example">
+                                        <select class="form-control form-control-lg form-control-solid form-select-sm"  id= "categoryDropdown" name="category_id" aria-label=".form-select-sm example">
                                             <option value="0-0">{{ __('setting.Not affiliated') }}</option>
-                                            <optgroup label="{{ __('setting.Primary Category') }}">
 
-                                                @if(!empty($category))
-                                                    @foreach($category as $key => $item)
-                                                        @if($item['level'] == 1)
-                                                            <option value="{{ $item['level'] }}-{{ $item['id'] }}">
-                                                                {{ $item['name'] }}
-                                                                <span>  - ({{ __('setting.Category Not affiliated') }})</span>
-                                                            </option>
-                                                        @endif
-                                                    @endforeach
+                                            <optgroup label="{{ __('setting.Primary Category') }}" id="primary-optgroup">
+
+{{--                                                @if(!empty($category))--}}
+{{--                                                    @foreach($category as $key => $item)--}}
+{{--                                                        @if($item['level'] == 1)--}}
+{{--                                                            <option value="{{ $item['level'] }}-{{ $item['id'] }}">--}}
+{{--                                                                {{ $item['name'] }}--}}
+{{--                                                                <span>  - ({{ __('setting.Category Not affiliated') }})</span>--}}
+{{--                                                            </option>--}}
+{{--                                                        @endif--}}
+{{--                                                    @endforeach--}}
                                             </optgroup>
 
-                                            <optgroup label="{{ __('setting.Sub Category') }}">
-                                                @foreach($category as $item)
-                                                    @if($item['level'] == 2)
-                                                        <option value="{{ $item['level'] }}-{{ $item['id'] }}">
-                                                            {{ $item['name'] }}
-                                                            <span> ({{ __('setting.Category belongs to') }} {{ app()->getLocale() === 'ar' ? $item['parent']['name_ar'] ?? '' : $item['parent']['name_en'] ?? '' }})</span>
-                                                        </option>
-                                                    @endif
-                                                @endforeach
+                                            <optgroup label="{{ __('setting.Sub Category') }}" id="sub-category-optgroup">
+{{--                                                @foreach($category as $item)--}}
+{{--                                                    @if($item['level'] == 2)--}}
+{{--                                                        <option value="{{ $item['level'] }}-{{ $item['id'] }}">--}}
+{{--                                                            {{ $item['name'] }}--}}
+{{--                                                            <span> ({{ __('setting.Category belongs to') }} {{ app()->getLocale() === 'ar' ? $item['parent']['name_ar'] ?? '' : $item['parent']['name_en'] ?? '' }})</span>--}}
+{{--                                                        </option>--}}
+{{--                                                    @endif--}}
+{{--                                                @endforeach--}}
                                             </optgroup>
-                                            @endif
+{{--                                            @endif--}}
                                         </select>
                                     </div>
                                 </div>
@@ -636,40 +647,43 @@
                                     <button type="button" class="btn btn-lg btn-light-primary me-3" data-kt-stepper-action="previous">
                                         <!--begin::Svg Icon | path: icons/duotune/arrows/arr063.svg-->
                                         <span class="svg-icon svg-icon-3 me-1">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <rect opacity="0.5" x="6" y="11" width="13" height="2" rx="1" fill="black" />
-                    <path d="M8.56569 11.4343L12.75 7.25C13.1642 6.83579 13.1642 6.16421 12.75 5.75C12.3358 5.33579 11.6642 5.33579 11.25 5.75L5.70711 11.2929C5.31658 11.6834 5.31658 12.3166 5.70711 12.7071L11.25 18.25C11.6642 18.6642 12.3358 18.6642 12.75 18.25C13.1642 17.8358 13.1642 17.1642 12.75 16.75L8.56569 12.5657C8.25327 12.2533 8.25327 11.7467 8.56569 11.4343Z" fill="black" />
-                </svg>
-            </span>
-                                        <!--end::Svg Icon-->{{ __('setting.Back') }}
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                <rect opacity="0.5" x="6" y="11" width="13" height="2" rx="1" fill="black" />
+                                                <path d="M8.56569 11.4343L12.75 7.25C13.1642 6.83579 13.1642 6.16421 12.75 5.75C12.3358 5.33579 11.6642 5.33579 11.25 5.75L5.70711 11.2929C5.31658 11.6834 5.31658 12.3166 5.70711 12.7071L11.25 18.25C11.6642 18.6642 12.3358 18.6642 12.75 18.25C13.1642 17.8358 13.1642 17.1642 12.75 16.75L8.56569 12.5657C8.25327 12.2533 8.25327 11.7467 8.56569 11.4343Z" fill="black" />
+                                            </svg>
+                                        </span>
+                                                        <!--end::Svg Icon-->{{ __('setting.Back') }}
                                     </button>
                                 </div>
                                 <!--end::Wrapper-->
                                 <!--begin::Wrapper-->
                                 <div>
                                     <button type="submit" id="submit_form" class="btn btn-lg btn-primary" data-kt-stepper-action="submit">
-            <span class="indicator-label">{{ __('setting.Submit') }}
-                <!--begin::Svg Icon | path: icons/duotune/arrows/arr064.svg-->
-                <span class="svg-icon svg-icon-3 ms-2 me-0">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                        <rect opacity="0.5" x="18" y="13" width="13" height="2" rx="1" transform="rotate(-180 18 13)" fill="black" />
-                        <path d="M15.4343 12.5657L11.25 16.75C10.8358 17.1642 10.8358 17.8358 11.25 18.25C11.6642 18.6642 12.3358 18.6642 12.75 18.25L18.2929 12.7071C18.6834 12.3166 18.6834 11.6834 18.2929 11.2929L12.75 5.75C12.3358 5.33579 11.6642 5.33579 11.25 5.75C10.8358 6.16421 10.8358 6.83579 11.25 7.25L15.4343 11.4343C15.7467 11.7467 15.7467 12.2533 15.4343 12.5657Z" fill="black" />
-                    </svg>
-                </span>
-                <!--end::Svg Icon--></span>
-                                        <span class="indicator-progress">{{ __('setting.Please wait...') }}
+                                        <span class="indicator-label ">{{ __('setting.Submit') }}
+                                            <!--begin::Svg Icon | path: icons/duotune/arrows/arr064.svg-->
+                                            <span class="svg-icon svg-icon-3 ms-2 me-0">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                    <rect opacity="0.5" x="18" y="13" width="13" height="2" rx="1" transform="rotate(-180 18 13)" fill="black" />
+                                                    <path d="M15.4343 12.5657L11.25 16.75C10.8358 17.1642 10.8358 17.8358 11.25 18.25C11.6642 18.6642 12.3358 18.6642 12.75 18.25L18.2929 12.7071C18.6834 12.3166 18.6834 11.6834 18.2929 11.2929L12.75 5.75C12.3358 5.33579 11.6642 5.33579 11.25 5.75C10.8358 6.16421 10.8358 6.83579 11.25 7.25L15.4343 11.4343C15.7467 11.7467 15.7467 12.2533 15.4343 12.5657Z" fill="black" />
+                                                </svg>
+                                            </span>
+                                    </span>
+                                        <span class="indicator-label-progress hidden"> Please wait.. {{ __('setting.Please wait...') }}
                                          <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
                                         </span>
                                     </button>
                                     <button type="button" class="btn btn-lg btn-primary" data-kt-stepper-action="next">{{ __('setting.Continue') }}
                                         <!--begin::Svg Icon | path: icons/duotune/arrows/arr064.svg-->
-                                        <span class="svg-icon svg-icon-3 ms-1 me-0">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <rect opacity="0.5" x="18" y="13" width="13" height="2" rx="1" transform="rotate(-180 18 13)" fill="black" />
-                    <path d="M15.4343 12.5657L11.25 16.75C10.8358 17.1642 10.8358 17.8358 11.25 18.25C11.6642 18.6642 12.3358 18.6642 12.75 18.25L18.2929 12.7071C18.6834 12.3166 18.6834 11.6834 18.2929 11.2929L12.75 5.75C12.3358 5.33579 11.6642 5.33579 11.25 5.75C10.8358 6.16421 10.8358 6.83579 11.25 7.25L15.4343 11.4343C15.7467 11.7467 15.7467 12.2533 15.4343 12.5657Z" fill="black" />
-                </svg>
-            </span>
+                                                <span class="svg-icon svg-icon-3 ms-1 me-0">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                            <rect opacity="0.5" x="18" y="13" width="13" height="2" rx="1" transform="rotate(-180 18 13)" fill="black" />
+                                                            <path d="M15.4343 12.5657L11.25 16.75C10.8358 17.1642 10.8358 17.8358 11.25 18.25C11.6642 18.6642 12.3358 18.6642 12.75 18.25L18.2929 12.7071C18.6834 12.3166 18.6834 11.6834 18.2929 11.2929L12.75 5.75C12.3358 5.33579 11.6642 5.33579 11.25 5.75C10.8358 6.16421 10.8358 6.83579 11.25 7.25L15.4343 11.4343C15.7467 11.7467 15.7467 12.2533 15.4343 12.5657Z" fill="black" />
+                                                        </svg>
+                                                    </span>
                                         <!--end::Svg Icon-->
+                                    </button>
+                                    <button type="button" id="resetButton" class="btn btn-secondary d-none">
+                                        إعادة تعيين
                                     </button>
                                 </div>
                                 <!--end::Wrapper-->
@@ -940,15 +954,12 @@
                                                     <!--begin::Hint-->
                                                     <div class="form-text">{{ __('setting.Allowed file types') }}</div>
                                                     <div id="error-message-update" style="color: red; display: none;"></div>
-
-                                                    <!--end::Hint-->
                                                 </div>
                                                 <!--end::Col-->
                                             </div>
 
                                         </div>
                                         <!--end::Input group-->
-
                                         <div class="mb-4">
                                             <select class="form-control form-control-lg form-control-solid form-select-sm" name="category_id" id="category_id_update" aria-label=".form-select-sm example">
                                                 <option value="0-0">{{ __('setting.Not affiliated') }}</option>
@@ -970,7 +981,7 @@
                                                             <option value="{{$item['level']}}-{{$item['id']}}">{{$item['name']}}
                                                                 <span>{{ __('setting.Category belongs to') }}
                                                                     {{ app()->getLocale() === 'ar' ? $item['parent']['name_ar'] ?? '' : $item['parent']['name_en'] ?? '' }}
-                                    </span>
+                                                                </span>
                                                             </option>
                                                         @endif
                                                     @endforeach
@@ -1047,11 +1058,11 @@
                                         <button type="button" class="btn btn-lg btn-light-primary me-3" data-kt-stepper-action="previous">
                                             <!--begin::Svg Icon | path: icons/duotune/arrows/arr063.svg-->
                                             <span class="svg-icon svg-icon-3 me-1">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <rect opacity="0.5" x="6" y="11" width="13" height="2" rx="1" fill="black" />
-                    <path d="M8.56569 11.4343L12.75 7.25C13.1642 6.83579 13.1642 6.16421 12.75 5.75C12.3358 5.33579 11.6642 5.33579 11.25 5.75L5.70711 11.2929C5.31658 11.6834 5.31658 12.3166 5.70711 12.7071L11.25 18.25C11.6642 18.6642 12.3358 18.6642 12.75 18.25C13.1642 17.8358 13.1642 17.1642 12.75 16.75L8.56569 12.5657C8.25327 12.2533 8.25327 11.7467 8.56569 11.4343Z" fill="black" />
-                </svg>
-            </span>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                <rect opacity="0.5" x="6" y="11" width="13" height="2" rx="1" fill="black" />
+                                                <path d="M8.56569 11.4343L12.75 7.25C13.1642 6.83579 13.1642 6.16421 12.75 5.75C12.3358 5.33579 11.6642 5.33579 11.25 5.75L5.70711 11.2929C5.31658 11.6834 5.31658 12.3166 5.70711 12.7071L11.25 18.25C11.6642 18.6642 12.3358 18.6642 12.75 18.25C13.1642 17.8358 13.1642 17.1642 12.75 16.75L8.56569 12.5657C8.25327 12.2533 8.25327 11.7467 8.56569 11.4343Z" fill="black" />
+                                            </svg>
+                                        </span>
                                             <!--end::Svg Icon--> {{ __('setting.Back') }}
                                         </button>
                                     </div>
@@ -1059,30 +1070,33 @@
                                     <!--begin::Wrapper-->
                                     <div>
                                         <button type="submit" id="submit_form_Update_Category" class="btn btn-lg btn-primary" data-kt-stepper-action="submit">
-            <span class="indicator-label">{{ __('setting.Update') }}
-                <!--begin::Svg Icon | path: icons/duotune/arrows/arr064.svg-->
-                <span class="svg-icon svg-icon-3 ms-2 me-0">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                        <rect opacity="0.5" x="18" y="13" width="13" height="2" rx="1" transform="rotate(-180 18 13)" fill="black" />
-                        <path d="M15.4343 12.5657L11.25 16.75C10.8358 17.1642 10.8358 17.8358 11.25 18.25C11.6642 18.6642 12.3358 18.6642 12.75 18.25L18.2929 12.7071C18.6834 12.3166 18.6834 11.6834 18.2929 11.2929L12.75 5.75C12.3358 5.33579 11.6642 5.33579 11.25 5.75C10.8358 6.16421 10.8358 6.83579 11.25 7.25L15.4343 11.4343C15.7467 11.7467 15.7467 12.2533 15.4343 12.5657Z" fill="black" />
-                    </svg>
-                </span>
-                <!--end::Svg Icon-->
-            </span>
-                                            <span class="indicator-progress">{{ __('setting.Please wait...') }}
-                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-            </span>
+                                        <span class="indicator-label">{{ __('setting.Update') }}
+                                            <!--begin::Svg Icon | path: icons/duotune/arrows/arr064.svg-->
+                                            <span class="svg-icon svg-icon-3 ms-2 me-0">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                    <rect opacity="0.5" x="18" y="13" width="13" height="2" rx="1" transform="rotate(-180 18 13)" fill="black" />
+                                                    <path d="M15.4343 12.5657L11.25 16.75C10.8358 17.1642 10.8358 17.8358 11.25 18.25C11.6642 18.6642 12.3358 18.6642 12.75 18.25L18.2929 12.7071C18.6834 12.3166 18.6834 11.6834 18.2929 11.2929L12.75 5.75C12.3358 5.33579 11.6642 5.33579 11.25 5.75C10.8358 6.16421 10.8358 6.83579 11.25 7.25L15.4343 11.4343C15.7467 11.7467 15.7467 12.2533 15.4343 12.5657Z" fill="black" />
+                                                </svg>
+                                            </span>
+                                            <!--end::Svg Icon-->
+                                        </span>
+                                            <span class="indicator-label-progress hidden">{{ __('setting.Please wait...') }}
+                                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                            </span>
                                         </button>
                                         <button type="button" class="btn btn-lg btn-primary" data-kt-stepper-action="next">
                                             {{ __('setting.Continue') }}
                                             <!--begin::Svg Icon | path: icons/duotune/arrows/arr064.svg-->
                                             <span class="svg-icon svg-icon-3 ms-1 me-0">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <rect opacity="0.5" x="18" y="13" width="13" height="2" rx="1" transform="rotate(-180 18 13)" fill="black" />
-                    <path d="M15.4343 12.5657L11.25 16.75C10.8358 17.1642 10.8358 17.8358 11.25 18.25C11.6642 18.6642 12.3358 18.6642 12.75 18.25L18.2929 12.7071C18.6834 12.3166 18.6834 11.6834 18.2929 11.2929L12.75 5.75C12.3358 5.33579 11.6642 5.33579 11.25 5.75C10.8358 6.16421 10.8358 6.83579 11.25 7.25L15.4343 11.4343C15.7467 11.7467 15.7467 12.2533 15.4343 12.5657Z" fill="black" />
-                </svg>
-            </span>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                        <rect opacity="0.5" x="18" y="13" width="13" height="2" rx="1" transform="rotate(-180 18 13)" fill="black" />
+                                                        <path d="M15.4343 12.5657L11.25 16.75C10.8358 17.1642 10.8358 17.8358 11.25 18.25C11.6642 18.6642 12.3358 18.6642 12.75 18.25L18.2929 12.7071C18.6834 12.3166 18.6834 11.6834 18.2929 11.2929L12.75 5.75C12.3358 5.33579 11.6642 5.33579 11.25 5.75C10.8358 6.16421 10.8358 6.83579 11.25 7.25L15.4343 11.4343C15.7467 11.7467 15.7467 12.2533 15.4343 12.5657Z" fill="black" />
+                                                    </svg>
+                                            </span>
                                             <!--end::Svg Icon-->
+                                        </button>
+                                        <button type="button" id="resetButtonUpdate" class="btn btn-secondary d-none">
+                                            إعادة تعيين
                                         </button>
                                     </div>
                                     <!--end::Wrapper-->
@@ -1112,6 +1126,7 @@
         revert: @json(__('setting.revert')),
         yes: @json(__('setting.yes')),
     };
+
 </script>
 <script src="{{url('assets/js/custom/actions/style-validation.js')}}"></script>
 <script src="{{url('assets/plugins/custom/datatables/datatables.bundle.js')}}"></script>

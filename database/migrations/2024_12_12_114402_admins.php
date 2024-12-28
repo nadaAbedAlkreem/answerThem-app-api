@@ -15,8 +15,10 @@ return new class extends Migration
         $table->id();
         $table->string('name')->index();
         $table->string('email')->unique();
-        $table->string('phone')->unique()->nullable();
+        $table->string('phone')->nullable();
         $table->string('image')->nullable()->index();
+        $table->foreignId('category_id')->nullable()->index();
+        $table->foreign('category_id', 'fk_category_admins_id')->references('id')->on('categories')->onDelete('cascade');
         $table->string('password');
         $table->rememberToken();
         $table->timestamps();

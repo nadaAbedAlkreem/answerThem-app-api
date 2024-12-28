@@ -1,4 +1,4 @@
-const MAX_SIZE = 20; // 2MB
+const MAX_SIZE = 2042; // 2MB
 //
 const imageInput = document.getElementById('image-input-create-categroy');//
 const imageInputUpdate = document.getElementById('image-input-upadate-categroy');

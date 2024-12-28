@@ -26,8 +26,8 @@ class StoreQuestionRequest extends FormRequest
         app::setLocale($this->input('lang'));
 
         return [
-            'question_ar_text' => 'required|string|unique:questions,question_ar_text ,NULL,id,deleted_at,NULL|max:255',
-            'question_en_text' => 'required|string|unique:questions,question_en_text ,NULL,id,deleted_at,NULL|max:255',
+            'question_ar_text' => 'required|string|max:255',
+            'question_en_text' => 'required|string|max:255',
              'image' =>  $this->hasFile('image')
                  ? 'required|file|mimes:jpeg,png,jpg,gif,svg|max:2048'
                  : 'required|string|max:255',

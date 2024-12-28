@@ -22,20 +22,23 @@ class Category extends Model
         'color',
         'famous_gaming'
     ];
+    public function admin()
+    {
+        return $this->hasOne(Admin::class);
+    }
     protected $dates = ['deleted_at'];
     protected static function boot()
     {
         parent::boot();
 
         static::deleting(function ($category) {
-            // Soft delete related friend requests
-            $category->children()->each(function ($children) {
-                $children->delete(); // Soft delete sent requests
+             $category->children()->each(function ($children) {
+                $children->delete();
             });
             $category->questions()->each(function ($questions) {
-                $questions->delete(); // Soft delete sent requests
+                $questions->delete();
             });
-
+            $category->admin()->update(['category_id' => null]);
         });
     }
     public function parent()

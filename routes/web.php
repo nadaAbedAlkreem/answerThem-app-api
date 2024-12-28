@@ -61,7 +61,17 @@ Route::middleware([ 'auth:admin', CheckLanguage::class ,'role:super-admin|admin'
         Route::post('setting/update', [SettingController::class, 'update'])->name('dashboard.setting.update');
 
 
+        Route::prefix('category')->group(function ()
+        {
+            Route::get('/{lang}', [CategoryController::class, 'index'])->name('dashboard.category');
+            Route::post('create/', [CategoryController::class, 'store'])->name('dashboard.category.create');
+            Route::post('update', [CategoryController::class, 'update'])->name('dashboard.category.update');
+            Route::delete('delete/{id}', [CategoryController::class, 'destroy'])->name('dashboard.category.delete');
+            Route::get('/get-categories/filter', [CategoryController::class, 'getCategories']);
+            Route::get('/search/filter', [CategoryController::class, 'searchCategories'])->name('categories.search');
 
+        }
+        );
 
 
         Route::prefix('users')->group(function ()
@@ -101,17 +111,7 @@ Route::middleware(['role:staff|super-admin'  ,CheckLanguage::class  , 'auth:admi
             Route::post('filter', [QuestionController::class, 'filterLevelCategory'])->name('dashboard.question.filter');
             Route::delete('delete/{id}', [QuestionController::class, 'destroy'])->name('dashboard.question.delete');
         });
-        Route::prefix('category')->group(function ()
-        {
-            Route::get('/{lang}', [CategoryController::class, 'index'])->name('dashboard.category');
-            Route::post('create/', [CategoryController::class, 'store'])->name('dashboard.category.create');
-            Route::post('update', [CategoryController::class, 'update'])->name('dashboard.category.update');
-            Route::delete('delete/{id}', [CategoryController::class, 'destroy'])->name('dashboard.category.delete');
-            Route::get('/get-categories', [CategoryController::class, 'getCategories']);
-            Route::get('/search/filter', [CategoryController::class, 'searchCategories'])->name('categories.search');
 
-        }
-        );
 
 
 

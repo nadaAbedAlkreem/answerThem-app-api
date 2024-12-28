@@ -13,16 +13,15 @@ return new class extends Migration
     {
         Schema::create('questions', function (Blueprint $table) {
             $table->id();
-             $table->foreignId('category_id')->index();
+            $table->foreignId('category_id')->index();
             $table->foreign('category_id', 'fk_category_id')->references('id')->on('categories')->onDelete('cascade');
+
             $table->string('image');
             $table->string('question_ar_text');
             $table->string('question_en_text');
             $table->timestamps();
             $table->softDeletes(); // Soft delete for notifications
-            $table->unique(['question_ar_text', 'deleted_at']);
-            $table->unique(['question_en_text', 'deleted_at']);
-        });
+          });
     }
 
     /**

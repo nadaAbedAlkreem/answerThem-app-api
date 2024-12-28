@@ -2,29 +2,6 @@
 
 
 $(document).ready(function ($) {
-    var OK = window.translations.OK;
-    var are_sure = window.translations.are_sure;
-    var revert = window.translations.revert;
-    var yes = window.translations.yes;
-    var cansel = window.translations.cansel;
-
-    $('#categorySelect').select2({
-        ajax: {
-            url: 'dashboard/category/search/filter',  // URL to the search endpoint
-            dataType: 'json',
-            delay: 250,  // Delay before sending the request
-            processResults: function (data) {
-                return {
-                    results: data.results || []  // Ensure data.results is always an array
-                };
-            },
-            cache: true
-        },
-        placeholder: 'Select a category',  // Placeholder text
-        minimumInputLength: 1,
-        dropdownParent: $("#kt_menu_61cf14c9caa9b"),
-        width: '100%'
-     });
     var language_datatables = null;
     var lang = window.location.pathname.split('/').pop();
 
@@ -56,6 +33,88 @@ $(document).ready(function ($) {
 
 
     }
+
+    var OK = window.translations.OK;
+    var are_sure = window.translations.are_sure;
+    var revert = window.translations.revert;
+    var yes = window.translations.yes;
+    var cansel = window.translations.cansel;
+
+    $('#categorySelect').select2({
+        ajax: {
+            url: 'dashboard/category/search/filter',  // URL to the search endpoint
+            dataType: 'json',
+            delay: 250,  // Delay before sending the request
+            processResults: function (data) {
+                return {
+                    results: data.results || []  // Ensure data.results is always an array
+                };
+            },
+            cache: true
+        },
+        placeholder: 'Select a category',  // Placeholder text
+        minimumInputLength: 1,
+        dropdownParent: $("#kt_menu_61cf14c9caa9b"),
+        width: '100%'
+     });
+
+    $("#create-category").on("click", function (e) {
+         $.ajaxSetup({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+        });
+        $.ajax({
+            url: '/dashboard/category/get-categories/filter?lang='+lang,
+            method: 'GET',
+            success: function (categories) {
+                 var $select = $('#categoryDropdown');
+
+                var $optgroupprimar = $('#primary-optgroup');
+
+                $optgroupprimar.empty();
+
+                $.each(categories, function (index, item) {
+                        if(item.level  === '1')
+                        {
+                            var $option = $('<option>')
+                                .val(item.level + '-' + item.id) // Combine level and id as the value
+                                .text(item.name);
+                        }
+
+
+                        $optgroupprimar.append($option); // Add the option to the optgroup
+                });
+                var $optgroup = $('#sub-category-optgroup');
+
+                 $optgroup.empty();
+
+                $.each(categories, function (index, item) {
+                    if(item.level  === '2')
+                    {
+                        var $option = $('<option>')
+                            .val(item.level + '-' + item.id) // Combine level and id as the value
+                            .text(
+                                item.name +
+                                ' (  ' + item.parent_name + ')'
+                            );
+                    }
+
+
+                    $optgroup.append($option); // Add the option to the optgroup
+                });
+            },
+            error: function (xhr, status, error) {
+                console.error('حدث خطأ أثناء جلب البيانات:', error);
+            }
+        });
+    });
+
+
+
+
+
+
     var table = $(".data-table-category").DataTable({
         language: language_datatables,
         processing: true,
@@ -95,6 +154,10 @@ $(document).ready(function ($) {
     $("#submit_form").on("click", function (e) {
         e.preventDefault();
 
+        const button = document.getElementById('submit_form');
+        const progress = button.querySelector('.indicator-label-progress');
+        progress.classList.remove('hidden');
+
         let formData = new FormData($("#kt_modal_create_app_form")[0]);
         let famousGamingValue = $("#famous_gaming_create").prop("checked") ? 1 : 0;
         const path = window.location.pathname;
@@ -106,6 +169,7 @@ $(document).ready(function ($) {
         formData.set('category_id', id);
         formData.set('lang', lang);
         formData.set('famous_gaming', famousGamingValue);
+        const form = document.getElementById("kt_modal_create_app_form");
 
 
         $.ajaxSetup({
@@ -120,10 +184,19 @@ $(document).ready(function ($) {
             contentType: false,
             processData: false, // processing on response
             success: function (response) {
+                progress.classList.add('hidden');
                 const dismissButton = document.getElementById('dismiss_create_category');
-
+                form.reset();
                 if (dismissButton) {
                     dismissButton.click();
+                }
+                const resetButton = document.getElementById('resetButton'); //
+                if (resetButton) {
+                    resetButton.click();
+                }
+                const cansel = document.getElementById('cansel'); //
+                if (cansel) {
+                    cansel.click();
                 }
                 $(".data-table-category").DataTable().ajax.reload();
 
@@ -131,6 +204,8 @@ $(document).ready(function ($) {
 
             error: function (response) {
                 console.log(response);
+                progress.classList.add('hidden');
+
                 Swal.fire({
                     text: response.responseJSON.data.error,
                     icon: "error",
@@ -180,6 +255,7 @@ $(document).ready(function ($) {
     $(".data-table-category").on("click", ".updateRecord", function (e)
     {
         e.preventDefault();
+
         var id = $(this).data("id");
         var famous_gaming = $(this).data("famous_gaming");
         var name_ar = $(this).data("name_ar");
@@ -226,6 +302,9 @@ $(document).ready(function ($) {
     $("#submit_form_Update_Category").on("click", function (e) {
         e.preventDefault();
 
+        const button = document.getElementById('submit_form_Update_Category');
+        const progress = button.querySelector('.indicator-label-progress');
+        progress.classList.remove('hidden');
         let formData = new FormData($("#kt_modal_update_app_form")[0]);
         let famousGamingValue = $("#famous_gaming").prop("checked") ? 1 : 0;
         formData.set('famous_gaming', famousGamingValue);
@@ -247,15 +326,22 @@ $(document).ready(function ($) {
             contentType: false, // determint type object
             processData: false, // processing on response
             success: function (response) {
+                progress.classList.add('hidden');
 
                 const dismissButton = document.getElementById('dismiss_update_category');
                 if (dismissButton) {
                     dismissButton.click();
                 }
+                const resetButtonUpdate = document.getElementById('resetButtonUpdate');
+                if (resetButtonUpdate) {
+                    resetButtonUpdate.click();
+                }
+
                 $(".data-table-category").DataTable().ajax.reload();
             },
 
             error: function (response) {
+                progress.classList.add('hidden');
                 Swal.fire({
                     text: response.responseJSON.data.error,
                     icon: "error",
