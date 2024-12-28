@@ -101,8 +101,8 @@ class QuestionController extends Controller
             if ($question) {
                 $item = $this->questionRepository->findOne($request['id'] );
                  $item->answers()->each(function($answer, $index) use ($request) {
-                    $isCorrectAr = ($request->input('correct_answer_ar') == ($index + 1)) ? 1 : 0;
-                    $answer->update([
+                     $isCorrectAr = (0 == $index) ? 1 : 0;
+                     $answer->update([
                         'answer_text_ar' => $request->input("answer_text_ar_" . ($index + 1)),
                         'answer_text_en' => $request->input("answer_text_en_" . ($index + 1)),
                         'is_correct' => $isCorrectAr,

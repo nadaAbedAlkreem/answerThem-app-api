@@ -163,7 +163,7 @@
                                     <!--begin::Input-->
                                     <div>
                                         @if($isCollection == true)
-                                            <select class="form-select form-select-solid" id = "category" data-kt-select2="true" data-placeholder="{{__('Setting.Select Option')}}" data-dropdown-parent="#kt_menu_61cf14c9caa9b" data-allow-clear="true">
+                                            <select class="form-select form-select-solid" id = "category" data-kt-select2="true" data-placeholder="{{__('setting.Select Option')}}" data-dropdown-parent="#kt_menu_61cf14c9caa9b" data-allow-clear="true">
                                                 <option></option>
                                                 @if(!empty($category))
 
@@ -1092,7 +1092,7 @@
                                             <span class="indicator-label-progress hidden">{{__('setting.Please wait...')}}
 												<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                                         </button>
-                                        <button type="button" id="resetButtonQuestion" class="btn btn-secondary d-none">
+                                        <button type="button" id="resetButtonQuestionUpdate" class="btn btn-secondary d-none">
                                             إعادة تعيين
                                         </button>
                                         <button type="button" class="btn btn-lg btn-primary" data-kt-stepper-action="next">Continue
