@@ -164,12 +164,11 @@
                                     <!--end::Label-->
                                     <!--begin::Input-->
                                     <div>
-                                        <?php if($isCollection == true): ?>
-                                            <select class="form-select form-select-solid" id = "category" data-kt-select2="true" data-placeholder="<?php echo e(__('setting.Select Option')); ?>" data-dropdown-parent="#kt_menu_61cf14c9caa9b" data-allow-clear="true">
+                                             <select class="form-select form-select-solid" id = "category" data-kt-select2="true" data-placeholder="<?php echo e(__('setting.Select Option')); ?>" data-dropdown-parent="#kt_menu_61cf14c9caa9b" data-allow-clear="true">
                                                 <option></option>
-                                                <?php if(!empty($category)): ?>
+                                                <?php if(!empty($category_filter)): ?>
 
-                                                <?php $__currentLoopData = $category; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <?php $__currentLoopData = $category_filter; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                           <?php if($lang == 'ar'): ?>
                                                                 <option value = "<?php echo e($value['id']); ?>"> <?php echo e($value['name_ar']); ?></option>
                                                           <?php else: ?>
@@ -180,8 +179,7 @@
                                                      <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                 <?php endif; ?>
                                              </select>
-                                        <?php endif; ?>
-                                    </div>
+                                     </div>
                                     <!--end::Input-->
                                 </div>
                                 <!--end::Input group-->

@@ -116,7 +116,6 @@ Route::middleware([ SetLocale::class  , UpdateLastActive::class])->group( functi
                 Route::post('score', [ResultController::class, 'storeCompetitorsScore']);
                 Route::get('test-yourself', [QuestionController::class, 'tryChallengeAlone']);
 
-
             });
 
            Route::post('evaluation', [EvaluationController::class, 'store']);

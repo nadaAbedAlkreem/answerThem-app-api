@@ -162,12 +162,11 @@
                                     <!--end::Label-->
                                     <!--begin::Input-->
                                     <div>
-                                        @if($isCollection == true)
-                                            <select class="form-select form-select-solid" id = "category" data-kt-select2="true" data-placeholder="{{__('setting.Select Option')}}" data-dropdown-parent="#kt_menu_61cf14c9caa9b" data-allow-clear="true">
+                                             <select class="form-select form-select-solid" id = "category" data-kt-select2="true" data-placeholder="{{__('setting.Select Option')}}" data-dropdown-parent="#kt_menu_61cf14c9caa9b" data-allow-clear="true">
                                                 <option></option>
-                                                @if(!empty($category))
+                                                @if(!empty($category_filter))
 
-                                                @foreach($category as $key => $value)
+                                                @foreach($category_filter as $key => $value)
                                                           @if($lang == 'ar')
                                                                 <option value = "{{$value['id']}}"> {{$value['name_ar']}}</option>
                                                           @else
@@ -178,8 +177,7 @@
                                                      @endforeach
                                                 @endif
                                              </select>
-                                        @endif
-                                    </div>
+                                     </div>
                                     <!--end::Input-->
                                 </div>
                                 <!--end::Input group-->

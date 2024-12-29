@@ -40,6 +40,7 @@ class QuestionController extends Controller
         $category = [] ;
         $structureCategory =  null ;
         $isCollection  = false ;
+        $categoryFilter = Category::with('parent' , 'parent.parent')->where('level', 3)->get() ;
           if( auth()->user()->getRoleNames()[0]  == 'super-admin')
         {
             $isCollection = true;
@@ -64,7 +65,7 @@ class QuestionController extends Controller
             }
         }
 
-        return view('dashboard.pages.questions' , ['lang' => app::getLocale()  , 'isCollection' => $isCollection ,   'category'=>$category ]);
+        return view('dashboard.pages.questions' , ['lang' => app::getLocale()  ,  'category_filter'=>$categoryFilter, 'isCollection' => $isCollection ,   'category'=>$category ]);
     }
     public function store(StoreQuestionRequest $request)
     {
