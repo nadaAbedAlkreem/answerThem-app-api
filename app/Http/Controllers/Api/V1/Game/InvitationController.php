@@ -35,9 +35,7 @@ class InvitationController extends Controller
            ->where('created_at', '>=', Carbon::now()->subMinutes(5))
             ->get();
              return $this->successResponse('DATA_RETRIEVED_SUCCESSFULLY',
-             [
-                 InvitationResource::collection($invitations),
-             ], 200, App::getLocale());
+             InvitationResource::collection($invitations), 200, App::getLocale());
 
      }
 

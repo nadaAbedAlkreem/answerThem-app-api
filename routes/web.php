@@ -33,6 +33,7 @@ Route::middleware(CustomRedirectIfAuthenticated::class)->group(function () {
         Route::post('login', [LoginController::class , 'login'])->name('admin.login.store');
     });
 });
+
 Route::get('admin/logout', [LoginController::class , 'logout'])->name('admin.logout');
 
 
