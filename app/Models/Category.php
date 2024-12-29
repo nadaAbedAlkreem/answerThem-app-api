@@ -38,7 +38,15 @@ class Category extends Model
             $category->questions()->each(function ($questions) {
                 $questions->delete();
             });
-            $category->admin()->update(['category_id' => null]);
+
+            $categoryGetNotSET = Category::whereDoesntHave('admin')->where('level' , 3 )->orderBy('created_at', 'asc')->first();
+            if ($categoryGetNotSET != null )
+            {
+                $category->admin()->update(['category_id' => $categoryGetNotSET->id]);
+
+
+
+            }
         });
     }
     public function parent()

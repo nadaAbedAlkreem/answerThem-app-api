@@ -58,12 +58,12 @@ class RegisterAdminRequest extends FormRequest
 
             $data['password'] = Hash::make($data['password']);
         }
-        $category = Category::where('level' , 3 )->orderBy('created_at', 'asc')->first();
+        $category = Category::whereDoesntHave('admin')->where('level' , 3 )->orderBy('created_at', 'asc')->first();
          if ($category != null )
         {
-            $usersCount = Admin::whereHas('roles', function($query) {
-                $query->where('name', 'staff');
-            })->count();
+//            $usersCount = Admin::whereNull('category_id')->whereHas('roles', function($query) {
+//                $query->where('name', 'staff');
+//             })->count();
             $data['category_id'] = $category->id;
 
         }

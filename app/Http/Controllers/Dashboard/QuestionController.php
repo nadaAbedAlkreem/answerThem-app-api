@@ -35,7 +35,7 @@ class QuestionController extends Controller
     }
     public function index(Request $request ,  QuestionDatatableService $questionDatatableService)
     {
-        $dataNative = Question::select('*')->orderBy('created_at', 'desc')->get() ;
+        $dataNative =  Question::select('*')->orderBy('created_at', 'desc')->get() ;
         $name = (app::getLocale() == 'ar')? 'name_ar' : 'name_en'  ;
         $category = [] ;
         $structureCategory =  null ;
@@ -43,10 +43,17 @@ class QuestionController extends Controller
         $categoryFilter = Category::with('parent' , 'parent.parent')->where('level', 3)->get() ;
           if( auth()->user()->getRoleNames()[0]  == 'super-admin')
         {
+            $dataNative = Question::select('*')->orderBy('created_at', 'desc')->get() ;
             $isCollection = true;
             $category = Category::with('parent' , 'parent.parent')->where('level', 3)->get() ;
           }else if( auth()->user()->getRoleNames()[0]  == 'staff')
         {
+            $categoryId  = auth()->user()->category_id ;
+            if($categoryId)
+            {
+                $dataNative = Question::select('*')->where('category_id' , $categoryId)->orderBy('created_at', 'desc')->get() ;
+
+            }
             $isCollection = false ;
             $category = auth()->user()->category()->with(['admin' , 'parent' , 'parent.parent'])->first();
 
