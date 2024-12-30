@@ -29,37 +29,37 @@ class DatabaseSeeder extends Seeder
             SettingsTableSeeder::class,
             UserRolesPermissionsSeeder::class,
             CategorySeeder::class,
-            QuestionSeeder::class,
-            AnswerSeeder::class,
+//            QuestionSeeder::class,
+//            AnswerSeeder::class,
             AdminSeeder::class,
 
         ]);
 
-        $users = User::factory()
-            ->count(20)
-            ->create();
-          ContactUs::factory()
-            ->count(20)
-            ->create();
-            Evaluation::factory()
-                  ->count(40)
-                  ->create();
-        $users->each(function ($users) {
-            $users->update([
-                'created_at' => now()->subDays(rand(0, 365)), // Set created_at to a random date in the last year
-            ]);
-        });
-        FriendRequest::factory()->count(5)->create([
-            'sender_id' => $users->random()->id,  // Randomly select a user as sender
-            'receiver_id' => $users->random()->id, // Randomly select another user as receiver
-        ]);
-
-        // Create friends with user IDs
-        Friend::factory()->count(5)->create([
-            'user_id' => $users->random()->id,
-            'friend_id' => $users->random()->id,
-
-        ]);
+//        $users = User::factory()
+//            ->count(20)
+//            ->create();
+//          ContactUs::factory()
+//            ->count(20)
+//            ->create();
+//            Evaluation::factory()
+//                  ->count(40)
+//                  ->create();
+//        $users->each(function ($users) {
+//            $users->update([
+//                'created_at' => now()->subDays(rand(0, 365)), // Set created_at to a random date in the last year
+//            ]);
+//        });
+//        FriendRequest::factory()->count(5)->create([
+//            'sender_id' => $users->random()->id,  // Randomly select a user as sender
+//            'receiver_id' => $users->random()->id, // Randomly select another user as receiver
+//        ]);
+//
+//        // Create friends with user IDs
+//        Friend::factory()->count(5)->create([
+//            'user_id' => $users->random()->id,
+//            'friend_id' => $users->random()->id,
+//
+//        ]);
 //        $level1 = Category::factory()->count(5)->create(['level' => 1, 'parent_id' => 0]);
 
 //         $level1Ids = $level1->pluck('id')->toArray();
@@ -92,17 +92,17 @@ class DatabaseSeeder extends Seeder
 //        });
 //
 
-        $teams = Team::factory()->count(5)->create();
-//         $answers= Question::factory()->count(25)->create([
-//            'category_id' => $categories->random()->id,
-//        ]);
-//        Answer::factory()->count(5)->create([
-//            'question_id' => $answers->random()->id,
-//        ]);
-       $teamMembers = TeamMember::factory()->count(5)->create([
-             'team_id' => $teams->random()->id,
-             'user_id' => $users->random()->id,
-         ]);
+//        $teams = Team::factory()->count(5)->create();
+////         $answers= Question::factory()->count(25)->create([
+////            'category_id' => $categories->random()->id,
+////        ]);
+////        Answer::factory()->count(5)->create([
+////            'question_id' => $answers->random()->id,
+////        ]);
+//       $teamMembers = TeamMember::factory()->count(5)->create([
+//             'team_id' => $teams->random()->id,
+//             'user_id' => $users->random()->id,
+//         ]);
 //       $challenges = Challenge::factory()->count(50)->create([
 //            'team_member1_id' => $teamMembers->random()->id,
 //            'team_member2_id' => $teamMembers->random()->id,

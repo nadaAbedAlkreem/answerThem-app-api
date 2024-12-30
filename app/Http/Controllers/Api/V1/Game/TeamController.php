@@ -8,11 +8,13 @@ use App\Http\Requests\UpdateTeamRequest;
 use App\Http\Resources\Api\TeamResource;
 use App\Models\Team;
 use App\Models\TeamMember;
+use App\Traits\ResponseTrait;
 use Illuminate\Support\Facades\Auth;
 
 class TeamController extends Controller
 {
 
+    use ResponseTrait;
     public function __construct()
     {
         $this->middleware('auth:sanctum');
@@ -50,10 +52,8 @@ class TeamController extends Controller
                 'user_id' => $memberId,
             ]);
         }
-         $team->load(['user','teamMembers.user']);
-        return $this->successResponse('CREATE_SUCCESS', new TeamResource($team) , 202, app()->getLocale());
 
-
+          return $this->successResponse('CREATE_SUCCESS', new TeamResource($team->load(['user','teamMembers.user'])) , 202, app()->getLocale());
 
 
     }

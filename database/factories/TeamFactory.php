@@ -21,8 +21,7 @@ class TeamFactory extends Factory
         $arabicFaker = \Faker\Factory::create('ar_SA');
         $englishFaker = $this->faker;
         return [
-            'name_ar' => $arabicFaker->word,
-            'name_en' =>  $this->faker->word,
+             'name' =>  $this->faker->word,
             'user_id' => User::factory(),
         ];
     }

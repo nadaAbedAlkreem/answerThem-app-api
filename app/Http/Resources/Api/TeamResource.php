@@ -18,6 +18,10 @@ class TeamResource extends JsonResource
 
         return
         [
+            'id' => $this->id ,
+            'name' => $this->name ,
+            'creator'=>new UserResource($this->whenLoaded('user')),
+            'members'=> teamMembersResource::collection($this->whenLoaded('teamMembers')),
 
         ] ;
 

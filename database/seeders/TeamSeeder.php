@@ -15,8 +15,7 @@ class TeamSeeder extends Seeder
     {
         DB::table('teams')->insert([
             [
-                'name_ar' => 'فريق 1',
-                'name_en' => 'Team 1',
+                'name' => 'Team 1',
                 'user_id' => 1, // Creator of the team
                 'created_at' => now(),
                 'updated_at' => now(),
