@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
+use App\Models\Category;
 use App\Services\AdminDatatableService;
 use App\Traits\ResponseTrait;
 use Illuminate\Http\Request;
@@ -27,9 +28,11 @@ class AdminController extends Controller
     public function index(Request $request , AdminDatatableService $adminsDatatableService)
     {
          $roles = Role::pluck('name','id')->all();
-          if ($request->ajax())
+//         $category = Category::whereDoesntHave('admin')->with('parent' , 'parent.parent')->where('level', 3)->orderBy('created_at', 'asc')->get() ;
+        $users = Admin::with(['category' , 'category.parent' , 'category.parent.parent'])->select()->get();
+         if ($request->ajax())
         {
-            $users = Admin::select();
+            $users = Admin::with('category')->select();
 
             try {
                 return $adminsDatatableService->handle($request,$users );
@@ -72,12 +75,14 @@ class AdminController extends Controller
     {
 
         app::setLocale($request->query('lang'));
-        $admins_ =  $admins::select('*')->where('id', $id)->first();
+        $admins_ =  $admins::with(['category' , 'category.parent' , 'category.parent.parent'])->select('*')->where('id', $id)->first();
+        $categories = Category::whereDoesntHave('admin')->with('parent' , 'parent.parent')->where('level', 3)->orderBy('created_at', 'asc')->get() ;
         $roles = Role::pluck('name','name')->all();
 
         $userRoles = $admins_->roles->pluck('name','name')->all();
         return view('dashboard.role&permission.admin.edit', [
             'user' => $admins_,
+            'categories' => $categories ,
             'roles' => $roles,
             'userRoles' => $userRoles
         ]);
@@ -86,26 +91,42 @@ class AdminController extends Controller
     public function update(Request $request, Admin  $admins , $id)
     {
         try {
-
-             $admins= Admin::select('*')->where('id', $request['id'])->first();
+              $admins= Admin::select('*')->where('id', $request['id'])->first();
              $validation =  $request->validate([
                 'name' => 'required|string|max:255',
                 'roles' => [
                     'required',
                     function ($attribute, $value, $fail ) use ($admins) {
                      $superAdminsCount = Admin::role('super-admin')->count();
-
                         if ($admins->hasRole('super-admin') && !in_array('super-admin', $value) && $superAdminsCount <= 1) {
                             $fail('You cannot assign a role other than "super admin" as there is no other "super admin" in the table.');
                         }
+
                     },
                 ],
             ]);
-            $data = [
-                'name' => $request->name,
-                'email' => $request->email,
+             $data = [];
+              if($request->roles[0]  == 'super-admin')
+             {
+                 $data = [
+                     'name' => $request->name,
+                     'email' => $request->email,
+                     'category_id'=> null
 
-            ];
+                 ];
+
+              }else
+             {
+                 $data = [
+                     'name' => $request->name,
+                     'email' => $request->email,
+                     'category_id' => $request->category_id  ,
+
+                 ];
+
+
+             }
+
             $admins->update($data);
             $admins->syncRoles($request->roles);
             return $this->successResponse('UPDATE_SUCCESS',[], 201, app()->getLocale());
@@ -121,11 +142,14 @@ class AdminController extends Controller
 
     }
 
-//     public function destroy($userId)
-//     {
-//         $admins = Admins::findOrFail($userId);
-//         $admins->delete();
+     public function destroy($userId)
+     {
+         $admin = Admin::findOrFail($userId);
+         $admin->category_id = null ;
+         $admin->save();
+         $admin->delete();
+         return $this->successResponse('DELETE_SUCCESS',[], 202, app()->getLocale());
 
-//         return redirect('/users')->with('status','User Delete Successfully');
-//     }
+
+     }
 }

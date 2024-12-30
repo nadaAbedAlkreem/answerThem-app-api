@@ -50,20 +50,43 @@ class AdminDatatableService extends Controller
             )
             ->addColumn('action', function ($data)
             {
-                  $buttons ="" ;
-                  if (auth()->user()->can("update admin")) {
+                $buttons ="" ;
+
+                if($data['email'] != 'superadmin@gmail.com')
+                {
                     $buttons .= '<a href="' . url("admins/" . $data->id . "/edit") . '?lang=' . app()->getLocale() . '" class="btn btn-outline-success mx-2 ">' . __('setting.Edit') . '</a>';
+                    $buttons .= '<a data-id="' . $data->id . '" class="deleteRecord btn btn-outline-danger mx-2 show_confirm">'.__('setting.Delete').'</a>';
                 }
+
 
 
                 return '<td>' . $buttons . '</td>';
             })
+              ->addColumn('Dependency',function ($data) {
+                  $dependency = "";
+                  $name = (app::getLocale() == 'ar') ? 'name_ar' : 'name_en';
+
+                  if($data->getRoleNames()[0]  != 'super-admin')
+                  {
+                      if($data['category'] != null)
+                      {
+                          $dependency .= '<td class="w-100px text-end fs-7 pe-9">
+                                                   <span class="fw-bold text-muted">'. $data['category'][$name] .'-'. $data['category']['parent'][$name] . '-' . $data['category']['parent']['parent'][$name] . '</span>
+                                          </td>';
+                      }
+
+                  }
 
 
 
 
+                  return $dependency;
+              })
 
-            ->rawColumns([ 'action'  ,'roles'   ])
+
+
+
+            ->rawColumns([ 'action'  ,'roles' , 'Dependency'  ])
             ->make(true);
 
     }

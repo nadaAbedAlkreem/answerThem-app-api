@@ -11,7 +11,7 @@ class Team extends Model
 
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['name_ar', 'name_en', 'user_id'];
+    protected $fillable = ['name', 'user_id'];
     protected $dates = ['deleted_at'];
 
 

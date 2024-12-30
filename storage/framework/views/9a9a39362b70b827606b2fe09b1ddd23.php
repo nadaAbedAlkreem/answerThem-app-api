@@ -223,7 +223,17 @@
 
                                     <!--begin::Pagination-->
                                     <div class="d-flex align-items-center flex-wrap gap-2">
+                                            <?php if(!empty($category)): ?>
+                                                <?php if($isCollection == false): ?>
+                                                         <span><?php echo e(app()->getLocale() === 'ar' ? $category['name_ar'] ?? '' : $category['name_en'] ?? ''); ?>   - <?php echo e(app()->getLocale() === 'ar' ? $category['parent']['name_ar'] ?? '' : $category['parent']['name_en'] ?? ''); ?> -  <?php echo e(app()->getLocale() === 'ar' ? $category['parent']['parent']['name_ar'] ?? '' : $category['parent']['parent']['name_en'] ?? ''); ?></span>
 
+                                            <?php endif; ?>
+                                        <?php else: ?>
+                                            <div class="alert alert-warning" role="alert">
+                                                <span><?php echo e(__('setting.You have not been assigned a category to add questions according to. Please contact the administrator to specify your category')); ?></span>
+                                            </div>
+
+                                        <?php endif; ?>
                                     </div>
                                     <div class="d-flex align-items-center position-relative">
                                         <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->

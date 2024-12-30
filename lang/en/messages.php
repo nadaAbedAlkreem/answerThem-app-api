@@ -11,6 +11,22 @@ return [
         'required' => 'The game name field is required.',
         'max' => 'The name must be less than 255 characters'
     ],
+    'name' => [
+        'required' => 'Name field is required.',
+        'string' => 'Name field must be text.',
+        'max' => 'Users cannot exceed 4.',
+
+    ],
+    'members' => [
+        'required' => 'Name field is required.',
+        'string' => 'Phone number must be text.',
+        'max' => 'Users cannot exceed 4.',
+        'min' => 'Users cannot exceed 2.',
+
+    ],
+         'exists' => 'The users you attached do not exist.',
+
+
     'category_id' => [
         'required' => 'The game type field is required',
         'integer' => 'The game type reference must be a number',

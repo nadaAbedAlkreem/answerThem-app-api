@@ -30,13 +30,15 @@ class CategoryController extends Controller
 
     public function index(Request $request ,  CategoryDatatableService $categoryDatatableService)
     {
+
+
         $dataNative = Category::with('parent' , 'parent.parent')->select('*')->orderBy('created_at', 'desc')->get() ;
           if ($request->ajax())
         {
             $data = CategoryResource::collection($dataNative);
 
             try {
-                return $categoryDatatableService->handle($request,$data);
+                return $categoryDatatableService->handle($request, $data);
             } catch (Throwable $e) {
                 return response([
                     'message' => $e->getMessage(),
@@ -44,64 +46,68 @@ class CategoryController extends Controller
             }
         }
 
-         return view('dashboard.pages.category' , ['category'=>CategoryResource::collection($dataNative)->toArray($request) , 'lang' => app::getLocale()]);
+        return view('dashboard.pages.category', ['category' => CategoryResource::collection($dataNative)->toArray($request), 'lang' => app::getLocale()]);
     }
+
     public function store(StoreCategoryRequest $request)
     {
 
-         try {
+        try {
             $category = $this->categoryRepository->create($request->getData());
-            $usersWithoutCategory = Admin::whereNull('category_id')->whereHas('roles', function($query) {
-                $query->where('name', 'staff');
-            })->first();
-            if ($usersWithoutCategory != null)
-            {
-                if($category->level == '3')
-                {
-                    $usersWithoutCategory->category_id = $category->id;
-                    $usersWithoutCategory->save();
+//            $usersWithoutCategory = Admin::whereNull('category_id')->whereHas('roles', function($query) {
+//                $query->where('name', 'staff');
+//            })->first();
+//            if ($usersWithoutCategory != null)
+//            {
+//                if($category->level == '3')
+//                {
+//                    $usersWithoutCategory->category_id = $category->id;
+//                    $usersWithoutCategory->save();
+//
+//                }
+//
+//            }
 
-                }
-
-            }
-
-            return $this->successResponse('CREATE_SUCCESS',[], 201, App::getLocale())  ;
+            return $this->successResponse('CREATE_SUCCESS', [], 201, App::getLocale());
         } catch (\Exception $e) {
-             return response([
+            return response([
                 'message' => $e->getMessage(),
             ], 500);
         }
     }
+
     public function update(UpdateCategoryRequest $request)
     {
         try {
 
-            $this->categoryRepository->update($request->getData() , $request['id']);
-             return $this->successResponse('UPDATE_SUCCESS',[], 201, App::getLocale())  ;
+            $this->categoryRepository->update($request->getData(), $request['id']);
+            return $this->successResponse('UPDATE_SUCCESS', [], 201, App::getLocale());
 
         } catch (\Exception $e) {
-            return $this->errorResponse('ERROR_OCCURRED',  ['error' =>  $e->getMessage()] ,  404 , app()->getLocale());
+            return $this->errorResponse('ERROR_OCCURRED', ['error' => $e->getMessage()], 404, app()->getLocale());
         }
     }
+
     public function destroy($id)
     {
-         try {
-             $this->categoryRepository->delete($id);
-            return $this->successResponse('DELETE_SUCCESS',[], 202, App::getLocale())  ;
+        try {
+            $this->categoryRepository->delete($id);
+            return $this->successResponse('DELETE_SUCCESS', [], 202, App::getLocale());
 
-         } catch (\Exception $e) {
-             return $this->errorResponse('ERROR_OCCURRED',  ['error' =>  $e->getMessage()] ,  404 , app()->getLocale());
-         }
+        } catch (\Exception $e) {
+            return $this->errorResponse('ERROR_OCCURRED', ['error' => $e->getMessage()], 404, app()->getLocale());
+        }
     }
+
     public function searchCategories(Request $request)
     {
-         $searchTerm = $request->input('q');
-        $categories = Category::where(function($query) use ($searchTerm) {
+        $searchTerm = $request->input('q');
+        $categories = Category::where(function ($query) use ($searchTerm) {
             $query->where('name_en', 'LIKE', "%{$searchTerm}%")
                 ->orWhere('name_ar', 'LIKE', "%{$searchTerm}%");
-          })
-             ->where('level', 1)->orWhere('level', 2)
-             ->get(['id', 'name_en', 'name_ar', 'level']);
+        })
+            ->where('level', 1)->orWhere('level', 2)
+            ->get(['id', 'name_en', 'name_ar', 'level']);
 
         return response()->json([
             'results' => $categories->map(function ($category) {
@@ -116,9 +122,9 @@ class CategoryController extends Controller
     public function getCategories(Request $request)
     {
         app::setLocale($request->query('lang'));
-        $name = (app::getLocale() == 'ar')? 'name_ar' : 'name_en' ;
+        $name = (app::getLocale() == 'ar') ? 'name_ar' : 'name_en';
         $categories = Category::with('parent')
-        ->select('id', 'level', $name, 'parent_id')
+            ->select('id', 'level', $name, 'parent_id')
             ->get()
             ->map(function ($category) use ($name) {
                 return [
@@ -131,8 +137,41 @@ class CategoryController extends Controller
             });
 
 
+        return response()->json($categories);
 
-         return response()->json($categories);
+    }
+
+    public function getCategoriesForAdmin(Request $request)
+    {
+        app::setLocale($request->query('lang'));
+        $name = (app::getLocale() == 'ar') ? 'name_ar' : 'name_en';
+        $categories = Category::whereDoesntHave('admin')->with('parent', 'parent.parent')->where('level', 3)->orderBy('created_at', 'asc')
+            ->select('id', 'level', $name, 'parent_id')
+            ->get()
+            ->map(function ($category) use ($name) {
+                return [
+                    'id' => $category->id,
+                    'level' => $category->level,
+                    'name' => $category->$name,
+                    'parent_name' => $category->parent ? $category->parent->$name : null,
+                    'grand_name' => $category->parent->parent ? $category->parent->parent->$name : null,
+
+                ];
+            });
+
+
+        return response()->json($categories);
+
+    }
+
+    public function getStatisticsForEmp(Request $request)
+    {
+        $categories = Category::whereDoesntHave('admin')->where('level', 3)->count();
+        $staff = Admin::role('staff')
+            ->whereNull('category_id')
+            ->count();
+
+        return response()->json(['categoriesCount'=> $categories ,'staffCount' => $staff]);
 
     }
 

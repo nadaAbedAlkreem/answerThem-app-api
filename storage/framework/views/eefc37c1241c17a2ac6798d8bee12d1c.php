@@ -18,10 +18,10 @@
                             <h1 class="text-dark mb-3">Create an Account</h1>
                             <!--end::Title-->
                             <!--begin::Link-->
-                            <div class="text-gray-400 fw-bold fs-4">Already have an account?
-                                <a href="<?php echo e(route('admin.register')); ?>" class="link-primary fw-bolder">Sign up here</a></div>
-                            <!--end::Link-->
-                        </div>
+
+
+
+
                         <!--end::Heading-->
 
                          <!--begin::Input group-->

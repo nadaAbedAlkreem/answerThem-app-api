@@ -14,8 +14,7 @@
                         </h4>
                     </div>
                     <div class="card-body">
-{{--                        action="{{ url('admins/'.$user->id) }}" method="POST">--}}
-                        <form id ="formUpdateAdmins">
+                         <form id ="formUpdateAdmins">
                             @csrf
                             @method('PUT')
                             <input type="hidden" name="id" id="userId" value="{{ $user->id }}" class="form-control" />
@@ -28,7 +27,30 @@
                                 <label for="">{{__('setting.Email')}}</label>
                                 <input type="text" name="email" readonly value="{{ $user->email }}" class="form-control" />
                             </div>
+                            @if($user->getRoleNames()[0]  != 'super-admin')
+                                <div class="mb-4">
+                                    <label class="d-flex align-items-center fs-5 fw-bold mb-4">
+                                        <span class="required">{{__('setting.Category')}} </span>
+                                        <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"  ></i>
+                                    </label>
+                                    <select class="form-control form-control-lg form-control-solid  form-select-sm" name = "category_id"   id="category_id_edit_admin" required aria-label=".form-select-sm example">
+                                        <option value=""></option>
+                                        @if(!empty($user['category']['id']))
+                                        <option selected value="{{$user['category']['id']}}"> {{ app()->getLocale() === 'ar' ? $user['category']['name_ar'] ?? '' : $user['category']['name_en'] ?? '' }}
+                                            <span>({{ app()->getLocale() === 'ar' ? $user['category']['parent']['name_ar'] ?? '' : $user['category']['parent']['name_en'] ?? '' }}) -  ({{ app()->getLocale() === 'ar' ? $user['category']['parent']['parent']['name_ar'] ?? '' : $user['category']['parent']['parent']['name_en'] ?? '' }})</span>
+                                        </option>
+                                        @endif
+                                        @if(!empty($categories))
+                                                 @foreach($categories as  $key => $item)
+                                                    <option value="{{$item['id']}}"  > {{ app()->getLocale() === 'ar' ? $item['name_ar'] ?? '' : $item['name_en'] ?? '' }}
+                                                        <span>({{ app()->getLocale() === 'ar' ? $item['parent']['name_ar'] ?? '' : $item['parent']['name_en'] ?? '' }}) -  ({{ app()->getLocale() === 'ar' ? $item['parent']['parent']['name_ar'] ?? '' : $item['parent']['parent']['name_en'] ?? '' }})</span>
+                                                    </option>
+                                                @endforeach
+                                        @endif
+                                     </select>
 
+                                </div>
+                            @endif
                             <div class="mb-3">
                                 <label for="">{{__('setting.Roles')}}</label>
                                 <select name="roles[]" class="form-control" multiple>
@@ -36,8 +58,7 @@
                                     @foreach ($roles as $role)
                                         <option
                                             value="{{ $role }}"
-                                            {{ in_array($role, $userRoles) ? 'selected':'' }}
-                                        >
+                                            {{ in_array($role, $userRoles) ? 'selected':'' }}>
                                             {{ $role }}
                                         </option>
                                     @endforeach
@@ -71,7 +92,15 @@
     <script src="{{url('assets/js/custom/apps/chat/chat.js')}}"></script>
     <script src="{{url('assets/js/custom/utilities/modals/users-search.js')}}"></script>
     <script src='{{asset('assets/js/custom/actions/admins-action.js')}}'></script>
+    <script>
+        window.translations = {
+            OK: @json(__('setting.OK!')),
+            are_sure: @json(__('setting.are_sure')),
+            revert: @json(__('setting.revert')),
+            yes: @json(__('setting.yes')),
+        };
 
+    </script>
     @push('scripts')
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
         <script>

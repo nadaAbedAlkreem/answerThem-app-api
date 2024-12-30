@@ -221,7 +221,17 @@
 
                                     <!--begin::Pagination-->
                                     <div class="d-flex align-items-center flex-wrap gap-2">
+                                            @if(!empty($category))
+                                                @if($isCollection == false)
+                                                         <span>{{ app()->getLocale() === 'ar' ? $category['name_ar'] ?? '' : $category['name_en'] ?? '' }}   - {{ app()->getLocale() === 'ar' ? $category['parent']['name_ar'] ?? '' : $category['parent']['name_en'] ?? '' }} -  {{ app()->getLocale() === 'ar' ? $category['parent']['parent']['name_ar'] ?? '' : $category['parent']['parent']['name_en'] ?? '' }}</span>
 
+                                            @endif
+                                        @else
+                                            <div class="alert alert-warning" role="alert">
+                                                <span>{{ __('setting.You have not been assigned a category to add questions according to. Please contact the administrator to specify your category') }}</span>
+                                            </div>
+
+                                        @endif
                                     </div>
                                     <div class="d-flex align-items-center position-relative">
                                         <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->

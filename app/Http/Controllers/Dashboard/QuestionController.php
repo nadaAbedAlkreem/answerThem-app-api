@@ -49,9 +49,13 @@ class QuestionController extends Controller
           }else if( auth()->user()->getRoleNames()[0]  == 'staff')
         {
             $categoryId  = auth()->user()->category_id ;
+
             if($categoryId)
             {
                 $dataNative = Question::select('*')->where('category_id' , $categoryId)->orderBy('created_at', 'desc')->get() ;
+            }else
+            {
+                 $dataNative = Question::select('*')->where('category_id' , 0)->orderBy('created_at', 'desc')->get() ;
 
             }
             $isCollection = false ;
@@ -72,7 +76,7 @@ class QuestionController extends Controller
             }
         }
 
-        return view('dashboard.pages.questions' , ['lang' => app::getLocale()  ,  'category_filter'=>$categoryFilter, 'isCollection' => $isCollection ,   'category'=>$category ]);
+        return view('dashboard.pages.questions' , ['lang' => app::getLocale()   ,  'category_filter'=>$categoryFilter, 'isCollection' => $isCollection ,   'category'=>$category ]);
     }
     public function store(StoreQuestionRequest $request)
     {

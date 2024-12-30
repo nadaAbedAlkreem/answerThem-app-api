@@ -13,8 +13,7 @@
                         </h4>
                     </div>
                     <div class="card-body">
-
-                        <form id ="formUpdateAdmins">
+                         <form id ="formUpdateAdmins">
                             <?php echo csrf_field(); ?>
                             <?php echo method_field('PUT'); ?>
                             <input type="hidden" name="id" id="userId" value="<?php echo e($user->id); ?>" class="form-control" />
@@ -34,7 +33,32 @@ unset($__errorArgs, $__bag); ?>
                                 <label for=""><?php echo e(__('setting.Email')); ?></label>
                                 <input type="text" name="email" readonly value="<?php echo e($user->email); ?>" class="form-control" />
                             </div>
+                            <?php if($user->getRoleNames()[0]  != 'super-admin'): ?>
+                                <div class="mb-4">
+                                    <label class="d-flex align-items-center fs-5 fw-bold mb-4">
+                                        <span class="required"><?php echo e(__('setting.Category')); ?> </span>
+                                        <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"  ></i>
+                                    </label>
+                                    <select class="form-control form-control-lg form-control-solid  form-select-sm" name = "category_id"   id="category_id_edit_admin" required aria-label=".form-select-sm example">
+                                        <option value=""></option>
+                                        <?php if(!empty($user['category']['id'])): ?>
+                                        <option selected value="<?php echo e($user['category']['id']); ?>"> <?php echo e(app()->getLocale() === 'ar' ? $user['category']['name_ar'] ?? '' : $user['category']['name_en'] ?? ''); ?>
 
+                                            <span>(<?php echo e(app()->getLocale() === 'ar' ? $user['category']['parent']['name_ar'] ?? '' : $user['category']['parent']['name_en'] ?? ''); ?>) -  (<?php echo e(app()->getLocale() === 'ar' ? $user['category']['parent']['parent']['name_ar'] ?? '' : $user['category']['parent']['parent']['name_en'] ?? ''); ?>)</span>
+                                        </option>
+                                        <?php endif; ?>
+                                        <?php if(!empty($categories)): ?>
+                                                 <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                    <option value="<?php echo e($item['id']); ?>"  > <?php echo e(app()->getLocale() === 'ar' ? $item['name_ar'] ?? '' : $item['name_en'] ?? ''); ?>
+
+                                                        <span>(<?php echo e(app()->getLocale() === 'ar' ? $item['parent']['name_ar'] ?? '' : $item['parent']['name_en'] ?? ''); ?>) -  (<?php echo e(app()->getLocale() === 'ar' ? $item['parent']['parent']['name_ar'] ?? '' : $item['parent']['parent']['name_en'] ?? ''); ?>)</span>
+                                                    </option>
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                        <?php endif; ?>
+                                     </select>
+
+                                </div>
+                            <?php endif; ?>
                             <div class="mb-3">
                                 <label for=""><?php echo e(__('setting.Roles')); ?></label>
                                 <select name="roles[]" class="form-control" multiple>
@@ -42,9 +66,7 @@ unset($__errorArgs, $__bag); ?>
                                     <?php $__currentLoopData = $roles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $role): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <option
                                             value="<?php echo e($role); ?>"
-                                            <?php echo e(in_array($role, $userRoles) ? 'selected':''); ?>
-
-                                        >
+                                            <?php echo e(in_array($role, $userRoles) ? 'selected':''); ?>>
                                             <?php echo e($role); ?>
 
                                         </option>
@@ -86,7 +108,15 @@ unset($__errorArgs, $__bag); ?>
     <script src="<?php echo e(url('assets/js/custom/apps/chat/chat.js')); ?>"></script>
     <script src="<?php echo e(url('assets/js/custom/utilities/modals/users-search.js')); ?>"></script>
     <script src='<?php echo e(asset('assets/js/custom/actions/admins-action.js')); ?>'></script>
+    <script>
+        window.translations = {
+            OK: <?php echo json_encode(__('setting.OK!'), 15, 512) ?>,
+            are_sure: <?php echo json_encode(__('setting.are_sure'), 15, 512) ?>,
+            revert: <?php echo json_encode(__('setting.revert'), 15, 512) ?>,
+            yes: <?php echo json_encode(__('setting.yes'), 15, 512) ?>,
+        };
 
+    </script>
     <?php $__env->startPush('scripts'); ?>
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
         <script>

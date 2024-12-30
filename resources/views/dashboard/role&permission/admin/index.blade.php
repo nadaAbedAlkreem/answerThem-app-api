@@ -1,8 +1,20 @@
 
 @extends('dashboard.layout.app')
 @section('content')
+    <style>
+        .hidden-progress {
+            display: none;
+        }
 
-  <div class="d-flex flex-column flex-root">
+        input[readonly] {
+            background-color: #e9ecef;
+            cursor: not-allowed;
+        }
+      </style>
+
+
+
+        <div class="d-flex flex-column flex-root">
     <div class="page d-flex flex-column flex-column-fluid">
         <div id="kt_header" class="header" data-kt-sticky="true" data-kt-sticky-name="header" data-kt-sticky-offset="{default: '200px', lg: '300px'}">
             <!--begin::Container-->
@@ -121,6 +133,7 @@
                             <div class="container ">
                                 <div class="row">
                                     <div class="col-md-12">
+                                        <a  class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#kt_modal_create_admin_app">{{__('setting.Create')}}</a>
 
                                         @if (session('status'))
                                             <div class="alert alert-success">{{ session('status') }}</div>
@@ -138,6 +151,19 @@
                                                 </select>
 
                                             </div>
+                                            <div class="container mt-4">
+                                                <div class="d-flex align-items-center gap-3">
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="me-2 fw-bold">{{__('setting.Number of employees who have not been assigned a category')}}</span>
+                                                        <input class="form-control" name="staffCount"  type="text" value="0" readonly>
+                                                    </div>
+                                                     <div class="d-flex align-items-center">
+                                                        <span class="me-2 fw-bold">{{__('setting.Number of categories for which no employee has been assigned')}}</span>
+                                                        <input class="form-control" name = "categoriesCount" type="text" value="0" readonly>
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                             <div class="card-body">
 
                                                 <table class="data-table-admins table table-bordered table-striped">
@@ -147,6 +173,7 @@
                                                         <th>{{__('setting.Name')}}</th>
                                                         <th>{{__('setting.Email')}}</th>
                                                         <th>{{__('setting.Roles')}}</th>
+                                                        <th>{{__('setting.Dependency')}}</th>
                                                         <th>{{__('setting.Actions')}}</th>
                                                     </tr>
                                                     </thead>
@@ -171,7 +198,139 @@
 
         </div>
         <!--end::Wrapper-->
+        <!--begin::Modal - Create App-->
+        <div class="modal fade" id="kt_modal_create_admin_app" tabindex="-1" aria-hidden="true">
+            <!--begin::Modal dialog-->
+            <div class="modal-dialog modal-dialog-centered mw-900px">
+                <!--begin::Modal content-->
+                <div class="modal-content">
+                    <!--begin::Modal header-->
+                    <div class="modal-header">
+                        <!--begin::Modal title-->
+                        <h2>{{__('setting.Create Admin')}}</h2>
+                        <!--end::Modal title-->
+                        <!--begin::Close-->
+                        <div class="btn btn-sm btn-icon btn-active-color-primary" id ="dismiss_create_admin" data-bs-dismiss="modal">
+                            <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                            <span class="svg-icon svg-icon-1">
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+									<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
+									<rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black" />
+								</svg>
+							</span>
+                            <!--end::Svg Icon-->
+                        </div>
+                        <!--end::Close-->
+                    </div>
+                    <!--end::Modal header-->
+                    <!--begin::Modal body-->
+                    <div class="modal-body py-lg-10 px-lg-10">
+                        <!--begin::Stepper-->
+                        <div class="stepper stepper-pills stepper-column d-flex flex-column flex-xl-row flex-row-fluid" id="">
 
+                            <div class="flex-row-fluid py-lg-5 px-lg-15">
+                                <!--begin::Form-->
+                                <form class="form" novalidate="novalidate" enctype="multipart/form-data" id="kt_sign_up_form">
+
+                                    <!--begin::Step 1-->
+                                    <div class="current" data-kt-stepper-element="content">
+                                        <div class="w-100">
+                                            <!--begin::Input group-->
+                                            <div class="fv-row mb-10">
+                                                <!--begin::Label-->
+                                                <label class="d-flex align-items-center fs-5 fw-bold mb-2">
+                                                    <span class="required"> {{__('setting.Name')}}</span>
+                                                    <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="{{__('setting.Specify your unique app name')}}"></i>
+                                                </label>
+                                                <!--end::Label-->
+                                                <!--begin::Input-->
+                                                <input type="text" class="form-control form-control-lg form-control-solid" name="name" placeholder=" {{__('setting.Name')}}" value="" />
+                                                <!--end::Input-->
+                                            </div>
+                                            <!--end::Input group-->
+
+                                            <div class="w-100">
+                                                <!--begin::Input group-->
+                                                <div class="fv-row mb-10">
+                                                    <!--begin::Label-->
+                                                    <label class="d-flex align-items-center fs-5 fw-bold mb-2">
+                                                        <span class="required"> {{__('setting.Email')}}</span>
+                                                        <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="{{__('setting.Specify your unique app name')}}"></i>
+                                                    </label>
+                                                    <!--end::Label-->
+                                                    <!--begin::Input-->
+                                                    <input type="text" class="form-control form-control-lg form-control-solid" name="email" placeholder=" {{__('setting.Email')}}" value="" />
+                                                    <!--end::Input-->
+                                                </div>
+                                                <!--end::Input group-->
+
+                                                <!--begin::Input group-->
+
+                                                <!--end::Input group-->
+
+                                            </div>
+
+                                            <div class="mb-4">
+                                                <label class="d-flex align-items-center fs-5 fw-bold mb-4">
+                                                    <span class="required">{{__('setting.Category')}} </span>
+                                                    <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"  ></i>
+                                                </label>
+                                                <select class="form-control form-control-lg form-control-solid  form-select-sm" name = "category_id"   id="category_id_admin" required aria-label=".form-select-sm example">
+
+                                                </select>
+
+                                            </div>
+                                            <div class="fv-row mb-10">
+                                                <!--begin::Wrapper-->
+                                                <div class="d-flex flex-stack mb-2">
+                                                    <!--begin::Label-->
+                                                    <label class="form-label fs-6 fw-bolder text-dark">{{__('setting.password')}}</label>
+                                                </div>
+                                                <!--end::Wrapper-->
+                                                <!--begin::Input-->
+                                                <input class="form-control form-control-lg form-control-solid" type="password" name="password" autocomplete="off" />
+                                                <!--end::Input-->
+                                            </div>
+                                        </div>
+                                        <!--end::Step 1-->
+
+                                    </div>
+
+                                    <div>
+                                        <button type="button" id="kt_sign_up_submit" class="btn btn-lg btn-primary" >
+                                            {{__('setting.Continue')}}
+                                            <!--begin::Svg Icon | path: icons/duotune/arrows/arr064.svg-->
+                                            <span class="svg-icon svg-icon-3 ms-1 me-0">
+												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+													<rect opacity="0.5" x="18" y="13" width="13" height="2" rx="1" transform="rotate(-180 18 13)" fill="black" />
+													<path d="M15.4343 12.5657L11.25 16.75C10.8358 17.1642 10.8358 17.8358 11.25 18.25C11.6642 18.6642 12.3358 18.6642 12.75 18.25L18.2929 12.7071C18.6834 12.3166 18.6834 11.6834 18.2929 11.2929L12.75 5.75C12.3358 5.33579 11.6642 5.33579 11.25 5.75C10.8358 6.16421 10.8358 6.83579 11.25 7.25L15.4343 11.4343C15.7467 11.7467 15.7467 12.2533 15.4343 12.5657Z" fill="black" />
+												</svg>
+											</span>
+                                            <!--end::Svg Icon-->
+                                                <span class="indicator-label-progress hidden-progress">{{__('setting.Please wait...')}}
+												<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                            </button>
+                                            <button type="button" id="resetButtonQuestion" class="btn btn-secondary d-none">
+                                                إعادة تعيين
+                                            </button>
+
+                                        </div>
+                                        <!--end::Wrapper-->
+                                     <!--end::Actions-->
+                                </form>
+                                <!--end::Form-->
+                            </div>
+                            <!--end::Content-->
+                        </div>
+                        <!--end::Stepper-->
+                    </div>
+                    <!--end::Modal body-->
+                </div>
+                <!--end::Modal content-->
+            </div>
+            <!--end::Modal dialog-->
+        </div>
+        <!--end::Modal - Create App-->
         <input type="hidden" name="locale"  id="locale" value="{{app()->getLocale()}}" />
 
 

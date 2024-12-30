@@ -44,8 +44,6 @@ class Category extends Model
             {
                 $category->admin()->update(['category_id' => $categoryGetNotSET->id]);
 
-
-
             }
         });
     }

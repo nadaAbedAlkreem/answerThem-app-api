@@ -5,10 +5,19 @@ namespace App\Http\Controllers\Api\V1\Game;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTeamRequest;
 use App\Http\Requests\UpdateTeamRequest;
+use App\Http\Resources\Api\TeamResource;
 use App\Models\Team;
+use App\Models\TeamMember;
+use Illuminate\Support\Facades\Auth;
 
 class TeamController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum');
+
+    }
     /**
      * Display a listing of the resource.
      */
@@ -20,7 +29,7 @@ class TeamController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create( )
     {
         //
     }
@@ -30,7 +39,23 @@ class TeamController extends Controller
      */
     public function store(StoreTeamRequest $request)
     {
-        //
+
+         $team = Team::create([
+            'name' => $request['name'],
+            'user_id' => $request->user()->id,
+        ]);
+         foreach ($request['members'] as $memberId) {
+            TeamMember::create([
+                'team_id' => $team->id,
+                'user_id' => $memberId,
+            ]);
+        }
+         $team->load(['user','teamMembers.user']);
+        return $this->successResponse('CREATE_SUCCESS', new TeamResource($team) , 202, app()->getLocale());
+
+
+
+
     }
 
     /**

@@ -29,7 +29,6 @@ Route::middleware(CustomRedirectIfAuthenticated::class)->group(function () {
     Route::prefix('admin')->group(callback: function () {
         Route::get('login', [LoginController::class , 'index'])->name('admin.login');
         Route::get('register', [RegisterController::class ,'index'])->name('admin.register');
-        Route::post('register', [RegisterController::class ,'register'])->name('admin.register.store');
         Route::post('login', [LoginController::class , 'login'])->name('admin.login.store');
     });
 });
@@ -44,6 +43,7 @@ Route::middleware([ 'auth:admin', CheckLanguage::class ,'role:super-admin|admin'
         ->name('roles.give-permissions');
     Route::post('roles/{roleId}/update-permissions', [RoleController::class, 'givePermissionToRole'])
         ->name('roles.update-permissions');
+    Route::post('admin/register/role', [RegisterController::class ,'register'])->name('admin.register.store');
 
 
 
@@ -68,7 +68,9 @@ Route::middleware([ 'auth:admin', CheckLanguage::class ,'role:super-admin|admin'
             Route::post('create/', [CategoryController::class, 'store'])->name('dashboard.category.create');
             Route::post('update', [CategoryController::class, 'update'])->name('dashboard.category.update');
             Route::delete('delete/{id}', [CategoryController::class, 'destroy'])->name('dashboard.category.delete');
-            Route::get('/get-categories/filter', [CategoryController::class, 'getCategories']);
+            Route::get('/get-categories/filter', [CategoryController::class, 'getCategories']);//getCategoriesForAdmin
+            Route::get('/get-categories/filter/admin', [CategoryController::class, 'getCategoriesForAdmin']);//
+            Route::get('statistics/employees/', [CategoryController::class, 'getStatisticsForEmp']);//
             Route::get('/search/filter', [CategoryController::class, 'searchCategories'])->name('categories.search');
 
         }

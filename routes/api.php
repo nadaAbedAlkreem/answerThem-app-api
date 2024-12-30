@@ -14,6 +14,7 @@ use App\Http\Controllers\Api\V1\Game\ChallengeController;
 use App\Http\Controllers\Api\V1\Game\InvitationController;
 use App\Http\Controllers\Api\V1\Game\QuestionController;
 use App\Http\Controllers\Api\V1\Game\ResultController;
+use App\Http\Controllers\Api\V1\Game\TeamController;
 use App\Http\Controllers\Api\V1\Game\UserTrackingController;
 use App\Http\Controllers\Api\V1\NotificationController;
 use App\Http\Controllers\Api\V1\SettingController;
@@ -115,6 +116,13 @@ Route::middleware([ SetLocale::class  , UpdateLastActive::class])->group( functi
                 Route::get('end/{challengeId}', [ChallengeController::class, 'endOFChallenge']);
                 Route::post('score', [ResultController::class, 'storeCompetitorsScore']);
                 Route::get('test-yourself', [QuestionController::class, 'tryChallengeAlone']);
+
+            });
+
+            Route::prefix('teams')->group(function ()
+            {
+                 Route::post('store', [TeamController::class, 'store']);
+
 
             });
 
