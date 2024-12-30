@@ -45,7 +45,7 @@ class RegisterAdminRequest extends FormRequest
                 'string',
                 Password::min(8)] ,
             'category_id' => [
-                'required',
+                '',
                 'string',
                 'exists:categories,id'
                 ]

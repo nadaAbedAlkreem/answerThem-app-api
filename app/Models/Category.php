@@ -32,19 +32,15 @@ class Category extends Model
         parent::boot();
 
         static::deleting(function ($category) {
-             $category->children()->each(function ($children) {
+
+           $category->children()->each(function ($children) {
                 $children->delete();
             });
             $category->questions()->each(function ($questions) {
                 $questions->delete();
             });
 
-            $categoryGetNotSET = Category::whereDoesntHave('admin')->where('level' , 3 )->orderBy('created_at', 'asc')->first();
-            if ($categoryGetNotSET != null )
-            {
-                $category->admin()->update(['category_id' => $categoryGetNotSET->id]);
-
-            }
+            $category->admin()->update(['category_id' => null]);
         });
     }
     public function parent()
