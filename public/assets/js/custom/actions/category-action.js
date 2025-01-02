@@ -112,9 +112,6 @@ $(document).ready(function ($) {
 
 
 
-
-
-
     var table = $(".data-table-category").DataTable({
         language: language_datatables,
         processing: true,

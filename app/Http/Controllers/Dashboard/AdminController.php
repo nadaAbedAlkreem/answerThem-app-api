@@ -29,8 +29,10 @@ class AdminController extends Controller
     {
          $roles = Role::pluck('name','id')->all();
 //         $category = Category::whereDoesntHave('admin')->with('parent' , 'parent.parent')->where('level', 3)->orderBy('created_at', 'asc')->get() ;
-        $users = Admin::with(['category' , 'category.parent' , 'category.parent.parent'])->select()->get();
-         if ($request->ajax())
+//        $users = Admin::with(['category' , 'category.parent' , 'category.parent.parent'])->select()->get();
+        $users = Admin::with('category')->select()->get();
+
+        if ($request->ajax())
         {
             $users = Admin::with('category')->select();
 
@@ -45,31 +47,6 @@ class AdminController extends Controller
          return view('dashboard.role&permission.admin.index'  ,[ 'lang' => app::getLocale(), 'roles' => $roles]);
     }
 
-    // public function create()
-    // {
-    //     $roles = Role::pluck('name','name')->all();
-    //     return view('role-permission.user.create', ['roles' => $roles]);
-    // }
-
-    // public function store(Request $request)
-    // {
-    //     $request->validate([
-    //         'full_name' => 'required|string|max:255',
-    //         'email' => 'required|email|max:255|unique:users,email',
-    //         'password' => 'required|string|min:8|max:20',
-    //         'roles' => 'required'
-    //     ]);
-
-    //     $user = Admins::create([
-    //                     'full_name' => $request->full_name,
-    //                     'email' => $request->email,
-    //                     'password' => Hash::make($request->password),
-    //                 ]);
-
-    //     $user->syncRoles($request->roles);
-
-    //     return redirect('/users')->with('status','User created successfully with roles');
-    // }
 
     public function edit(Admin $admins, $id , Request $request)
     {
@@ -88,50 +65,45 @@ class AdminController extends Controller
         ]);
     }
 
-    public function update(Request $request, Admin  $admins , $id)
+    public function update(Request $request, Admin $admins, $id)
     {
         try {
-              $admins= Admin::select('*')->where('id', $request['id'])->first();
-             $validation =  $request->validate([
+             $admins = Admin::with('category')->where('id', $id)->first();
+
+             $validation = $request->validate([
                 'name' => 'required|string|max:255',
                 'roles' => [
                     'required',
-                    function ($attribute, $value, $fail ) use ($admins) {
-                     $superAdminsCount = Admin::role('super-admin')->count();
+                    function ($attribute, $value, $fail) use ($admins) {
+                        $superAdminsCount = Admin::role('super-admin')->count();
                         if ($admins->hasRole('super-admin') && !in_array('super-admin', $value) && $superAdminsCount <= 1) {
                             $fail('You cannot assign a role other than "super admin" as there is no other "super admin" in the table.');
                         }
-
                     },
                 ],
+                'category_id' => 'array',
+                'category_id.*' => 'nullable|exists:categories,id' ,
             ]);
-             $data = [];
-              if($request->roles[0]  == 'super-admin')
-             {
-                 $data = [
-                     'name' => $request->name,
-                     'email' => $request->email,
-                     'category_id'=> null
-
-                 ];
-
-              }else
-             {
-                 $data = [
-                     'name' => $request->name,
-                     'email' => $request->email,
-                     'category_id' => $request->category_id  ,
-
-                 ];
-
-
-             }
+             $data = [
+                'name' => $request->name,
+                'email' => $request->email,
+            ];
+             if ($request->roles[0] == 'super-admin') {
+                $data['category_id'] = null;
+            }
 
             $admins->update($data);
             $admins->syncRoles($request->roles);
-            return $this->successResponse('UPDATE_SUCCESS',[], 201, app()->getLocale());
 
-        }catch (Throwable $e) {
+            if ($request->roles[0] != 'super-admin') {
+                $admins->category()->sync($request->category_id);
+            } else {
+                $admins->category()->detach();
+            }
+
+            return $this->successResponse('UPDATE_SUCCESS', [], 201, app()->getLocale());
+
+        } catch (Throwable $e) {
             return $this->errorResponse(
                 'ERROR_OCCURRED',
                 ['error' => $e->getMessage()],
@@ -139,14 +111,11 @@ class AdminController extends Controller
                 app()->getLocale()
             );
         }
-
     }
 
      public function destroy($userId)
      {
          $admin = Admin::findOrFail($userId);
-         $admin->category_id = null ;
-         $admin->save();
          $admin->delete();
          return $this->successResponse('DELETE_SUCCESS',[], 202, app()->getLocale());
 

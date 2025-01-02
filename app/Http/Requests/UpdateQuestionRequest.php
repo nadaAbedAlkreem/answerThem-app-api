@@ -24,7 +24,7 @@ class UpdateQuestionRequest extends FormRequest
     protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
     {
         $errors = $validator->errors()->all();
-        $formattedErrors = ['error' => $errors[0]] ;
+        $formattedErrors = ['error' => $errors[0]];
         throw new \Illuminate\Validation\ValidationException($validator, response()->json([
             'success' => false,
             'message' => __('messages.ERROR_OCCURRED'),
@@ -32,6 +32,7 @@ class UpdateQuestionRequest extends FormRequest
             'status' => 'Internal Server Error'
         ], 500));
     }
+
     public function rules(): array
     {
         app::setLocale($this->input('lang'));
@@ -44,6 +45,9 @@ class UpdateQuestionRequest extends FormRequest
                 : 'string|max:255',
 
             'category_id' => 'required',
+            'video-update-question' => $this->hasFile('video')
+                ? 'file|mimes:mp4,mkv,avi,webm'
+                : '',
         ];
     }
 
@@ -51,8 +55,9 @@ class UpdateQuestionRequest extends FormRequest
     {
         $data= $this::validated();
 
-        if ($this->hasFile('image')) {
-            $userName =  (!empty($data['name']))
+        if ($this->hasFile('image'))
+        {
+             $userName =  (!empty($data['name']))
                 ? str_replace(' ', '_', $data['name']) . time() . rand(1, 10000000)
                 : time() . rand(1, 10000000);
 
@@ -70,6 +75,24 @@ class UpdateQuestionRequest extends FormRequest
             }
 
             $data['image'] = Storage::url($path . $nameImage);
+        }
+        if ($this->hasFile('video-update-question')) {
+            $userName =  time() . rand(1, 10000000);
+            $path = 'uploads/videos/categories/';
+            $nameVideo = $userName . '.' . $this->file('video-update-question')->getClientOriginalExtension();
+            Storage::disk('public')->put($path . $nameVideo, file_get_contents($this->file('video-update-question')));
+
+            $this->file('video-update-question')->move('storage/' . ($path), $nameVideo);
+
+            $absolutePath = storage_path('app/public/' . $path . $nameVideo);
+            if (file_exists($absolutePath)) {
+                chmod($absolutePath, 0775);
+            } else {
+                throw new \Exception(__('messages.ERROR_OCCURRED') . $absolutePath);
+            }
+
+            $data['video'] = Storage::url($path . $nameVideo);
+            $data['is_have_video'] = true ;
         }
 
 

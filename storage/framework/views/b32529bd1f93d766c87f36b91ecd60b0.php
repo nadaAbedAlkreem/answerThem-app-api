@@ -275,7 +275,7 @@
                                                     <span class="required"><?php echo e(__('setting.Category')); ?> </span>
                                                     <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"  ></i>
                                                 </label>
-                                                <select class="form-control form-control-lg form-control-solid  form-select-sm" name = "category_id"   id="category_id_admin" required aria-label=".form-select-sm example">
+                                                <select class="form-control form-control-lg form-control-solid  form-select-sm"    multiple name="category_id[]" id="category_id_admin" required aria-label=".form-select-sm example">
 
                                                 </select>
 

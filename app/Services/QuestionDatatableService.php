@@ -29,6 +29,7 @@ class QuestionDatatableService
             ->addColumn('action', function ($data) {
                 $isCorrectIndex = 0;
 
+
                  foreach ($data['answers'] as $answer)
                 {
                     $isCorrectIndex ++ ;
@@ -38,7 +39,8 @@ class QuestionDatatableService
                     }
                 }
 
-                          return  '
+
+                return  '
                                                   <a  class="btn btn-icon btn-color-gray-400 btn-sm btn-active-color-primary deleteRecord btn btn-xs btn show_confirm "  data-id="' . $data['id'] . '" data-bs-toggle="tooltip" data-bs-placement="right" title="Mark as important">
                                                          <span class="svg-icon svg-icon-3 mt-1">
                                                                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
@@ -47,7 +49,7 @@ class QuestionDatatableService
 //                                                                    </svg>
                                                                     </span>
                                                      </a>
-                                                 <a  class="btn btn-icon btn-color-gray-400 btn-sm btn-active-color-primary  updateRecord" data-bs-toggle="modal" data-category="' . $data['category']['id'] . '" data-is_correct="' . $isCorrectIndex. '" data-question_en_text="' . $data['question_en_text'] . '" data-question_ar_text="' . $data['question_ar_text'] . '" data-image="' . $data['image'] . '"    data-id="' . $data['id'] . '"  data-answer_text_ar_1="' . $data['answers'][0]['answer_text_ar'] . '" data-answer_text_ar_2="' . $data['answers'][1]['answer_text_ar'] . '" data-answer_text_ar_3="' . $data['answers'][2]['answer_text_ar'] . '" data-answer_text_ar_4="' . $data['answers'][3]['answer_text_ar'] . '"  data-answer_text_en_1="' . $data['answers'][0]['answer_text_en'] . '" data-answer_text_en_2="' . $data['answers'][1]['answer_text_en'] . '"  data-answer_text_en_3="' . $data['answers'][2]['answer_text_en'] . '" data-answer_text_en_4="' . $data['answers'][3]['answer_text_en'] . '" data-bs-target="#kt_modal_update_question_app"     data-bs-toggle="tooltip" data-bs-placement="right" title="Mark as important">
+                                                 <a  class="btn btn-icon btn-color-gray-400 btn-sm btn-active-color-primary  updateRecord" data-bs-toggle="modal" data-video="' . $data['video'] . '" data-image-answer-1="' . $data['answers'][0]['answer_image'] . '"  data-image-answer-2="' . $data['answers'][1]['answer_image'] . '"  data-image-answer-3="' . $data['answers'][2]['answer_image'] . '" data-image-have="' . $data['answers'][0]['is_have_image'] . '"   data-image-answer-4="' . $data['answers'][3]['answer_image'] . '" data-category="' . $data['category']['id'] . '" data-is_correct="' . $isCorrectIndex. '" data-question_en_text="' . $data['question_en_text'] . '" data-question_ar_text="' . $data['question_ar_text'] . '" data-image="' . $data['image'] . '"    data-id="' . $data['id'] . '"  data-answer_text_ar_1="' . $data['answers'][0]['answer_text_ar'] . '" data-answer_text_ar_2="' . $data['answers'][1]['answer_text_ar'] . '" data-answer_text_ar_3="' . $data['answers'][2]['answer_text_ar'] . '" data-answer_text_ar_4="' . $data['answers'][3]['answer_text_ar'] . '"  data-answer_text_en_1="' . $data['answers'][0]['answer_text_en'] . '" data-answer_text_en_2="' . $data['answers'][1]['answer_text_en'] . '"  data-answer_text_en_3="' . $data['answers'][2]['answer_text_en'] . '" data-answer_text_en_4="' . $data['answers'][3]['answer_text_en'] . '" data-bs-target="#kt_modal_update_question_app"     data-bs-toggle="tooltip" data-bs-placement="right" title="Mark as important">
                                                      <span class="svg-icon svg-icon-3 mt-1">
 																	<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                                                                 <path d="M14.06 2.939l6.364 6.364c.195.195.195.51 0 .707l-9.182 9.182c-.195.195-.51.195-.707 0l-6.364-6.364c-.195-.195-.195-.51 0-.707l9.182-9.182c.195-.195.51-.195.707 0zm-3.88 9.056L4.5 16.939v3.061h3.061l5.686-5.686-3.061-3.061z" fill="currentColor"/>
@@ -57,7 +59,6 @@ class QuestionDatatableService
                                                  </a>
                                                 <!--end::Important-->
                                             </td>';
-
 
 
 
@@ -109,18 +110,41 @@ class QuestionDatatableService
                 $result = '';
                 foreach ($data['answers'] as $key => $answer) {
                     $isCorrect = $answer->is_correct ? '✔️' : '';
+                    if($answer->is_have_image &&   $answer->answer_image != null)
+                    {
+                        $imageUrl = asset( $answer->answer_image);
+                        $initialOrImage = '<img src="' . $imageUrl . '" class="img-fluid" style="width: 35px; height: 35px; border-radius: 50%;">';
+                        $result .= '<div class="btn btn-light shadow" style="pointer-events: none; cursor: default; margin: 5px;">
+                              <div class="symbol-label bg-light-warning">' .
+                            $initialOrImage .
+                            '</div>
 
-                    // Add margin between elements
-                    $result .= '<div class="btn btn-light shadow" style="pointer-events: none; cursor: default; margin: 5px;">
                               ' . $answer->$answer_text . ' ' . $isCorrect . '
                      </div>';
+                    }else
+                    {
+                        $result .= '<div class="btn btn-light shadow" style="pointer-events: none; cursor: default; margin: 5px;">
+                              ' . $answer->$answer_text . ' ' . $isCorrect . '
+                     </div>';
+                    }
                 }
                 return $result;
             })
+            ->addColumn('Video', function ($data) {
+                if (!empty($data['video'])) {
+                    $videoUrl = asset($data['video']);
+                    return '<video width="120" height="80" controls style="border-radius: 10px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">
+                        <source src="' . $videoUrl . '" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>';
+                } else {
+                    return '';
+                }
+
+            })
 
 
-
-        ->rawColumns(['action', 'Question'  , 'Category' , 'Answers' ])
+        ->rawColumns(['action', 'Question'  ,'Video' , 'Category' , 'Answers' ])
             ->make(true);
     }
 

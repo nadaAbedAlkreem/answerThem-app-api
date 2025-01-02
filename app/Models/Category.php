@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Category extends Model
@@ -22,9 +23,9 @@ class Category extends Model
         'color',
         'famous_gaming'
     ];
-    public function admin()
+    public function admin():belongsToMany
     {
-        return $this->hasOne(Admin::class);
+        return $this->belongsToMany(Admin::class, 'admin_category') ;
     }
     protected $dates = ['deleted_at'];
     protected static function boot()
@@ -40,7 +41,7 @@ class Category extends Model
                 $questions->delete();
             });
 
-            $category->admin()->update(['category_id' => null]);
+            $category->admin()->detach();
         });
     }
     public function parent()

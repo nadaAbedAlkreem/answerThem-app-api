@@ -107,6 +107,7 @@ var KTCreateQuestApp = function () {
                             },
 
 
+
                         },
                         plugins: {
                             trigger: new FormValidation.plugins.Trigger(),

@@ -34,7 +34,7 @@ class StoreCategoryRequest extends FormRequest
             'description_en' => 'required|string|max:255',
             'rating' => 'required|numeric|min:0|max:5', // Assuming rating should not exceed 5
             'image' =>  $this->hasFile('image')
-            ? 'required|file|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            ? 'required|file|mimes:jpeg,png,jpg,gif,svg'
             : 'required|string|max:255',// Modify if you need specific image validations
               'parent_id' => 'nullable|integer|min:0|exists:categories,id',
               'level' => '',

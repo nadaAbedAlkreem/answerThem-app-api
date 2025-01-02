@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('question_id')->nullable()->index();
             $table->foreign('question_id', 'fk_question_id')->references('id')->on('questions')->onDelete('cascade');
-
+            $table->string('answer_image')->nullable();
+            $table->boolean('is_have_image')->default(0);
             $table->string('answer_text_ar');
             $table->string('answer_text_en')->nullable();
             $table->boolean('is_correct')->default(false)->index(); // To mark the correct answer

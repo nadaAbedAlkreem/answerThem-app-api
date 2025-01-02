@@ -167,10 +167,7 @@ class CategoryController extends Controller
     public function getStatisticsForEmp(Request $request)
     {
         $categories = Category::whereDoesntHave('admin')->where('level', 3)->count();
-        $staff = Admin::role('staff')
-            ->whereNull('category_id')
-            ->count();
-
+        $staff = Admin::role('staff')->whereDoesntHave('category')->count();
         return response()->json(['categoriesCount'=> $categories ,'staffCount' => $staff]);
 
     }

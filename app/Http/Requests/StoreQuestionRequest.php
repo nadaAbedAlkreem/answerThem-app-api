@@ -24,15 +24,17 @@ class StoreQuestionRequest extends FormRequest
     public function rules(): array
     {
         app::setLocale($this->input('lang'));
-
         return [
             'question_ar_text' => 'required|string|max:255',
             'question_en_text' => 'required|string|max:255',
              'image' =>  $this->hasFile('image')
-                 ? 'required|file|mimes:jpeg,png,jpg,gif,svg|max:2048'
+                 ? 'required|file|mimes:jpeg,png,jpg,gif,svg'
                  : 'required|string|max:255',
+            'video' => $this->hasFile('video')
+                ? 'file|mimes:mp4,mkv,avi,webm'
+                : '',
 
-             'category_id' => 'required',
+            'category_id' => 'required',
          ];
     }
     public function getData()
@@ -40,7 +42,8 @@ class StoreQuestionRequest extends FormRequest
         $data= $this::validated();
 
 
-            if ($this->hasFile('image')) {
+            if ($this->hasFile('image'))
+            {
                 $userName =  (!empty($data['name']))
                     ? str_replace(' ', '_', $data['name']) . time() . rand(1, 10000000)
                     : time() . rand(1, 10000000);
@@ -59,6 +62,25 @@ class StoreQuestionRequest extends FormRequest
                 }
 
                 $data['image'] = Storage::url($path . $nameImage);
+            }
+            if ($this->hasFile('video')) {
+                $userName =  time() . rand(1, 10000000);
+
+                $path = 'uploads/videos/categories/';
+                $nameVideo = $userName . '.' . $this->file('video')->getClientOriginalExtension();
+                Storage::disk('public')->put($path . $nameVideo, file_get_contents($this->file('video')));
+
+                $this->file('video')->move('storage/' . ($path), $nameVideo);
+
+                $absolutePath = storage_path('app/public/' . $path . $nameVideo);
+                if (file_exists($absolutePath)) {
+                    chmod($absolutePath, 0775);
+                } else {
+                    throw new \Exception(__('messages.ERROR_OCCURRED') . $absolutePath);
+                }
+
+                $data['video'] = Storage::url($path . $nameVideo);
+                $data['is_have_video'] = true ;
             }
 
 

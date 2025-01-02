@@ -33,12 +33,17 @@
                                         <span class="required">{{__('setting.Category')}} </span>
                                         <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"  ></i>
                                     </label>
-                                    <select class="form-control form-control-lg form-control-solid  form-select-sm" name = "category_id"   id="category_id_edit_admin" required aria-label=".form-select-sm example">
+                                    <select class="form-control form-control-lg form-control-solid  form-select-sm"  multiple name = "category_id[]"   id="category_id_edit_admin" required aria-label=".form-select-sm example">
                                         <option value=""></option>
-                                        @if(!empty($user['category']['id']))
-                                        <option selected value="{{$user['category']['id']}}"> {{ app()->getLocale() === 'ar' ? $user['category']['name_ar'] ?? '' : $user['category']['name_en'] ?? '' }}
-                                            <span>({{ app()->getLocale() === 'ar' ? $user['category']['parent']['name_ar'] ?? '' : $user['category']['parent']['name_en'] ?? '' }}) -  ({{ app()->getLocale() === 'ar' ? $user['category']['parent']['parent']['name_ar'] ?? '' : $user['category']['parent']['parent']['name_en'] ?? '' }})</span>
-                                        </option>
+                                        @if(!empty($user['category']))
+                                            @foreach($user['category'] as  $item)
+
+                                                <option selected value="{{$item['id']}}"> {{ app()->getLocale() === 'ar' ? $item['name_ar'] ?? '' : $item['name_en'] ?? '' }}
+                                                    <span>({{ app()->getLocale() === 'ar' ? $item['parent']['name_ar'] ?? '' : $item['parent']['name_en'] ?? '' }}) -  ({{ app()->getLocale() === 'ar' ? $item['parent']['parent']['name_ar'] ?? '' : $item['parent']['parent']['name_en'] ?? '' }})</span>
+                                                </option>
+
+                                            @endforeach
+
                                         @endif
                                         @if(!empty($categories))
                                                  @foreach($categories as  $key => $item)

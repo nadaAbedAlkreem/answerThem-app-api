@@ -15,8 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('category_id')->index();
             $table->foreign('category_id', 'fk_category_id')->references('id')->on('categories')->onDelete('cascade');
-
             $table->string('image');
+            $table->string('video')->nullable();
+            $table->boolean('is_have_video')->default(0);
             $table->string('question_ar_text');
             $table->string('question_en_text');
             $table->timestamps();

@@ -66,21 +66,27 @@ class AdminDatatableService extends Controller
                   $dependency = "";
                   $name = (app::getLocale() == 'ar') ? 'name_ar' : 'name_en';
 
-                  if($data->getRoleNames()[0]  != 'super-admin')
-                  {
-                      if($data['category'] != null)
-                      {
-                          $dependency .= '<td class="w-100px text-end fs-7 pe-9">
-                                                   <span class="fw-bold text-muted">'. $data['category'][$name] .'-'. $data['category']['parent'][$name] . '-' . $data['category']['parent']['parent'][$name] . '</span>
-                                          </td>';
+                  if ($data->getRoleNames()[0] != 'super-admin') {
+                      if ($data['category'] != null && $data['category']->isNotEmpty()) {
+                          $dependency = '<td class="w-100px text-end fs-7 pe-9">';
+                          foreach ($data['category'] as $category) {
+                               $dependency .= '<span class="fw-bold text-muted">' . $category[$name];
+
+                              if (isset($category['parent'])) {
+                                   $dependency .= '-' . $category['parent'][$name];
+                                  if (isset($category['parent']['parent'])) {
+                                      $dependency .= '-' . $category['parent']['parent'][$name];
+                                  }
+                              }
+
+                              $dependency .= '</span><br>';
+                          }
+
+                          $dependency .= '</td>';
                       }
-
                   }
+                  return $dependency ;
 
-
-
-
-                  return $dependency;
               })
 
 

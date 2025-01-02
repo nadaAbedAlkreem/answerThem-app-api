@@ -24,6 +24,7 @@ class QuestionResource extends JsonResource
             'image' => $this->image ,
             'answers' => AnswerResource::collection($this->answers),
             'category' => new CategoryResource($this->category),
+            'video'=> $this->video ,
             'timer' => 60  ,
         ];
     }

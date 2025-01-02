@@ -23,7 +23,7 @@
 {{--                            <div class="text-gray-400 fw-bold fs-4">Already have an account?--}}
 {{--                                <a href="{{route('admin.register')}}" class="link-primary fw-bolder">Sign up here</a></div>--}}
 {{--                            <!--end::Link-->--}}
-{{--                        </div>--}}
+                        </div>
                         <!--end::Heading-->
 
                          <!--begin::Input group-->
@@ -41,6 +41,7 @@
                             <!--begin::Wrapper-->
                             <div class="d-flex flex-stack mb-2">
                                 <!--begin::Label-->
+                                <label class="form-label fs-6 fw-bolder text-dark">Password</label>
 
                             </div>
                             <!--end::Wrapper-->

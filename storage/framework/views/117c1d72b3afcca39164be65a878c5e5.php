@@ -39,13 +39,18 @@ unset($__errorArgs, $__bag); ?>
                                         <span class="required"><?php echo e(__('setting.Category')); ?> </span>
                                         <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"  ></i>
                                     </label>
-                                    <select class="form-control form-control-lg form-control-solid  form-select-sm" name = "category_id"   id="category_id_edit_admin" required aria-label=".form-select-sm example">
+                                    <select class="form-control form-control-lg form-control-solid  form-select-sm"  multiple name = "category_id[]"   id="category_id_edit_admin" required aria-label=".form-select-sm example">
                                         <option value=""></option>
-                                        <?php if(!empty($user['category']['id'])): ?>
-                                        <option selected value="<?php echo e($user['category']['id']); ?>"> <?php echo e(app()->getLocale() === 'ar' ? $user['category']['name_ar'] ?? '' : $user['category']['name_en'] ?? ''); ?>
+                                        <?php if(!empty($user['category'])): ?>
+                                            <?php $__currentLoopData = $user['category']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
-                                            <span>(<?php echo e(app()->getLocale() === 'ar' ? $user['category']['parent']['name_ar'] ?? '' : $user['category']['parent']['name_en'] ?? ''); ?>) -  (<?php echo e(app()->getLocale() === 'ar' ? $user['category']['parent']['parent']['name_ar'] ?? '' : $user['category']['parent']['parent']['name_en'] ?? ''); ?>)</span>
-                                        </option>
+                                                <option selected value="<?php echo e($item['id']); ?>"> <?php echo e(app()->getLocale() === 'ar' ? $item['name_ar'] ?? '' : $item['name_en'] ?? ''); ?>
+
+                                                    <span>(<?php echo e(app()->getLocale() === 'ar' ? $item['parent']['name_ar'] ?? '' : $item['parent']['name_en'] ?? ''); ?>) -  (<?php echo e(app()->getLocale() === 'ar' ? $item['parent']['parent']['name_ar'] ?? '' : $item['parent']['parent']['name_en'] ?? ''); ?>)</span>
+                                                </option>
+
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
                                         <?php endif; ?>
                                         <?php if(!empty($categories)): ?>
                                                  <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>

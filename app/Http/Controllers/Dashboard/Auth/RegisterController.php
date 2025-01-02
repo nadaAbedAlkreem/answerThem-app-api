@@ -27,6 +27,9 @@ class RegisterController extends Controller
         try {
             $user = Admin::create($request->getData());
             $user->assignRole('staff');
+            $categoryIds = $request['category_id'];
+            unset($request['category_id']);
+            $user->category()->sync($categoryIds);
             return $this->successResponse('CREATE_USER_SUCCESSFULLY',[], 201, app()->getLocale());
         } catch (\Exception $e) {
              return $this->errorResponse(

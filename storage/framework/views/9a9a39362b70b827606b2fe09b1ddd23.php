@@ -6,7 +6,21 @@
     .hidden {
         display: none;
     }
- </style>
+    .video-input {
+        background-color: #f9f9f9;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+    }
+
+    #video-preview {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: #eee;
+    }
+
+
+</style>
 
     <div class="d-flex flex-column flex-root">
     <!--begin::Page-->
@@ -223,17 +237,19 @@
 
                                     <!--begin::Pagination-->
                                     <div class="d-flex align-items-center flex-wrap gap-2">
-                                            <?php if(!empty($category)): ?>
+
                                                 <?php if($isCollection == false): ?>
-                                                         <span><?php echo e(app()->getLocale() === 'ar' ? $category['name_ar'] ?? '' : $category['name_en'] ?? ''); ?>   - <?php echo e(app()->getLocale() === 'ar' ? $category['parent']['name_ar'] ?? '' : $category['parent']['name_en'] ?? ''); ?> -  <?php echo e(app()->getLocale() === 'ar' ? $category['parent']['parent']['name_ar'] ?? '' : $category['parent']['parent']['name_en'] ?? ''); ?></span>
 
-                                            <?php endif; ?>
-                                        <?php else: ?>
-                                            <div class="alert alert-warning" role="alert">
-                                                <span><?php echo e(__('setting.You have not been assigned a category to add questions according to. Please contact the administrator to specify your category')); ?></span>
-                                            </div>
-
-                                        <?php endif; ?>
+                                                  <?php if($category->isEmpty()): ?>
+                                                        <div class="alert alert-warning" role="alert">
+                                                            <span><?php echo e(__('setting.You have not been assigned a category to add questions according to. Please contact the administrator to specify your category')); ?></span>
+                                                        </div>
+                                                    <?php else: ?>
+                                                        <?php $__currentLoopData = $category; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                <span>(<?php echo e(app()->getLocale() === 'ar' ? $item['name_ar'] ?? '' : $item['name_en'] ?? ''); ?>   - <?php echo e(app()->getLocale() === 'ar' ? $item['parent']['name_ar'] ?? '' : $item['parent']['name_en'] ?? ''); ?> -  <?php echo e(app()->getLocale() === 'ar' ? $item['parent']['parent']['name_ar'] ?? '' : $item['parent']['parent']['name_en'] ?? ''); ?>)</span>
+                                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                   <?php endif; ?>
+                                           <?php endif; ?>
                                     </div>
                                     <div class="d-flex align-items-center position-relative">
                                         <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
@@ -258,6 +274,7 @@
                                             <th><?php echo e(__('setting.question')); ?></th>
                                             <th><?php echo e(__('setting.Answers')); ?></th>
                                             <th><?php echo e(__('setting.Category')); ?></th>
+                                            <th><?php echo e(__('setting.Video')); ?></th>
 
                                         </tr>
                                         </thead>
@@ -429,40 +446,48 @@
                                         <!--end::Label-->
                                         <!--begin::Input-->
                                         <input type="text" class="form-control form-control-lg form-control-solid" name="question_ar_text" placeholder=" <?php echo e(__('setting.Question text in Arabic')); ?>" value="" />
-                                         <!--end::Input-->
+                                        <!--end::Input-->
                                     </div>
                                     <!--end::Input group-->
 
-                                    <div class="w-100">
-                                        <!--begin::Input group-->
-                                        <div class="fv-row mb-10">
-                                            <!--begin::Label-->
-                                            <label class="d-flex align-items-center fs-5 fw-bold mb-2">
-                                                <span class="required"> <?php echo e(__('setting.Question text in English')); ?></span>
-                                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="<?php echo e(__('setting.Specify your unique app name')); ?>"></i>
-                                            </label>
-                                            <!--end::Label-->
-                                            <!--begin::Input-->
-                                            <input type="text" class="form-control form-control-lg form-control-solid" name="question_en_text" placeholder=" <?php echo e(__('setting.Question text in English')); ?>" value="" />
-                                            <!--end::Input-->
-                                        </div>
-                                        <!--end::Input group-->
-
                                     <!--begin::Input group-->
-
+                                    <div class="fv-row mb-10">
+                                        <!--begin::Label-->
+                                        <label class="d-flex align-items-center fs-5 fw-bold mb-2">
+                                            <span class="required"> <?php echo e(__('setting.Question text in English')); ?></span>
+                                            <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="<?php echo e(__('setting.Specify your unique app name')); ?>"></i>
+                                        </label>
+                                        <!--end::Label-->
+                                        <!--begin::Input-->
+                                        <input type="text" class="form-control form-control-lg form-control-solid" name="question_en_text" placeholder=" <?php echo e(__('setting.Question text in English')); ?>" value="" />
+                                        <!--end::Input-->
+                                    </div>
                                     <!--end::Input group-->
 
+                                    <!--begin::Input group for video-->
+                                    <div class="fv-row mb-10">
+                                        <!--begin::Label-->
+                                        <label class="d-flex align-items-center fs-5 fw-bold mb-2">
+                                            <span class=""> <?php echo e(__('setting.Attach video for the question')); ?></span>
+                                        </label>
+                                        <!--end::Label-->
+                                        <!--begin::Input-->
+                                        <input type="file" class="form-control form-control-lg form-control-solid" name="video"      title="<?php echo e(__('setting.no_file_selected')); ?>"
+                                               data-label="<?php echo e(__('setting.choose_file')); ?>" accept="video/*" />
+                                        <!--end::Input-->
+                                    </div>
+                                    <!--end::Input group-->
                                 </div>
                             </div>
                             <!--end::Step 1-->
 
-                            </div>
                             <!--begin::Step 2-->
 
                             <div data-kt-stepper-element="content">
                                 <div class="w-100">
                                     <div class="fv-row mb-10">
                                         <!--begin::Label-->
+
                                         <label class="d-flex align-items-center fs-5 fw-bold mb-2">
                                             <span class="required"><?php echo e(__('setting.Answer text in Arabic')); ?></span>
                                             <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="<?php echo e(__('setting.Specify your unique app name')); ?>"></i>
@@ -471,12 +496,47 @@
 
                                         <!--begin::Answers Section-->
                                         <div class="mb-4">
-                                            <!-- Answer 1 -->
                                             <div class="input-group mb-3">
                                                 <span class="input-group-text">
-                                                            <input type="radio" name="correct_answer_ar" value="1" required disabled checked>
+                                                    <input type="radio" name="correct_answer_ar" value="1" required disabled checked>
+                                                </span>
+                                                <input type="text" class="form-control form-control-lg form-control-solid rounded-3 shadow-sm" name="answer_text_ar_1" placeholder="<?php echo e(__('setting.Enter Answer')); ?>" required>
+                                                <div >
+                                                    <!--begin::Image input-->
+                                                    <div class="image-input image-input-outline" id="image-answer" data-kt-image-input="true" style="background-image: url('assets/media/svg/avatars/blank.svg')">
+                                                        <!--begin::Preview existing avatar-->
+                                                        <div class="image-input-wrapper w-40px h-40px bgi-position-center" style="background-size: cover; background-image: url()"></div>
+                                                        <!--end::Preview existing avatar-->
+
+                                                        <!--begin::Label-->
+                                                        <label class="btn btn-icon btn-circle btn-active-color-primary w-20px h-20px bg-white shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="<?php echo e(__('setting.Change avatar')); ?>">
+                                                            <i class="bi bi-pencil-fill fs-6"></i>
+                                                            <!--begin::Inputs-->
+                                                            <input type="file" name="image-answer-1" accept=".png, .jpg, .jpeg" required />
+                                                            <input type="hidden" name="avatar_remove" />
+                                                            <!--end::Inputs-->
+                                                        </label>
+                                                        <!--end::Label-->
+
+                                                        <!--begin::Cancel-->
+                                                        <span class="btn btn-icon btn-circle btn-active-color-primary w-20px h-20px bg-white shadow cansel" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="<?php echo e(__('setting.Cancel avatar')); ?>">
+                                                            <i class="bi bi-x fs-6"></i>
                                                         </span>
-                                                <input type="text" class="form-control form-control-lg form-control-solid rounded-3 shadow-sm" name="answer_text_ar_1" placeholder="<?php echo e(__('setting.Enter Answer')); ?> " required>
+                                                        <!--end::Cancel-->
+
+                                                        <!--begin::Remove-->
+                                                        <span class="btn btn-icon btn-circle btn-active-color-primary w-20px h-20px bg-white shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="<?php echo e(__('setting.Remove avatar')); ?>">
+                                                            <i class="bi bi-x fs-6"></i>
+                                                        </span>
+                                                        <!--end::Remove-->
+                                                    </div>
+                                                    <!--end::Image input-->
+
+                                                    <!--begin::Hint-->
+                                                     <!--end::Hint-->
+                                                </div>
+
+
                                             </div>
 
                                             <!-- Answer 2 -->
@@ -485,6 +545,41 @@
                                                 <input type="radio" name="correct_answer_ar" value="2" disabled>
                                             </span>
                                                 <input type="text" class="form-control form-control-lg form-control-solid rounded-3 shadow-sm" name="answer_text_ar_2" placeholder="<?php echo e(__('setting.Enter Answer')); ?>" required>
+                                                <div>
+                                                    <!--begin::Image input-->
+                                                    <div class="image-input image-input-outline" id="image-answer" data-kt-image-input="true" style="background-image: url('assets/media/svg/avatars/blank.svg')">
+                                                        <!--begin::Preview existing avatar-->
+                                                        <div class="image-input-wrapper w-40px h-40px bgi-position-center" style="background-size: cover; background-image: url()"></div>
+                                                        <!--end::Preview existing avatar-->
+
+                                                        <!--begin::Label-->
+                                                        <label class="btn btn-icon btn-circle btn-active-color-primary w-20px h-20px bg-white shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="<?php echo e(__('setting.Change avatar')); ?>">
+                                                            <i class="bi bi-pencil-fill fs-6"></i>
+                                                            <!--begin::Inputs-->
+                                                            <input type="file" name="image-answer-2" accept=".png, .jpg, .jpeg" required />
+                                                            <input type="hidden" name="avatar_remove" />
+                                                            <!--end::Inputs-->
+                                                        </label>
+                                                        <!--end::Label-->
+
+                                                        <!--begin::Cancel-->
+                                                        <span class="btn btn-icon btn-circle btn-active-color-primary w-20px h-20px bg-white shadow cansel" data-kt-image-input-action="cancel" id="" data-bs-toggle="tooltip" title="<?php echo e(__('setting.Cancel avatar')); ?>">
+                                                            <i class="bi bi-x fs-6"></i>
+                                                        </span>
+                                                        <!--end::Cancel-->
+
+                                                        <!--begin::Remove-->
+                                                        <span class="btn btn-icon btn-circle btn-active-color-primary w-20px h-20px bg-white shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="<?php echo e(__('setting.Remove avatar')); ?>">
+                                                            <i class="bi bi-x fs-6"></i>
+                                                        </span>
+                                                        <!--end::Remove-->
+                                                    </div>
+                                                    <!--end::Image input-->
+
+                                                    <!--begin::Hint-->
+                                                     <!--end::Hint-->
+                                                </div>
+
                                             </div>
 
                                             <!-- Answer 3 -->
@@ -493,6 +588,42 @@
                                                     <input type="radio" name="correct_answer_ar" value="3" disabled>
                                                 </span>
                                                 <input type="text" class="form-control form-control-lg form-control-solid rounded-3 shadow-sm" name="answer_text_ar_3" placeholder="<?php echo e(__('setting.Enter Answer')); ?>" required>
+                                                <!-- Image upload icon -->
+                                                <div >
+                                                    <!--begin::Image input-->
+                                                    <div class="image-input image-input-outline" id="image-answer" data-kt-image-input="true" style="background-image: url('assets/media/svg/avatars/blank.svg')">
+                                                        <!--begin::Preview existing avatar-->
+                                                        <div class="image-input-wrapper w-40px h-40px bgi-position-center" style="background-size: cover; background-image: url()"></div>
+                                                        <!--end::Preview existing avatar-->
+
+                                                        <!--begin::Label-->
+                                                        <label class="btn btn-icon btn-circle btn-active-color-primary w-20px h-20px bg-white shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="<?php echo e(__('setting.Change avatar')); ?>">
+                                                            <i class="bi bi-pencil-fill fs-6"></i>
+                                                            <!--begin::Inputs-->
+                                                            <input type="file" name="image-answer-3" accept=".png, .jpg, .jpeg" required />
+                                                            <input type="hidden" name="avatar_remove" />
+                                                            <!--end::Inputs-->
+                                                        </label>
+                                                        <!--end::Label-->
+
+                                                        <!--begin::Cancel-->
+                                                        <span class="btn btn-icon btn-circle btn-active-color-primary w-20px h-20px bg-white shadow cansel" data-kt-image-input-action="cancel" id="" data-bs-toggle="tooltip" title="<?php echo e(__('setting.Cancel avatar')); ?>">
+                                                            <i class="bi bi-x fs-6"></i>
+                                                        </span>
+                                                        <!--end::Cancel-->
+
+                                                        <!--begin::Remove-->
+                                                        <span class="btn btn-icon btn-circle btn-active-color-primary w-20px h-20px bg-white shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="<?php echo e(__('setting.Remove avatar')); ?>">
+                                                                <i class="bi bi-x fs-6"></i>
+                                                            </span>
+                                                        <!--end::Remove-->
+                                                    </div>
+                                                    <!--end::Image input-->
+
+                                                    <!--begin::Hint-->
+                                                     <!--end::Hint-->
+                                                </div>
+
                                             </div>
 
                                             <!-- Answer 4 -->
@@ -500,10 +631,42 @@
                                                 <span class="input-group-text">
                                                     <input type="radio" name="correct_answer_ar" value="4" disabled>
                                                 </span>
-                                                        <input type="text" class="form-control form-control-lg form-control-solid rounded-3 shadow-sm" name="answer_text_ar_4" placeholder="<?php echo e(__('setting.Enter Answer')); ?>" required>
+                                                <input type="text" class="form-control form-control-lg form-control-solid rounded-3 shadow-sm" name="answer_text_ar_4" placeholder="<?php echo e(__('setting.Enter Answer')); ?>" required>
+                                                <!-- Image upload icon -->
+                                                <div >
+                                                    <!--begin::Image input-->
+                                                    <div class="image-input image-input-outline" id="image-answer" data-kt-image-input="true" style="background-image: url('assets/media/svg/avatars/blank.svg')">
+                                                        <!--begin::Preview existing avatar-->
+                                                        <div class="image-input-wrapper w-40px h-40px bgi-position-center" style="background-size: cover; background-image: url()"></div>
+                                                        <!--end::Preview existing avatar-->
+
+                                                        <!--begin::Label-->
+                                                        <label class="btn btn-icon btn-circle btn-active-color-primary w-20px h-20px bg-white shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="<?php echo e(__('setting.Change avatar')); ?>">
+                                                            <i class="bi bi-pencil-fill fs-6"></i>
+                                                            <!--begin::Inputs-->
+                                                            <input type="file" name="image-answer-4" accept=".png, .jpg, .jpeg" required />
+                                                            <input type="hidden" name="avatar_remove" />
+                                                            <!--end::Inputs-->
+                                                        </label>
+                                                        <!--end::Label-->
+
+                                                        <!--begin::Cancel-->
+                                                        <span class="btn btn-icon btn-circle btn-active-color-primary w-20px h-20px bg-white shadow cansel" data-kt-image-input-action="cancel" id="" data-bs-toggle="tooltip" title="<?php echo e(__('setting.Cancel avatar')); ?>">
+                                                            <i class="bi bi-x fs-6"></i>
+                                                        </span>
+                                                        <!--end::Cancel-->
+
+                                                        <!--begin::Remove-->
+                                                        <span class="btn btn-icon btn-circle btn-active-color-primary w-20px h-20px bg-white shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="<?php echo e(__('setting.Remove avatar')); ?>">
+                                                                <i class="bi bi-x fs-6"></i>
+                                                            </span>
+                                                        <!--end::Remove-->
+                                                    </div>
+
+                                                </div>
+
                                             </div>
                                         </div>
-
                                         <!--end::Answers Section-->
                                     </div>
 
@@ -519,39 +682,38 @@
                                         <div class="mb-4">
                                             <!-- Answer 1 -->
                                             <div class="input-group mb-3">
-                                            <span class="input-group-text">
-                                                <input type="radio" name="correct_answer_en" value="1" required disabled checked>
-                                            </span>
-                                                <input type="text" class="form-control form-control-lg form-control-solid rounded-3 shadow-sm" name="answer_text_en_1" placeholder="<?php echo e(__('setting.Enter Answer')); ?> " required>
+                                                            <span class="input-group-text">
+                                                                <input type="radio" name="correct_answer_en" value="1" required disabled checked>
+                                                            </span>
+                                                <input type="text" class="form-control form-control-lg form-control-solid rounded-3 shadow-sm" name="answer_text_en_1" placeholder="<?php echo e(__('setting.Enter Answer')); ?>" required>
                                             </div>
 
                                             <!-- Answer 2 -->
                                             <div class="input-group mb-3">
-                                                <span class="input-group-text">
-                                                    <input type="radio" name="correct_answer_en" value="2" required disabled>
-                                                </span>
+                                                        <span class="input-group-text">
+                                                            <input type="radio" name="correct_answer_en" value="2" required disabled>
+                                                        </span>
                                                 <input type="text" class="form-control form-control-lg form-control-solid rounded-3 shadow-sm" name="answer_text_en_2" placeholder="<?php echo e(__('setting.Enter Answer')); ?>" required>
                                             </div>
 
                                             <!-- Answer 3 -->
                                             <div class="input-group mb-3">
-                                            <span class="input-group-text">
-                                                <input type="radio" name="correct_answer_en" value="3" required disabled>
-                                            </span>
+                                                    <span class="input-group-text">
+                                                        <input type="radio" name="correct_answer_en" value="3" required disabled>
+                                                    </span>
                                                 <input type="text" class="form-control form-control-lg form-control-solid rounded-3 shadow-sm" name="answer_text_en_3" placeholder="<?php echo e(__('setting.Enter Answer')); ?>" required>
                                             </div>
 
                                             <!-- Answer 4 -->
                                             <div class="input-group mb-3">
-                                                <span class="input-group-text">
-                                                    <input type="radio" name="correct_answer_en" value="4" required disabled>
-                                                </span>
-                                                <input type="text" class="form-control form-control-lg form-control-solid rounded-3 shadow-sm" name="answer_text_en_4" placeholder="<?php echo e(__('setting.Enter Answer')); ?> " required>
+                                                            <span class="input-group-text">
+                                                                <input type="radio" name="correct_answer_en" value="4" required disabled>
+                                                            </span>
+                                                <input type="text" class="form-control form-control-lg form-control-solid rounded-3 shadow-sm" name="answer_text_en_4" placeholder="<?php echo e(__('setting.Enter Answer')); ?>" required>
                                             </div>
                                         </div>
                                         <!--end::Answers Section-->
                                     </div>
-
                                 </div>
                             </div>
 
@@ -568,8 +730,7 @@
                                         </label>
                                         <!--end::Label-->
                                         <div class="row mb-5">
-                                            <!--begin::Col-->
-                                            <!--end::Col-->
+
                                             <!--begin::Col-->
                                             <div class="col-lg-8">
                                                 <!--begin::Image input-->
@@ -587,7 +748,7 @@
                                                     </label>
                                                     <!--end::Label-->
                                                     <!--begin::Cancel-->
-                                                    <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="cancel" id="canselquestion" data-bs-toggle="tooltip" title="<?php echo e(__('setting.Cancel avatar')); ?>">
+                                                    <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow cansel" data-kt-image-input-action="cancel" id="cansel" data-bs-toggle="tooltip" title="<?php echo e(__('setting.Cancel avatar')); ?>">
                                                                                             <i class="bi bi-x fs-2"></i>
                                                                                         </span>
                                                     <!--end::Cancel-->
@@ -614,20 +775,12 @@
                                         </label>
                                         <select class="form-control form-control-lg form-control-solid  form-select-sm" name = "category_id"  id="category_id" required aria-label=".form-select-sm example">
                                                  <?php if(!empty($category)): ?>
-                                                    <?php if($isCollection == true): ?>
-                                                    <?php $__currentLoopData = $category; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-
+                                                     <?php $__currentLoopData = $category; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                         <option value="<?php echo e($item['id']); ?>"> <?php echo e(app()->getLocale() === 'ar' ? $item['name_ar'] ?? '' : $item['name_en'] ?? ''); ?>
 
                                                             <span>(<?php echo e(app()->getLocale() === 'ar' ? $item['parent']['name_ar'] ?? '' : $item['parent']['name_en'] ?? ''); ?>) -  (<?php echo e(app()->getLocale() === 'ar' ? $item['parent']['parent']['name_ar'] ?? '' : $item['parent']['parent']['name_en'] ?? ''); ?>)</span>
                                                         </option>
                                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                                     <?php else: ?>
-                                                     <option value="<?php echo e($category['id']); ?>"><?php echo e(app()->getLocale() === 'ar' ? $category['name_ar'] ?? '' : $category['name_en'] ?? ''); ?>
-
-                                                        <span>(<?php echo e(app()->getLocale() === 'ar' ? $category['parent']['name_ar'] ?? '' : $category['parent']['name_en'] ?? ''); ?>) -  (<?php echo e(app()->getLocale() === 'ar' ? $category['parent']['parent']['name_ar'] ?? '' : $category['parent']['parent']['name_en'] ?? ''); ?>)</span>
-                                                    </option>
-                                                    <?php endif; ?>
                                                 <?php endif; ?>
                                         </select>
 
@@ -873,16 +1026,44 @@
                                             </div>
                                             <!--end::Input group-->
 
-                                            <!--begin::Input group-->
 
-                                            <!--end::Input group-->
 
                                         </div>
+                                        <div class="fv-row mb-10">
+                                            <label class="d-flex align-items-center fs-5 fw-bold mb-2">
+                                                <span class="required"><?php echo e(__('setting.Attach video for the question')); ?></span>
+                                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="<?php echo e(__('setting.Specify your unique app name')); ?>"></i>
+                                            </label>
+
+                                            <div class="row mb-5">
+                                                <div class="col-lg-8">
+                                                    <div class="video-input video-input-outline" id="video-input-update-question" style="background: #f3f6f9; border: 1px solid #ddd; padding: 10px; border-radius: 8px;">
+                                                        <!-- Video preview -->
+                                                        <video id="video-preview" class="w-100" controls style="display: none; background: #eee; border-radius: 8px; width: 100px; height: 100px; object-fit: cover;">
+                                                            <source id="video-preview-source" src="" type="video/mp4">
+                                                            <?php echo e(__('setting.No video uploaded')); ?>
+
+                                                        </video>
+
+                                                        <!-- File input -->
+                                                        <input type="file" id="video-file-input" name="video-update-question" accept="video/*" class="form-control mt-3" onchange="previewVideo(this)">
+
+                                                        <!-- Action buttons -->
+                                                        <div class="mt-3">
+                                                            <button type="button" class="btn btn-danger btn-sm" id="remove-video-btn" style="display: none;" onclick="removeVideo()">
+                                                                <?php echo e(__('setting.Remove video')); ?>
+
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                     </div>
                                     <!--end::Step 1-->
 
                                 </div>
-                                <!--begin::Step 2-->
 
                                 <div data-kt-stepper-element="content">
                                     <div class="w-100">
@@ -902,14 +1083,99 @@
                                                             <input type="radio"  id ="correct_answer_ar1" class="correct_answer_ar_update" name="correct_answer_ar" value="1" disabled checked>
                                                         </span>
                                                     <input type="text" id = "answer_text_ar_1" class="form-control form-control-lg form-control-solid rounded-3 shadow-sm" name="answer_text_ar_1" placeholder="<?php echo e(__('setting.Enter Answer')); ?> 1" required>
+                                                      <div >
+                                                                                                        <!--begin::Image input-->
+                                                          <div class="image-input image-input-outline" id="image-answer-update" data-kt-image-input="true" style="background-image: url('assets/media/svg/avatars/blank.svg')">
+                                                                                                            <!--begin::Preview existing avatar-->
+                                                                                                            <div class="image-input-wrapper w-40px h-40px bgi-position-center" id="image-answer-update-1" style="background-size: cover; background-image: url()"></div>
+                                                                                                            <!--end::Preview existing avatar-->
+
+                                                                                                            <!--begin::Label-->
+                                                                                                            <label class="btn btn-icon btn-circle btn-active-color-primary w-20px h-20px bg-white shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="<?php echo e(__('setting.Change avatar')); ?>">
+                                                                                                                <i class="bi bi-pencil-fill fs-6"></i>
+                                                                                                                <!--begin::Inputs-->
+                                                                                                                <input type="file" name="image-answer-update-1" accept=".png, .jpg, .jpeg" required />
+                                                                                                                <input type="hidden" name="remove_image_answer_1" id="remove_image_answer_1" value="0">
+                                                                                                                <!--end::Inputs-->
+                                                                                                            </label>
+                                                                                                            <!--end::Label-->
+
+                                                                                                            <!--begin::Cancel-->
+                                                                                                            <span class="btn btn-icon btn-circle btn-active-color-primary w-20px h-20px bg-white shadow" data-kt-image-input-action="cancel" id="canselquestion" data-bs-toggle="tooltip" title="<?php echo e(__('setting.Cancel avatar')); ?>">
+                                                                                                                    <i class="bi bi-x fs-6"></i>
+                                                                                                                </span>
+                                                                                                            <!--end::Cancel-->
+
+                                                                                                            <!--begin::Remove-->
+
+
+
+                                                                                                            <span class="btn btn-icon btn-circle btn-active-color-primary w-20px h-20px bg-white shadow"
+                                                                                                                  data-kt-image-input-action="remove"
+                                                                                                                  onclick="document.getElementById('remove_image_answer_1').value = '1'"
+                                                                                                                  data-bs-toggle="tooltip"
+                                                                                                                  title="<?php echo e(__('setting.Remove avatar')); ?>">
+                                                                                                            <i class="bi bi-x fs-6"></i>
+                                                                                                            </span>
+                                                                                                            <!--end::Remove-->
+                                                                                                        </div>
+                                                                                                        <!--end::Image input-->
+
+                                                                                                        <!--begin::Hint-->
+                                                                                                        <!--end::Hint-->
+                                                                                                    </div>
+
                                                 </div>
 
                                                 <!-- Answer 2 -->
                                                 <div class="input-group mb-3">
-                                            <span class="input-group-text">
-                                                <input type="radio"  id = "correct_answer_ar2"  class="correct_answer_ar_update" name="correct_answer_ar" value="2" disabled >
-                                            </span>
+                                                <span class="input-group-text">
+                                                    <input type="radio"  id = "correct_answer_ar2"  class="correct_answer_ar_update" name="correct_answer_ar" value="2" disabled >
+                                                </span>
                                                     <input type="text" class="form-control form-control-lg form-control-solid rounded-3 shadow-sm" id="answer_text_ar_2" name="answer_text_ar_2" placeholder="<?php echo e(__('setting.Enter Answer')); ?> 2" required>
+                                                    <div >
+                                                        <!--begin::Image input-->
+                                                        <div class="image-input image-input-outline" id="image-answer-update" data-kt-image-input="true" style="background-image: url('assets/media/svg/avatars/blank.svg')">
+                                                            <!--begin::Preview existing avatar-->
+                                                            <div class="image-input-wrapper w-40px h-40px bgi-position-center" id="image-answer-update-2" style="background-size: cover; background-image: url()"></div>
+                                                            <!--end::Preview existing avatar-->
+
+                                                            <!--begin::Label-->
+                                                            <label class="btn btn-icon btn-circle btn-active-color-primary w-20px h-20px bg-white shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="<?php echo e(__('setting.Change avatar')); ?>">
+                                                                <i class="bi bi-pencil-fill fs-6"></i>
+                                                                <!--begin::Inputs-->
+                                                                <input type="file" name="image-answer-update-2"  accept=".png, .jpg, .jpeg" required />
+                                                                 <input type="hidden" name="remove_image_answer_2" id="remove_image_answer_2" value="0">
+
+                                                                <!--end::Inputs-->
+                                                            </label>
+                                                            <!--end::Label-->
+
+                                                            <!--begin::Cancel-->
+                                                            <span class="btn btn-icon btn-circle btn-active-color-primary w-20px h-20px bg-white shadow" data-kt-image-input-action="cancel" id="canselquestion" data-bs-toggle="tooltip" title="<?php echo e(__('setting.Cancel avatar')); ?>">
+                                                                                                                    <i class="bi bi-x fs-6"></i>
+                                                                                                                </span>
+                                                            <!--end::Cancel-->
+
+                                                            <!--begin::Remove-->
+
+
+
+                                                            <span class="btn btn-icon btn-circle btn-active-color-primary w-20px h-20px bg-white shadow"
+                                                                  data-kt-image-input-action="remove"
+                                                                  onclick="document.getElementById('remove_image_answer_2').value = '2'"
+                                                                  data-bs-toggle="tooltip"
+                                                                  title="<?php echo e(__('setting.Remove avatar')); ?>">
+                                                                                                            <i class="bi bi-x fs-6"></i>
+                                                                                                            </span>
+                                                            <!--end::Remove-->
+                                                        </div>
+                                                        <!--end::Image input-->
+
+                                                        <!--begin::Hint-->
+                                                        <!--end::Hint-->
+                                                    </div>
+
                                                 </div>
 
                                                 <!-- Answer 3 -->
@@ -918,6 +1184,48 @@
                                                     <input type="radio" id = "correct_answer_ar3" class="correct_answer_ar_update" name="correct_answer_ar" value="3" disabled >
                                                 </span>
                                                     <input type="text" class="form-control form-control-lg form-control-solid rounded-3 shadow-sm"  id = "answer_text_ar_3" name="answer_text_ar_3" placeholder="<?php echo e(__('setting.Enter Answer')); ?> 3" required>
+                                                    <div >
+                                                        <!--begin::Image input-->
+                                                        <div class="image-input image-input-outline" id="image-answer-update" data-kt-image-input="true" style="background-image: url('assets/media/svg/avatars/blank.svg')">
+                                                            <!--begin::Preview existing avatar-->
+                                                            <div class="image-input-wrapper w-40px h-40px bgi-position-center"  id="image-answer-update-3" style="background-size: cover; background-image: url()"></div>
+                                                            <!--end::Preview existing avatar-->
+
+                                                            <!--begin::Label-->
+                                                            <label class="btn btn-icon btn-circle btn-active-color-primary w-20px h-20px bg-white shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="<?php echo e(__('setting.Change avatar')); ?>">
+                                                                <i class="bi bi-pencil-fill fs-6"></i>
+                                                                <!--begin::Inputs-->
+                                                                <input type="file" name="image-answer-update-3" accept=".png, .jpg, .jpeg" required />
+                                                                <input type="hidden" name="remove_image_answer_3" id="remove_image_answer_3" value="0">
+                                                                <!--end::Inputs-->
+                                                            </label>
+                                                            <!--end::Label-->
+
+                                                            <!--begin::Cancel-->
+                                                            <span class="btn btn-icon btn-circle btn-active-color-primary w-20px h-20px bg-white shadow" data-kt-image-input-action="cancel" id="canselquestion" data-bs-toggle="tooltip" title="<?php echo e(__('setting.Cancel avatar')); ?>">
+                                                                                                                    <i class="bi bi-x fs-6"></i>
+                                                                                                                </span>
+                                                            <!--end::Cancel-->
+
+                                                            <!--begin::Remove-->
+
+
+
+                                                            <span class="btn btn-icon btn-circle btn-active-color-primary w-20px h-20px bg-white shadow"
+                                                                  data-kt-image-input-action="remove"
+                                                                  onclick="document.getElementById('remove_image_answer_3').value = '3'"
+                                                                  data-bs-toggle="tooltip"
+                                                                  title="<?php echo e(__('setting.Remove avatar')); ?>">
+                                                                <i class="bi bi-x fs-6"></i>
+                                                            </span>
+                                                            <!--end::Remove-->
+                                                        </div>
+                                                        <!--end::Image input-->
+
+                                                        <!--begin::Hint-->
+                                                        <!--end::Hint-->
+                                                    </div>
+
                                                 </div>
 
                                                 <!-- Answer 4 -->
@@ -926,6 +1234,47 @@
                                                     <input type="radio" id ="correct_answer_ar4" class="correct_answer_ar_update"   name="correct_answer_ar" value="4" disabled >
                                                 </span>
                                                     <input type="text" class="form-control form-control-lg form-control-solid rounded-3 shadow-sm" id ="answer_text_ar_4" name="answer_text_ar_4" placeholder="<?php echo e(__('setting.Enter Answer')); ?> 4" required>
+                                                    <div >
+                                                        <!--begin::Image input-->
+                                                        <div class="image-input image-input-outline" id="image-answer-update" data-kt-image-input="true" style="background-image: url('assets/media/svg/avatars/blank.svg')">
+                                                            <!--begin::Preview existing avatar-->
+                                                            <div class="image-input-wrapper w-40px h-40px bgi-position-center"  id="image-answer-update-4" style="background-size: cover; background-image: url()"></div>
+                                                            <!--end::Preview existing avatar-->
+
+                                                            <!--begin::Label-->
+                                                            <label class="btn btn-icon btn-circle btn-active-color-primary w-20px h-20px bg-white shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="<?php echo e(__('setting.Change avatar')); ?>">
+                                                                <i class="bi bi-pencil-fill fs-6"></i>
+                                                                <!--begin::Inputs-->
+                                                                <input type="file" name="image-answer-update-4" accept=".png, .jpg, .jpeg" required />
+                                                                <input type="hidden" name="remove_image_answer_4" id="remove_image_answer_4" value="0">
+                                                                <!--end::Inputs-->
+                                                            </label>
+                                                            <!--end::Label-->
+
+                                                            <!--begin::Cancel-->
+                                                            <span class="btn btn-icon btn-circle btn-active-color-primary w-20px h-20px bg-white shadow" data-kt-image-input-action="cancel" id="canselquestion" data-bs-toggle="tooltip" title="<?php echo e(__('setting.Cancel avatar')); ?>">
+                                                                                                                    <i class="bi bi-x fs-6"></i>
+                                                                                                                </span>
+                                                            <!--end::Cancel-->
+
+
+
+                                                            <span class="btn btn-icon btn-circle btn-active-color-primary w-20px h-20px bg-white shadow"
+                                                                  data-kt-image-input-action="remove"
+                                                                  onclick="document.getElementById('remove_image_answer_4').value = '4'"
+                                                                  data-bs-toggle="tooltip"
+                                                                  title="<?php echo e(__('setting.Remove avatar')); ?>">
+                                                                <i class="bi bi-x fs-6"></i>
+                                                            </span>
+
+                                                            <!--end::Remove-->
+                                                        </div>
+                                                        <!--end::Image input-->
+
+                                                        <!--begin::Hint-->
+                                                        <!--end::Hint-->
+                                                    </div>
+
                                                 </div>
                                             </div>
 
@@ -994,8 +1343,6 @@
                                             <!--end::Label-->
                                             <div class="row mb-5">
                                                 <!--begin::Col-->
-                                                <!--end::Col-->
-                                                <!--begin::Col-->
                                                 <div class="col-lg-8">
                                                     <!--begin::Image input-->
                                                     <div class="image-input image-input-outline"  id='image-input-upadate-categroy'  data-kt-image-input="true" style="background-image: url('assets/media/svg/avatars/blank.svg')">
@@ -1039,20 +1386,13 @@
                                             </label>
                                             <select class="form-control form-control-lg form-control-solid  form-select-sm"  id= "category_id_update" name = "category_id"   aria-label=".form-select-sm example" required>
                                                 <?php if(!empty($category)): ?>
-                                                    <?php if($isCollection == true): ?>
-                                                         <?php $__currentLoopData = $category; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $cate => $eleme): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                          <?php $__currentLoopData = $category; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $cate => $eleme): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                              <option value="<?php echo e($eleme['id']); ?>"><?php echo e(( app()->getLocale() === 'ar' )? $eleme['name_ar'] ?? '' : $eleme['name_en'] ?? ''); ?>
 
                                                                 <span>(<?php echo e((app()->getLocale() === 'ar') ? $eleme['parent']['name_ar'] ?? '' : $eleme['parent']['name_en'] ?? ''); ?>) -  (<?php echo e((app()->getLocale() === 'ar' )? $eleme['parent']['parent']['name_ar'] ?? '' : $eleme['parent']['parent']['name_en'] ?? ''); ?>)</span>
                                                             </option>
                                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                                    <?php else: ?>
-                                                        <option value="<?php echo e($category['id']); ?>"><?php echo e(app()->getLocale() === 'ar' ? $category['name_ar'] ?? '' : $category['name_en'] ?? ''); ?>
-
-                                                            <span>(<?php echo e((app()->getLocale() === 'ar') ? $category['parent']['name_ar'] ?? '' : $category['parent']['name_en'] ?? ''); ?>) -  (<?php echo e((app()->getLocale() === 'ar' )? $category['parent']['parent']['name_ar'] ?? '' : $category['parent']['parent']['name_en'] ?? ''); ?>)</span>
-                                                        </option>
-                                                    <?php endif; ?>
-                                                <?php endif; ?>
+                                                 <?php endif; ?>
                                             </select>
 
                                         </div>
@@ -1152,6 +1492,44 @@
 
 
     <script>
+        function previewVideo(input) {
+            const file = input.files[0];
+            const videoElement = document.getElementById('video-preview');
+            const videoSource = document.getElementById('video-preview-source');
+            const removeButton = document.getElementById('remove-video-btn');
+
+            if (file) {
+                // Set the video source to the selected file
+                const videoURL = URL.createObjectURL(file);
+                videoSource.src = videoURL;
+
+                // Show the video element
+                videoElement.style.display = 'block';
+                videoElement.load(); // Load the video source
+
+                // Show the remove button
+                removeButton.style.display = 'inline-block';
+            }
+        }
+
+        function removeVideo() {
+            const videoElement = document.getElementById('video-preview');
+            const videoSource = document.getElementById('video-preview-source');
+            const fileInput = document.getElementById('video-file-input');
+            const removeButton = document.getElementById('remove-video-btn');
+
+            // Reset the file input
+            fileInput.value = '';
+
+            // Hide the video preview and reset the source
+            videoElement.style.display = 'none';
+            videoSource.src = '';
+
+            // Hide the remove button
+            removeButton.style.display = 'none';
+        }
+
+
         window.translations = {
             OK: <?php echo json_encode(__('setting.OK!'), 15, 512) ?>,
             Sorry: <?php echo json_encode(__('setting.Sorry'), 15, 512) ?>,
@@ -1162,7 +1540,7 @@
             category_a: <?php echo json_encode(__('setting.category_a'), 15, 512) ?>,//
             are_sure: <?php echo json_encode(__('setting.are_sure'), 15, 512) ?>,
             revert: <?php echo json_encode(__('setting.revert'), 15, 512) ?>,
-            yes: <?php echo json_encode(__('setting.yes'), 15, 512) ?>,
+            yes: <?php echo json_encode(__('setting.yes'), 15, 512) ?>,  //video_ques
 
             // Add more translations as needed
         };

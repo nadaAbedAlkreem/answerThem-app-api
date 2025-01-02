@@ -39,16 +39,16 @@ class RegisterAdminRequest extends FormRequest
     {
          return [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:admins',
+            'email' => 'required|string|email|max:255|unique:admins,email,NULL,id,deleted_at,NULL',
             'password' => [
                 'required',
                 'string',
                 Password::min(8)] ,
-            'category_id' => [
-                '',
-                'string',
-                'exists:categories,id'
-                ]
+             'category_id' => [
+                 'required',
+                 'array',
+             ],
+             'category_id.*' => 'exists:categories,id'
             ];
 
 

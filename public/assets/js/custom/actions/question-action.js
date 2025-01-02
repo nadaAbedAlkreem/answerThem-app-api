@@ -55,9 +55,11 @@ $(document).ready(function ($) {
         },
         columns:  [
             { data: 'action', name: 'action', orderable: false, searchable: false },
-            { data: "Question", name: "Question" },
+            { data: "Question", name: "Question" },//Video
             { data: "Answers", name: "Answers" },
             { data: "Category", name: "Category" },
+            { data: "Video", name: "Video" },//Video
+
         ],
         pageLength: 10, // Set the number of rows per page
         lengthMenu: [10, 25, 50, 100], // Allow users to select the number of rows
@@ -108,9 +110,11 @@ $(document).ready(function ($) {
                 if (resetButtonQuestion) {
                     resetButtonQuestion.click();
                 }
-                const canselquestion = document.getElementById('canselquestion'); //
-                if (canselquestion) {
-                    canselquestion.click();
+                const cancelButtons = document.getElementsByClassName('cansel'); //
+                if (cancelButtons.length > 0) {
+                     Array.from(cancelButtons).forEach(button => {
+                        button.click();
+                    });
                 }
 
                 $("#questions-table").DataTable().ajax.reload();
@@ -138,15 +142,20 @@ $(document).ready(function ($) {
 
         var id = $(this).data("id");
         var category_id = $(this).data("category");
+        var video = $(this).data("video");
         var answer_text_ar = $(this).data("answer_text_ar_1");
         var is_correct_index = $(this).data("is_correct");
         var question_en_text = $(this).data("question_en_text");
         var question_ar_text = $(this).data("question_ar_text");
         var image = $(this).data("image");
+        console.log('video'+ video )
+         if (video) {
+            setVideoSource(video);
+        }
 
-        // Find the radio button with the   value
 
-        // Select the radio button with the matching value
+
+
         const radioToCheck = document.querySelector(`input[class="correct_answer_ar_update"][value="${is_correct_index}"]`);
 
         if (radioToCheck) {
@@ -155,19 +164,21 @@ $(document).ready(function ($) {
             radioToCheck_en.checked = true;
 
         }
-
         $('#id_update').val(id);
-        $('#answer_text_en_1').val($(this).data("answer_text_en_1"));
-        $('#answer_text_en_2').val($(this).data("answer_text_en_2"));
-        $('#answer_text_en_3').val($(this).data("answer_text_en_3"));
-        $('#answer_text_en_4').val($(this).data("answer_text_en_4"));
 
-        $('#answer_text_ar_1').val( $(this).data("answer_text_ar_1"));
-        $('#answer_text_ar_2').val( $(this).data("answer_text_ar_2"));
-        $('#answer_text_ar_3').val( $(this).data("answer_text_en_3"));
-        $('#answer_text_ar_4').val( $(this).data("answer_text_ar_4"));
+        for(var i = 1 ;  i < 5 ; i++)
+        {
+            $('#answer_text_ar_'+i).val( $(this).data("answer_text_ar_"+i));
+            $('#answer_text_en_'+i).val($(this).data("answer_text_en_"+i));
+            if($(this).data("image-have"))
+            {
+                var imageWrapperUpdateAnswer = document.querySelector('#image-answer-update-'+i)
+                console.log(imageWrapperUpdateAnswer);
+                 var image_answer = $(this).data("image-answer-"+i) ;
+                imageWrapperUpdateAnswer.style.backgroundImage = `url('${image_answer}')`;
+            }
 
-
+        }
         $('#question_ar_text').val(question_ar_text);
         $('#question_en_text').val(question_en_text);
 
@@ -180,10 +191,22 @@ $(document).ready(function ($) {
 
         if (image) {
             imageWrapper.style.backgroundImage = `url('${image}')`;
-         } else {
          }
 
     });
+    function setVideoSource(videoPath)
+    {
+        const videoElement = document.getElementById('video-preview');
+        const videoSource = document.getElementById('video-preview-source');
+
+        if (videoPath) {
+            videoSource.src = videoPath;
+            videoElement.load();
+            videoElement.style.display = 'block';
+        } else {
+            videoElement.style.display = 'none';
+        }
+    }
 
     $("#submit_form_question_update").on("click", function (e) {
         e.preventDefault();
@@ -233,9 +256,6 @@ $(document).ready(function ($) {
             },
         });
     });
-
-
-
 
     $("#questions-table").on("click", ".deleteRecord[data-id]", function (e)
     {

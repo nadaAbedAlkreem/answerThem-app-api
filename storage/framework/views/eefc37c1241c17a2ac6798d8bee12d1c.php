@@ -21,7 +21,7 @@
 
 
 
-
+                        </div>
                         <!--end::Heading-->
 
                          <!--begin::Input group-->
@@ -39,6 +39,7 @@
                             <!--begin::Wrapper-->
                             <div class="d-flex flex-stack mb-2">
                                 <!--begin::Label-->
+                                <label class="form-label fs-6 fw-bolder text-dark">Password</label>
 
                             </div>
                             <!--end::Wrapper-->
