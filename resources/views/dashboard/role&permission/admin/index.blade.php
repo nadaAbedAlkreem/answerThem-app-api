@@ -272,14 +272,16 @@
 
                                             <div class="mb-4">
                                                 <label class="d-flex align-items-center fs-5 fw-bold mb-4">
-                                                    <span class="required">{{__('setting.Category')}} </span>
-                                                    <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"  ></i>
+                                                    <span class="required">{{ __('setting.Category') }}</span>
+                                                    <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"></i>
                                                 </label>
-                                                <select class="form-control form-control-lg form-control-solid  form-select-sm"    multiple name="category_id[]" id="category_id_admin" required aria-label=".form-select-sm example">
 
-                                                </select>
-
+                                                <div id="categories_container"  class="form-control form-control-lg form-control-solid" >
+                                                 </div>
                                             </div>
+
+
+
                                             <div class="fv-row mb-10">
                                                 <!--begin::Wrapper-->
                                                 <div class="d-flex flex-stack mb-2">

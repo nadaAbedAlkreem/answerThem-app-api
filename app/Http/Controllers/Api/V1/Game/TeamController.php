@@ -10,6 +10,7 @@ use App\Models\Team;
 use App\Models\TeamMember;
 use App\Traits\ResponseTrait;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class TeamController extends Controller
 {
@@ -23,9 +24,23 @@ class TeamController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function getUserTeams(Request $request)
     {
-        //
+        $userId = $request->user()->id;
+
+        $teamsUserIn = Team::whereHas('teamMembers', function ($query) use ($userId) {
+            $query->where('user_id', $userId);
+        })->get();
+        $teamsDifferent = Team::where('user_id', '!=', $userId)
+            ->whereDoesntHave('teamMembers', function ($query) use ($userId) {
+                $query->where('user_id', $userId);
+            })->get();
+        dd($teamsUserIn ."  ".$teamsDifferent);
+
+        return [
+            'teams_user_in' => $teamsUserIn,
+            'teams_different' => $teamsDifferent,
+        ];
     }
 
     /**
@@ -42,18 +57,18 @@ class TeamController extends Controller
     public function store(StoreTeamRequest $request)
     {
 
-         $team = Team::create([
+        $team = Team::create([
             'name' => $request['name'],
             'user_id' => $request->user()->id,
         ]);
-         foreach ($request['members'] as $memberId) {
+        foreach ($request['members'] as $memberId) {
             TeamMember::create([
                 'team_id' => $team->id,
                 'user_id' => $memberId,
             ]);
         }
 
-          return $this->successResponse('CREATE_SUCCESS', new TeamResource($team->load(['user','teamMembers.user'])) , 202, app()->getLocale());
+        return $this->successResponse('CREATE_SUCCESS', new TeamResource($team->load(['user', 'teamMembers.user'])), 202, app()->getLocale());
 
 
     }
@@ -61,9 +76,9 @@ class TeamController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Team $team)
+    public function getTeams()
     {
-        //
+
     }
 
     /**

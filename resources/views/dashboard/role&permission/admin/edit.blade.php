@@ -28,33 +28,57 @@
                                 <input type="text" name="email" readonly value="{{ $user->email }}" class="form-control" />
                             </div>
                             @if($user->getRoleNames()[0]  != 'super-admin')
-                                <div class="mb-4">
-                                    <label class="d-flex align-items-center fs-5 fw-bold mb-4">
-                                        <span class="required">{{__('setting.Category')}} </span>
-                                        <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"  ></i>
-                                    </label>
-                                    <select class="form-control form-control-lg form-control-solid  form-select-sm"  multiple name = "category_id[]"   id="category_id_edit_admin" required aria-label=".form-select-sm example">
-                                        <option value=""></option>
-                                        @if(!empty($user['category']))
-                                            @foreach($user['category'] as  $item)
+                                 <div class="mb-4">
+                                     <label class="d-flex align-items-center fs-5 fw-bold mb-4">
+                                         <span class="required">{{__('setting.Category')}}</span>
+                                         <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"></i>
+                                     </label>
+                                     <div id="categories_container"  class="form-control form-control-lg form-control-solid">
+                                         @if(!empty($user['category']))
+                                             @foreach($user['category'] as $item)
+                                                 <div class="form-check mb-2">
+                                                     <input
+                                                         type="checkbox"
+                                                         class="form-check-input"
+                                                         name="category_id[]"
+                                                         id="category_{{ $item['id'] }}"
+                                                         value="{{ $item['id'] }}"
+                                                         checked>
+                                                     <label class="form-check-label" for="category_{{ $item['id'] }}">
+                                                         {{ app()->getLocale() === 'ar' ? $item['name_ar'] ?? '' : $item['name_en'] ?? '' }}
+                                                         <span>
+                            ({{ app()->getLocale() === 'ar' ? $item['parent']['name_ar'] ?? '' : $item['parent']['name_en'] ?? '' }}) -
+                            ({{ app()->getLocale() === 'ar' ? $item['parent']['parent']['name_ar'] ?? '' : $item['parent']['parent']['name_en'] ?? '' }})
+                        </span>
+                                                     </label>
+                                                 </div>
+                                             @endforeach
+                                         @endif
 
-                                                <option selected value="{{$item['id']}}"> {{ app()->getLocale() === 'ar' ? $item['name_ar'] ?? '' : $item['name_en'] ?? '' }}
-                                                    <span>({{ app()->getLocale() === 'ar' ? $item['parent']['name_ar'] ?? '' : $item['parent']['name_en'] ?? '' }}) -  ({{ app()->getLocale() === 'ar' ? $item['parent']['parent']['name_ar'] ?? '' : $item['parent']['parent']['name_en'] ?? '' }})</span>
-                                                </option>
+                                         @if(!empty($categories))
+                                             @foreach($categories as $item)
+                                                 <div class="form-check mb-2">
+                                                     <input
+                                                         type="checkbox"
+                                                         class="form-check-input"
+                                                         name="category_id[]"
+                                                         id="category_{{ $item['id'] }}"
+                                                         value="{{ $item['id'] }}">
+                                                     <label class="form-check-label" for="category_{{ $item['id'] }}">
+                                                         {{ app()->getLocale() === 'ar' ? $item['name_ar'] ?? '' : $item['name_en'] ?? '' }}
+                                                         <span>
+                            ({{ app()->getLocale() === 'ar' ? $item['parent']['name_ar'] ?? '' : $item['parent']['name_en'] ?? '' }}) -
+                            ({{ app()->getLocale() === 'ar' ? $item['parent']['parent']['name_ar'] ?? '' : $item['parent']['parent']['name_en'] ?? '' }})
+                        </span>
+                                                     </label>
+                                                 </div>
+                                             @endforeach
+                                         @endif
+                                     </div>
+                                 </div>
 
-                                            @endforeach
 
-                                        @endif
-                                        @if(!empty($categories))
-                                                 @foreach($categories as  $key => $item)
-                                                    <option value="{{$item['id']}}"  > {{ app()->getLocale() === 'ar' ? $item['name_ar'] ?? '' : $item['name_en'] ?? '' }}
-                                                        <span>({{ app()->getLocale() === 'ar' ? $item['parent']['name_ar'] ?? '' : $item['parent']['name_en'] ?? '' }}) -  ({{ app()->getLocale() === 'ar' ? $item['parent']['parent']['name_ar'] ?? '' : $item['parent']['parent']['name_en'] ?? '' }})</span>
-                                                    </option>
-                                                @endforeach
-                                        @endif
-                                     </select>
 
-                                </div>
                             @endif
                             <div class="mb-3">
                                 <label for="">{{__('setting.Roles')}}</label>

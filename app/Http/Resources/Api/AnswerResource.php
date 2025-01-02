@@ -21,6 +21,8 @@ class AnswerResource extends JsonResource
         [
             'id' => $this->id ,
             'answer_text' => $locale === 'ar' ? $this->answer_text_ar : $this->answer_text_en,
+            'answer_image' =>$this->answer_image    ,
+            'is_have_image' => $this->is_have_image ,
             'is_correct' => $this->is_correct ,
         ] ;
 

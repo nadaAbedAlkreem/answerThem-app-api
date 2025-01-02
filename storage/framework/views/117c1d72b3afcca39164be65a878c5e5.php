@@ -34,35 +34,59 @@ unset($__errorArgs, $__bag); ?>
                                 <input type="text" name="email" readonly value="<?php echo e($user->email); ?>" class="form-control" />
                             </div>
                             <?php if($user->getRoleNames()[0]  != 'super-admin'): ?>
-                                <div class="mb-4">
-                                    <label class="d-flex align-items-center fs-5 fw-bold mb-4">
-                                        <span class="required"><?php echo e(__('setting.Category')); ?> </span>
-                                        <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"  ></i>
-                                    </label>
-                                    <select class="form-control form-control-lg form-control-solid  form-select-sm"  multiple name = "category_id[]"   id="category_id_edit_admin" required aria-label=".form-select-sm example">
-                                        <option value=""></option>
-                                        <?php if(!empty($user['category'])): ?>
-                                            <?php $__currentLoopData = $user['category']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                 <div class="mb-4">
+                                     <label class="d-flex align-items-center fs-5 fw-bold mb-4">
+                                         <span class="required"><?php echo e(__('setting.Category')); ?></span>
+                                         <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"></i>
+                                     </label>
+                                     <div id="categories_container"  class="form-control form-control-lg form-control-solid">
+                                         <?php if(!empty($user['category'])): ?>
+                                             <?php $__currentLoopData = $user['category']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                 <div class="form-check mb-2">
+                                                     <input
+                                                         type="checkbox"
+                                                         class="form-check-input"
+                                                         name="category_id[]"
+                                                         id="category_<?php echo e($item['id']); ?>"
+                                                         value="<?php echo e($item['id']); ?>"
+                                                         checked>
+                                                     <label class="form-check-label" for="category_<?php echo e($item['id']); ?>">
+                                                         <?php echo e(app()->getLocale() === 'ar' ? $item['name_ar'] ?? '' : $item['name_en'] ?? ''); ?>
 
-                                                <option selected value="<?php echo e($item['id']); ?>"> <?php echo e(app()->getLocale() === 'ar' ? $item['name_ar'] ?? '' : $item['name_en'] ?? ''); ?>
+                                                         <span>
+                            (<?php echo e(app()->getLocale() === 'ar' ? $item['parent']['name_ar'] ?? '' : $item['parent']['name_en'] ?? ''); ?>) -
+                            (<?php echo e(app()->getLocale() === 'ar' ? $item['parent']['parent']['name_ar'] ?? '' : $item['parent']['parent']['name_en'] ?? ''); ?>)
+                        </span>
+                                                     </label>
+                                                 </div>
+                                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                         <?php endif; ?>
 
-                                                    <span>(<?php echo e(app()->getLocale() === 'ar' ? $item['parent']['name_ar'] ?? '' : $item['parent']['name_en'] ?? ''); ?>) -  (<?php echo e(app()->getLocale() === 'ar' ? $item['parent']['parent']['name_ar'] ?? '' : $item['parent']['parent']['name_en'] ?? ''); ?>)</span>
-                                                </option>
+                                         <?php if(!empty($categories)): ?>
+                                             <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                 <div class="form-check mb-2">
+                                                     <input
+                                                         type="checkbox"
+                                                         class="form-check-input"
+                                                         name="category_id[]"
+                                                         id="category_<?php echo e($item['id']); ?>"
+                                                         value="<?php echo e($item['id']); ?>">
+                                                     <label class="form-check-label" for="category_<?php echo e($item['id']); ?>">
+                                                         <?php echo e(app()->getLocale() === 'ar' ? $item['name_ar'] ?? '' : $item['name_en'] ?? ''); ?>
 
-                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                         <span>
+                            (<?php echo e(app()->getLocale() === 'ar' ? $item['parent']['name_ar'] ?? '' : $item['parent']['name_en'] ?? ''); ?>) -
+                            (<?php echo e(app()->getLocale() === 'ar' ? $item['parent']['parent']['name_ar'] ?? '' : $item['parent']['parent']['name_en'] ?? ''); ?>)
+                        </span>
+                                                     </label>
+                                                 </div>
+                                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                         <?php endif; ?>
+                                     </div>
+                                 </div>
 
-                                        <?php endif; ?>
-                                        <?php if(!empty($categories)): ?>
-                                                 <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                    <option value="<?php echo e($item['id']); ?>"  > <?php echo e(app()->getLocale() === 'ar' ? $item['name_ar'] ?? '' : $item['name_en'] ?? ''); ?>
 
-                                                        <span>(<?php echo e(app()->getLocale() === 'ar' ? $item['parent']['name_ar'] ?? '' : $item['parent']['name_en'] ?? ''); ?>) -  (<?php echo e(app()->getLocale() === 'ar' ? $item['parent']['parent']['name_ar'] ?? '' : $item['parent']['parent']['name_en'] ?? ''); ?>)</span>
-                                                    </option>
-                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                        <?php endif; ?>
-                                     </select>
 
-                                </div>
                             <?php endif; ?>
                             <div class="mb-3">
                                 <label for=""><?php echo e(__('setting.Roles')); ?></label>

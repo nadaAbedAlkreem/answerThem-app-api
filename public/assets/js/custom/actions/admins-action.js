@@ -1,6 +1,7 @@
 $(document).ready(function($)
 {
 
+
     let locale = document.getElementById("locale").value;
     loadCategories(locale);
 
@@ -52,18 +53,31 @@ $(document).ready(function($)
             url: '/dashboard/category/get-categories/filter/admin?lang=' + locale,
             method: 'GET',
             success: function (categories) {
-                var $select = $('#category_id_admin');
-                $select.empty();
+                const container = document.getElementById('categories_container');
+                container.innerHTML = '';
 
-                $.each(categories, function (index, item) {
-                    if (item.level === '3') {
-                        var $option = $('<option>')
-                            .val(item.id)
-                            .text(item.name + ' (  ' + item.parent_name + ')' +' - ' + ' (  ' + item.grand_name + ')');
-                        $select.append($option);
-                    }
+                categories.forEach(category => {
+                    const checkboxWrapper = document.createElement('div');
+                    checkboxWrapper.className = 'form-check mb-2';
+
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.name = 'category_id[]';
+                    checkbox.id = `category_${category.id}`;
+                    checkbox.value = category.id;
+                    checkbox.className = 'form-check-input';
+
+                    const label = document.createElement('label');
+                    label.htmlFor = `category_${category.id}`;
+                    label.className = 'form-check-label';
+                    label.textContent = category.name + ' (  ' + category.parent_name + ')' +' - ' + ' (  ' + category.grand_name + ')' ;
+                    checkboxWrapper.appendChild(checkbox);
+                    checkboxWrapper.appendChild(label);
+
+                    container.appendChild(checkboxWrapper);
                 });
-            },
+
+    },
             error: function (xhr, status, error) {
                 console.error('حدث خطأ أثناء جلب البيانات:', error);
             }

@@ -35,7 +35,7 @@ class Team extends Model
 //    }
     public function teamMembers()
     {
-        return $this->hasMany(TeamMember::class, 'team_id');
+        return $this->hasMany(TeamMember::class);
     }
     protected static function boot()
     {
